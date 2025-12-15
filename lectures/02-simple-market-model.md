@@ -565,7 +565,7 @@ $$
 S(T) = \begin{cases} 160 & \text{if stock goes up} \\ 40 & \text{if stock goes down} \end{cases}
 $$
 
-*Call option price*: \$31.81, which needs to be repaid as \$35 (it’s a loan). 
+*Call option price*: 31.81, which needs to be repaid as 35 (it’s a loan). 
 
 Borrow the money, purchase the option. Repay the loan at time $𝑇$.
 

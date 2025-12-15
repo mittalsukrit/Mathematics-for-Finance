@@ -526,7 +526,50 @@ $$
 
 Foreign exchange markets enable trading between currencies.
 
-FX pricing, interest rate parity, and arbitrage constraints follow the same principles introduced here.
+* Define the exchange rate $X(t)$ as the price of foreign currency in domestic currency. 
+* Introduce domestic and foreign risk-free assets with rates $r_d$ and $r_f$. 
+* Portfolio representation:
+
+$$
+V(t) = y_d A_d(t) + y_f A_f(t)X(t)
+$$
+
+</section>
+
+<section class="slide" markdown="1">
+
+## Binomial Model for Exchange Rate
+
+* Exchange rate uncertainty:
+
+$$
+X(T) = \begin{cases} X_u(T) & \text{with probability } p \\ X_d(T) & \text{with probability } 1-p \end{cases}
+$$
+
+* No-arbitrage condition (interest rate pairity)
+
+  * Constraint: 
+  
+  $$ 
+  \frac{X_d(T)}{X(0)} < \frac{1+r_d}{1+r_f} < \frac{X_u(T)}{X(0)} 
+  $$
+  
+  * Economic interpretation
+
+</section>
+
+<section class="slide" markdown="1">
+
+## FX Forward and Option
+
+* **Forward rate** formula: 
+
+$$
+F = X(0) . \frac{1+r_d}{1+r_f}
+$$
+
+* Currency **call option** with strike $K$.
+* Replication using portfolio of domestic and foreign assets. 
 
 </section>
 

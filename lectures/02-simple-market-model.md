@@ -357,7 +357,11 @@ Again, $V(T) \geq 0$ implies there is an arbitrage opportunity, violating the No
 Let:
 
 * $A(0) = 100$; $A(T) = 110$
-* $S(0) = 80$; $S(T)=\begin{cases} 100 & \text{with probability } 0.8 \\ 60 & \text{with probability } 0.2 \end{cases}$
+* $S(0) = 80$; 
+
+$$
+S(T)=\begin{cases} 100 & \text{with probability } 0.8 \\ 60 & \text{with probability } 0.2 \end{cases}
+$$
 
 Suppose you invest $10,000$ with: $x = 50$ shares; $y = 60$ bonds.
 

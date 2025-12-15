@@ -7,13 +7,15 @@ title: Mathematics for Finance
 # Mathematics for Finance
 
 
-These notes accompany the undergraduate course **Mathematics for Finance**.
+These notes accompany the open elective course **Mathematics for Finance** at [IIIT Hyderabad](https://www.iiit.ac.in/).
+
+Instructor: [Sukrit Mittal](https://mittalsukrit.github.io/)
 
 
 ## Lecture Notes
 
-
-1. [Overview of Financial Systems](lectures/01-financial-systems.md)
+*Coming soon...*
+<!-- 1. [Overview of Financial Systems](lectures/01-financial-systems.md) -->
 <!-- 2. [Simple Market Model](lectures/02-simple-market-model.md) -->
 
 

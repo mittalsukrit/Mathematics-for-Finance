@@ -3,12 +3,36 @@ layout: default
 title: Overview of Financial Systems
 ---
 
+<style>
+  .slides {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    height: 100vh;
+  }
+
+  .slide {
+    scroll-snap-align: start;
+    min-height: 100vh;
+    padding: 4rem;
+    box-sizing: border-box;
+  }
+
+  /* Nice-to-have: smoother feel */
+  html { scroll-behavior: smooth; }
+</style>
+
+<div class="slides">
+
+<section class="slide">
+
 # Overview of Financial Systems
 
-**Sukrit Mittal, Ph.D.**  
+**Sukrit Mittal**  
 Franklin Templeton Investments  
 
----
+</section>
+
+<section class="slide">
 
 ## 1. Course Introduction
 
@@ -17,7 +41,9 @@ The emphasis is not on rules or recipes, but on **structure, abstraction, and ri
 
 Finance today is inseparable from mathematics, computation, and uncertainty.
 
----
+</section>
+
+<section class="slide">
 
 ## What is Quantitative Finance?
 
@@ -28,9 +54,10 @@ It exists because:
 - Financial markets have grown too complex for pure intuition.
 - Asset prices evolve under uncertainty and randomness — precisely what mathematics formalizes.
 - Computers allow simulation, optimization, and testing at massive scale.
-- Modern finance runs on algorithms, not gut feeling.
 
----
+</section>
+
+<section class="slide">
 
 ## Why Should You Care About Financial Systems?
 
@@ -45,14 +72,16 @@ It is a **mission-critical distributed computing system**.
 
 ### Algorithms Rule the Battlefield
 
-- High-frequency trading
-- Fraud detection
-- Risk management
-- Portfolio optimization
+- High-frequency trading  
+- Fraud detection  
+- Risk management  
+- Portfolio optimization  
 
 Many core computer science innovations—low-latency systems, streaming pipelines, secure computation—were pioneered in finance.
 
----
+</section>
+
+<section class="slide">
 
 ## Financial Literacy as Career Leverage
 
@@ -64,7 +93,9 @@ Old view:
 Current reality:
 > Those who understand both design the systems that move markets.
 
----
+</section>
+
+<section class="slide">
 
 ## 2. What Is a Financial System?
 
@@ -72,9 +103,9 @@ A **financial system** exists to coordinate economic activity across **time and 
 
 At its core, it performs three fundamental functions.
 
----
+</section>
 
-## Financial Systems: Fundamental Roles
+<section class="slide">
 
 ### 1. Allocation of Capital
 
@@ -88,7 +119,9 @@ This happens through:
 - Lending
 - Equity financing
 
----
+</section>
+
+<section class="slide">
 
 ### 2. Risk Transfer
 
@@ -104,7 +137,9 @@ Purpose:
 - Spread risk across many participants
 - Enable calculated risk-taking instead of existential bets
 
----
+</section>
+
+<section class="slide">
 
 ### 3. Price Discovery
 
@@ -117,7 +152,9 @@ Markets aggregate:
 
 Prices act as **signals**, guiding decisions and allocating resources efficiently.
 
----
+</section>
+
+<section class="slide">
 
 ## An Analogy: Financial System as an Operating System
 
@@ -134,11 +171,15 @@ Think of the financial system as the **operating system of the economy**.
 
 Just as a faulty OS crashes applications, a faulty financial system crashes economies.
 
----
+</section>
+
+<section class="slide">
 
 ## 3. Key Components of Financial Systems
 
----
+</section>
+
+<section class="slide">
 
 ## Money Markets vs. Capital Markets
 
@@ -153,7 +194,9 @@ Characteristics:
 - Returns linked to policy rates
 - High liquidity
 
----
+</section>
+
+<section class="slide">
 
 ### Capital Markets
 
@@ -166,7 +209,9 @@ Characteristics:
 - Higher expected returns
 - Sensitive to economic growth and earnings
 
----
+</section>
+
+<section class="slide">
 
 ## Introduction to Financial Markets
 
@@ -178,8 +223,6 @@ Characteristics:
 
 Example: Buying shares of Reliance Industries on NSE.
 
----
-
 ### Debt Markets
 
 - **What it is:** Lending money in exchange for interest
@@ -188,7 +231,9 @@ Example: Buying shares of Reliance Industries on NSE.
 
 Example: Holding a 10-year Government of India bond.
 
----
+</section>
+
+<section class="slide">
 
 ### Derivatives Markets
 
@@ -205,7 +250,9 @@ Types:
 
 Example: A Nifty 50 futures contract.
 
----
+</section>
+
+<section class="slide">
 
 ### Banks
 
@@ -220,7 +267,9 @@ In India, banks are central to:
 
 Examples: SBI, HDFC Bank.
 
----
+</section>
+
+<section class="slide">
 
 ### Exchanges
 
@@ -231,7 +280,9 @@ Examples:
 - India: NSE, BSE
 - US: NYSE, NASDAQ
 
----
+</section>
+
+<section class="slide">
 
 ### Funds
 
@@ -243,7 +294,9 @@ Examples:
 - Mutual funds
 - ETFs (e.g., SBI ETF Nifty 50)
 
----
+</section>
+
+<section class="slide">
 
 ## Role of Regulators
 
@@ -255,7 +308,9 @@ Examples:
 
 US equivalent: SEC.
 
----
+</section>
+
+<section class="slide">
 
 ### RBI (Reserve Bank of India)
 
@@ -266,7 +321,9 @@ US equivalent: SEC.
 
 US equivalent: Federal Reserve.
 
----
+</section>
+
+<section class="slide">
 
 ## 4. Takeaways
 
@@ -281,13 +338,16 @@ US equivalent: Federal Reserve.
 A financial system is not just about money.  
 It is about **coordination, incentives, and control under uncertainty**.
 
----
+</section>
 
-## What Comes Next
+<section class="slide">
 
-Next lecture:
-- Time value of money
-- Discounting
-- Arbitrage logic
+**Thank you!**
 
-This is where mathematics truly enters the picture.
+<div style="height:6rem;"></div>
+
+**Any questions?**
+
+</section>
+
+</div>

@@ -21,9 +21,9 @@ title: Overview of Financial Systems
   html { scroll-behavior: smooth; }
 </style>
 
-<div class="slides">
+<div class="slides" markdown="1">
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 # Overview of Financial Systems
 
@@ -32,7 +32,7 @@ Franklin Templeton Investments
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## 1. Course Introduction
 
@@ -43,7 +43,7 @@ Finance today is inseparable from mathematics, computation, and uncertainty.
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## What is Quantitative Finance?
 
@@ -57,7 +57,7 @@ It exists because:
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## Why Should You Care About Financial Systems?
 
@@ -81,7 +81,7 @@ Many core computer science innovations—low-latency systems, streaming pipeline
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## Financial Literacy as Career Leverage
 
@@ -95,7 +95,7 @@ Current reality:
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## 2. What Is a Financial System?
 
@@ -105,7 +105,7 @@ At its core, it performs three fundamental functions.
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ### 1. Allocation of Capital
 
@@ -121,7 +121,7 @@ This happens through:
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ### 2. Risk Transfer
 
@@ -139,7 +139,7 @@ Purpose:
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ### 3. Price Discovery
 
@@ -154,7 +154,7 @@ Prices act as **signals**, guiding decisions and allocating resources efficientl
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## An Analogy: Financial System as an Operating System
 
@@ -173,13 +173,13 @@ Just as a faulty OS crashes applications, a faulty financial system crashes econ
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## 3. Key Components of Financial Systems
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## Money Markets vs. Capital Markets
 
@@ -196,7 +196,7 @@ Characteristics:
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ### Capital Markets
 
@@ -211,7 +211,7 @@ Characteristics:
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## Introduction to Financial Markets
 
@@ -233,7 +233,7 @@ Example: Holding a 10-year Government of India bond.
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ### Derivatives Markets
 
@@ -252,7 +252,7 @@ Example: A Nifty 50 futures contract.
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ### Banks
 
@@ -269,7 +269,7 @@ Examples: SBI, HDFC Bank.
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ### Exchanges
 
@@ -282,7 +282,7 @@ Examples:
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ### Funds
 
@@ -296,7 +296,7 @@ Examples:
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## Role of Regulators
 
@@ -310,7 +310,7 @@ US equivalent: SEC.
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ### RBI (Reserve Bank of India)
 
@@ -323,7 +323,7 @@ US equivalent: Federal Reserve.
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## 4. Takeaways
 
@@ -340,7 +340,7 @@ It is about **coordination, incentives, and control under uncertainty**.
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 **Thank you!**
 

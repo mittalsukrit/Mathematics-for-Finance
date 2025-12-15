@@ -21,9 +21,9 @@ title: A Simple Market Model
   html { scroll-behavior: smooth; }
 </style>
 
-<div class="slides">
+<div class="slides" markdown="1">
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 # A Simple Market Model
 
@@ -32,7 +32,7 @@ Franklin Templeton Investments
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## Outline
 
@@ -47,7 +47,7 @@ Franklin Templeton Investments
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## 1. Basic Notions and Assumptions
 
@@ -65,7 +65,7 @@ We assume that **two assets** are traded:
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ### Time Structure
 
@@ -78,7 +78,7 @@ This is deliberately simplistic. Refinement will come later.
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## Risky and Risk-Free Assets
 
@@ -105,7 +105,7 @@ $$
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## Portfolio
 
@@ -138,7 +138,7 @@ $$
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## Some Important Market Assumptions
 
@@ -157,7 +157,7 @@ There are no bounds on $x$ and $y$. Assets can be bought or sold in arbitrary qu
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## Shorting an Asset
 
@@ -185,7 +185,7 @@ where $C(t)$ is a cash reserve or collateral ensuring obligations can be met.
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## 2. The No-Arbitrage Principle
 
@@ -207,7 +207,7 @@ Key features:
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## Why Arbitrage Should Not Exist
 
@@ -231,7 +231,7 @@ There is **no portfolio** $(x, y)$ such that:
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## 3. One-Step Binomial Model
 
@@ -253,7 +253,7 @@ Despite its simplicity, this model captures the essence of uncertainty.
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## Example
 
@@ -271,7 +271,7 @@ Then:
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## No-Arbitrage Constraint
 
@@ -287,7 +287,7 @@ The proof proceeds by constructing portfolios with zero initial cost and non-neg
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## Case-1
 
@@ -315,7 +315,7 @@ $V(T) \geq 0$ implies there is an arbitrage opportunity, violating the No-arbitr
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## Case-2
 
@@ -343,7 +343,7 @@ Again, $V(T) \geq 0$ implies there is an arbitrage opportunity, violating the No
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## 4. Risk and Return
 
@@ -378,7 +378,7 @@ $$
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ### Expected Return and Risk
 
@@ -401,7 +401,7 @@ Comparison:
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## Exercise
 
@@ -422,7 +422,7 @@ Use the same asset prices as above.
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## 5. Forward Contracts
 
@@ -437,7 +437,7 @@ or to take a short forward position*.
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## 6. Call and Put Options
 
@@ -455,7 +455,7 @@ Payoff formulas:
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## Options Pricing
 
@@ -475,7 +475,7 @@ Assume $𝐴 (0) = 100$ and $𝐴 (1) = 110$.
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## Replicating the Option
 
@@ -501,7 +501,7 @@ $$
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## 7. Foreign Exchange
 
@@ -511,7 +511,7 @@ FX pricing, interest rate parity, and arbitrage constraints follow the same prin
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## 8. Managing Risk with Options
 
@@ -525,7 +525,7 @@ They combine probabilistic thinking with no-arbitrage logic.
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## Managing Risk with Options
 
@@ -541,7 +541,7 @@ Instead, I can buy 73.33 options priced at $13.64 each.
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## Managing Risk with Options
 
@@ -560,7 +560,7 @@ Hence, $S(T) - C(T) + 35 = \begin{cases} 135 \\ 75 \end{cases}$
 
 </section>
 
-<section class="slide">
+<section class="slide" markdown="1">
 
 ## Takeaway
 

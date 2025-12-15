@@ -266,7 +266,12 @@ Suppose:
 
 Then:
 
-* Stock return: $K_S(T)= \begin{cases} 25\% & \text{with probability } p \\ 5\% & \text{with probability } 1-p \end{cases}$
+* Stock return: 
+
+$$
+K_S(T)= \begin{cases} 25\% & \text{with probability } p \\ 5\% & \text{with probability } 1-p \end{cases}
+$$
+
 * Risk-free return: $K_A=10\%$
 
 </section>
@@ -460,17 +465,22 @@ Payoff formulas:
 ## Options Pricing
 
 Let us change the portfolio representation to: $(𝑥, 𝑦, 𝑧)$
+
 $$𝑉 (𝑡) = 𝑥𝑆 (𝑡) + 𝑦𝐴 (𝑡) + 𝑧C(𝑡)$$
 Pricing the option is equivalent to identifying $𝐶(0)$.
 $$
+
 𝑆(𝑇) = \begin{cases} 120 & \text{with probability } p \\
 80 & \text{with probability } 1-p \end{cases}
 $$
+
 Call option:
+
 $$
 C(𝑇) = \begin{cases} 20 & \text{with probability } p \\
 0 & \text{with probability } 1-p \end{cases}
 $$
+
 Assume $𝐴 (0) = 100$ and $𝐴 (1) = 110$.
 
 </section>

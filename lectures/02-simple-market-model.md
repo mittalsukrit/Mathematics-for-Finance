@@ -607,8 +607,6 @@ Instead, I can buy 73.33 options priced at $13.64 each.
 
 ## Managing Risk with Options
 
-## Managing Risk with Options
-
 Alternatively, assume a risky asset with $S(0) = 100$:
 $$
 S(T) = \begin{cases} 160 & \text{if stock goes up} \\ 40 & \text{if stock goes down} \end{cases}
@@ -629,6 +627,8 @@ At $t=T$, the premium grows to $35.
 
 <section class="slide" markdown="1">
 
+## Managing Risk with Options
+
 Where $C(T) = \max(S(T) - 100, 0)$ is the call payoff you owe.
 
 $$
@@ -639,8 +639,8 @@ V(T) = \begin{cases}
 $$
 
 **Risk comparison:**
-* Holding stock only: payoffs range from $40 to $160 (risk = $120)
-* Covered call strategy: payoffs range from $75 to $135 (risk = $60)
+* Holding stock only: payoffs range from 40 to 160 (risk = $120)
+* Covered call strategy: payoffs range from 75 to 135 (risk = $60)
 
 > The risk (spread between outcomes) has been reduced by 50%.
 

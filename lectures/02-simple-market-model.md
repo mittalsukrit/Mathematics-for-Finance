@@ -3,12 +3,36 @@ layout: default
 title: A Simple Market Model
 ---
 
+<style>
+  .slides {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    height: 100vh;
+  }
+
+  .slide {
+    scroll-snap-align: start;
+    min-height: 100vh;
+    padding: 4rem;
+    box-sizing: border-box;
+  }
+
+  /* Nice-to-have: smoother feel */
+  html { scroll-behavior: smooth; }
+</style>
+
+<div class="slides">
+
+<section class="slide">
+
 # A Simple Market Model
 
-**Sukrit Mittal, Ph.D.**
+**Sukrit Mittal**  
 Franklin Templeton Investments
 
----
+</section>
+
+<section class="slide">
 
 ## Outline
 
@@ -21,7 +45,9 @@ Franklin Templeton Investments
 7. Foreign exchange
 8. Managing risk with options
 
----
+</section>
+
+<section class="slide">
 
 ## 1. Basic Notions and Assumptions
 
@@ -37,6 +63,10 @@ We assume that **two assets** are traded:
 * **One risky asset**
   Typically a stock, but it could also be a commodity, currency, or any uncertain asset.
 
+</section>
+
+<section class="slide">
+
 ### Time Structure
 
 We work with only **two points in time**:
@@ -46,7 +76,9 @@ We work with only **two points in time**:
 
 This is deliberately simplistic. Refinement will come later.
 
----
+</section>
+
+<section class="slide">
 
 ## Risky and Risk-Free Assets
 
@@ -71,7 +103,9 @@ K_S = \frac{S(T) - S(0)}{S(0)}, \qquad
 K_A = \frac{A(T) - A(0)}{A(0)}
 $$
 
----
+</section>
+
+<section class="slide">
 
 ## Portfolio
 
@@ -102,7 +136,9 @@ $$
 K_V = \frac{V(T) - V(0)}{V(0)}
 $$
 
----
+</section>
+
+<section class="slide">
 
 ## Some Important Market Assumptions
 
@@ -119,7 +155,9 @@ There are no bounds on $x$ and $y$. Assets can be bought or sold in arbitrary qu
 * **Long position**: holding a positive quantity of an asset
 * **Short position**: holding a negative quantity (selling an asset you do not own)
 
----
+</section>
+
+<section class="slide">
 
 ## Shorting an Asset
 
@@ -145,7 +183,9 @@ $$
 
 where $C(t)$ is a cash reserve or collateral ensuring obligations can be met.
 
----
+</section>
+
+<section class="slide">
 
 ## 2. The No-Arbitrage Principle
 
@@ -165,7 +205,9 @@ Key features:
 * No risk (in theory)
 * No capital committed
 
----
+</section>
+
+<section class="slide">
 
 ## Why Arbitrage Should Not Exist
 
@@ -187,7 +229,9 @@ There is **no portfolio** $(x, y)$ such that:
 * $V(T) \ge 0$ with probability 1
 * $V(T) > 0$ with positive probability
 
----
+</section>
+
+<section class="slide">
 
 ## 3. One-Step Binomial Model
 
@@ -207,7 +251,9 @@ with $0 < p < 1$ and $S_d(T) < S_u(T)$.
 
 Despite its simplicity, this model captures the essence of uncertainty.
 
----
+</section>
+
+<section class="slide">
 
 ## Example
 
@@ -220,10 +266,12 @@ Suppose:
 
 Then:
 
-* Stock return: 25% (up), 5% (down)
-* Risk-free return: 10%
+* Stock return: $K_S(T)= \begin{cases} 25\% & \text{with probability } p \\ 5\% & \text{with probability } 1-p \end{cases}$
+* Risk-free return: $K_A=10\%$
 
----
+</section>
+
+<section class="slide">
 
 ## No-Arbitrage Constraint
 
@@ -237,7 +285,65 @@ Violating either inequality leads to an arbitrage strategy.
 
 The proof proceeds by constructing portfolios with zero initial cost and non-negative future payoff.
 
----
+</section>
+
+<section class="slide">
+
+## Case-1
+
+Suppose $\frac{A(T)}{A(0)} \leq \frac{S^d(T)}{S(0)}$. In this case, at $t=0$:
+* borrow the amount $S(0)$ risk free;
+* buy one share of stock for $S(0)$. 
+
+This way, the portfolio $(x,y)$ will have:  
+
+$$
+x=1; \text{ } y = -\frac{S(0)}{A(0)}; \text{ } V(0) = 0
+$$
+
+At time $T$, the value will become:
+
+$$
+V(T) = 
+        \begin{cases}
+            S^u(T) - \frac{S(0)}{A(0)}A(T) & \text{if stock goes up,} \\
+            S^d(T) - \frac{S(0)}{A(0)}A(T) & \text{if stock goes down.}
+        \end{cases}
+$$
+
+$V(T) \geq 0$ implies there is an arbitrage opportunity, violating the No-arbitrage principle. 
+
+</section>
+
+<section class="slide">
+
+## Case-2
+
+Suppose $\frac{A(T)}{A(0)} \geq \frac{S^u(T)}{S(0)}$. In this case, at $t=0$:
+* sell short one share for $S(0)$;
+* invest the amount $S(0)$ risk free. 
+
+This way, the portfolio $(x,y)$ will have:  
+
+$$
+x=-1; \text{ } y = \frac{S(0)}{A(0)}; \text{ } V(0) = 0
+$$
+
+At time $T$, the value will become:
+
+$$
+V(T) = 
+        \begin{cases}
+            -S^u(T) + \frac{S(0)}{A(0)}A(T) & \text{if stock goes up,} \\
+            -S^d(T) + \frac{S(0)}{A(0)}A(T) & \text{if stock goes down.}
+        \end{cases}
+$$
+
+Again, $V(T) \geq 0$ implies there is an arbitrage opportunity, violating the No-arbitrage principle. 
+
+</section>
+
+<section class="slide">
 
 ## 4. Risk and Return
 
@@ -245,15 +351,10 @@ The proof proceeds by constructing portfolios with zero initial cost and non-neg
 
 Let:
 
-* $A(0) = 100$, $A(T) = 110$
-* $S(0) = 80$
-* $S(T) = 100$ with probability 0.8
-* $S(T) = 60$ with probability 0.2
+* $A(0) = 100$; $A(T) = 110$
+* $S(0) = 80$; $S(T)=\begin{cases} 100 & \text{with probability } 0.8 \\ 60 & \text{with probability } 0.2 \end{cases}$
 
-Suppose you invest $10,000$ with:
-
-* $x = 50$ shares
-* $y = 60$ bonds
+Suppose you invest $10,000$ with: $x = 50$ shares; $y = 60$ bonds.
 
 Then:
 
@@ -270,33 +371,37 @@ Corresponding returns:
 $$
 K_V =
 \begin{cases}
-16% \\
--4%
+16\% & \text{if stock goes up} \\
+-4\% & \text{if stock goes down}
 \end{cases}
 $$
 
----
+</section>
+
+<section class="slide">
 
 ### Expected Return and Risk
 
 Expected return:
 
 $$
-E[K_V] = 0.8 \times 16% + 0.2 \times (-4%) = 12%
+E(K_V) = 16\% \times 0.8 - 4\% \times 0.2 = 12\%
 $$
 
 Risk (standard deviation):
 
 $$
-\sigma_V = 8%
+\sigma_V = \sqrt{(16\% - 12\%)^2 \times 0.8 + (-4\%-12\%)^2 \times 0.2} = 8\%
 $$
 
 Comparison:
 
-* All bonds: $K_A = 10%$, $\sigma = 0$
-* All stocks: $E[K_S] = 15%$, $\sigma = 20%$
+* All bonds: $K_A = 10\%$; $\sigma_A = 0\%$
+* All stocks: $E(K_S)=25\% \times 0.8 - 25\% \times 0.2 = 15\%$; $\sigma_S = 20%$
 
----
+</section>
+
+<section class="slide">
 
 ## Exercise
 
@@ -307,30 +412,96 @@ Compute:
 * Expected return
 * Risk
 
-Use the same asset prices as above.
+Use the same asset prices as above. 
+* $A(0)=100$ and $A(T)=110$ dollars.
+* $S(0)=80$ and $S(T) = 
+        \begin{cases}
+            100 & \text{with probability } 0.8 \\
+            60 & \text{with probability } 0.2
+        \end{cases}$
 
----
+</section>
+
+<section class="slide">
 
 ## 5. Forward Contracts
 
-A **forward contract** is an agreement to buy or sell an asset at a future time $T$ for a price $F$ fixed today.
+**Forward contract** is an agreement to buy or sell a risky asset at a specified future
+time, known as the **delivery date**, for a price $F$ fixed at the present moment, called the
+**forward price**.
+* An investor who agrees to buy the asset is said to *enter into a long forward contract
+or to take a long forward position*.
+* An investor who agrees to sell the asset is said to *enter into a short forward contract
+or to take a short forward position*.
+* No upfront payment.
 
-* **Long forward**: obligation to buy
-* **Short forward**: obligation to sell
+</section>
 
-Forwards are foundational instruments for pricing and hedging.
-
----
+<section class="slide">
 
 ## 6. Call and Put Options
 
-Options give the **right, but not the obligation**, to buy or sell an asset at a specified price.
+**Option** is a financial contract giving the right but not the obligation to buy or sell an
+asset.
+* **Call Option**: right to buy at strike $X$.
+* **Put Option**: right to sell at strike $X$.
 
-They allow asymmetric payoff structures and controlled risk exposure.
+A premium is paid today to receive this flexibility.
 
-(Details will be developed later.)
 
----
+Payoff formulas:
+* **Call**: Payoff = $\max (S(T)-X, 0)$
+* **Put**: Payoff = $\max (X − S(T), 0)$
+
+</section>
+
+<section class="slide">
+
+## Options Pricing
+
+Let us change the portfolio representation to: $(𝑥, 𝑦, 𝑧)$
+$$𝑉 (𝑡) = 𝑥𝑆 (𝑡) + 𝑦𝐴 (𝑡) + 𝑧C(𝑡)$$
+Pricing the option is equivalent to identifying $𝐶(0)$.
+$$
+𝑆(𝑇) = \begin{cases} 120 & \text{with probability } p \\
+80 & \text{with probability } 1-p \end{cases}
+$$
+Call option:
+$$
+C(𝑇) = \begin{cases} 20 & \text{with probability } p \\
+0 & \text{with probability } 1-p \end{cases}
+$$
+Assume $𝐴 (0) = 100$ and $𝐴 (1) = 110$.
+
+</section>
+
+<section class="slide">
+
+## Replicating the Option
+
+$$
+xS(T) + yA(T) = \begin{cases} x120 + y110, & \text{if stock goes up} \\
+x80 + y110, & \text{if stock goes down} \end{cases}
+$$
+
+Hence, 
+
+$$
+C(T) = \begin{cases} x120 + y110 = 20 \\
+x80 + y110 = 0 \end{cases}
+$$
+
+Solving these equations give: $x = \frac{1}{2}$ ; $y = -\frac{4}{11}$.
+
+This means that to replicate this option, we need to buy 1/2 stock and take a short position on -4/11 bonds (borrow $400/11 in cash).
+
+$$
+C(0) = \frac{1}{2} \times 100 - \frac{4}{11} \times 100 = 13.64
+$$
+
+</section>
+
+<section class="slide">
 
 ## 7. Foreign Exchange
 
@@ -338,7 +509,9 @@ Foreign exchange markets enable trading between currencies.
 
 FX pricing, interest rate parity, and arbitrage constraints follow the same principles introduced here.
 
----
+</section>
+
+<section class="slide">
 
 ## 8. Managing Risk with Options
 
@@ -350,7 +523,44 @@ Options are central tools for:
 
 They combine probabilistic thinking with no-arbitrage logic.
 
----
+</section>
+
+<section class="slide">
+
+## Managing Risk with Options
+
+If I have $1000: 
+* It becomes $1200 if the stock goes up. 
+* Else it becomes $800. 
+
+Instead, I can buy 73.33 options priced at $13.64 each. 
+* Becomes $1466 if the stock goes up. 
+* Else $0. 
+
+> Purchasing an option clearly seems riskier. 
+
+</section>
+
+<section class="slide">
+
+## Managing Risk with Options
+
+Alternatively, assume a risky asset: 
+$$
+S(T) = \begin{cases} 160 & \text{if stock goes up} \\ 40 & \text{if stock goes down} \end{cases}
+$$
+
+*Call option price*: $31.81, which needs to be repaid as $35 (it’s a loan). 
+
+Borrow the money, purchase the option. Repay the loan at time $𝑇$.
+
+Hence, $S(T) - C(T) + 35 = \begin{cases} 135 \\ 75 \end{cases}$
+
+> Clearly, the risk (gap between possibilities) has reduced. 
+
+</section>
+
+<section class="slide">
 
 ## Takeaway
 
@@ -361,3 +571,7 @@ Even the simplest market model reveals:
 * How portfolios balance risk and return
 
 This framework underlies everything that follows in mathematical finance.
+
+</section>
+
+</div>

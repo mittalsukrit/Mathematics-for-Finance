@@ -402,7 +402,7 @@ $$
 Comparison:
 
 * All bonds: $K_A = 10\%$; $\sigma_A = 0\%$
-* All stocks: $E(K_S)=25\% \times 0.8 - 25\% \times 0.2 = 15\%$; $\sigma_S = 20%$
+* All stocks: $E(K_S)=25\% \times 0.8 - 25\% \times 0.2 = 15\%$; $\sigma_S = 20\%$
 
 </section>
 
@@ -419,11 +419,15 @@ Compute:
 
 Use the same asset prices as above. 
 * $A(0)=100$ and $A(T)=110$ dollars.
-* $S(0)=80$ and $S(T) = 
+* $S(0)=80$ and 
+
+$$
+S(T) = 
         \begin{cases}
             100 & \text{with probability } 0.8 \\
             60 & \text{with probability } 0.2
-        \end{cases}$
+        \end{cases}
+$$
 
 </section>
 
@@ -467,9 +471,10 @@ Payoff formulas:
 Let us change the portfolio representation to: $(𝑥, 𝑦, 𝑧)$
 
 $$𝑉 (𝑡) = 𝑥𝑆 (𝑡) + 𝑦𝐴 (𝑡) + 𝑧C(𝑡)$$
-Pricing the option is equivalent to identifying $𝐶(0)$.
-$$
 
+Pricing the option is equivalent to identifying $𝐶(0)$.
+
+$$
 𝑆(𝑇) = \begin{cases} 120 & \text{with probability } p \\
 80 & \text{with probability } 1-p \end{cases}
 $$
@@ -560,11 +565,13 @@ $$
 S(T) = \begin{cases} 160 & \text{if stock goes up} \\ 40 & \text{if stock goes down} \end{cases}
 $$
 
-*Call option price*: $31.81, which needs to be repaid as $35 (it’s a loan). 
+*Call option price*: \$31.81, which needs to be repaid as \$35 (it’s a loan). 
 
 Borrow the money, purchase the option. Repay the loan at time $𝑇$.
 
-Hence, $S(T) - C(T) + 35 = \begin{cases} 135 \\ 75 \end{cases}$
+Hence, 
+
+$$S(T) - C(T) + 35 = \begin{cases} 135 \\ 75 \end{cases}$$
 
 > Clearly, the risk (gap between possibilities) has reduced. 
 

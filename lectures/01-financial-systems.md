@@ -3,44 +3,291 @@ layout: default
 title: Overview of Financial Systems
 ---
 
-
 # Overview of Financial Systems
 
+**Sukrit Mittal, Ph.D.**  
+Franklin Templeton Investments  
 
-## Motivation
-Finance exists to allocate capital across time and uncertainty.
+---
 
+## 1. Course Introduction
 
-This course focuses on the **mathematics** that makes this possible.
+This course introduces the **mathematical foundations of modern financial systems**.  
+The emphasis is not on rules or recipes, but on **structure, abstraction, and rigor**.
 
+Finance today is inseparable from mathematics, computation, and uncertainty.
 
-## Financial Markets
+---
 
+## What is Quantitative Finance?
 
-We distinguish between:
+Quantitative finance is the **mathematics, statistics, and computing engine** that drives modern financial markets.
+
+It exists because:
+
+- Financial markets have grown too complex for pure intuition.
+- Asset prices evolve under uncertainty and randomness — precisely what mathematics formalizes.
+- Computers allow simulation, optimization, and testing at massive scale.
+- Modern finance runs on algorithms, not gut feeling.
+
+---
+
+## Why Should You Care About Financial Systems?
+
+Finance is no longer a separate industry.  
+It is a **mission-critical distributed computing system**.
+
+### Finance Runs on Code
+
+- Banks, hedge funds, payment systems, and exchanges are software-driven.
+- Every trade, card swipe, or UPI transaction is executed by code.
+- Latency, correctness, and robustness matter as much as capital.
+
+### Algorithms Rule the Battlefield
+
+- High-frequency trading
+- Fraud detection
+- Risk management
+- Portfolio optimization
+
+Many core computer science innovations—low-latency systems, streaming pipelines, secure computation—were pioneered in finance.
+
+---
+
+## Financial Literacy as Career Leverage
+
+If you understand **both code and capital**, you are rare—and rarity has value.
+
+Old view:
+> Engineers build apps, finance people handle money.
+
+Current reality:
+> Those who understand both design the systems that move markets.
+
+---
+
+## 2. What Is a Financial System?
+
+A **financial system** exists to coordinate economic activity across **time and uncertainty**.
+
+At its core, it performs three fundamental functions.
+
+---
+
+## Financial Systems: Fundamental Roles
+
+### 1. Allocation of Capital
+
+Deciding **where money should go**.
+
+Capital is scarce.  
+The system must direct it toward projects and assets with the best expected return for the risk taken.
+
+This happens through:
+- Investment decisions
+- Lending
+- Equity financing
+
+---
+
+### 2. Risk Transfer
+
+Shifting risk from one party to another using financial instruments.
+
+Examples:
+- Insurance
+- Derivatives
+- Hedging contracts
+
+Purpose:
+- Allow specialization (a farmer farms, a bank prices risk)
+- Spread risk across many participants
+- Enable calculated risk-taking instead of existential bets
+
+---
+
+### 3. Price Discovery
+
+Determining **what an asset is worth right now**.
+
+Markets aggregate:
+- Information
+- Expectations
+- Sentiment
+
+Prices act as **signals**, guiding decisions and allocating resources efficiently.
+
+---
+
+## An Analogy: Financial System as an Operating System
+
+Think of the financial system as the **operating system of the economy**.
+
+| OS Function                    | Financial Equivalent              |
+|--------------------------------|----------------------------------|
+| Resource allocation            | Capital allocation               |
+| Inter-process communication    | Payments & settlements           |
+| Security & access control      | Risk management & regulation     |
+| Scheduling                     | Liquidity management             |
+| APIs & system calls            | Financial instruments & markets  |
+| Monitoring & logs              | Price discovery & reporting      |
+
+Just as a faulty OS crashes applications, a faulty financial system crashes economies.
+
+---
+
+## 3. Key Components of Financial Systems
+
+---
+
+## Money Markets vs. Capital Markets
+
+### Money Markets
+
+- Short-term borrowing and lending (maturity ≤ 1 year)
+- Primarily regulated by the RBI
+- Used to manage liquidity
+
+Characteristics:
+- Very low risk
+- Returns linked to policy rates
+- High liquidity
+
+---
+
+### Capital Markets
+
+- Long-term securities (maturity > 1 year)
+- Regulated by SEBI (and RBI for certain debt)
+- Used to fund growth and infrastructure
+
+Characteristics:
+- Higher risk
+- Higher expected returns
+- Sensitive to economic growth and earnings
+
+---
+
+## Introduction to Financial Markets
+
+### Equity Markets
+
+- **What it is:** Ownership in a company
+- **Returns:** Dividends + capital gains
+- **Risk:** High, tied to firm performance and market sentiment
+
+Example: Buying shares of Reliance Industries on NSE.
+
+---
+
+### Debt Markets
+
+- **What it is:** Lending money in exchange for interest
+- **Returns:** Fixed interest + principal repayment
+- **Risk:** Lower than equity, but subject to default risk
+
+Example: Holding a 10-year Government of India bond.
+
+---
+
+### Derivatives Markets
+
+- Contracts derived from an underlying asset
+- Used for:
+  - Hedging
+  - Speculation
+  - Arbitrage
+
+Types:
+- Futures
+- Options
+- Swaps
+
+Example: A Nifty 50 futures contract.
+
+---
+
+### Banks
+
+- Accept deposits
+- Make loans
+- Provide payment services
+
+In India, banks are central to:
 - Money markets
-- Capital markets
-- Derivatives markets
+- Government securities
+- Credit creation
 
+Examples: SBI, HDFC Bank.
 
-## A First Mathematical Object
+---
 
+### Exchanges
 
-Let $C_t$ denote cash flow at time $t$.
+- Organized platforms for buying and selling securities
+- Ensure transparency, liquidity, and price discovery
 
+Examples:
+- India: NSE, BSE
+- US: NYSE, NASDAQ
 
-The present value is defined as:
+---
 
+### Funds
 
-$$
-PV = \sum_{t=0}^T \frac{C_t}{(1+r)^t}
-$$
+- Pool money from multiple investors
+- Invest across asset classes
+- Provide diversification and professional management
 
+Examples:
+- Mutual funds
+- ETFs (e.g., SBI ETF Nifty 50)
 
-This simple expression will reappear throughout the course.
+---
 
+## Role of Regulators
+
+### SEBI (Securities and Exchange Board of India)
+
+- Regulates capital markets
+- Enforces disclosure and transparency
+- Protects investors
+
+US equivalent: SEC.
+
+---
+
+### RBI (Reserve Bank of India)
+
+- Central bank of India
+- Controls monetary policy
+- Regulates banks
+- Oversees money markets and payment systems
+
+US equivalent: Federal Reserve.
+
+---
+
+## 4. Takeaways
+
+- **Equity** = ownership  
+- **Debt** = lending  
+- **Derivatives** = risk transfer or speculation  
+- **Banks** = move and create money  
+- **Exchanges** = enable trading and price discovery  
+- **Funds** = pool and allocate capital  
+- **Regulators** = keep the system stable (at least in theory)
+
+A financial system is not just about money.  
+It is about **coordination, incentives, and control under uncertainty**.
+
+---
 
 ## What Comes Next
 
+Next lecture:
+- Time value of money
+- Discounting
+- Arbitrage logic
 
-We now formalize discounting, compounding, and arbitrage.
+This is where mathematics truly enters the picture.

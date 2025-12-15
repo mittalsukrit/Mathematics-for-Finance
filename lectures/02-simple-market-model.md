@@ -198,7 +198,7 @@ The future stock price can take **only two values**:
 $$
 S(T) =
 \begin{cases}
-S_u(T) & \text{with probability } p \
+S_u(T) & \text{with probability } p \\
 S_d(T) & \text{with probability } 1-p
 \end{cases}
 $$
@@ -260,7 +260,7 @@ Then:
 $$
 V(T) =
 \begin{cases}
-11{,}600 & \text{if stock goes up} \
+11{,}600 & \text{if stock goes up} \\
 9{,}600 & \text{if stock goes down}
 \end{cases}
 $$
@@ -270,7 +270,7 @@ Corresponding returns:
 $$
 K_V =
 \begin{cases}
-16% \
+16% \\
 -4%
 \end{cases}
 $$

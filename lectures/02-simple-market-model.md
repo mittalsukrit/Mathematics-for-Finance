@@ -553,7 +553,7 @@ $$
   $$ 
   \frac{X_d(T)}{X(0)} < \frac{1+r_d}{1+r_f} < \frac{X_u(T)}{X(0)} 
   $$
-  
+
   * Economic interpretation
 
 </section>
@@ -607,20 +607,42 @@ Instead, I can buy 73.33 options priced at $13.64 each.
 
 ## Managing Risk with Options
 
-Alternatively, assume a risky asset: 
+## Managing Risk with Options
+
+Alternatively, assume a risky asset with $S(0) = 100$:
 $$
 S(T) = \begin{cases} 160 & \text{if stock goes up} \\ 40 & \text{if stock goes down} \end{cases}
 $$
 
-*Call option price*: 31.81, which needs to be repaid as 35 (it’s a loan). 
+**Strategy: Covered Call**
 
-Borrow the money, purchase the option. Repay the loan at time $𝑇$.
+At $t=0$:
+* Own 1 share of stock (worth $100)
+* **Sell** 1 call option (strike $X=100$) for $31.81
+* Invest the premium at 10% risk-free rate
 
-Hence, 
+At $t=T$, the premium grows to $35.
 
-$$S(T) - C(T) + 35 = \begin{cases} 135 \\ 75 \end{cases}$$
+**Portfolio value:** $V(T) = S(T) - C(T) + 35$
 
-> Clearly, the risk (gap between possibilities) has reduced. 
+</section>
+
+<section class="slide" markdown="1">
+
+Where $C(T) = \max(S(T) - 100, 0)$ is the call payoff you owe.
+
+$$
+V(T) = \begin{cases} 
+160 - 60 + 35 = 135 & \text{if stock goes up} \\ 
+40 - 0 + 35 = 75 & \text{if stock goes down} 
+\end{cases}
+$$
+
+**Risk comparison:**
+* Holding stock only: payoffs range from $40 to $160 (risk = $120)
+* Covered call strategy: payoffs range from $75 to $135 (risk = $60)
+
+> The risk (spread between outcomes) has been reduced by 50%.
 
 </section>
 

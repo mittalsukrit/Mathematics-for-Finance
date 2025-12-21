@@ -104,17 +104,17 @@ This is deliberately simplistic. Real markets trade continuously, but the two-pe
 * Current price $S(0)$ is known (observable in the market)
 * Future price $S(T)$ is **uncertain** (depends on future states of the world)
 
-**Example**: A share of Apple stock costs $S(0) = $ &#36;$175$ today, but its price in one year could be anywhere from &#36;$150$ to &#36;$200$ depending on earnings, economic conditions, etc.
+**Example**: A share of Apple stock costs $S(0) =  175$ today, but its price in one year could be anywhere from $150$ to $200$ depending on earnings, economic conditions, etc.
 
 ### Risk-Free Asset (Bond)
 
 * Described by money in a bank account or bonds held
-* Current price $A(0)$ is known (typically normalized to &#36;$1$ or &#36;$100$)
+* Current price $A(0)$ is known (typically normalized to $1$ or $100$)
 * Future price $A(T)$ is **known with certainty** via the risk-free rate $r$
 
 $$A(T) = A(0)(1 + r)$$
 
-**Example**: A bond with $A(0) =$ &#36;$100$ and annual interest rate $r = 5\%$ will be worth exactly $A(T) =$ &#36;$105$ in one year.
+**Example**: A bond with $A(0) = 100$ and annual interest rate $r = 5\%$ will be worth exactly $A(T) = 105$ in one year.
 
 ### Returns
 
@@ -125,7 +125,7 @@ K_S = \frac{S(T) - S(0)}{S(0)}, \qquad
 K_A = \frac{A(T) - A(0)}{A(0)} = r
 $$
 
-**Why returns matter**: They normalize profits for comparison across different initial investments. A &#36;10 profit on a &#36;100 investment (10% return) is better than a &#36;10 profit on a &#36;1000 investment (1% return).
+**Why returns matter**: They normalize profits for comparison across different initial investments. A 10 profit on a 100 investment (10% return) is better than a 10 profit on a 1000 investment (1% return).
 
 **Note**: The risk-free return $K_A = r$ is deterministic, while the risky return $K_S$ is a random variable.
 
@@ -242,7 +242,7 @@ Steps:
 * If the price **falls** ($S(T) < S(0)$): you profit by $S(0) - S(T)$ per share
 * If the price **rises** ($S(T) > S(0)$): you lose $S(T) - S(0)$ per share
 
-**Example**: Short 100 shares at &#36;$50$. If the price drops to &#36;$40$, you profit &#36;$10 \times 100 = $ &#36;$1000$. If it rises to &#36;$60$, you lose &#36;$10 \times 100 = $ &#36;$1000$.
+**Example**: Short 100 shares at $50$. If the price drops to $40$, you profit $10 \times 100 =  1000$. If it rises to $60$, you lose $10 \times 100 =  1000$.
 
 ### Risks of Short Selling
 
@@ -499,7 +499,7 @@ Let $S(0) = 100$, $S^d(T) = 110$, $A(0) = 100$, $A(T) = 105$.
 
 Check: $\frac{110}{100} = 1.10 > \frac{105}{100} = 1.05$ (condition violated).
 
-Portfolio: Buy 1 share, borrow &#36;100.
+Portfolio: Buy 1 share, borrow 100.
 
 Payoff: $V(T) = S(T) - 105 \in \{110-105, 125-105\} = \{5, 20\}$ (always positive!). 
 
@@ -549,7 +549,7 @@ Let $S(0) = 100$, $S^u(T) = 105$, $A(0) = 100$, $A(T) = 110$.
 
 Check: $\frac{105}{100} = 1.05 < \frac{110}{100} = 1.10$ (condition violated).
 
-Portfolio: Short 1 share, invest &#36;100.
+Portfolio: Short 1 share, invest 100.
 
 Payoff: $V(T) = -S(T) + 110 \in \{-105+110, -95+110\} = \{5, 15\}$ (always positive!).
 
@@ -583,7 +583,7 @@ $$
 
 ### Portfolio Construction
 
-Suppose you invest &#36;$10,000$ with: $x = 50$ shares; $y = 60$ bonds.
+Suppose you invest $10,000$ with: $x = 50$ shares; $y = 60$ bonds.
 
 **Initial value**: $V(0) = 50 \times 80 + 60 \times 100 = 4000 + 6000 = 10{,}000$ ✓
 
@@ -668,7 +668,7 @@ $$
 
 ## Exercise
 
-Design a portfolio with initial wealth of &#36;$10{,}000$, split **50:50 between stocks and bonds** (by value).
+Design a portfolio with initial wealth of $10{,}000$, split **50:50 between stocks and bonds** (by value).
 
 Compute:
 
@@ -691,9 +691,9 @@ $$
 
 ### Solution Sketch
 
-**Initial wealth**: &#36;10,000, split 50-50.
-- Stock investment: &#36;5,000 → $x = 5000/80 = 62.5$ shares
-- Bond investment: &#36;5,000 → $y = 5000/100 = 50$ bonds
+**Initial wealth**: 10,000, split 50-50.
+- Stock investment: 5,000 → $x = 5000/80 = 62.5$ shares
+- Bond investment: 5,000 → $y = 5000/100 = 50$ bonds
 
 **Final value**:
 $$
@@ -813,13 +813,13 @@ This asymmetry has **value**, so you must pay a **premium** $C(0)$ or $P(0)$ to 
 
 ### Example
 
-Stock at $S(0) = $ &#36;$100$. Buy a call option with strike $X = $ &#36;$100$ for premium $C(0) = $ &#36;$10$.
+Stock at $S(0) =  100$. Buy a call option with strike $X =  100$ for premium $C(0) =  10$.
 
 At maturity:
-- If $S(T) = $ &#36;$120$: Exercise, profit = &#36;$120 - $ &#36;$100 - $ &#36;$10 = $ &#36;$10$
-- If $S(T) = $ &#36;$80$: Don't exercise, loss = $-$ &#36;$10$ (just the premium)
+- If $S(T) =  120$: Exercise, profit = $120 -  100 -  10 =  10$
+- If $S(T) =  80$: Don't exercise, loss = $- 10$ (just the premium)
 
-**Maximum loss**: &#36;10. **Maximum gain**: unlimited!
+**Maximum loss**: 10. **Maximum gain**: unlimited!
 
 </section>
 
@@ -896,13 +896,13 @@ $$
 ### Interpretation
 
 The replicating portfolio is:
-- **Buy** $1/2$ share of stock (costs $\frac{1}{2} \times 100 = $ &#36;$50$)
-- **Short** $4/11$ bonds (borrow $\frac{4}{11} \times 100 = $ &#36;$36.36$)
+- **Buy** $1/2$ share of stock (costs $\frac{1}{2} \times 100 =  50$)
+- **Short** $4/11$ bonds (borrow $\frac{4}{11} \times 100 =  36.36$)
 
 **Net cost today**:
 
 $$
-C(0) = \frac{1}{2} \times 100 - \frac{4}{11} \times 100 = 50 - 36.36 = $ &#36;$13.64
+C(0) = \frac{1}{2} \times 100 - \frac{4}{11} \times 100 = 50 - 36.36 =  13.64
 $$
 
 ### Verification
@@ -911,7 +911,7 @@ Up state: $V(T) = \frac{1}{2} \times 120 - \frac{4}{11} \times 110 = 60 - 40 = 2
 
 Down state: $V(T) = \frac{1}{2} \times 80 - \frac{4}{11} \times 110 = 40 - 40 = 0$ ✓
 
-The portfolio perfectly replicates the option payoff, so by no-arbitrage: **$C(0) = $ &#36;$13.64$**.
+The portfolio perfectly replicates the option payoff, so by no-arbitrage: **$C(0) =  13.64$**.
 
 </section>
 
@@ -1020,7 +1020,7 @@ A **currency call option** gives the right to buy foreign currency at strike $K$
 
 **Payoff**: $C(T) = \max(X(T) - K, 0)$
 
-**Use case**: An Indian company expects to pay &#36;1M in one year. Buy a call option with strike $K = 85$ INR/USD to cap the cost.
+**Use case**: An Indian company expects to pay 1M in one year. Buy a call option with strike $K = 85$ INR/USD to cap the cost.
 - If INR weakens ($X(T) = 90$): Exercise, pay only 85 INR/USD (plus premium)
 - If INR strengthens ($X(T) = 80$): Don't exercise, buy USD at spot
 
@@ -1060,45 +1060,45 @@ Let's explore some concrete strategies.
 
 ## Example 1: Speculative Use of Options
 
-**Scenario**: You have &#36;1000 to invest. Stock trades at $S(0) = 100$:
+**Scenario**: You have 1000 to invest. Stock trades at $S(0) = 100$:
 $$
 S(T) = \begin{cases} 120 & \text{with probability } 0.5 \\ 80 & \text{with probability } 0.5 \end{cases}
 $$
 
 ### Strategy A: Buy Stock Directly
 
-Buy 10 shares for &#36;1000.
+Buy 10 shares for 1000.
 
 **Payoff**: 
-* Up state: $V(T) = 10 \times 120 = $ &#36;$1200$ (20% gain)
-* Down state: $V(T) = 10 \times 80 = $ &#36;$800$ (20% loss)
+* Up state: $V(T) = 10 \times 120 =  1200$ (20% gain)
+* Down state: $V(T) = 10 \times 80 =  800$ (20% loss)
 
-**Expected value**: $E(V) = 0.5 \times 1200 + 0.5 \times 800 = $ &#36;$1000$ (0% expected return—fair bet)
+**Expected value**: $E(V) = 0.5 \times 1200 + 0.5 \times 800 =  1000$ (0% expected return—fair bet)
 
-**Risk (std dev)**: &#36;$200$
+**Risk (std dev)**: $200$
 
 ### Strategy B: Buy Call Options
 
-Assume call options (strike $X=100$) cost $C(0) = $ &#36;$13.64$ each.
+Assume call options (strike $X=100$) cost $C(0) =  13.64$ each.
 
 Buy $\frac{1000}{13.64} \approx 73.3$ options.
 
 **Payoff**:
-* Up state: $V(T) = 73.3 \times (120-100) = 73.3 \times 20 = $ &#36;$1466$
-* Down state: $V(T) = 73.3 \times 0 = $ &#36;$0$
+* Up state: $V(T) = 73.3 \times (120-100) = 73.3 \times 20 =  1466$
+* Down state: $V(T) = 73.3 \times 0 =  0$
 
-**Expected value**: $E(V) = 0.5 \times 1466 + 0.5 \times 0 = $ &#36;$733$
+**Expected value**: $E(V) = 0.5 \times 1466 + 0.5 \times 0 =  733$
 
-**Risk (std dev)**: &#36;$733$
+**Risk (std dev)**: $733$
 
 ### Comparison
 
 | Strategy | Up State | Down State | Expected | Risk |
 |----------|----------|------------|----------|------|
-| Stock | &#36;1200 | &#36;800 | &#36;1000 | &#36;200 |
-| Options | &#36;1466 | &#36;0 | &#36;733 | &#36;733 |
+| Stock | 1200 | 800 | 1000 | 200 |
+| Options | 1466 | 0 | 733 | 733 |
 
-**Observation**: Options provide **leverage**—higher potential upside (&#36;1466 vs &#36;1200) but also higher risk (can lose everything). The expected return is actually **negative** due to the premium you pay.
+**Observation**: Options provide **leverage**—higher potential upside (1466 vs 1200) but also higher risk (can lose everything). The expected return is actually **negative** due to the premium you pay.
 
 > Purchasing options is **riskier and more speculative** than buying the stock directly. 
 
@@ -1118,11 +1118,11 @@ $$
 ### Strategy: Covered Call
 
 **At $t=0$**:
-1. **Own** 1 share of stock (worth &#36;100)
-2. **Sell** 1 call option (strike $X=100$) for premium $C(0) = $ &#36;$31.81$
+1. **Own** 1 share of stock (worth 100)
+2. **Sell** 1 call option (strike $X=100$) for premium $C(0) =  31.81$
 3. **Invest** the premium at 10% risk-free rate
 
-The &#36;31.81 premium grows to $31.81 \times 1.10 = $ &#36;$35$ by time $T$.
+The 31.81 premium grows to $31.81 \times 1.10 =  35$ by time $T$.
 
 ### Payoff at $T$
 
@@ -1135,16 +1135,16 @@ $$
 where $C(T) = \max(S(T) - 100, 0)$ is the call payoff **you owe** (since you sold it).
 
 **Up state** ($S(T) = 160$):
-- Stock value: &#36;160
-- Call obligation: $-(160-100) = -$ &#36;$60$
-- Premium growth: &#36;35
-- **Total**: $160 - 60 + 35 = $ &#36;$135$
+- Stock value: 160
+- Call obligation: $-(160-100) = - 60$
+- Premium growth: 35
+- **Total**: $160 - 60 + 35 =  135$
 
 **Down state** ($S(T) = 40$):
-- Stock value: &#36;40
-- Call obligation: &#36;0 (option expires worthless)
-- Premium growth: &#36;35
-- **Total**: $40 - 0 + 35 = $ &#36;$75$
+- Stock value: 40
+- Call obligation: 0 (option expires worthless)
+- Premium growth: 35
+- **Total**: $40 - 0 + 35 =  75$
 
 </section>
 
@@ -1158,24 +1158,24 @@ Let's compare the risk profiles:
 
 Payoffs: $S(T) \in \{40, 160\}$
 
-**Range**: &#36;40 to &#36;160  
-**Risk (spread)**: $160 - 40 = $ &#36;$120$  
-**Expected value**: $E(V) = 0.5 \times 160 + 0.5 \times 40 = $ &#36;$100$
+**Range**: 40 to 160  
+**Risk (spread)**: $160 - 40 =  120$  
+**Expected value**: $E(V) = 0.5 \times 160 + 0.5 \times 40 =  100$
 
 ### Covered Call Strategy
 
 Payoffs: $V(T) \in \{75, 135\}$
 
-**Range**: &#36;75 to &#36;135  
-**Risk (spread)**: $135 - 75 = $ &#36;$60$  
-**Expected value**: $E(V) = 0.5 \times 135 + 0.5 \times 75 = $ &#36;$105$
+**Range**: 75 to 135  
+**Risk (spread)**: $135 - 75 =  60$  
+**Expected value**: $E(V) = 0.5 \times 135 + 0.5 \times 75 =  105$
 
 ### Key Insights
 
-1. **Risk reduced by 50%**: The spread decreased from &#36;120 to &#36;60
-2. **Downside protection**: Worst case improved from &#36;40 to &#36;75 (the premium provides a cushion)
-3. **Capped upside**: You give up gains above &#36;135 (trade-off for receiving premium)
-4. **Expected value increased**: From &#36;100 to &#36;105 (you collect premium income)
+1. **Risk reduced by 50%**: The spread decreased from 120 to 60
+2. **Downside protection**: Worst case improved from 40 to 75 (the premium provides a cushion)
+3. **Capped upside**: You give up gains above 135 (trade-off for receiving premium)
+4. **Expected value increased**: From 100 to 105 (you collect premium income)
 
 **Interpretation**: By selling the call, you:
 - Give up unlimited upside potential

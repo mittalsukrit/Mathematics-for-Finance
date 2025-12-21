@@ -112,22 +112,14 @@ This is deliberately simplistic. Real markets trade continuously, but the two-pe
 * Current price $A(0)$ is known (typically normalized to $1$ or $100$)
 * Future price $A(T)$ is **known with certainty** via the risk-free rate $r$
 
-$$A(T) = A(0)(1 + r)$$
-
 **Example**: A bond with $A(0) = 100$ and annual interest rate $r = 5\%$ will be worth exactly $A(T) = 105$ in one year.
 
 ### Returns
-
-The **return** on an asset measures the percentage gain or loss:
 
 $$
 K_S = \frac{S(T) - S(0)}{S(0)}, \qquad
 K_A = \frac{A(T) - A(0)}{A(0)} = r
 $$
-
-**Why returns matter**: They normalize profits for comparison across different initial investments. A 10 profit on a 100 investment (10% return) is better than a 10 profit on a 1000 investment (1% return).
-
-**Note**: The risk-free return $K_A = r$ is deterministic, while the risky return $K_S$ is a random variable.
 
 </section>
 
@@ -162,9 +154,9 @@ $$
 V(T) - V(0) = x\big(S(T) - S(0)\big) + y\big(A(T) - A(0)\big)
 $$
 
-This has a clear interpretation:
-* $x\big(S(T) - S(0)\big)$ = profit/loss from your stock holdings
-* $y\big(A(T) - A(0)\big)$ = profit/loss from your bond holdings
+</section>
+
+<section class="slide" markdown="1">
 
 ### Portfolio Return
 
@@ -202,6 +194,10 @@ There are no bounds on $x$ and $y$. Assets can be bought or sold in arbitrary qu
 
 **Rationale**: This is the "price taker" assumption. In reality, large orders move prices (market impact), but for sufficiently liquid markets and moderate position sizes, this effect is negligible.
 
+</section>
+
+<section class="slide" markdown="1">
+
 ### Solvency
 
 Investors can always meet their obligations. No bankruptcy or counterparty risk.
@@ -211,6 +207,10 @@ Investors can always meet their obligations. No bankruptcy or counterparty risk.
 No fees, taxes, or bid-ask spreads. Every trade executes at the quoted price.
 
 **Reality check**: These last two assumptions are clearly false but simplify the analysis. More realistic models incorporate these frictions.
+
+</section>
+
+<section class="slide" markdown="1">
 
 ### Long and Short Positions
 
@@ -243,6 +243,10 @@ Steps:
 * If the price **rises** ($S(T) > S(0)$): you lose $S(T) - S(0)$ per share
 
 **Example**: Short 100 shares at $50$. If the price drops to $40$, you profit $10 \times 100 =  1000$. If it rises to $60$, you lose $10 \times 100 =  1000$.
+
+</section>
+
+<section class="slide" markdown="1">
 
 ### Risks of Short Selling
 
@@ -288,6 +292,10 @@ Key features:
 * **No risk** (prices are locked in)
 * **No capital committed** (borrow to buy, repay from sale proceeds)
 
+</section>
+
+<section class="slide" markdown="1">
+
 ### Why This Is "Free Money"
 
 If such an opportunity existed and was known, rational investors would:
@@ -323,6 +331,10 @@ We assume that markets **do not allow arbitrage opportunities**.
 * **Rare events**: During market crashes or flash crashes, temporary arbitrage can appear
 
 But these are exceptions. For liquid, developed markets, the no-arbitrage assumption is excellent.
+
+</section>
+
+<section class="slide" markdown="1">
 
 ### Mathematical Statement
 
@@ -369,14 +381,6 @@ Despite its simplicity, this model:
 * Can be extended to multi-period binomial trees (next lectures)
 * Converges to continuous-time models (Black-Scholes) as we add more periods
 
-### Notation
-
-* $S_u(T)$ = stock price in the "up" state (subscript $u$ for "up")
-* $S_d(T)$ = stock price in the "down" state (subscript $d$ for "down")
-* $p$ = probability of the up state (often called the "physical" or "real-world" probability)
-
-The risk-free asset grows deterministically: $A(T) = A(0)(1+r)$ in both states.
-
 </section>
 
 <section class="slide" markdown="1">
@@ -386,12 +390,7 @@ The risk-free asset grows deterministically: $A(T) = A(0)(1+r)$ in both states.
 Suppose:
 
 * $S(0) = 100$
-* $S(T) = 125$ with probability $p$
-* $S(T) = 105$ with probability $1-p$
-* $A(0) = 100$, $A(T) = 110$
-
-Then:
-
+* $A(0) = 100$
 * **Stock return**: 
 
 $$
@@ -475,6 +474,10 @@ At $t=0$:
 
 Portfolio: $x=1$, $y = -\frac{S(0)}{A(0)}$
 
+</section>
+
+<section class="slide" markdown="1">
+
 ### Payoff at Time $T$
 
 $$
@@ -523,6 +526,10 @@ At $t=0$:
 
 Portfolio: $x=-1$, $y = \frac{S(0)}{A(0)}$
 
+</section>
+
+<section class="slide" markdown="1">
+
 ### Payoff at Time $T$
 
 You must buy back the stock to return it. Your portfolio is worth:
@@ -553,10 +560,6 @@ Portfolio: Short 1 share, invest 100.
 
 Payoff: $V(T) = -S(T) + 110 \in \{-105+110, -95+110\} = \{5, 15\}$ (always positive!).
 
-### Conclusion
-
-The no-arbitrage condition $K_d < r < K_u$ is both **necessary** (just proved) and **sufficient** (can be shown) for the absence of arbitrage in the binomial model. 
-
 </section>
 
 <section class="slide" markdown="1">
@@ -580,6 +583,10 @@ $$
 $$
 K_S = \begin{cases} \frac{100-80}{80} = 25\% & \text{with probability } 0.8 \\ \frac{60-80}{80} = -25\% & \text{with probability } 0.2 \end{cases}
 $$
+
+</section>
+
+<section class="slide" markdown="1">
 
 ### Portfolio Construction
 
@@ -647,6 +654,10 @@ $$
 \sigma_V = \sqrt{0.0064} = 0.08 = 8\%
 $$
 
+</section>
+
+<section class="slide" markdown="1">
+
 ### Comparison with Pure Strategies
 
 * **All bonds**: 
@@ -688,6 +699,10 @@ S(T) =
             60 & \text{with probability } 0.2
         \end{cases}
 $$
+
+</section>
+
+<section class="slide" markdown="1">
 
 ### Solution Sketch
 
@@ -736,6 +751,10 @@ A **forward contract** is an agreement to buy or sell a risky asset at a specifi
   - Profits if $S(T) < F$ (sold high)
   - Loses if $S(T) > F$ (sold too cheap)
 
+</section>
+
+<section class="slide" markdown="1">
+
 ### Payoff at Maturity
 
 * **Long forward payoff**: $S(T) - F$
@@ -754,6 +773,10 @@ F = S(0) \cdot \frac{A(T)}{A(0)} = S(0) \cdot (1+r)
 $$
 
 **Intuition**: The forward price is the current stock price "grown" at the risk-free rate.
+
+</section>
+
+<section class="slide" markdown="1">
 
 ### Derivation
 
@@ -791,6 +814,10 @@ You **choose** whether to exercise:
 
 If exercising would lose money, simply walk away—that's the power of an option.
 
+</section>
+
+<section class="slide" markdown="1">
+
 ### Payoff at Maturity
 
 * **Call option payoff**: 
@@ -810,6 +837,10 @@ Options have **asymmetric payoffs**:
 * Downside: limited to zero (you just don't exercise)
 
 This asymmetry has **value**, so you must pay a **premium** $C(0)$ or $P(0)$ to acquire the option.
+
+</section>
+
+<section class="slide" markdown="1">
 
 ### Example
 
@@ -844,7 +875,11 @@ $$V(t) = xS(t) + yA(t) + zC(t)$$
 
 To price the option, we find $C(0)$ such that a replicating portfolio exists.
 
-### Concrete Example
+</section>
+
+<section class="slide" markdown="1">
+
+### Example
 
 $$
 S(0) = 100, \quad S(T) = \begin{cases} 120 & \text{with probability } p \\ 80 & \text{with probability } 1-p \end{cases}
@@ -893,6 +928,10 @@ $$
 \frac{1}{2} \cdot 80 + y \cdot 110 = 0 \implies 40 + 110y = 0 \implies y = -\frac{40}{110} = -\frac{4}{11}
 $$
 
+</section>
+
+<section class="slide" markdown="1">
+
 ### Interpretation
 
 The replicating portfolio is:
@@ -938,6 +977,10 @@ Foreign exchange (FX) markets enable trading between currencies. They are among 
    - Grows at foreign rate: $A_f(T) = A_f(0)(1 + r_f)$
    - Value in domestic currency: $A_f(t) \cdot X(t)$
 
+</section>
+
+<section class="slide" markdown="1">
+
 ### Portfolio Representation
 
 $$
@@ -982,6 +1025,10 @@ The ratio $\frac{1+r_d}{1+r_f}$ is the **relative interest rate factor**.
 
 This is the foundation of **covered interest rate parity**, one of the most fundamental relationships in international finance.
 
+</section>
+
+<section class="slide" markdown="1">
+
 ### Intuition
 
 If this condition is violated:
@@ -1013,6 +1060,10 @@ $$
 - Indian rate: $r_d = 7\%$
 - US rate: $r_f = 3\%$
 - Forward: $F = 80 \times \frac{1.07}{1.03} = 80 \times 1.0388 \approx 83.11$ INR/USD
+
+</section>
+
+<section class="slide" markdown="1">
 
 ### Currency Call Option
 
@@ -1077,6 +1128,10 @@ Buy 10 shares for 1000.
 
 **Risk (std dev)**: $200$
 
+</section>
+
+<section class="slide" markdown="1">
+
 ### Strategy B: Buy Call Options
 
 Assume call options (strike $X=100$) cost $C(0) =  13.64$ each.
@@ -1090,6 +1145,10 @@ Buy $\frac{1000}{13.64} \approx 73.3$ options.
 **Expected value**: $E(V) = 0.5 \times 1466 + 0.5 \times 0 =  733$
 
 **Risk (std dev)**: $733$
+
+</section>
+
+<section class="slide" markdown="1">
 
 ### Comparison
 
@@ -1123,6 +1182,10 @@ $$
 3. **Invest** the premium at 10% risk-free rate
 
 The 31.81 premium grows to $31.81 \times 1.10 =  35$ by time $T$.
+
+</section>
+
+<section class="slide" markdown="1">
 
 ### Payoff at $T$
 
@@ -1170,6 +1233,10 @@ Payoffs: $V(T) \in \{75, 135\}$
 **Risk (spread)**: $135 - 75 =  60$  
 **Expected value**: $E(V) = 0.5 \times 135 + 0.5 \times 75 =  105$
 
+</section>
+
+<section class="slide" markdown="1">
+
 ### Key Insights
 
 1. **Risk reduced by 50%**: The spread decreased from 120 to 60
@@ -1214,16 +1281,6 @@ Even the simplest market model—two periods, two assets, two states—reveals p
 * Options provide asymmetric payoffs (limited downside, unlimited upside)
 * Options have value due to this asymmetry
 * Strategies combining options and stocks can either increase or decrease risk
-
-### Looking Ahead
-
-This framework generalizes to:
-* **Multi-period binomial trees**: Allowing trading at intermediate times
-* **Multiple risky assets**: Portfolio theory and diversification
-* **Continuous time**: Black-Scholes model and stochastic calculus
-* **Complete markets**: Every payoff can be replicated
-
-The two-period binomial model is the foundation upon which all of mathematical finance is built. Master it well!
 
 </section>
 

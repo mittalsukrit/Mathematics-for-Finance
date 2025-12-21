@@ -86,7 +86,6 @@ It is a **mission-critical distributed computing system**.
 - Every trade, card swipe, or UPI transaction is executed by code.
 - Latency, correctness, and robustness matter as much as capital.
 
-**Example:** High-frequency trading firms compete on microsecond latencies. A trading algorithm must be both mathematically sound and computationally efficient. The difference between a 100-microsecond and 200-microsecond execution can mean millions in profits or losses.
 
 ### Algorithms Rule the Battlefield
 
@@ -188,10 +187,7 @@ Purpose:
 
 Determining **what an asset is worth right now**.
 
-Markets aggregate:
-- **Information:** Earnings reports, economic data, news events
-- **Expectations:** What people believe will happen in the future
-- **Sentiment:** Fear, greed, optimism, panic
+Markets aggregate: **Information**, **Expectations**, **Sentiment**. 
 
 Prices act as **signals**, guiding decisions and allocating resources efficiently.
 

@@ -34,7 +34,7 @@ Franklin Templeton Investments
 
 <section class="slide" markdown="1">
 
-## 1. Course Introduction
+## Course Introduction
 
 This course introduces the **mathematical foundations of modern financial systems**.  
 The emphasis is not on rules or recipes, but on **structure, abstraction, and rigor**.
@@ -80,14 +80,22 @@ It exists because:
 Finance is no longer a separate industry.  
 It is a **mission-critical distributed computing system**.
 
-### Finance Runs on Code
+### 1. Finance Runs on Code
 
 - Banks, hedge funds, payment systems, and exchanges are software-driven.
 - Every trade, card swipe, or UPI transaction is executed by code.
 - Latency, correctness, and robustness matter as much as capital.
 
+</section>
 
-### Algorithms Rule the Battlefield
+<section class="slide" markdown="1">
+
+## Why Should You Care About Financial Systems?
+
+Finance is no longer a separate industry.  
+It is a **mission-critical distributed computing system**.
+
+### 2. Algorithms Rule the Battlefield
 
 - **High-frequency trading:** Algorithms execute thousands of trades per second, exploiting tiny price discrepancies.
 - **Fraud detection:** Machine learning models analyze transaction patterns in real-time to flag suspicious activity.
@@ -121,7 +129,7 @@ Current reality:
 
 <section class="slide" markdown="1">
 
-## 2. What Is a Financial System?
+## What Is a Financial System?
 
 A **financial system** exists to coordinate economic activity across **time and uncertainty**.
 
@@ -138,7 +146,7 @@ The financial system provides mechanisms to solve all three.
 
 <section class="slide" markdown="1">
 
-### 1. Allocation of Capital
+### Capital Allocation Problem
 
 Deciding **where money should go**.
 
@@ -158,7 +166,7 @@ This happens through:
 
 <section class="slide" markdown="1">
 
-### 2. Risk Transfer
+### Risk Transfer Problem
 
 Shifting risk from one party to another using financial instruments.
 
@@ -183,7 +191,7 @@ Purpose:
 
 <section class="slide" markdown="1">
 
-### 3. Price Discovery
+### Price Discovery Problem
 
 Determining **what an asset is worth right now**.
 
@@ -227,7 +235,7 @@ Just as a faulty OS crashes applications, a faulty financial system crashes econ
 
 <section class="slide" markdown="1">
 
-## 3. Key Components of Financial Systems
+## Key Components of Financial Systems
 
 </section>
 
@@ -466,7 +474,7 @@ US equivalent: Federal Reserve (The Fed).
 
 <section class="slide" markdown="1">
 
-## 4. Takeaways
+## Takeaways
 
 **Financial instruments:**
 - **Equity** = ownership (high risk, high potential return)

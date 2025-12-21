@@ -350,8 +350,6 @@ Types:
 
 **Example:** A Nifty 50 futures contract allows you to bet on (or hedge against) the movement of India's benchmark stock index without buying all 50 stocks.
 
-**Coming up in this course:** We'll study option pricing (Black-Scholes model), futures valuation, and risk management with derivatives.
-
 </section>
 
 <section class="slide" markdown="1">

@@ -104,7 +104,7 @@ This is deliberately simplistic. Real markets trade continuously, but the two-pe
 * Current price $S(0)$ is known (observable in the market)
 * Future price $S(T)$ is **uncertain** (depends on future states of the world)
 
-**Example**: A share of Apple stock costs $S(0) = $&#36;$175$ today, but its price in one year could be anywhere from &#36;$150$ to &#36;$200$ depending on earnings, economic conditions, etc.
+**Example**: A share of Apple stock costs $S(0) = $ &#36;$175$ today, but its price in one year could be anywhere from &#36;$150$ to &#36;$200$ depending on earnings, economic conditions, etc.
 
 ### Risk-Free Asset (Bond)
 
@@ -114,7 +114,7 @@ This is deliberately simplistic. Real markets trade continuously, but the two-pe
 
 $$A(T) = A(0)(1 + r)$$
 
-**Example**: A bond with $A(0) =$&#36;$100$ and annual interest rate $r = 5\%$ will be worth exactly $A(T) =$&#36;$105$ in one year.
+**Example**: A bond with $A(0) =$ &#36;$100$ and annual interest rate $r = 5\%$ will be worth exactly $A(T) =$ &#36;$105$ in one year.
 
 ### Returns
 
@@ -242,7 +242,7 @@ Steps:
 * If the price **falls** ($S(T) < S(0)$): you profit by $S(0) - S(T)$ per share
 * If the price **rises** ($S(T) > S(0)$): you lose $S(T) - S(0)$ per share
 
-**Example**: Short 100 shares at &#36;$50$. If the price drops to &#36;$40$, you profit &#36;$10 \times 100 = $&#36;$1000$. If it rises to &#36;$60$, you lose &#36;$10 \times 100 = $&#36;$1000$.
+**Example**: Short 100 shares at &#36;$50$. If the price drops to &#36;$40$, you profit &#36;$10 \times 100 = $ &#36;$1000$. If it rises to &#36;$60$, you lose &#36;$10 \times 100 = $ &#36;$1000$.
 
 ### Risks of Short Selling
 
@@ -813,11 +813,11 @@ This asymmetry has **value**, so you must pay a **premium** $C(0)$ or $P(0)$ to 
 
 ### Example
 
-Stock at $S(0) = $&#36;$100$. Buy a call option with strike $X = $&#36;$100$ for premium $C(0) = $&#36;$10$.
+Stock at $S(0) = $ &#36;$100$. Buy a call option with strike $X = $ &#36;$100$ for premium $C(0) = $ &#36;$10$.
 
 At maturity:
-- If $S(T) = $&#36;$120$: Exercise, profit = &#36;$120 - $&#36;$100 - $&#36;$10 = $&#36;$10$
-- If $S(T) = $&#36;$80$: Don't exercise, loss = $-$&#36;$10$ (just the premium)
+- If $S(T) = $ &#36;$120$: Exercise, profit = &#36;$120 - $ &#36;$100 - $ &#36;$10 = $ &#36;$10$
+- If $S(T) = $ &#36;$80$: Don't exercise, loss = $-$ &#36;$10$ (just the premium)
 
 **Maximum loss**: &#36;10. **Maximum gain**: unlimited!
 
@@ -896,13 +896,13 @@ $$
 ### Interpretation
 
 The replicating portfolio is:
-- **Buy** $1/2$ share of stock (costs $\frac{1}{2} \times 100 = $&#36;$50$)
-- **Short** $4/11$ bonds (borrow $\frac{4}{11} \times 100 = $&#36;$36.36$)
+- **Buy** $1/2$ share of stock (costs $\frac{1}{2} \times 100 = $ &#36;$50$)
+- **Short** $4/11$ bonds (borrow $\frac{4}{11} \times 100 = $ &#36;$36.36$)
 
 **Net cost today**:
 
 $$
-C(0) = \frac{1}{2} \times 100 - \frac{4}{11} \times 100 = 50 - 36.36 = $&#36;$13.64
+C(0) = \frac{1}{2} \times 100 - \frac{4}{11} \times 100 = 50 - 36.36 = $ &#36;$13.64
 $$
 
 ### Verification
@@ -911,7 +911,7 @@ Up state: $V(T) = \frac{1}{2} \times 120 - \frac{4}{11} \times 110 = 60 - 40 = 2
 
 Down state: $V(T) = \frac{1}{2} \times 80 - \frac{4}{11} \times 110 = 40 - 40 = 0$ ✓
 
-The portfolio perfectly replicates the option payoff, so by no-arbitrage: **$C(0) = $&#36;$13.64$**.
+The portfolio perfectly replicates the option payoff, so by no-arbitrage: **$C(0) = $ &#36;$13.64$**.
 
 </section>
 
@@ -1070,24 +1070,24 @@ $$
 Buy 10 shares for &#36;1000.
 
 **Payoff**: 
-* Up state: $V(T) = 10 \times 120 = $&#36;$1200$ (20% gain)
-* Down state: $V(T) = 10 \times 80 = $&#36;$800$ (20% loss)
+* Up state: $V(T) = 10 \times 120 = $ &#36;$1200$ (20% gain)
+* Down state: $V(T) = 10 \times 80 = $ &#36;$800$ (20% loss)
 
-**Expected value**: $E(V) = 0.5 \times 1200 + 0.5 \times 800 = $&#36;$1000$ (0% expected return—fair bet)
+**Expected value**: $E(V) = 0.5 \times 1200 + 0.5 \times 800 = $ &#36;$1000$ (0% expected return—fair bet)
 
 **Risk (std dev)**: &#36;$200$
 
 ### Strategy B: Buy Call Options
 
-Assume call options (strike $X=100$) cost $C(0) = $&#36;$13.64$ each.
+Assume call options (strike $X=100$) cost $C(0) = $ &#36;$13.64$ each.
 
 Buy $\frac{1000}{13.64} \approx 73.3$ options.
 
 **Payoff**:
-* Up state: $V(T) = 73.3 \times (120-100) = 73.3 \times 20 = $&#36;$1466$
-* Down state: $V(T) = 73.3 \times 0 = $&#36;$0$
+* Up state: $V(T) = 73.3 \times (120-100) = 73.3 \times 20 = $ &#36;$1466$
+* Down state: $V(T) = 73.3 \times 0 = $ &#36;$0$
 
-**Expected value**: $E(V) = 0.5 \times 1466 + 0.5 \times 0 = $&#36;$733$
+**Expected value**: $E(V) = 0.5 \times 1466 + 0.5 \times 0 = $ &#36;$733$
 
 **Risk (std dev)**: &#36;$733$
 
@@ -1119,10 +1119,10 @@ $$
 
 **At $t=0$**:
 1. **Own** 1 share of stock (worth &#36;100)
-2. **Sell** 1 call option (strike $X=100$) for premium $C(0) = $&#36;$31.81$
+2. **Sell** 1 call option (strike $X=100$) for premium $C(0) = $ &#36;$31.81$
 3. **Invest** the premium at 10% risk-free rate
 
-The &#36;31.81 premium grows to $31.81 \times 1.10 = $&#36;$35$ by time $T$.
+The &#36;31.81 premium grows to $31.81 \times 1.10 = $ &#36;$35$ by time $T$.
 
 ### Payoff at $T$
 
@@ -1136,15 +1136,15 @@ where $C(T) = \max(S(T) - 100, 0)$ is the call payoff **you owe** (since you sol
 
 **Up state** ($S(T) = 160$):
 - Stock value: &#36;160
-- Call obligation: $-(160-100) = -$&#36;$60$
+- Call obligation: $-(160-100) = -$ &#36;$60$
 - Premium growth: &#36;35
-- **Total**: $160 - 60 + 35 = $&#36;$135$
+- **Total**: $160 - 60 + 35 = $ &#36;$135$
 
 **Down state** ($S(T) = 40$):
 - Stock value: &#36;40
 - Call obligation: &#36;0 (option expires worthless)
 - Premium growth: &#36;35
-- **Total**: $40 - 0 + 35 = $&#36;$75$
+- **Total**: $40 - 0 + 35 = $ &#36;$75$
 
 </section>
 
@@ -1159,16 +1159,16 @@ Let's compare the risk profiles:
 Payoffs: $S(T) \in \{40, 160\}$
 
 **Range**: &#36;40 to &#36;160  
-**Risk (spread)**: $160 - 40 = $&#36;$120$  
-**Expected value**: $E(V) = 0.5 \times 160 + 0.5 \times 40 = $&#36;$100$
+**Risk (spread)**: $160 - 40 = $ &#36;$120$  
+**Expected value**: $E(V) = 0.5 \times 160 + 0.5 \times 40 = $ &#36;$100$
 
 ### Covered Call Strategy
 
 Payoffs: $V(T) \in \{75, 135\}$
 
 **Range**: &#36;75 to &#36;135  
-**Risk (spread)**: $135 - 75 = $&#36;$60$  
-**Expected value**: $E(V) = 0.5 \times 135 + 0.5 \times 75 = $&#36;$105$
+**Risk (spread)**: $135 - 75 = $ &#36;$60$  
+**Expected value**: $E(V) = 0.5 \times 135 + 0.5 \times 75 = $ &#36;$105$
 
 ### Key Insights
 

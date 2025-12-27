@@ -28,42 +28,42 @@ This course introduces the **mathematical foundations of modern financial system
 ## Lecture Notes
 
 ### Part I: Foundations
-1. **[Overview of Financial Systems](lectures/01-financial-systems.html)**  
+1. **[Overview of Financial Systems](lectures/01-financial-systems.md)**  
    *Introduction to mathematical finance and the structure of financial systems*
 
-2. **[Simple Market Model](lectures/02-simple-market-model.html)**  
+2. **[Simple Market Model](lectures/02-simple-market-model.md)**  
    *Basic modeling frameworks for financial markets*
 
-3. **[Time Value of Money](lectures/03-time-value-of-money.html)**  
+3. **[Time Value of Money](lectures/03-time-value-of-money.md)**  
    *Present and future value concepts, discounting, and time-based calculations*
 
-4. **[Money Market](lectures/04-money-market.html)**  
+4. **[Money Market](lectures/04-money-market.md)**  
    *Money market instruments, mechanics, and short-term interest rates*
 
 ### Part II: Portfolio Theory
-5. **[Introduction to Portfolios](lectures/05-introduction-to-portfolios.html)**  
+5. **[Introduction to Portfolios](lectures/05-introduction-to-portfolios.md)**  
    *Portfolio theory fundamentals and basic optimization*
 
-6. **[Risk-free Assets](lectures/06-risk-free-and-lagrange.html)**  
+6. **[Risk-free Assets](lectures/06-risk-free-and-lagrange.md)**  
    *Risk-free assets and Lagrange multipliers in portfolio optimization*
 
-7. **[Multi-asset Portfolios](lectures/07-multi-asset-portfolios.html)**  
+7. **[Multi-asset Portfolios](lectures/07-multi-asset-portfolios.md)**  
    *Portfolio optimization with multiple assets and constraints*
 
-8. **[CAPM Model](lectures/08-capm.html)**  
+8. **[CAPM Model](lectures/08-capm.md)**  
    *Capital Asset Pricing Model, systematic vs. idiosyncratic risk*
 
 ### Part III: Advanced Topics
-9. **[Utility Functions](lectures/09-utility-functions.html)**  
+9. **[Utility Functions](lectures/09-utility-functions.md)**  
    *Risk preferences, expected utility theory, and decision-making under uncertainty*
 
-10. **[Black-Scholes Model](lectures/10-Black-Scholes.html)**  
+10. **[Black-Scholes Model](lectures/10-Black-Scholes.md)**  
     *Options pricing, stochastic calculus, and the Black-Scholes equation*
 
-11. **[Value at Risk](lectures/11-VaR.html)**  
+11. **[Value at Risk](lectures/11-VaR.md)**  
     *Risk measurement methodology and VaR calculation techniques*
 
-12. **[Coherence](lectures/12-coherence.html)**  
+12. **[Coherence](lectures/12-coherence.md)**  
     *Coherent risk measures and their axiomatic foundations*
 
 ---

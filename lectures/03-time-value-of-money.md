@@ -71,15 +71,15 @@ The answer: **discount** future cash flows to their present value, or **compound
 
 Consider two offers:
 
-* Receive $100 today
-* Receive $110 one year from now
+* Receive 100 today
+* Receive 110 one year from now
 
 Which is better?
 
 **Answer:** It depends on the interest rate.
 
-* If you can invest at 12% annually: $100 today grows to $112 next year → take $100 today
-* If you can only invest at 8%: $100 today grows to $108 next year → take $110 next year
+* If you can invest at 12% annually: 100 today grows to 112 next year → take 100 today
+* If you can only invest at 8%: 100 today grows to 108 next year → take 110 next year
 
 The interest rate is the **bridge** between present and future values.
 
@@ -120,7 +120,7 @@ where:
 
 ## Simple Interest: Example
 
-You invest $1,000 at 8% simple interest per year.
+You invest 1,000 at 8% simple interest per year.
 
 **How much will you have after 3 years?**
 
@@ -136,8 +136,8 @@ $$A(t) = 1{,}000 + 80t$$
 
 ### Practice Questions
 
-1. If you invest $5,000 at 6% simple interest for 18 months, what is the final amount?
-2. How long does it take for $2,000 to grow to $2,500 at 5% simple interest?
+1. If you invest 5,000 at 6% simple interest for 18 months, what is the final amount?
+2. How long does it take for 2,000 to grow to 2,500 at 5% simple interest?
 
 *Hint for Q2: Solve $2000(1 + 0.05t) = 2500$ for $t$.*
 
@@ -166,7 +166,6 @@ This leads us to **compound interest**.
 
 ## The Power of Compounding
 
-### Einstein's Alleged Quote
 *"Compound interest is the eighth wonder of the world. He who understands it, earns it; he who doesn't, pays it."*
 
 ### Illustration: The Rule of 72
@@ -282,7 +281,7 @@ $$A = 1{,}000\left(1 + \frac{0.08}{4}\right)^{12} = 1{,}000(1.02)^{12} = \$1{,}2
 
 $$A = 1{,}000\left(1 + \frac{0.08}{12}\right)^{36} = \$1{,}270.24$$
 
-**Notice:** The difference between monthly and quarterly is $2.00, much smaller than the $8.53 difference between quarterly and annual. This diminishing return pattern continues as $n$ increases.
+**Notice:** The difference between monthly and quarterly is 2.00, much smaller than the 8.53 difference between quarterly and annual. This diminishing return pattern continues as $n$ increases.
 
 $$A = 1{,}000\left(1 + \frac{0.08}{12}\right)^{36} = \$1{,}270.24$$
 
@@ -534,7 +533,7 @@ $$PV = \sum_{k=1}^{n} \frac{C_k}{(1+r)^{t_k}}$$
 
 ### Example
 
-Cash flows: $100 at $t=1$, $200 at $t=2$, $150 at $t=3$. Rate: 5% (annual compounding).
+Cash flows: 100 at $t=1$, 200 at $t=2$, 150 at $t=3$. Rate: 5% (annual compounding).
 
 $$PV = \frac{100}{1.05} + \frac{200}{(1.05)^2} + \frac{150}{(1.05)^3}$$
 
@@ -681,7 +680,7 @@ $$PV = \frac{50}{0.05} = \$1{,}000$$
 
 ### Intuition
 
-At 5%, a $1,000 investment yields $50 annually forever—exactly matching the perpetuity's cash flows.
+At 5%, a $1,000 investment yields 50 annually forever—exactly matching the perpetuity's cash flows.
 
 </section>
 
@@ -727,8 +726,8 @@ $$\text{Bond Price} = PV(\text{coupons}) + PV(\text{face value})$$
 
 **Example:** A 3-year bond with $1,000 face value pays 6% annual coupons. Market rate is 5%.
 
-Coupons: $60 per year (ordinary annuity)  
-Face value: $1,000 at $t=3$
+Coupons: 60 per year (ordinary annuity)  
+Face value: 1,000 at $t=3$
 
 $$\text{Price} = 60 \cdot \frac{1-(1.05)^{-3}}{0.05} + \frac{1{,}000}{(1.05)^3}$$
 
@@ -794,7 +793,7 @@ where $C_0$ is the initial investment and $C_t$ are future cash flows.
 
 ### Example
 
-A project requires $10,000 investment today and generates $3,000, $4,000, $5,000 over the next 3 years. Discount rate is 8%.
+A project requires $10,000 investment today and generates 3,000, 4,000, 5,000 over the next 3 years. Discount rate is 8%.
 
 $$NPV = -10{,}000 + \frac{3{,}000}{1.08} + \frac{4{,}000}{(1.08)^2} + \frac{5{,}000}{(1.08)^3}$$
 
@@ -887,7 +886,7 @@ You win a lottery with two payout options:
 
 At what discount rate are you indifferent between the two options?
 
-*Hint: Set the PV of option B equal to $500,000 and solve for $r$.*
+*Hint: Set the PV of option B equal to 500,000 and solve for $r$.*
 
 </section>
 
@@ -968,15 +967,18 @@ Set up: $500{,}000 = 50{,}000 \cdot \frac{1-(1+r)^{-15}}{r}$
 Solve numerically: $r \approx 7.23\%$
 
 ### Problem 2 (Retirement Planning)
-(a) $PV = 2{,}000{,}000 / (1 + 0.07/12)^{360} \approx \$245{,}975$  
-(b) Solve: $2{,}000{,}000 = PMT \cdot \frac{(1+0.07/12)^{360}-1}{0.07/12}$, giving $PMT \approx \$1{,}633$
+(a) $PV = 2{,}000{,}000 / (1 + 0.07/12)^{360} \approx 245{,}975$  
+
+(b) Solve: $2{,}000{,}000 = PMT \cdot \frac{(1+0.07/12)^{360}-1}{0.07/12}$, giving $PMT \approx 1{,}633$
 
 ### Problem 3 (Rate Equivalence)
 $r_2 = 2(e^{0.06/2} - 1) = 2(e^{0.03} - 1) \approx 6.09\%$
 
 ### Problem 5 (Bond Pricing)
 At 6% yield: Bond price = $1,147.20 (premium)  
+
 At 10% yield: Bond price = $877.11 (discount)  
+
 When coupon rate > yield, bond trades at premium; when coupon rate < yield, bond trades at discount.
 
 </section>

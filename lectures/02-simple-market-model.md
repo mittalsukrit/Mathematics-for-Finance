@@ -104,7 +104,7 @@ This is deliberately simplistic. Real markets trade continuously, but the two-pe
 * Current price $S(0)$ is known (observable in the market)
 * Future price $S(T)$ is **uncertain** (depends on future states of the world)
 
-**Example**: A share of Apple stock costs $S(0) =  175$ today, but its price in one year could be anywhere from $150$ to $200$ depending on earnings, economic conditions, etc.
+**Example**: A share of Apple stock costs $S(0) = 175$ today, but its price in one year could be anywhere from $150$ to $200$ depending on earnings, economic conditions, etc.
 
 ### Risk-Free Asset (Bond)
 
@@ -242,7 +242,7 @@ Steps:
 * If the price **falls** ($S(T) < S(0)$): you profit by $S(0) - S(T)$ per share
 * If the price **rises** ($S(T) > S(0)$): you lose $S(T) - S(0)$ per share
 
-**Example**: Short 100 shares at $50$. If the price drops to $40$, you profit $10 \times 100 =  1000$. If it rises to $60$, you lose $10 \times 100 =  1000$.
+**Example**: Short 100 shares at $50$. If the price drops to $40$, you profit $10 \times 100 = 1000$. If it rises to $60$, you lose $10 \times 100 = 1000$.
 
 </section>
 
@@ -397,7 +397,7 @@ $$
 K_S(T)= \begin{cases} 25\% & \text{with probability } p \text{ (up state)}\\ 5\% & \text{with probability } 1-p \text{ (down state)}\end{cases}
 $$
 
-* **Risk-free return**: $K_A=10\%$ (deterministic, same in both states)
+* **Risk-free return**: $K_A = 10\%$ (deterministic, same in both states)
 
 ### Observations
 
@@ -460,7 +460,7 @@ The no-arbitrage condition is satisfied.
 
 ## Case-1: Arbitrage When Bond Return Is Too Low
 
-**Suppose** $\frac{A(T)}{A(0)} \leq \frac{S^d(T)}{S(0)}$ (equivalently, $r \leq K_d$).
+**Suppose** $\frac{A(T)}{A(0)} \leq \frac{S_d(T)}{S(0)}$ (equivalently, $r \leq K_d$).
 
 This means the stock beats the bond **even in the worst case**. That's too good to be true!
 
@@ -486,19 +486,19 @@ $$
 
 In the up state:
 $$
-V(T) = S^u(T) - \frac{S(0)}{A(0)}A(T) > 0 \quad \text{(strictly positive)}
+V(T) = S_u(T) - \frac{S(0)}{A(0)} A(T) > 0 \quad \text{(strictly positive)}
 $$
 
 In the down state:
 $$
-V(T) = S^d(T) - \frac{S(0)}{A(0)}A(T) \geq 0 \quad \text{(non-negative by assumption)}
+V(T) = S_d(T) - \frac{S(0)}{A(0)} A(T) \geq 0 \quad \text{(non-negative by assumption)}
 $$
 
 **Result**: We invested nothing, we never lose money, and we sometimes make money. This is arbitrage!
 
 ### Numerical Example
 
-Let $S(0) = 100$, $S^d(T) = 110$, $A(0) = 100$, $A(T) = 105$.
+Let $S(0) = 100$, $S_d(T) = 110$, $A(0) = 100$, $A(T) = 105$.
 
 Check: $\frac{110}{100} = 1.10 > \frac{105}{100} = 1.05$ (condition violated).
 
@@ -512,7 +512,7 @@ Payoff: $V(T) = S(T) - 105 \in \{110-105, 125-105\} = \{5, 20\}$ (always positiv
 
 ## Case-2: Arbitrage When Bond Return Is Too High
 
-**Suppose** $\frac{A(T)}{A(0)} \geq \frac{S^u(T)}{S(0)}$ (equivalently, $r \geq K_u$).
+**Suppose** $\frac{A(T)}{A(0)} \geq \frac{S_u(T)}{S(0)}$ (equivalently, $r \geq K_u$).
 
 This means the bond beats the stock **even in the best case**. Why would anyone hold the stock?
 
@@ -540,19 +540,19 @@ $$
 
 In the up state:
 $$
-V(T) = -S^u(T) + \frac{S(0)}{A(0)}A(T) \geq 0 \quad \text{(non-negative by assumption)}
+V(T) = -S_u(T) + \frac{S(0)}{A(0)} A(T) \geq 0 \quad \text{(non-negative by assumption)}
 $$
 
 In the down state:
 $$
-V(T) = -S^d(T) + \frac{S(0)}{A(0)}A(T) > 0 \quad \text{(strictly positive)}
+V(T) = -S_d(T) + \frac{S(0)}{A(0)} A(T) > 0 \quad \text{(strictly positive)}
 $$
 
 **Result**: Again, we have arbitrage!
 
 ### Numerical Example
 
-Let $S(0) = 100$, $S^u(T) = 105$, $A(0) = 100$, $A(T) = 110$.
+Let $S(0) = 100$, $S_u(T) = 105$, $A(0) = 100$, $A(T) = 110$.
 
 Check: $\frac{105}{100} = 1.05 < \frac{110}{100} = 1.10$ (condition violated).
 
@@ -665,8 +665,8 @@ $$
   - Risk: $\sigma_A = 0\%$
 
 * **All stocks**: 
-  - Expected return: $E(K_S)=25\% \times 0.8 + (-25\%) \times 0.2 = 20\% - 5\% = 15\%$
-  - Variance: $(25\%-15\%)^2 \times 0.8 + (-25\%-15\%)^2 \times 0.2 = 0.01 \times 0.8 + 0.16 \times 0.2 = 0.04$
+  - Expected return: $E(K_S) = 25\% \times 0.8 + (-25\%) \times 0.2 = 20\% - 5\% = 15\%$
+  - Variance: $(25\% - 15\%)^2 \times 0.8 + (-25\% - 15\%)^2 \times 0.2 = 0.01 \times 0.8 + 0.16 \times 0.2 = 0.04$
   - Risk: $\sigma_S = \sqrt{0.04} = 20\%$
 
 **Mixed portfolio (60-40)**: $E(K_V) = 12\%$, $\sigma_V = 8\%$
@@ -721,7 +721,7 @@ Down state: $V(T) = 3750 + 5500 = 9{,}250$ → Return = -7.5%
 
 **Expected return**: $E(K_V) = 0.8 \times 17.5\% + 0.2 \times (-7.5\%) = 14\% - 1.5\% = 12.5\%$
 
-**Variance**: $(17.5\%-12.5\%)^2 \times 0.8 + (-7.5\%-12.5\%)^2 \times 0.2 = 25 \times 0.8 + 400 \times 0.2 = 20 + 80 = 100$
+**Variance**: $(17.5\% - 12.5\%)^2 \times 0.8 + (-7.5\% - 12.5\%)^2 \times 0.2 = 25 \times 0.8 + 400 \times 0.2 = 20 + 80 = 100$
 
 **Risk**: $\sigma_V = \sqrt{100} = 10\%$
 
@@ -935,13 +935,13 @@ $$
 ### Interpretation
 
 The replicating portfolio is:
-- **Buy** $1/2$ share of stock (costs $\frac{1}{2} \times 100 =  50$)
-- **Short** $4/11$ bonds (borrow $\frac{4}{11} \times 100 =  36.36$)
+- **Buy** $1/2$ share of stock (costs $\frac{1}{2} \times 100 = 50$)
+- **Short** $4/11$ bonds (borrow $\frac{4}{11} \times 100 = 36.36$)
 
 **Net cost today**:
 
 $$
-C(0) = \frac{1}{2} \times 100 - \frac{4}{11} \times 100 = 50 - 36.36 =  13.64
+C(0) = \frac{1}{2} \times 100 - \frac{4}{11} \times 100 = 50 - 36.36 = 13.64
 $$
 
 ### Verification
@@ -950,7 +950,7 @@ Up state: $V(T) = \frac{1}{2} \times 120 - \frac{4}{11} \times 110 = 60 - 40 = 2
 
 Down state: $V(T) = \frac{1}{2} \times 80 - \frac{4}{11} \times 110 = 40 - 40 = 0$ ✓
 
-The portfolio perfectly replicates the option payoff, so by no-arbitrage: **$C(0) =  13.64$**.
+The portfolio perfectly replicates the option payoff, so by no-arbitrage: **$C(0) = 13.64$**.
 
 </section>
 
@@ -1111,20 +1111,21 @@ Let's explore some concrete strategies.
 
 ## Example 1: Speculative Use of Options
 
-**Scenario**: You have 1000 to invest. Stock trades at $S(0) = 100$:
+**Scenario**: You have $1000$ to invest. Stock trades at $S(0) = 100$:
+
 $$
 S(T) = \begin{cases} 120 & \text{with probability } 0.5 \\ 80 & \text{with probability } 0.5 \end{cases}
 $$
 
 ### Strategy A: Buy Stock Directly
 
-Buy 10 shares for 1000.
+Buy 10 shares for $1000$.
 
 **Payoff**: 
-* Up state: $V(T) = 10 \times 120 =  1200$ (20% gain)
-* Down state: $V(T) = 10 \times 80 =  800$ (20% loss)
+* Up state: $V(T) = 10 \times 120 = 1200$ (20% gain)
+* Down state: $V(T) = 10 \times 80 = 800$ (20% loss)
 
-**Expected value**: $E(V) = 0.5 \times 1200 + 0.5 \times 800 =  1000$ (0% expected return—fair bet)
+**Expected value**: $E(V) = 0.5 \times 1200 + 0.5 \times 800 = 1000$ (0% expected return—fair bet)
 
 **Risk (std dev)**: $200$
 
@@ -1134,15 +1135,15 @@ Buy 10 shares for 1000.
 
 ### Strategy B: Buy Call Options
 
-Assume call options (strike $X=100$) cost $C(0) =  13.64$ each.
+Assume call options (strike $X = 100$) cost $C(0) = 13.64$ each.
 
 Buy $\frac{1000}{13.64} \approx 73.3$ options.
 
 **Payoff**:
-* Up state: $V(T) = 73.3 \times (120-100) = 73.3 \times 20 =  1466$
-* Down state: $V(T) = 73.3 \times 0 =  0$
+* Up state: $V(T) = 73.3 \times (120 - 100) = 73.3 \times 20 = 1466$
+* Down state: $V(T) = 73.3 \times 0 = 0$
 
-**Expected value**: $E(V) = 0.5 \times 1466 + 0.5 \times 0 =  733$
+**Expected value**: $E(V) = 0.5 \times 1466 + 0.5 \times 0 = 733$
 
 **Risk (std dev)**: $733$
 
@@ -1154,8 +1155,8 @@ Buy $\frac{1000}{13.64} \approx 73.3$ options.
 
 | Strategy | Up State | Down State | Expected | Risk |
 |----------|----------|------------|----------|------|
-| Stock | 1200 | 800 | 1000 | 200 |
-| Options | 1466 | 0 | 733 | 733 |
+| Stock | $1200$ | $800$ | $1000$ | $200$ |
+| Options | $1466$ | $0$ | $733$ | $733$ |
 
 **Observation**: Options provide **leverage**—higher potential upside (1466 vs 1200) but also higher risk (can lose everything). The expected return is actually **negative** due to the premium you pay.
 
@@ -1170,6 +1171,7 @@ Buy $\frac{1000}{13.64} \approx 73.3$ options.
 Now let's see how options can **reduce** risk, not increase it.
 
 **Scenario**: You own a volatile stock with $S(0) = 100$:
+
 $$
 S(T) = \begin{cases} 160 & \text{with probability } 0.5 \text{ (if up)} \\ 40 & \text{with probability } 0.5 \text{ (if down)} \end{cases}
 $$
@@ -1177,11 +1179,11 @@ $$
 ### Strategy: Covered Call
 
 **At $t=0$**:
-1. **Own** 1 share of stock (worth 100)
-2. **Sell** 1 call option (strike $X=100$) for premium $C(0) =  31.81$
+1. **Own** 1 share of stock (worth $100$)
+2. **Sell** 1 call option (strike $X = 100$) for premium $C(0) = 31.81$
 3. **Invest** the premium at 10% risk-free rate
 
-The 31.81 premium grows to $31.81 \times 1.10 =  35$ by time $T$.
+The $31.81$ premium grows to $31.81 \times 1.10 = 35$ by time $T$.
 
 </section>
 
@@ -1198,16 +1200,16 @@ $$
 where $C(T) = \max(S(T) - 100, 0)$ is the call payoff **you owe** (since you sold it).
 
 **Up state** ($S(T) = 160$):
-- Stock value: 160
-- Call obligation: $-(160-100) = - 60$
-- Premium growth: 35
-- **Total**: $160 - 60 + 35 =  135$
+- Stock value: $160$
+- Call obligation: $-(160 - 100) = -60$
+- Premium growth: $35$
+- **Total**: $160 - 60 + 35 = 135$
 
 **Down state** ($S(T) = 40$):
-- Stock value: 40
-- Call obligation: 0 (option expires worthless)
-- Premium growth: 35
-- **Total**: $40 - 0 + 35 =  75$
+- Stock value: $40$
+- Call obligation: $0$ (option expires worthless)
+- Premium growth: $35$
+- **Total**: $40 - 0 + 35 = 75$
 
 </section>
 
@@ -1221,17 +1223,17 @@ Let's compare the risk profiles:
 
 Payoffs: $S(T) \in \{40, 160\}$
 
-**Range**: 40 to 160  
-**Risk (spread)**: $160 - 40 =  120$  
-**Expected value**: $E(V) = 0.5 \times 160 + 0.5 \times 40 =  100$
+**Range**: $40$ to $160$  
+**Risk (spread)**: $160 - 40 = 120$  
+**Expected value**: $E(V) = 0.5 \times 160 + 0.5 \times 40 = 100$
 
 ### Covered Call Strategy
 
 Payoffs: $V(T) \in \{75, 135\}$
 
-**Range**: 75 to 135  
-**Risk (spread)**: $135 - 75 =  60$  
-**Expected value**: $E(V) = 0.5 \times 135 + 0.5 \times 75 =  105$
+**Range**: $75$ to $135$  
+**Risk (spread)**: $135 - 75 = 60$  
+**Expected value**: $E(V) = 0.5 \times 135 + 0.5 \times 75 = 105$
 
 </section>
 
@@ -1239,10 +1241,10 @@ Payoffs: $V(T) \in \{75, 135\}$
 
 ### Key Insights
 
-1. **Risk reduced by 50%**: The spread decreased from 120 to 60
-2. **Downside protection**: Worst case improved from 40 to 75 (the premium provides a cushion)
-3. **Capped upside**: You give up gains above 135 (trade-off for receiving premium)
-4. **Expected value increased**: From 100 to 105 (you collect premium income)
+1. **Risk reduced by 50%**: The spread decreased from $120$ to $60$
+2. **Downside protection**: Worst case improved from $40$ to $75$ (the premium provides a cushion)
+3. **Capped upside**: You give up gains above $135$ (trade-off for receiving premium)
+4. **Expected value increased**: From $100$ to $105$ (you collect premium income)
 
 **Interpretation**: By selling the call, you:
 - Give up unlimited upside potential

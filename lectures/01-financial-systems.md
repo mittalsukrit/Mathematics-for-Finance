@@ -14,6 +14,7 @@ title: Overview of Financial Systems
     scroll-snap-align: start;
     min-height: 100vh;
     padding: 4rem;
+    padding-top: 1rem;
     box-sizing: border-box;
   }
 
@@ -50,7 +51,6 @@ Finance today is inseparable from mathematics, computation, and uncertainty.
 **What you won't learn:**
 - How to get rich quick
 - Stock tips or market predictions
-- Accounting or corporate finance basics
 
 </section>
 
@@ -70,6 +70,14 @@ It exists because:
 
 - **Computers allow simulation, optimization, and testing at massive scale.**  
   We can backtest strategies on decades of historical data, run Monte Carlo simulations with millions of scenarios, and optimize portfolios across thousands of assets—all in seconds. This computational power has transformed finance from an art to a science.
+
+</section>
+
+<section class="slide" markdown="1">
+
+<div align="center">
+<img src="Figures/Line chart of Apple .png" alt="Stock chart" style="width:80%;"/>
+</div>
 
 </section>
 
@@ -123,22 +131,22 @@ Current reality:
 - Algorithmic trading developer
 - Risk management technologist
 - Fintech entrepreneur
-- Blockchain/DeFi developer
+- Blockchain developer
 
 </section>
 
 <section class="slide" markdown="1">
 
-## What Is a Financial System?
+## What is a Financial System?
 
 A **financial system** exists to coordinate economic activity across **time and uncertainty**.
 
 At its core, it performs three fundamental functions.
 
 **Think about it this way:** 
-- You have an idea for a startup but no money (capital allocation problem)
-- A farmer worries about crop prices falling next season (risk transfer problem)
-- An investor wants to know if Tesla is overvalued (price discovery problem)
+1. You have an idea for a startup but no money (*capital allocation* problem)
+2. A farmer worries about crop prices falling next season (*risk transfer* problem)
+3. An investor wants to know if Tesla is overvalued (*price discovery* problem)
 
 The financial system provides mechanisms to solve all three.
 
@@ -146,7 +154,15 @@ The financial system provides mechanisms to solve all three.
 
 <section class="slide" markdown="1">
 
-### Capital Allocation Problem
+<div align="center">
+<img src="Figures/STI_clean_landscape_thumb.avif" alt="Stock chart" style="width:80%;"/>
+</div>
+
+</section>
+
+<section class="slide" markdown="1">
+
+### 1. Capital Allocation Problem
 
 Deciding **where money should go**.
 
@@ -166,7 +182,7 @@ This happens through:
 
 <section class="slide" markdown="1">
 
-### Risk Transfer Problem
+### 2. Risk Transfer Problem
 
 Shifting risk from one party to another using financial instruments.
 
@@ -191,7 +207,7 @@ Purpose:
 
 <section class="slide" markdown="1">
 
-### Price Discovery Problem
+### 3. Price Discovery Problem
 
 Determining **what an asset is worth right now**.
 
@@ -214,42 +230,27 @@ Prices act as **signals**, guiding decisions and allocating resources efficientl
 
 <section class="slide" markdown="1">
 
-## An Analogy: Financial System as an Operating System
-
-Think of the financial system as the **operating system of the economy**.
-
-| OS Function                    | Financial Equivalent              | Explanation |
-|--------------------------------|----------------------------------|-------------|
-| Resource allocation            | Capital allocation               | Just as an OS allocates CPU and memory to processes, the financial system allocates capital to businesses and projects |
-| Inter-process communication    | Payments & settlements           | Like IPC in computing, payment systems enable value transfer between economic agents |
-| Security & access control      | Risk management & regulation     | Analogous to OS security, regulators and risk systems prevent fraud and systemic failures |
-| Scheduling                     | Liquidity management             | Banks and central banks manage the "scheduling" of capital flows to prevent bottlenecks |
-| APIs & system calls            | Financial instruments & markets  | Standardized interfaces (stocks, bonds, derivatives) for accessing the financial system |
-| Monitoring & logs              | Price discovery & reporting      | Continuous monitoring of system health through prices, yields, and spreads |
-
-Just as a faulty OS crashes applications, a faulty financial system crashes economies.
-
-**2008 Financial Crisis = Kernel Panic:** When the "OS" of global finance failed, the entire economic system froze. Credit markets stopped functioning, and it required massive intervention (the equivalent of a hard reboot) to restore functionality.
-
-</section>
-
-<section class="slide" markdown="1">
-
 ## Key Components of Financial Systems
 
+- Money Market
+- Capital Market
+  - Equity Market
+  - Debt Market
+  - Derivatives Market
+
 </section>
 
 <section class="slide" markdown="1">
 
-## Money Markets vs. Capital Markets
+## Money Markets vs. Capital Market
 
-### Money Markets
+### Money Market
 
 - Short-term borrowing and lending (maturity ≤ 1 year)
 - Primarily regulated by the RBI
 - Used to manage liquidity
 
-Characteristics:
+**Characteristics:**
 - **Very low risk:** Short duration means less exposure to default or interest rate changes
 - **Returns linked to policy rates:** Typically close to the repo rate or overnight rates
 - **High liquidity:** Easy to buy and sell quickly
@@ -266,15 +267,15 @@ Characteristics:
 
 <section class="slide" markdown="1">
 
-## Money Markets vs. Capital Markets
+## Money Market vs. Capital Market
 
-### Capital Markets
+### Capital Market
 
 - Long-term securities (maturity > 1 year)
 - Regulated by SEBI (and RBI for certain debt)
 - Used to fund growth and infrastructure
 
-Characteristics:
+**Characteristics:**
 - **Higher risk:** Longer time horizon means more uncertainty and price volatility
 - **Higher expected returns:** Investors demand compensation for taking on more risk
 - **Sensitive to economic growth and earnings:** Long-term performance drives valuations
@@ -293,9 +294,9 @@ Characteristics:
 
 <section class="slide" markdown="1">
 
-## Introduction to Financial Markets
+## Capital Markets
 
-### Equity Markets
+### Equity Market
 
 - **What it is:** Ownership in a company. When you buy a share, you own a piece of that business.
 - **Returns:** Dividends (profit sharing) + capital gains (increase in stock price)
@@ -311,9 +312,9 @@ Example: Buying shares of Reliance Industries on NSE. You become a partial owner
 
 <section class="slide" markdown="1">
 
-## Introduction to Financial Markets
+## Capital Markets
 
-### Debt Markets
+### Debt Market
 
 - **What it is:** Lending money in exchange for interest. You're a creditor, not an owner.
 - **Returns:** Fixed interest + principal repayment
@@ -323,17 +324,15 @@ Example: Buying shares of Reliance Industries on NSE. You become a partial owner
 
 **Why investors buy debt:** Stable, predictable income. Useful for conservative investors or portfolio diversification.
 
-**Credit ratings:** Agencies like CRISIL and ICRA rate bonds. AAA is safest, D means default. Ratings determine interest rates—riskier borrowers pay more.
-
 Example: Holding a 10-year Government of India bond paying 7% annual interest. You lend money to the government, and they promise to pay you back with interest.
 
 </section>
 
 <section class="slide" markdown="1">
 
-## Introduction to Financial Markets
+## Capital Markets
 
-### Derivatives Markets
+### Derivatives Market
 
 - Contracts derived from an underlying asset (stocks, bonds, commodities, currencies)
 - Used for:
@@ -353,6 +352,8 @@ Types:
 </section>
 
 <section class="slide" markdown="1">
+
+## Financial Institutions
 
 ### Banks
 
@@ -378,6 +379,8 @@ Examples: SBI (India's largest public sector bank), HDFC Bank (largest private s
 
 <section class="slide" markdown="1">
 
+## Financial Institutions
+
 ### Exchanges
 
 - Organized platforms for buying and selling securities
@@ -401,6 +404,8 @@ Examples:
 
 <section class="slide" markdown="1">
 
+## Financial Institutions
+
 ### Funds
 
 - Pool money from multiple investors
@@ -418,8 +423,6 @@ Examples:
 - **Professional management:** Fund managers have expertise and resources individual investors lack
 - **Economies of scale:** Lower transaction costs and better access to research
 
-**Mathematical insight:** This course will cover portfolio theory—how to optimally combine assets to maximize return for a given level of risk. This is the foundation of fund management.
-
 Examples:
 - **Mutual funds:** HDFC Top 100 Fund, ICICI Prudential Bluechip Fund
 - **ETFs:** SBI ETF Nifty 50 (tracks the Nifty index)
@@ -428,7 +431,7 @@ Examples:
 
 <section class="slide" markdown="1">
 
-## Role of Regulators
+## Financial Regulators
 
 ### SEBI (Securities and Exchange Board of India)
 
@@ -449,6 +452,8 @@ US equivalent: SEC (Securities and Exchange Commission).
 </section>
 
 <section class="slide" markdown="1">
+
+## Financial Regulators
 
 ### RBI (Reserve Bank of India)
 
@@ -474,7 +479,7 @@ US equivalent: Federal Reserve (The Fed).
 
 ## Takeaways
 
-**Financial instruments:**
+**Financial markets/instruments:**
 - **Equity** = ownership (high risk, high potential return)
 - **Debt** = lending (lower risk, predictable return)  
 - **Derivatives** = risk transfer or speculation (leverage and complexity)
@@ -484,24 +489,22 @@ US equivalent: Federal Reserve (The Fed).
 - **Exchanges** = enable trading and price discovery (the marketplaces)
 - **Funds** = pool and allocate capital (diversification and management)
 
-**Regulators:**
+**Financial Regulators:**
 - **SEBI** = protect investors and ensure market integrity
 - **RBI** = control monetary policy and banking stability
 
 A financial system is not just about money.  
 It is about **coordination, incentives, and control under uncertainty**.
 
-**Looking ahead:** In this course, we'll build mathematical models for these components—how to price assets, manage risk, construct portfolios, and understand market dynamics. Each topic connects back to these foundational concepts.
-
 </section>
 
 <section class="slide" markdown="1">
 
-**Thank you!**
+## Thank you!
 
 <div style="height:6rem;"></div>
 
-**Any questions?**
+## Any questions?
 
 </section>
 

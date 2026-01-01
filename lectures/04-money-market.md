@@ -328,6 +328,10 @@ $$
 
 This is the annualized continuously compounded rate for 3-year money.
 
+</section>
+
+<section class="slide" markdown="1">
+
 ### Forward Rates
 
 We can also define **forward rates** $f(0,T_1,T_2)$: the rate agreed today for borrowing between times $T_1$ and $T_2$.
@@ -396,6 +400,10 @@ Think of buying:
 * 1 unit of $T$-year zero (for principal)
 
 Total cost must equal bond price, otherwise arbitrage exists.
+
+</section>
+
+<section class="slide" markdown="1">
 
 **Example with numbers:**
 

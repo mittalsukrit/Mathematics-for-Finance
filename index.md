@@ -74,4 +74,4 @@ These materials are written as **proper lecture notes**, not slide dumps. They i
 
 ---
 
-*Last updated: December 2025*
+*Last updated: January 1, 2026*

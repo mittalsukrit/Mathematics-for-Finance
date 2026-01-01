@@ -8,6 +8,9 @@ title: Overview of Financial Systems
     scroll-snap-type: y mandatory;
     overflow-y: scroll;
     height: 100vh;
+
+    /* 🔢 Start slide counter */
+    counter-reset: slide;
   }
 
   .slide {
@@ -16,10 +19,24 @@ title: Overview of Financial Systems
     padding: 4rem;
     padding-top: 1rem;
     box-sizing: border-box;
+
+    /* Ensure relative positioning for numbering */
+    position: relative;
   }
 
   /* Nice-to-have: smoother feel */
   html { scroll-behavior: smooth; }
+
+  /* 🔢 Automatic slide numbering */
+  .slide::before {
+    counter-increment: slide;
+    content: "Slide " counter(slide);
+    position: absolute;
+    top: 1rem;   /* footer-like placement */
+    right: 2rem;
+    font-size: 1rem;
+    color: #666;
+  }
 </style>
 
 <div class="slides" markdown="1">

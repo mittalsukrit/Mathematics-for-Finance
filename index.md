@@ -15,14 +15,6 @@ Welcome to the comprehensive lecture notes for the **Mathematics for Finance** c
 
 This course introduces the **mathematical foundations of modern financial systems** with emphasis on structure, abstraction, and rigor. Rather than providing recipes or rules, these notes develop the theoretical framework needed to understand how financial markets operate, how to quantify and manage risk, and how to value assets under uncertainty.
 
-### What You'll Learn
-- Mathematical modeling of financial markets and instruments
-- Portfolio theory and optimization techniques
-- Risk measurement and management frameworks
-- Asset pricing models (CAPM, Black-Scholes)
-- Stochastic processes in finance
-- Coherent risk measures and their applications
-
 ---
 
 ## Lecture Notes
@@ -68,4 +60,4 @@ This course introduces the **mathematical foundations of modern financial system
 
 ---
 
-*Last updated: January 1, 2026*
+*Last updated: January 3, 2026*

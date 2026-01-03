@@ -31,46 +31,40 @@ This course introduces the **mathematical foundations of modern financial system
 1. **[Overview of Financial Systems](lectures/01-financial-systems.md)**  
    *Introduction to mathematical finance and the structure of financial systems*
 
-2. **[Simple Market Model](lectures/02-simple-market-model.md)**  
+2. **Simple Market Model**  
    *Basic modeling frameworks for financial markets*
 
-3. **[Time Value of Money](lectures/03-time-value-of-money.md)**  
+3. **Time Value of Money**  
    *Present and future value concepts, discounting, and time-based calculations*
 
-4. **[Money Market](lectures/04-money-market.md)**  
+4. **Money Market**  
    *Money market instruments, mechanics, and short-term interest rates*
 
 ### Part II: Portfolio Theory
-5. **[Introduction to Portfolios](lectures/05-introduction-to-portfolios.md)**  
+5. **Introduction to Portfolios**  
    *Portfolio theory fundamentals and basic optimization*
 
-6. **[Risk-free Assets](lectures/06-risk-free-and-lagrange.md)**  
+6. **Risk-free Assets**  
    *Risk-free assets and Lagrange multipliers in portfolio optimization*
 
-7. **[Multi-asset Portfolios](lectures/07-multi-asset-portfolios.md)**  
+7. **Multi-asset Portfolios**  
    *Portfolio optimization with multiple assets and constraints*
 
-8. **[CAPM Model](lectures/08-capm.md)**  
+8. **CAPM Model**  
    *Capital Asset Pricing Model, systematic vs. idiosyncratic risk*
 
 ### Part III: Advanced Topics
-9. **[Utility Functions](lectures/09-utility-functions.md)**  
+9. **Utility Functions**  
    *Risk preferences, expected utility theory, and decision-making under uncertainty*
 
-10. **[Black-Scholes Model](lectures/10-Black-Scholes.md)**  
+10. **Black-Scholes Model**  
     *Options pricing, stochastic calculus, and the Black-Scholes equation*
 
-11. **[Value at Risk](lectures/11-VaR.md)**  
+11. **Value at Risk**  
     *Risk measurement methodology and VaR calculation techniques*
 
-12. **[Coherence](lectures/12-coherence.md)**  
+12. **Coherence**  
     *Coherent risk measures and their axiomatic foundations*
-
----
-
-## About the Notes
-
-These materials are written as **proper lecture notes**, not slide dumps. They include detailed explanations, mathematical derivations, and intuitive discussions that help build understanding from first principles.
 
 ---
 

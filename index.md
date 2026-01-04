@@ -23,10 +23,10 @@ This course introduces the **mathematical foundations of modern financial system
 1. **[Overview of Financial Systems](lectures/01-financial-systems.md)**  
    *Introduction to mathematical finance and the structure of financial systems*
 
-2. **Simple Market Model**  
+2. **[Simple Market Model](lectures/02-simple-market-model.md)**  
    *Basic modeling frameworks for financial markets*
 
-3. **Time Value of Money**  
+3. **[Time Value of Money](lectures/03-time-value-of-money.md)**  
    *Present and future value concepts, discounting, and time-based calculations*
 
 4. **Money Market**  
@@ -60,4 +60,4 @@ This course introduces the **mathematical foundations of modern financial system
 
 ---
 
-*Last updated: January 3, 2026*
+*Last updated: January 5, 2026*

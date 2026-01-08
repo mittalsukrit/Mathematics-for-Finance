@@ -779,6 +779,32 @@ $$
 
 <section class="slide" markdown="1">
 
+## Comparing Forwards and Futures
+
+### Forward Contracts
+
+* **Definition**: Obligation to buy/sell an asset at a predetermined price on a future date
+* **Standardization**: Customized (OTC - over-the-counter)
+* **Upfront cost**: Zero (no initial payment)
+* **Payoff**: Symmetric—can be positive or negative
+* **Obligation**: Binding for both parties
+* **Settlement**: At maturity (delivery date)
+* **Counterparty risk**: Yes (default risk exists)
+
+### Futures Contracts
+
+* **Definition**: Same as forwards but exchange-traded
+* **Standardization**: Highly standardized (contract size, expiry dates)
+* **Upfront cost**: Margin requirement (collateral)
+* **Payoff**: Same as forwards (symmetric)
+* **Obligation**: Binding, but can be closed before expiry
+* **Settlement**: Daily mark-to-market (daily settlement)
+* **Counterparty risk**: Minimal (clearinghouse guarantee)
+
+</section>
+
+<section class="slide" markdown="1">
+
 ## 6. Call and Put Options
 
 Unlike forward contracts (which are obligations), **options** give you **rights without obligations**.
@@ -934,6 +960,32 @@ Up state: $V(T) = \frac{1}{2} \times 120 - \frac{4}{11} \times 110 = 60 - 40 = 2
 Down state: $V(T) = \frac{1}{2} \times 80 - \frac{4}{11} \times 110 = 40 - 40 = 0$ ✓
 
 The portfolio perfectly replicates the option payoff, so by no-arbitrage: **$C(0) = 13.64$**.
+
+</section>
+
+<section class="slide" markdown="1">
+
+## Comparing Forwards, Futures, and Options
+
+### Options
+
+* **Definition**: Right (not obligation) to buy (call) or sell (put)
+* **Standardization**: Can be standardized (exchange) or customized (OTC)
+* **Upfront cost**: Premium must be paid
+* **Payoff**: Asymmetric—non-negative for buyer
+* **Obligation**: Optional for buyer, binding for seller
+* **Settlement**: At expiry (or can be sold before)
+* **Counterparty risk**: For OTC options, yes; for exchange-traded, minimal
+
+### Key Differences Summary
+
+| Feature | Forward | Future | Option |
+|---------|---------|--------|--------|
+| **Obligation** | Yes | Yes | No (for buyer) |
+| **Upfront cost** | $0$ | Margin | Premium |
+| **Loss potential** | Unlimited | Unlimited | Limited (premium) for buyer |
+| **Flexibility** | Low | Medium | High |
+| **Trading venue** | OTC | Exchange | Both |
 
 </section>
 

@@ -254,9 +254,9 @@ $$
 
 **Key insight:** Risk depends on co-movement, not individual volatilities alone.  
 
-<figure style="width: 500px; margin: 2rem auto; display: block;">
-  <img src="./figures/correlated_assets.png" alt="Correlated Assets" style="width: 100%; height: auto;">
-</figure>
+<div align="center">
+<img src="./Figures/correlated_assets.png" alt="Stock chart" style="width:50%;"/>
+</div>
 
 </section>
 
@@ -272,9 +272,9 @@ $$
 - The greatest benefit occurs when $\rho_{12}$ is negative.
 - Even if both assets are individually risky, their combination can be less risky than either alone. *This insight earned Markowitz the Nobel Prize.*
 
-<figure style="width: 300px; margin: 2rem auto; display: block;">
-  <img src="./figures/Markovitz.jpg" alt="Correlated Assets" style="width: 100%; height: auto;">
-</figure>
+<div align="center">
+<img src="Figures/Markovitz.jpg" alt="Stock chart" style="width:40%;"/>
+</div>
 
 - Diversification cannot eliminate systematic (market-wide) risk.
 
@@ -291,9 +291,9 @@ Two-Asset Theory states:
 - Every investor choosing between only two risky assets will pick a point on this curve based on risk preference.
 - All efficient portfolios of two risky assets are **convex combinations** of the two assets.
 
-<figure style="width: 500px; margin: 2rem auto; display: block;">
-  <img src="./figures/EF1.png" alt="Correlated Assets" style="width: 100%; height: auto;">
-</figure>
+<div align="center">
+<img src="Figures/EF1.png" alt="Stock chart" style="width:60%;"/>
+</div>
 
 </section>
 
@@ -331,9 +331,9 @@ The **efficient frontier** consists of the portfolios on the upper branch of thi
 - The **endpoints** correspond to holding 100% of one asset (either asset 1 or asset 2).
 - **Diversification** (choosing $0 < w < 1$) improves the risk-return trade-off compared to holding a single asset.
 
-<figure style="width: 400px; margin: 2rem auto; display: block;">
-  <img src="./figures/EF2.png" alt="Correlated Assets" style="width: 100%; height: auto;">
-</figure>
+<div align="center">
+<img src="Figures/EF2.png" alt="Stock chart" style="width:50%;"/>
+</div>
 
 </section>
 
@@ -351,9 +351,9 @@ The conditions for the efficient set (relative to asset 1) are:
 
 These conditions describe when diversification can reduce risk below that of the less risky asset, depending on the correlation and the possibility of short selling.
 
-<figure style="width: 400px; margin: 2rem auto; display: block;">
-  <img src="./figures/EF2.png" alt="Correlated Assets" style="width: 100%; height: auto;">
-</figure>
+<div align="center">
+<img src="Figures/EF2.png" alt="Stock chart" style="width:50%;"/>
+</div>
 
 </section>
 

@@ -29,11 +29,11 @@ This course introduces the **mathematical foundations of modern financial system
 3. **[Time Value of Money](lectures/03-time-value-of-money.md)**  
    *Present and future value concepts, discounting, and time-based calculations*
 
-4. **Money Market**  
+4. **[Money Market](lectures/04-money-market.md)**  
    *Money market instruments, mechanics, and short-term interest rates*
 
 ### Part II: Portfolio Theory
-5. **Introduction to Portfolios**  
+5. **[Introduction to Portfolios](lectures/05-introduction-to-portfolios.md)**  
    *Portfolio theory fundamentals and basic optimization*
 
 6. **Risk-free Assets**  
@@ -60,4 +60,4 @@ This course introduces the **mathematical foundations of modern financial system
 
 ---
 
-*Last updated: January 5, 2026*
+*Last updated: January 12, 2026*

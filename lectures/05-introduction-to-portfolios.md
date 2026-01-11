@@ -359,54 +359,6 @@ These conditions describe when diversification can reduce risk below that of the
 
 <section class="slide" markdown="1">
 
-## Derivation: Efficient Set Conditions
-
-To determine when diversification reduces portfolio risk below that of the less risky asset, analyze the portfolio variance:
-
-$$
-\sigma_V^2 = w_1^2 \sigma_1^2 + w_2^2 \sigma_2^2 + 2w_1 w_2 \rho_{12} \sigma_1 \sigma_2
-$$
-
-Assume $w_1 + w_2 = 1$ and $0 \leq w_1, w_2 \leq 1$ (no short selling).
-
-### Condition for $\sigma_V < \sigma_1$
-
-Set $w_1$ as the weight in asset 1. The portfolio variance is minimized when:
-
-$$
-\sigma_V^2 < \sigma_1^2
-$$
-
-Substitute $w_2 = 1 - w_1$ and solve for $w_1$:
-
-$$
-w_1^2 \sigma_1^2 + (1-w_1)^2 \sigma_2^2 + 2w_1(1-w_1)\rho_{12}\sigma_1\sigma_2 < \sigma_1^2
-$$
-
-Expand and rearrange:
-
-$$
-w_1^2 \sigma_1^2 + (1-w_1)^2 \sigma_2^2 + 2w_1(1-w_1)\rho_{12}\sigma_1\sigma_2 - \sigma_1^2 < 0
-$$
-
-This inequality holds if:
-
-$$
-\rho_{12} < \frac{\sigma_1}{\sigma_2}
-$$
-
-### Summary of Conditions
-
-- **If $\rho_{12} < \frac{\sigma_1}{\sigma_2}$:** There exists a portfolio (without short selling) with risk less than $\sigma_1$.
-- **If $\rho_{12} = \frac{\sigma_1}{\sigma_2}$:** The minimum risk equals $\sigma_1$; no further reduction is possible.
-- **If $\rho_{12} > \frac{\sigma_1}{\sigma_2}$:** Diversification cannot reduce risk below $\sigma_1$ without short selling.
-
-These conditions define when the efficient set includes portfolios with risk lower than the least risky asset, depending on correlation and asset volatilities.
-
-</section>
-
-<section class="slide" markdown="1">
-
 ## Minimum Variance Portfolio (MVP)
 
 The **Minimum Variance Portfolio (MVP)** is the portfolio with the lowest possible risk (variance) for given assets.
@@ -492,6 +444,60 @@ $$
 $$
 
 For $|\rho_{12}| < 1$, this condition is always satisfied unless the assets are perfectly positively correlated and have identical volatilities. Thus, the solution above gives the **minimum variance**.
+
+</section>
+
+<section class="slide" markdown="1">
+
+## Derivation: Efficient Set Conditions
+
+To determine when diversification reduces portfolio risk below that of the less risky asset, analyze the portfolio variance:
+
+$$
+\sigma_V^2 = w_1^2 \sigma_1^2 + w_2^2 \sigma_2^2 + 2w_1 w_2 \rho_{12} \sigma_1 \sigma_2
+$$
+
+Assume $w_1 + w_2 = 1$ and $0 \leq w_1, w_2 \leq 1$ (no short selling).
+
+### Condition for $\sigma_V < \sigma_1$ without short-selling
+
+$$
+0 \leq w_1^\ast, w_2^\ast \leq 1 
+$$
+
+$$
+0 \leq \frac{\sigma_2^2 - \rho_{12}\sigma_1\sigma_2}{\sigma_1^2 + \sigma_2^2 - 2\rho_{12}\sigma_1\sigma_2}, \frac{\sigma_1^2 - \rho_{12}\sigma_1\sigma_2}{\sigma_1^2 + \sigma_2^2 - 2\rho_{12}\sigma_1\sigma_2} \leq 1
+$$
+
+Since $\rho_{12} \leq 1$, the denominator: 
+
+$$
+\sigma_1^2 + \sigma_2^2 - 2\rho_{12}\sigma_1\sigma_2 \geq 0
+$$
+
+Hence, the numerators need to satisfy: 
+
+$$
+\sigma_1^2 - \rho_{12}\sigma_1\sigma_2 \geq 0 \rightarrow \rho_{12} \leq \frac{\sigma_1}{\sigma_2} 
+$$
+
+$$
+\sigma_2^2 - \rho_{12}\sigma_1\sigma_2 \geq 0 \rightarrow \rho_{12} \leq \frac{\sigma_2}{\sigma_1}
+$$
+
+By design, $\sigma_1 < \sigma_2$. This implies $\frac{\sigma_1}{\sigma_2} < \frac{\sigma_2}{\sigma_1}$. So, the prevailing condition is: 
+
+$$
+\rho_{12} < \frac{\sigma_1}{\sigma_2}
+$$
+
+### Summary of Conditions
+
+- **If $\rho_{12} < \frac{\sigma_1}{\sigma_2}$:** There exists a portfolio (without short selling) with risk less than $\sigma_1$.
+- **If $\rho_{12} = \frac{\sigma_1}{\sigma_2}$:** The minimum risk equals $\sigma_1$; no further reduction is possible.
+- **If $\rho_{12} > \frac{\sigma_1}{\sigma_2}$:** Diversification cannot reduce risk below $\sigma_1$ without short selling.
+
+These conditions define when the efficient set includes portfolios with risk lower than the least risky asset, depending on correlation and asset volatilities.
 
 </section>
 

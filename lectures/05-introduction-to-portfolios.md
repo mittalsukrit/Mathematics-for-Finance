@@ -35,7 +35,7 @@ title: Introduction to Portfolios
     top: 1rem;   /* footer-like placement */
     right: 2rem;
     font-size: 1rem;
-    color: #666;
+    color: #666;`
   }
 </style>
 
@@ -443,7 +443,7 @@ $$
 \sigma_1^2 + \sigma_2^2 > 2\rho_{12}\sigma_1\sigma_2
 $$
 
-For $|\rho_{12}| < 1$, this condition is always satisfied unless the assets are perfectly positively correlated and have identical volatilities. Thus, the solution above gives the **minimum variance**.
+For $\rho_{12} < 1$, this condition is always satisfied unless the assets are perfectly positively correlated and have identical volatilities. Thus, the solution above gives the **minimum variance**.
 
 </section>
 
@@ -469,20 +469,20 @@ $$
 0 \leq \frac{\sigma_2^2 - \rho_{12}\sigma_1\sigma_2}{\sigma_1^2 + \sigma_2^2 - 2\rho_{12}\sigma_1\sigma_2}, \frac{\sigma_1^2 - \rho_{12}\sigma_1\sigma_2}{\sigma_1^2 + \sigma_2^2 - 2\rho_{12}\sigma_1\sigma_2} \leq 1
 $$
 
-Since $\rho_{12} \leq 1$, the denominator: 
+Since $\rho_{12} < 1$, the denominator: 
 
 $$
-\sigma_1^2 + \sigma_2^2 - 2\rho_{12}\sigma_1\sigma_2 \geq 0
+\sigma_1^2 + \sigma_2^2 - 2\rho_{12}\sigma_1\sigma_2 > 0
 $$
 
 Hence, the numerators need to satisfy: 
 
 $$
-\sigma_1^2 - \rho_{12}\sigma_1\sigma_2 \geq 0 \rightarrow \rho_{12} \leq \frac{\sigma_1}{\sigma_2} 
+\sigma_1^2 - \rho_{12}\sigma_1\sigma_2 > 0 \rightarrow \rho_{12} < \frac{\sigma_1}{\sigma_2} 
 $$
 
 $$
-\sigma_2^2 - \rho_{12}\sigma_1\sigma_2 \geq 0 \rightarrow \rho_{12} \leq \frac{\sigma_2}{\sigma_1}
+\sigma_2^2 - \rho_{12}\sigma_1\sigma_2 > 0 \rightarrow \rho_{12} < \frac{\sigma_2}{\sigma_1}
 $$
 
 By design, $\sigma_1 < \sigma_2$. This implies $\frac{\sigma_1}{\sigma_2} < \frac{\sigma_2}{\sigma_1}$. So, the prevailing condition is: 

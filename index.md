@@ -34,9 +34,9 @@ This course introduces the **mathematical foundations of modern financial system
 
 ### Part II: Portfolio Theory
 5. **[Introduction to Portfolios](lectures/05-introduction-to-portfolios.md)**  
-   *Portfolio theory fundamentals and basic optimization*
+   *Portfolio theory fundamentals and two securities*
 
-6. **Risk-free Assets**  
+<!-- 6. **Risk-free Assets**  
    *Risk-free assets and Lagrange multipliers in portfolio optimization*
 
 7. **Multi-asset Portfolios**  
@@ -56,7 +56,7 @@ This course introduces the **mathematical foundations of modern financial system
     *Risk measurement methodology and VaR calculation techniques*
 
 12. **Coherence**  
-    *Coherent risk measures and their axiomatic foundations*
+    *Coherent risk measures and their axiomatic foundations* -->
 
 ---
 

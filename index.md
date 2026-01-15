@@ -32,6 +32,8 @@ This course introduces the **mathematical foundations of modern financial system
 4. **[Money Market](lectures/04-money-market.md)**  
    *Money market instruments, mechanics, and short-term interest rates*
 
+*Practical problems and case studies can be found in the [Problem Sets](lectures/problem_set_foundations_mathematical_finance.md).*
+
 ### Part II: Portfolio Theory
 5. **[Introduction to Portfolios](lectures/05-introduction-to-portfolios.md)**  
    *Portfolio theory fundamentals and two securities*

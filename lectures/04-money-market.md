@@ -451,12 +451,12 @@ YTM is a *quoting convention*, not a pricing principle.
 
 The **money market account** models continuous reinvestment.
 
-Let $B(t)$ denote its value.
+Let $A(t)$ denote its value.
 
 With constant rate $r$:
 
 $$
-B(t) = B(0)e^{rt}
+A(t) = A(0)e^{rt}
 $$
 
 This asset defines the baseline growth of wealth.
@@ -476,7 +476,7 @@ This is the "risk-free growth process."
 * In derivatives pricing, we discount at this rate
 * It defines what "risk-neutral" means
 
-Starting with $B(0) = 1$, we get $B(t) = e^{rt}$.
+Starting with $A(0) = 1$, we get $A(t) = e^{rt}$.
 
 The reciprocal $e^{-rt}$ is exactly our discount factor.
 
@@ -489,36 +489,62 @@ The reciprocal $e^{-rt}$ is exactly our discount factor.
 In discrete time:
 
 $$
-B(t+1) = (1+r)B(t)
+A(t+1) = (1+r)A(t)
 $$
 
-Starting from $B(0)=1$:
+Starting from $A(0)=1$:
 
 $$
-B(t) = (1+r)^t
+A(t) = (1+r)^t
 $$
 
 This will later become the **numeraire**.
 
 **Relationship to discounting:**
 
-If $B(t) = (1+r)^t$ grows wealth forward, then $P(0,t) = (1+r)^{-t}$ brings it back.
+If $A(t) = (1+r)^t$ grows wealth forward, then $P(0,t) = (1+r)^{-t}$ brings it back.
 
 These are inverse operations:
 
 $$
-B(t) \cdot P(0,t) = (1+r)^t \cdot (1+r)^{-t} = 1
+A(t) \cdot P(0,t) = (1+r)^t \cdot (1+r)^{-t} = 1
 $$
+
+</section>
+
+<section class="slide" markdown="1">
 
 **Preview of risk-neutral pricing:**
 
-Later, we'll price derivatives by:
+Pricing derivatives by:
 1. Computing expected payoffs
 2. Discounting at the risk-free rate
 
 The money market account is the denominator in that calculation.
 
-For now: it's just a modeling device for time value.
+For example: 
+
+* Assume a risky asset $S(t)$, with $S(0)=100$ and $S^u(T)=120;~S^d(T)=80$.
+* Assume a risk-free rate $r_F=10\%$.
+* The call option for strike $K=100$ pays $C^u(T)=20;~C^d(T)=0$, is priced at 13.64. (*remember this from earlier lecture?*)
+
+
+**Risk-neutral probability:**
+
+Given $S(0)=100$, $S^u(T)=120$, $S^d(T)=80$, $r_F=10\%$:
+
+$$q = \frac{e^{r_F T} \cdot S(0) - S^d(T)}{S^u(T) - S^d(T)} = \frac{1.10 \times 100 - 80}{120 - 80} = \frac{30}{40} = 0.75$$
+
+Expected payoff under risk-neutral measure:
+
+$$\mathbb{E}^Q[C(T)] = 0.75 \times 20 + 0.25 \times 0 = 15$$
+
+Discounted value:
+
+$$C(0) = \frac{15}{1.10} \approx 13.64$$
+
+The risk-neutral probability $q=0.75$ is *not* the real-world probability. It's the probability that makes the discounted expected value equal the market price.
+
 
 </section>
 
@@ -667,6 +693,24 @@ At maturity, bond pays exactly what shorts require. Free money.
 
 <section class="slide" markdown="1">
 
+## Macaulay Duration
+
+**Duration formula:**
+
+$$
+D = \frac{1}{P} \sum_{t=1}^{T} t \cdot C_t \cdot P(0,t)
+$$
+
+where $C_t$ is the cash flow at time $t$.
+
+Duration measures the sensitivity of bond prices to interest rate changes.
+
+It's the "center of mass" of the bond's cash flows.
+
+</section>
+
+<section class="slide" markdown="1">
+
 ## 10. Exercises
 
 ### Exercise 1
@@ -753,35 +797,7 @@ YTM is not a complete descriptor of a bond.
 
 <section class="slide" markdown="1">
 
-### Exercise 4: Duration
-
-Given a bond with:
-* Face value = 100
-* Coupon rate = 5% (annual)
-* Maturity = 4 years
-* Current price = 95.50
-
-(a) Compute the Macaulay duration.
-
-(b) If yields increase by 1%, estimate the new price using duration.
-
-**Duration formula:**
-
-$$
-D = \frac{1}{P} \sum_{t=1}^{T} t \cdot C_t \cdot P(0,t)
-$$
-
-where $C_t$ is the cash flow at time $t$.
-
-Duration measures the sensitivity of bond prices to interest rate changes.
-
-It's the "center of mass" of the bond's cash flows.
-
-</section>
-
-<section class="slide" markdown="1">
-
-### Exercise 5: Bootstrapping the Yield Curve
+### Exercise 4: Bootstrapping the Yield Curve
 
 You observe the following par bonds (bonds trading at face value):
 
@@ -807,7 +823,7 @@ This is how market practitioners build the term structure from observable bond p
 
 <section class="slide" markdown="1">
 
-### Exercise 6: Arbitrage Detection
+### Exercise 5: Arbitrage Detection
 
 Consider three bonds:
 

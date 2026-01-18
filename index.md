@@ -38,10 +38,10 @@ This course introduces the **mathematical foundations of modern financial system
 5. **[Introduction to Portfolios](lectures/05-introduction-to-portfolios.md)**  
    *Portfolio theory fundamentals and two securities*
 
-<!-- 6. **Risk-free Assets**  
-   *Risk-free assets and Lagrange multipliers in portfolio optimization*
+6. **[Risk-free Assets and Preferences](lectures/06-risk-free-assets-and-preferences.md)**  
+   *Risk-free assets and preferences in portfolio optimization*
 
-7. **Multi-asset Portfolios**  
+<!-- 7. **Multi-asset Portfolios**  
    *Portfolio optimization with multiple assets and constraints*
 
 8. **CAPM Model**  

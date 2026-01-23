@@ -177,7 +177,7 @@ Risk scales linearly with exposure.
 
 From the previous slide:
 * $\mu_p = R_f + w(\mu - R_f)$
-* $\sigma_p = |w|\sigma$ (assuming $w > 0$)
+* $\sigma_p = |w|\sigma$
 
 Solve for $w$ from the second equation:
 

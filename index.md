@@ -41,10 +41,10 @@ This course introduces the **mathematical foundations of modern financial system
 6. **[Risk-free Assets and Preferences](lectures/06-risk-free-and-preferences.md)**  
    *Risk-free assets and preferences in portfolio optimization*
 
-<!-- 7. **Multi-asset Portfolios**  
+7. **[Multi-asset Portfolios](lectures/07-multi-asset-portfolios.md)**  
    *Portfolio optimization with multiple assets and constraints*
 
-8. **CAPM Model**  
+<!-- 8. **CAPM Model**  
    *Capital Asset Pricing Model, systematic vs. idiosyncratic risk*
 
 ### Part III: Advanced Topics

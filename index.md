@@ -44,10 +44,10 @@ This course introduces the **mathematical foundations of modern financial system
 7. **[Multi-asset Portfolios](lectures/07-multi-asset-portfolios.md)**  
    *Portfolio optimization with multiple assets and constraints*
 
-<!-- 8. **CAPM Model**  
+8. **[CAPM Model](lectures/08-capm-model.md)**  
    *Capital Asset Pricing Model, systematic vs. idiosyncratic risk*
 
-### Part III: Advanced Topics
+<!-- ### Part III: Advanced Topics
 9. **Utility Functions**  
    *Risk preferences, expected utility theory, and decision-making under uncertainty*
 
@@ -62,4 +62,4 @@ This course introduces the **mathematical foundations of modern financial system
 
 ---
 
-*Last updated: January 18, 2026*
+*Last updated: February 6, 2026*

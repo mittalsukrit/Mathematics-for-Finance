@@ -84,20 +84,8 @@ Real portfolios:
 * Contain many assets
 * Are constrained by budgets
 * Must be optimized systematically
-
-Guesswork does not scale.
-
-Linear algebra does.
-
-**Key insight:** Moving from 2 to $n$ assets is not a minor extension.
-
 * The geometry becomes higher-dimensional
-* Intuition must be replaced with linear algebra
 * But the economic principles remain unchanged
-
-The mathematics may look harder.
-
-The ideas are the same.
 
 </section>
 
@@ -143,10 +131,6 @@ $$
 * Weights are portfolio allocations
 * This is perfectly linear
 
-Linearity survives dimension.
-
-Risk will not be so polite.
-
 ### Example: Three-Asset Portfolio
 
 Suppose:
@@ -158,10 +142,6 @@ Portfolio expected return:
 $$
 \mu_p = 0.3(0.08) + 0.5(0.12) + 0.2(0.15) = 0.024 + 0.060 + 0.030 = 0.114 = 11.4\%
 $$
-
-Simple arithmetic.
-
-Risk is where complexity emerges.
 
 </section>
 
@@ -214,10 +194,6 @@ The cross terms dominate for large $n$.
 * Required for many portfolio formulas
 * Fails only in degenerate cases
 
-These are not technicalities.
-
-They guarantee meaningful optimization problems.
-
 ### Numerical Example: Three-Asset Covariance
 
 Consider the covariance matrix:
@@ -246,17 +222,7 @@ The diversification benefit is embedded in the covariances.
 
 ## 4. Geometry of Diversification
 
-Expected return is linear in $w$.
-
-Variance is quadratic in $w$.
-
-This asymmetry creates:
-
-* Curvature
-* Trade-offs
-* Efficient frontiers
-
-Diversification is geometry in disguise.
+Expected return is **linear** in $w$. Variance is **quadratic** in $w$.
 
 ### Why Diversification Works
 
@@ -281,9 +247,11 @@ $$
 \sigma_p^2 \to \bar{\text{Cov}}
 $$
 
-**Interpretation:** Diversification eliminates idiosyncratic risk.
+**Interpretation:** Diversification eliminates idiosyncratic risk. Only systematic (correlated) risk remains.
 
-Only systematic (correlated) risk remains.
+</section>
+
+<section class="slide" markdown="1">
 
 ### Numerical Example: Diversification Benefits
 
@@ -302,9 +270,7 @@ Equally weighted portfolio variance:
 | 50  | 0.0326      | 18.07%    | 40%       |
 | $\infty$ | 0.0315 | 17.75%    | 41%       |
 
-Risk decreases rapidly at first, then asymptotes.
-
-This is the power—and limit—of diversification.
+Risk decreases rapidly at first, then asymptotes. This is the power—and limit—of diversification.
 
 **Diversification Benefits:**
 
@@ -645,25 +611,29 @@ Geometry collapses again.
 
 *Figure: The CAL (blue line) is tangent to the efficient frontier at the tangency portfolio. This portfolio has the highest Sharpe ratio among all risky portfolios.*
 
+</section>
+
+<section class="slide" markdown="1">
+
 ### Capital Allocation Line (CAL) - Revisited
 
 With $n$ risky assets and a risk-free asset:
 
 * Combine the risk-free asset with any risky portfolio
-* The best combination uses the **tangency portfolio**
+* The best combination uses the **tangency portfolio** or **market portfolio**
 
 The CAL equation:
 
 $$
-\mu_p = R_f + \frac{\mu_T - R_f}{\sigma_T} \sigma_p
+\mu_p = R_f + \frac{\mu_M - R_f}{\sigma_M} \sigma_p
 $$
 
-Where $T$ is the tangency portfolio (the one with highest Sharpe ratio).
+Where $M$ is the market portfolio (the tangency portfolio).
 
-**Key result:** The tangency portfolio dominates all other risky portfolios.
+**Key result:** The Capital Allocation Line dominates all other portfolios in the risky asset space.
 
 Every investor should hold:
-1. The tangency portfolio (risky assets)
+1. The market portfolio (risky assets)
 2. The risk-free asset
 
 Only the proportions differ based on risk preferences.
@@ -700,36 +670,40 @@ This is the **Sharpe ratio maximization problem**.
 
 ### Derivation of Market Portfolio
 
-Equivalently, we can solve:
+Equivalently, we can solve the Sharpe ratio maximization directly:
 
 $$
-\max_w \quad w^\top \mu - R_f
+\max_w \quad \frac{w^\top \mu - R_f}{\sqrt{w^\top \Sigma w}}
 $$
 
 subject to:
 
 $$
-u^\top w = 1, \quad w^\top \Sigma w = c
+u^\top w = 1
 $$
-
-for some constant $c > 0$ (target variance).
 
 **Lagrangian:**
 
 $$
-\mathcal{L} = w^\top \mu - R_f + \lambda_1(u^\top w - 1) + \lambda_2(w^\top \Sigma w - c)
+\mathcal{L} = \frac{w^\top \mu - R_f}{\sqrt{w^\top \Sigma w}} + \lambda(u^\top w - 1)
 $$
 
 **First-order condition:**
 
 $$
-\mu + \lambda_1 u + 2\lambda_2 \Sigma w = 0
+\frac{1}{\sqrt{w^\top \Sigma w}}[\mu - \frac{(w^\top \mu - R_f)}{w^\top \Sigma w}\Sigma w] + \lambda u = 0
 $$
 
-Rearranging:
+Simplifying and rearranging (with too much effort):
 
 $$
-\Sigma w = -\frac{1}{2\lambda_2}(\mu + \lambda_1 u)
+\Sigma w \propto \mu - R_f u
+$$
+
+With the budget constraint applied, this yields:
+
+$$
+w^{\text{M}} = \frac{\Sigma^{-1}(\mu - R_fu)}{u^\top \Sigma^{-1}(\mu - R_fu)}
 $$
 
 </section>
@@ -756,10 +730,6 @@ $$
 2. Inversely weighted by covariance matrix
 3. **Does not depend on risk aversion**
 
-Preferences disappear.
-
-Markets choose the risky portfolio.
-
 </section>
 
 <section class="slide" markdown="1">
@@ -770,10 +740,6 @@ Markets choose the risky portfolio.
 * Differences arise only through leverage (borrowing/lending at $R_f$)
 * Risk-averse investors hold more of the risk-free asset
 * Risk-tolerant investors borrow and lever up the market portfolio
-
-This result is fragile empirically.
-
-But foundational theoretically.
 
 ### Numerical Example: Market Portfolio
 

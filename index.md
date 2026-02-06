@@ -44,7 +44,7 @@ This course introduces the **mathematical foundations of modern financial system
 7. **[Multi-asset Portfolios](lectures/07-multi-asset-portfolios.md)**  
    *Portfolio optimization with multiple assets and constraints*
 
-8. **[CAPM Model](lectures/08-capm-model.md)**  
+8. **[CAPM Model](lectures/08-capm.md)**  
    *Capital Asset Pricing Model, systematic vs. idiosyncratic risk*
 
 <!-- ### Part III: Advanced Topics

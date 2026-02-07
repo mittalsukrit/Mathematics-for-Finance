@@ -216,7 +216,7 @@ $$
 
 **Examples:**
 
-* If a stock has market cap \$100B and total market is \$10T, then $w_i = 0.01$
+* If a stock has market cap 100B USD and total market is 10T USD, then $w_i = 0.01$
 * The S&P 500 (value-weighted) approximates the U.S. equity market portfolio
 * A global market portfolio includes all stocks, bonds, real estate, etc.
 

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>problem_set_foundations_mathematical_finance</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflar.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css" />
+  <link rel="stylesheet" href="wide.css" />
+</head>
+<body>
+<h1 id="problem-set-foundations-of-mathematical-finance">Problem Set:
+Foundations of Mathematical Finance</h1>
+<p><strong>Course:</strong> Mathematics for Finance<br />
+<strong>Instructor:</strong> Sukrit Mittal, Franklin Templeton
+Investments<br />
+<strong>Total Problems:</strong> 3 (Real-world, industry-grade
+problems)</p>
+<hr />
+<h2
+id="problem-1-structured-product-design-at-a-investment-bank">Problem 1:
+Structured Product Design at a Investment Bank</h2>
+<p><strong>The Scenario:</strong></p>
+<p>You work in the Product Development team at a major investment bank.
+A wealthy client approaches you with an interesting request:</p>
+<blockquote>
+<p>"I want to invest ₹1 crore in a 1-year structured product. I'm
+worried about downside risk—if the market crashes, I want a cushion. But
+I also want to participate in any upside. Can you design something that
+costs exactly ₹1 crore today?"</p>
+</blockquote>
+<p>Your team has identified a suitable underlying risky bond for this
+product. The bond currently trades at ₹100. Market analysis shows it
+could reach ₹130 (if conditions improve) or ₹70 (if they deteriorate) in
+one year. The risk-free rate is 5% per annum.</p>
+<p><strong>What You Know:</strong></p>
+<ul>
+<li>Underlying bond: current price ₹100, future values ₹130 (up) or ₹70
+(down)</li>
+<li>Risk-free rate: 5% per annum</li>
+<li>Product budget: Must cost exactly ₹100 (sells at par)</li>
+<li>Client's preferences: Downside protection + upside
+participation</li>
+</ul>
+<p><strong>Your Task:</strong></p>
+<p>Your boss walks into your office and says:</p>
+<blockquote>
+<p>"Design a payoff structure that satisfies the client. Figure out what
+guarantees we can offer and what upside the client can capture. Then
+verify your design actually works—make sure there's no hidden arbitrage.
+Use pricing theory, not guesses."</p>
+</blockquote>
+<p><strong>What to deliver:</strong></p>
+<ol type="1">
+<li>A proposed payoff structure with specific strike price and
+participation rate</li>
+<li>Proof that your design is arbitrage-free</li>
+<li>Verification that your product prices at exactly ₹100</li>
+<li>A brief explanation to the client (non-technical) of why they can't
+have 100% downside protection AND 100% upside participation
+simultaneously</li>
+</ol>
+<hr />
+<h2
+id="problem-2-currency-hedging-strategy-for-a-multinational-corporation">Problem
+2: Currency Hedging Strategy for a Multinational Corporation</h2>
+<p><strong>The Scenario:</strong></p>
+<p>You're a treasurer at a multinational corporation. Your company has
+just acquired subsidiaries in three countries and inherited their debt
+obligations. You now manage a mixed-currency bond portfolio:</p>
+<table>
+<thead>
+<tr>
+<th>Currency</th>
+<th>Asset</th>
+<th>Amount</th>
+<th>Coupon</th>
+<th>Maturity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>INR (Domestic)</td>
+<td>Govt Bond</td>
+<td>₹100 crore</td>
+<td>5% p.a.</td>
+<td>2 years</td>
+</tr>
+<tr>
+<td>USD (Foreign)</td>
+<td>Treasury</td>
+<td>$30 million</td>
+<td>3% p.a.</td>
+<td>2 years</td>
+</tr>
+<tr>
+<td>EUR (Foreign)</td>
+<td>Corp Bond</td>
+<td>€20 million</td>
+<td>4% p.a.</td>
+<td>2 years</td>
+</tr>
+</tbody>
+</table>
+<p>Your CFO just sent you this message:</p>
+<blockquote>
+<p>"We have foreign currency risk now. Our shareholders are in India, so
+our P&amp;L is in INR. Every time the rupee strengthens, we lose on our
+USD and EUR bonds. Every time it weakens, we gain. This is
+unpredictable. Should we hedge? What's our true economic exposure? And
+how much would hedging cost us?"</p>
+</blockquote>
+<p>Current market conditions:</p>
+<ul>
+<li>INR rate: 5.5% (continuously compounded)</li>
+<li>USD rate: 2.5%</li>
+<li>EUR rate: 3.0%</li>
+<li>Spot rates: 83 INR/USD, 90 INR/EUR</li>
+</ul>
+<p><strong>Your Task:</strong></p>
+<ol type="1">
+<li><p><strong>Value the portfolio:</strong> Convert everything to INR.
+What's the total value today?</p></li>
+<li><p><strong>Identify the exposure:</strong> What does interest rate
+parity tell you about expected currency movements? Is the rupee likely
+to appreciate or depreciate?</p></li>
+<li><p><strong>Calculate hedging costs:</strong> If you use forward
+contracts to lock in exchange rates, what rates would you be locking in?
+How do they compare to current spot rates?</p></li>
+<li><p><strong>Scenario analysis:</strong></p>
+<ul>
+<li>What happens to your portfolio if INR rates spike 100 bps while
+foreign rates stay flat?</li>
+<li>What happens if the rupee suddenly strengthens by 2.4% against the
+dollar?</li>
+</ul></li>
+<li><p><strong>Hedging recommendation:</strong> Based on your analysis,
+should the corporation hedge its foreign exposure? What would be the
+trade-offs of hedging vs. not hedging?</p></li>
+</ol>
+<p><strong>What you deliver:</strong></p>
+<ul>
+<li>Current portfolio valuation in INR</li>
+<li>Calculation of no-arbitrage forward exchange rates</li>
+<li>Sensitivity analysis under different scenarios</li>
+<li>A recommendation memo to the CFO with clear reasoning on whether to
+hedge and why</li>
+</ul>
+<hr />
+<h2 id="why-these-problems-matter">Why These Problems Matter</h2>
+<p><strong>Problem 1</strong> teaches you the essence of derivatives
+pricing: how to design financial products that satisfy constraints
+(cost, payoff profile) while respecting no-arbitrage.</p>
+<p><strong>Problem 2</strong> reveals why multinational corporations
+exist in a web of currency risks. Every foreign investment is also a
+currency bet. Understanding interest rate parity and forward pricing is
+central to corporate finance.</p>
+<p>All three problems ask you to think like a finance professional:
+diagnose the problem, apply theory, calculate precisely, and communicate
+the results to decision-makers.</p>
+<p>Welcome to real-world finance!</p>
+</body>
+</html>

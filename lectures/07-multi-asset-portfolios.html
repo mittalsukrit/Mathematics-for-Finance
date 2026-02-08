@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Portfolios of Multiple Assets</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflar.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css" />
+  <link rel="stylesheet" href="wide.css" />
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Portfolios of Multiple Assets</h1>
+</header>
+<style>
+  .slides {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    height: 100vh;
+
+    /* 🔢 Start slide counter */
+    counter-reset: slide;
+  }
+
+  .slide {
+    scroll-snap-align: start;
+    min-height: 100vh;
+    padding: 4rem;
+    padding-top: 1rem;
+    box-sizing: border-box;
+
+    /* Ensure relative positioning for numbering */
+    position: relative;
+  }
+
+  /* Nice-to-have: smoother feel */
+  html { scroll-behavior: smooth; }
+
+  /* 🔢 Automatic slide numbering */
+  .slide::before {
+    counter-increment: slide;
+    content: "Slide " counter(slide);
+    position: absolute;
+    top: 1rem;   /* footer-like placement */
+    right: 2rem;
+    font-size: 1rem;
+    color: #666;
+  }
+</style>
+
+<div class="slides" markdown="1">
+
+<section class="slide" markdown="1">
+
+<h1 id="portfolios-of-multiple-assets">Portfolios of Multiple
+Assets</h1>
+<p><strong>Sukrit Mittal</strong> Franklin Templeton Investments</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="outline">Outline</h2>
+<ol type="1">
+<li>From two assets to many</li>
+<li>Portfolio return and risk (general case)</li>
+<li>Geometry of diversification</li>
+<li>Three risky securities</li>
+<li>Minimum variance portfolio (MVP)</li>
+<li>Minimum variance set and line</li>
+<li>Introducing the market portfolio</li>
+<li>Exercises</li>
+</ol>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="1-from-two-assets-to-many">1. From Two Assets to Many</h2>
+<p>The two-asset case taught us geometry.</p>
+<p>The multi-asset case teaches us <strong>structure</strong>.</p>
+<p>Nothing fundamentally new appears.</p>
+<p>What changes is notation—and discipline.</p>
+<h3 id="why-this-matters">Why This Matters</h3>
+<p>Real portfolios:</p>
+<ul>
+<li>Contain many assets</li>
+<li>Are constrained by budgets</li>
+<li>Must be optimized systematically</li>
+<li>The geometry becomes higher-dimensional</li>
+<li>But the economic principles remain unchanged</li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="2-portfolio-return-general-case">2. Portfolio Return: General
+Case</h2>
+<p>Let:</p>
+<ul>
+<li><span class="math inline">\(n\)</span> risky assets</li>
+<li>returns <span class="math inline">\(R = (R_1, \dots,
+R_n)^\top\)</span></li>
+<li>weights <span class="math inline">\(w = (w_1, \dots,
+w_n)^\top\)</span></li>
+</ul>
+<p>Portfolio return:</p>
+<p><span class="math display">\[
+R_p = w^\top R
+\]</span></p>
+<p>Budget constraint:</p>
+<p><span class="math display">\[
+\sum_{i=1}^n w_i = 1
+\]</span></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="expected-return">Expected Return</h3>
+<p>Let <span class="math inline">\(\mu = \mathbb{E}[R]\)</span> be the
+vector of expected returns.</p>
+<p>Then:</p>
+<p><span class="math display">\[
+\mathbb{E}[R_p] = w^\top \mu = \sum_{i=1}^n w_i \mu_i
+\]</span></p>
+<p><strong>Interpretation:</strong></p>
+<ul>
+<li>Expected portfolio return is a weighted average</li>
+<li>Weights are portfolio allocations</li>
+<li>This is perfectly linear</li>
+</ul>
+<h3 id="example-three-asset-portfolio">Example: Three-Asset
+Portfolio</h3>
+<p>Suppose:</p>
+<ul>
+<li>Asset 1: <span class="math inline">\(\mu_1 = 8\%\)</span>, <span
+class="math inline">\(w_1 = 0.3\)</span></li>
+<li>Asset 2: <span class="math inline">\(\mu_2 = 12\%\)</span>, <span
+class="math inline">\(w_2 = 0.5\)</span></li>
+<li>Asset 3: <span class="math inline">\(\mu_3 = 15\%\)</span>, <span
+class="math inline">\(w_3 = 0.2\)</span></li>
+</ul>
+<p>Portfolio expected return: <span class="math display">\[
+\mu_p = 0.3(0.08) + 0.5(0.12) + 0.2(0.15) = 0.024 + 0.060 + 0.030 =
+0.114 = 11.4\%
+\]</span></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="3-portfolio-risk-variance">3. Portfolio Risk: Variance</h2>
+<p>Let <span class="math inline">\(\Sigma\)</span> be the covariance
+matrix:</p>
+<p><span class="math display">\[
+\Sigma_{ij} = \text{Cov}(R_i, R_j)
+\]</span></p>
+<p>Portfolio variance:</p>
+<p><span class="math display">\[
+\sigma_p^2 = w^\top \Sigma w = \sum_{i=1}^n \sum_{j=1}^n w_i w_j
+\Sigma_{ij}
+\]</span></p>
+<p>This single quadratic form drives modern portfolio theory.</p>
+<p><strong>Expanded form:</strong></p>
+<p><span class="math display">\[
+\sigma_p^2 = \sum_{i=1}^n w_i^2 \sigma_i^2 + \sum_{i=1}^n \sum_{j \neq
+i} w_i w_j \text{Cov}(R_i, R_j)
+\]</span></p>
+<ul>
+<li>First term: individual variances weighted by squared weights</li>
+<li>Second term: all pairwise covariances</li>
+</ul>
+<p>The cross terms dominate for large <span
+class="math inline">\(n\)</span>.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="properties-of-the-covariance-matrix">Properties of the
+Covariance Matrix</h3>
+<p><strong>Symmetric:</strong> <span class="math inline">\(\Sigma_{ij} =
+\Sigma_{ji}\)</span></p>
+<ul>
+<li>Covariance is symmetric by definition</li>
+</ul>
+<p><strong>Positive semi-definite:</strong> <span
+class="math inline">\(w^\top \Sigma w \geq 0\)</span> for all <span
+class="math inline">\(w\)</span></p>
+<ul>
+<li>Variance cannot be negative</li>
+<li>Critical for optimization</li>
+</ul>
+<p><strong>Invertible (usually):</strong> <span
+class="math inline">\(\Sigma^{-1}\)</span> exists</p>
+<ul>
+<li>Required for many portfolio formulas</li>
+<li>Fails only in degenerate cases</li>
+</ul>
+<h3 id="numerical-example-three-asset-covariance">Numerical Example:
+Three-Asset Covariance</h3>
+<p>Consider the covariance matrix:</p>
+<p><span class="math display">\[
+\Sigma = \begin{pmatrix}
+0.04 &amp; 0.01 &amp; 0.02 \\
+0.01 &amp; 0.09 &amp; 0.03 \\
+0.02 &amp; 0.03 &amp; 0.16
+\end{pmatrix}
+\]</span></p>
+<p>For <span class="math inline">\(w = (0.3, 0.5,
+0.2)^\top\)</span>:</p>
+<p><span class="math display">\[
+\sigma_p^2 = w^\top \Sigma w = 0.3^2(0.04) + 0.5^2(0.09) + 0.2^2(0.16) =
+0.0439
+\]</span></p>
+<p>Therefore: <span class="math inline">\(\sigma_p = \sqrt{0.0439} =
+20.95\%\)</span></p>
+<p>The diversification benefit is embedded in the covariances.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="4-geometry-of-diversification">4. Geometry of
+Diversification</h2>
+<p>Expected return is <strong>linear</strong> in <span
+class="math inline">\(w\)</span>. Variance is <strong>quadratic</strong>
+in <span class="math inline">\(w\)</span>.</p>
+<h3 id="why-diversification-works">Why Diversification Works</h3>
+<p>As <span class="math inline">\(n\)</span> increases:</p>
+<ul>
+<li>Number of variance terms: <span
+class="math inline">\(n\)</span></li>
+<li>Number of covariance terms: <span
+class="math inline">\(n(n-1)\)</span></li>
+</ul>
+<p>For equally weighted portfolios (<span class="math inline">\(w_i =
+1/n\)</span>):</p>
+<p><span class="math display">\[
+\sigma_p^2 = \frac{1}{n} \bar{\sigma}^2 + \frac{n-1}{n} \bar{\text{Cov}}
+\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(\bar{\sigma}^2\)</span> = average
+variance</li>
+<li><span class="math inline">\(\bar{\text{Cov}}\)</span> = average
+covariance</li>
+</ul>
+<p>As <span class="math inline">\(n \to \infty\)</span>:</p>
+<p><span class="math display">\[
+\sigma_p^2 \to \bar{\text{Cov}}
+\]</span></p>
+<p><strong>Interpretation:</strong> Diversification eliminates
+idiosyncratic risk. Only systematic (correlated) risk remains.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="numerical-example-diversification-benefits">Numerical Example:
+Diversification Benefits</h3>
+<p>Consider <span class="math inline">\(n\)</span> assets with:</p>
+<ul>
+<li>Individual variance: <span class="math inline">\(\sigma^2 =
+0.09\)</span> (30% volatility)</li>
+<li>Average pairwise correlation: <span class="math inline">\(\bar{\rho}
+= 0.35\)</span></li>
+<li>Hence, average pairwise covariance: <span
+class="math inline">\(\bar{\text{Cov}} = 0.0315\)</span></li>
+</ul>
+<p>Equally weighted portfolio variance:</p>
+<table>
+<thead>
+<tr>
+<th><span class="math inline">\(n\)</span></th>
+<th><span class="math inline">\(\sigma_p^2\)</span></th>
+<th><span class="math inline">\(\sigma_p\)</span></th>
+<th>Reduction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0.0900</td>
+<td>30.00%</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0.0432</td>
+<td>20.78%</td>
+<td>31%</td>
+</tr>
+<tr>
+<td>10</td>
+<td>0.0373</td>
+<td>19.33%</td>
+<td>36%</td>
+</tr>
+<tr>
+<td>50</td>
+<td>0.0326</td>
+<td>18.07%</td>
+<td>40%</td>
+</tr>
+<tr>
+<td><span class="math inline">\(\infty\)</span></td>
+<td>0.0315</td>
+<td>17.75%</td>
+<td>41%</td>
+</tr>
+</tbody>
+</table>
+<p>Risk decreases rapidly at first, then asymptotes. This is the
+power—and limit—of diversification.</p>
+<p><strong>Diversification Benefits:</strong></p>
+<div align="center">
+<img src="Figures/diversification_benefits.png" alt="Diversification Benefits" style="width:70%;"/>
+</div>
+
+<p><em>Figure: Portfolio risk decreases as the number of assets
+increases, but approaches a limit (systematic risk) that cannot be
+diversified away.</em></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="5-three-risky-securities">5. Three Risky Securities</h2>
+<p>With three risky assets:</p>
+<ul>
+<li>The weight space is two-dimensional</li>
+<li>The attainable set fills an area</li>
+</ul>
+<p>Yet the efficient set collapses to a curve.</p>
+<p>More choice does not mean more freedom.</p>
+<p><strong>Three-Asset Portfolio Space:</strong></p>
+<div align="center">
+<img src="Figures/three_asset_space.png" alt="Three-Asset Portfolio Space" style="width:70%;"/>
+</div>
+
+<p><em>Figure: Portfolio possibilities in three-asset space. The simplex
+shows all valid portfolios where weights sum to 1. Color indicates
+expected return.</em></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="return-and-risk">Return and Risk</h3>
+<p>For three assets:</p>
+<p><span class="math display">\[
+R_p = w_1R_1 + w_2R_2 + w_3R_3
+\]</span></p>
+<p><span class="math display">\[
+\sigma_p^2 = w^\top \Sigma w
+\]</span></p>
+<p>With <span class="math inline">\(w_1 + w_2 + w_3 = 1\)</span>.</p>
+<p>Same equations. Higher dimension.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="6-minimum-variance-portfolio-mvp">6. Minimum Variance Portfolio
+(MVP)</h2>
+<p>The <strong>minimum variance portfolio</strong> solves:</p>
+<p><span class="math display">\[
+\min_w \quad w^\top \Sigma w
+\]</span></p>
+<p>subject to:</p>
+<p><span class="math display">\[
+u^\top w = 1
+\]</span></p>
+<p>Expected returns play no role here.</p>
+<p>Risk comes first.</p>
+<p><strong>Why find the MVP?</strong></p>
+<ul>
+<li>Anchors the efficient frontier</li>
+<li>Minimum risk achievable with given assets</li>
+<li>Starting point for efficient portfolios</li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="derivation-via-lagrange-multipliers">Derivation via Lagrange
+Multipliers</h3>
+<p><strong>Step 1:</strong> Form the Lagrangian</p>
+<p><span class="math display">\[
+\mathcal{L}(w,\lambda) = w^\top \Sigma w + \lambda(u^\top w - 1)
+\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(\lambda\)</span> is the Lagrange
+multiplier</li>
+<li>The constraint <span class="math inline">\(u^\top w = 1\)</span>
+ensures weights sum to 1</li>
+</ul>
+<p><strong>Step 2:</strong> Take first-order conditions</p>
+<p>Differentiate with respect to <span
+class="math inline">\(w\)</span>:</p>
+<p><span class="math display">\[
+\frac{\partial \mathcal{L}}{\partial w} = 2\Sigma w + \lambda u = 0
+\]</span></p>
+<p>Differentiate with respect to <span
+class="math inline">\(\lambda\)</span>:</p>
+<p><span class="math display">\[
+\frac{\partial \mathcal{L}}{\partial \lambda} = u^\top w - 1 = 0
+\]</span></p>
+<p>This is linear algebra, not magic.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="solving-for-mvp-weights">Solving for MVP Weights</h3>
+<p>From the first condition:</p>
+<p><span class="math display">\[
+2\Sigma w + \lambda u = 0
+\]</span></p>
+<p>Rearranging:</p>
+<p><span class="math display">\[
+\Sigma w = -\frac{\lambda}{2} u
+\]</span></p>
+<p>Multiply both sides by <span
+class="math inline">\(\Sigma^{-1}\)</span>:</p>
+<p><span class="math display">\[
+w = -\frac{\lambda}{2} \Sigma^{-1} u
+\]</span></p>
+<p>Apply the constraint <span class="math inline">\(u^\top w =
+1\)</span>:</p>
+<p><span class="math display">\[
+u^\top w = -\frac{\lambda}{2} u^\top \Sigma^{-1} u = 1
+\]</span></p>
+<p>Solve for <span class="math inline">\(\lambda\)</span>:</p>
+<p><span class="math display">\[
+\lambda = -\frac{2}{u^\top \Sigma^{-1} u}
+\]</span></p>
+<p>Substitute back:</p>
+<p><span class="math display">\[
+\boxed{w^{\text{MVP}} = \frac{\Sigma^{-1}u}{u^\top \Sigma^{-1}u}}
+\]</span></p>
+<p>This formula appears everywhere for a reason.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="properties-of-the-mvp">Properties of the MVP</h3>
+<ol type="1">
+<li><p><strong>Weights sum to one</strong> (by construction)</p></li>
+<li><p><strong>Unique</strong> (if <span
+class="math inline">\(\Sigma\)</span> is invertible)</p></li>
+<li><p><strong>Does not depend on expected returns</strong></p>
+<ul>
+<li>Pure risk minimization</li>
+<li>No assumptions about investor preferences</li>
+</ul></li>
+<li><p><strong>Computationally stable</strong> (usually)</p>
+<ul>
+<li>Depends only on covariance matrix</li>
+<li>Less sensitive to estimation error than mean-variance
+portfolios</li>
+</ul></li>
+</ol>
+<h3 id="numerical-example-three-asset-mvp">Numerical Example:
+Three-Asset MVP</h3>
+<p>Using our previous covariance matrix:</p>
+<p><span class="math display">\[
+\Sigma = \begin{pmatrix}
+0.04 &amp; 0.01 &amp; 0.02 \\
+0.01 &amp; 0.09 &amp; 0.03 \\
+0.02 &amp; 0.03 &amp; 0.16
+\end{pmatrix}
+\]</span></p>
+<p>First compute <span class="math inline">\(\Sigma^{-1}\)</span>:</p>
+<p><span class="math display">\[
+\Sigma^{-1} \approx \begin{pmatrix}
+28.09 &amp; -2.25 &amp; -2.81 \\
+-2.25 &amp; 12.36 &amp; -0.56 \\
+-2.81 &amp; -0.56 &amp; 7.30
+\end{pmatrix}
+\]</span></p>
+<p>Then:</p>
+<p><span class="math display">\[
+\Sigma^{-1}u = \begin{pmatrix}
+23.03 \\
+9.55 \\
+3.93
+\end{pmatrix}, \quad u^\top \Sigma^{-1}u = 36.51
+\]</span></p>
+<p>MVP weights:</p>
+<p><span class="math display">\[
+w^{\text{MVP}} = \begin{pmatrix}
+0.631 \\
+0.262 \\
+0.108
+\end{pmatrix}
+\]</span></p>
+<p>Portfolio variance: <span class="math inline">\(\sigma_{\text{MVP}}^2
+= 0.0274\)</span>, so <span class="math inline">\(\sigma_{\text{MVP}} =
+16.55\%\)</span></p>
+<p><strong>Interpretation:</strong> Most weight in Asset 1 (lowest
+variance), least in Asset 3 (highest variance).</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="7-minimum-variance-set-and-line">7. Minimum Variance Set and
+Line</h2>
+<p>As we vary expected return constraints:</p>
+<p><span class="math display">\[
+w^\top \mu = \mu_p
+\]</span></p>
+<p>we obtain a family of portfolios.</p>
+<p>Their image in <span class="math inline">\((\sigma, \mu)\)</span>
+space forms the <strong>minimum variance frontier</strong>.</p>
+<p>This is the set of all portfolios with minimum variance for each
+target return.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="optimization-problem-for-target-return">Optimization Problem for
+Target Return</h3>
+<p>For a target expected return <span
+class="math inline">\(\mu_p\)</span>, solve:</p>
+<p><span class="math display">\[
+\min_w \quad w^\top \Sigma w
+\]</span></p>
+<p>subject to:</p>
+<p><span class="math display">\[
+u^\top w = 1, \quad w^\top \mu = \mu_p
+\]</span></p>
+<p><strong>Lagrangian:</strong></p>
+<p><span class="math display">\[
+\mathcal{L}(w,\lambda_1,\lambda_2) = w^\top \Sigma w + \lambda_1(u^\top
+w - 1) + \lambda_2(w^\top \mu - \mu_p)
+\]</span></p>
+<p><strong>First-order condition:</strong></p>
+<p><span class="math display">\[
+2\Sigma w + \lambda_1 u + \lambda_2 \mu = 0
+\]</span></p>
+<p>Solving this system yields the entire efficient frontier.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="general-solution">General Solution</h3>
+<p>The solution has the form:</p>
+<p><span class="math display">\[
+w^*(\mu_p) = w^{\text{MVP}} + \lambda(\mu_p) \cdot w^{\text{diff}}
+\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(w^{\text{MVP}}\)</span> is the minimum
+variance portfolio</li>
+<li><span class="math inline">\(w^{\text{diff}}\)</span> is a portfolio
+orthogonal to the MVP</li>
+<li><span class="math inline">\(\lambda(\mu_p)\)</span> scales based on
+target return</li>
+</ul>
+<p><strong>Key insight:</strong> All efficient portfolios are
+combinations of two "basis" portfolios.</p>
+<p>This is the <strong>two-fund theorem</strong> for risky assets.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="minimum-variance-line">Minimum Variance Line</h3>
+<p>Without a risk-free asset:</p>
+<ul>
+<li>The efficient set is a curve (hyperbola in <span
+class="math inline">\((\sigma^2, \mu)\)</span> space)</li>
+<li>Only the upper branch is relevant (above the MVP)</li>
+<li>Below the MVP, portfolios are dominated</li>
+</ul>
+<p>Efficiency is selective.</p>
+<p><strong>Graphical representation:</strong></p>
+<div align="center">
+<img src="Figures/efficient_frontier_risky.png" alt="Efficient Frontier" style="width:70%;"/>
+</div>
+
+<p><em>Figure: The efficient frontier shows the minimum risk for each
+level of return. Only the upper branch (above MVP) is
+efficient.</em></p>
+<ul>
+<li>The MVP is the leftmost point</li>
+<li>Moving up the frontier increases both return and risk</li>
+<li>The lower branch is inefficient (higher risk for same return)</li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="8-adding-the-risk-free-asset">8. Adding the Risk-Free Asset</h2>
+<p>Once a risk-free asset is available:</p>
+<ul>
+<li>The efficient frontier becomes a straight line</li>
+<li>Only one risky portfolio matters</li>
+</ul>
+<p>This line dominates all others.</p>
+<p>Geometry collapses again.</p>
+<p><strong>Capital Allocation Line with Tangency Portfolio:</strong></p>
+<div align="center">
+<img src="Figures/tangency_with_risky_frontier.png" alt="CAL with Tangency Portfolio" style="width:70%;"/>
+</div>
+
+<p><em>Figure: The CAL (blue line) is tangent to the efficient frontier
+at the tangency portfolio. This portfolio has the highest Sharpe ratio
+among all risky portfolios.</em></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="capital-allocation-line-cal---revisited">Capital Allocation Line
+(CAL) - Revisited</h3>
+<p>With <span class="math inline">\(n\)</span> risky assets and a
+risk-free asset:</p>
+<ul>
+<li>Combine the risk-free asset with any risky portfolio</li>
+<li>The best combination uses the <strong>tangency portfolio</strong> or
+<strong>market portfolio</strong></li>
+</ul>
+<p>The CAL equation:</p>
+<p><span class="math display">\[
+\mu_p = R_f + \frac{\mu_M - R_f}{\sigma_M} \sigma_p
+\]</span></p>
+<p>Where <span class="math inline">\(M\)</span> is the market portfolio
+(the tangency portfolio).</p>
+<p><strong>Key result:</strong> The Capital Allocation Line dominates
+all other portfolios in the risky asset space.</p>
+<p>Every investor should hold:</p>
+<ol type="1">
+<li>The market portfolio (risky assets)</li>
+<li>The risk-free asset</li>
+</ol>
+<p>Only the proportions differ based on risk preferences.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="9-market-portfolio">9. Market Portfolio</h2>
+<p>The <strong>market portfolio</strong> is:</p>
+<ul>
+<li>The tangency portfolio</li>
+<li>The risky portfolio with the highest Sharpe ratio</li>
+<li>The portfolio all investors hold (in equilibrium)</li>
+</ul>
+<p>It solves:</p>
+<p><span class="math display">\[
+\max_w \quad \frac{w^\top \mu - R_f}{\sqrt{w^\top \Sigma w}}
+\]</span></p>
+<p>subject to:</p>
+<p><span class="math display">\[
+u^\top w = 1
+\]</span></p>
+<p>This is the <strong>Sharpe ratio maximization problem</strong>.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="derivation-of-market-portfolio">Derivation of Market
+Portfolio</h3>
+<p>Equivalently, we can solve the Sharpe ratio maximization
+directly:</p>
+<p><span class="math display">\[
+\max_w \quad \frac{w^\top \mu - R_f}{\sqrt{w^\top \Sigma w}}
+\]</span></p>
+<p>subject to:</p>
+<p><span class="math display">\[
+u^\top w = 1
+\]</span></p>
+<p><strong>Lagrangian:</strong></p>
+<p><span class="math display">\[
+\mathcal{L} = \frac{w^\top \mu - R_f}{\sqrt{w^\top \Sigma w}} +
+\lambda(u^\top w - 1)
+\]</span></p>
+<p><strong>First-order condition:</strong></p>
+<p><span class="math display">\[
+\frac{1}{\sqrt{w^\top \Sigma w}}[\mu - \frac{(w^\top \mu - R_f)}{w^\top
+\Sigma w}\Sigma w] + \lambda u = 0
+\]</span></p>
+<p>Simplifying and rearranging (with too much effort):</p>
+<p><span class="math display">\[
+\Sigma w \propto \mu - R_f u
+\]</span></p>
+<p>With the budget constraint applied, this yields:</p>
+<p><span class="math display">\[
+w^{\text{M}} = \frac{\Sigma^{-1}(\mu - R_fu)}{u^\top \Sigma^{-1}(\mu -
+R_fu)}
+\]</span></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="characterization-of-the-market-portfolio">Characterization of
+the Market Portfolio</h3>
+<p>After applying constraints and simplifying:</p>
+<p><span class="math display">\[
+w^{\text{M}} \propto \Sigma^{-1}(\mu - R_fu)
+\]</span></p>
+<p>With normalization:</p>
+<p><span class="math display">\[
+w^{\text{M}} = \frac{\Sigma^{-1}(\mu - R_fu)}{u^\top \Sigma^{-1}(\mu -
+R_fu)}
+\]</span></p>
+<p><strong>Key observations:</strong></p>
+<ol type="1">
+<li>Depends on <span class="math inline">\(\mu - R_f\)</span> (excess
+returns)</li>
+<li>Inversely weighted by covariance matrix</li>
+<li><strong>Does not depend on risk aversion</strong></li>
+</ol>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="interpretation">Interpretation</h3>
+<ul>
+<li>Everyone holds the same risky portfolio (the market portfolio)</li>
+<li>Differences arise only through leverage (borrowing/lending at <span
+class="math inline">\(R_f\)</span>)</li>
+<li>Risk-averse investors hold more of the risk-free asset</li>
+<li>Risk-tolerant investors borrow and lever up the market
+portfolio</li>
+</ul>
+<h3 id="numerical-example-market-portfolio">Numerical Example: Market
+Portfolio</h3>
+<p>Using our three-asset example with:</p>
+<p><span class="math display">\[
+\mu = \begin{pmatrix} 0.08 \\ 0.12 \\ 0.15 \end{pmatrix}, \quad R_f =
+0.03
+\]</span></p>
+<p><span class="math display">\[
+\Sigma^{-1} \approx \begin{pmatrix}
+28.09 &amp; -2.25 &amp; -2.81 \\
+-2.25 &amp; 12.36 &amp; -0.56 \\
+-2.81 &amp; -0.56 &amp; 7.30
+\end{pmatrix}
+\]</span></p>
+<p>Compute <span class="math inline">\(\mu - R_fu\)</span>:</p>
+<p><span class="math display">\[
+\mu - R_fu = \begin{pmatrix} 0.05 \\ 0.09 \\ 0.12 \end{pmatrix}
+\]</span></p>
+<p>Then:</p>
+<p><span class="math display">\[
+\Sigma^{-1}(\mu - R_fu) = \begin{pmatrix}
+0.768 \\
+0.984 \\
+0.689
+\end{pmatrix}
+\]</span></p>
+<p>Sum: <span class="math inline">\(0.768 + 0.984 + 0.689 =
+2.441\)</span></p>
+<p>Market portfolio weights:</p>
+<p><span class="math display">\[
+w^{\text{M}} = \begin{pmatrix}
+0.315 \\
+0.403 \\
+0.282
+\end{pmatrix}
+\]</span></p>
+<p>Expected return: <span class="math inline">\(\mu_M = 0.315(0.08) +
+0.403(0.12) + 0.282(0.15) = 11.4\%\)</span></p>
+<p>Variance: <span class="math inline">\(\sigma_M^2 = 0.0332\)</span>,
+so <span class="math inline">\(\sigma_M = 18.2\%\)</span></p>
+<p>Sharpe ratio: <span class="math inline">\(\frac{0.114 - 0.03}{0.182}
+= 0.462\)</span></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="10-exercises">10. Exercises</h2>
+<h3 id="exercise-1-computing-the-mvp">Exercise 1: Computing the MVP</h3>
+<p>Given three assets with expected returns and covariance matrix:</p>
+<p><span class="math display">\[
+\mu = \begin{pmatrix} 0.07 \\ 0.10 \\ 0.13 \end{pmatrix}, \quad
+\Sigma = \begin{pmatrix}
+0.09 &amp; 0.02 &amp; 0.01 \\
+0.02 &amp; 0.16 &amp; 0.03 \\
+0.01 &amp; 0.03 &amp; 0.25
+\end{pmatrix}
+\]</span></p>
+<p><strong>Tasks:</strong></p>
+<ol type="1">
+<li>Compute the minimum variance portfolio weights</li>
+<li>Calculate the expected return and standard deviation of the MVP</li>
+<li>Verify that the weights sum to one</li>
+<li>Interpret the result: which asset gets the most weight and why?</li>
+</ol>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="exercise-2-efficient-frontier">Exercise 2: Efficient
+Frontier</h3>
+<p>Using the same three assets from Exercise 1:</p>
+<p><strong>Tasks:</strong></p>
+<ol type="1">
+<li>Find the portfolio with target expected return <span
+class="math inline">\(\mu_p = 10\%\)</span></li>
+<li>Calculate the variance of this portfolio</li>
+<li>Compare its risk to the MVP</li>
+<li>Is this portfolio on the efficient frontier? Explain.</li>
+</ol>
+<p><strong>Hint:</strong> Set up the Lagrangian with two constraints and
+solve the first-order conditions.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="exercise-3-market-portfolio">Exercise 3: Market Portfolio</h3>
+<p>Given <span class="math inline">\(R_f = 0.04\)</span> and the data
+from Exercise 1:</p>
+<p><strong>Tasks:</strong></p>
+<ol type="1">
+<li>Compute the market portfolio (tangency portfolio)</li>
+<li>Calculate its expected return, variance, and Sharpe ratio</li>
+<li>Compare the market portfolio to the MVP: which has higher expected
+return? Which has lower risk?</li>
+<li>Explain why the market portfolio does not depend on individual risk
+aversion</li>
+</ol>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="exercise-4-diversification-analysis">Exercise 4: Diversification
+Analysis</h3>
+<p>Consider <span class="math inline">\(n\)</span> identical assets,
+each with:</p>
+<ul>
+<li>Expected return: <span class="math inline">\(\mu =
+12\%\)</span></li>
+<li>Variance: <span class="math inline">\(\sigma^2 = 0.16\)</span></li>
+<li>Pairwise correlation: <span class="math inline">\(\rho =
+0.3\)</span></li>
+</ul>
+<p><strong>Tasks:</strong></p>
+<ol type="1">
+<li>Write the formula for the variance of an equally-weighted
+portfolio</li>
+<li>Compute portfolio variance for <span class="math inline">\(n = 2, 5,
+10, 50, 100\)</span></li>
+<li>What is the limiting variance as <span class="math inline">\(n \to
+\infty\)</span>?</li>
+<li>What percentage of risk is diversifiable? What percentage is
+systematic?</li>
+</ol>
+<p><strong>Hint:</strong> Use <span class="math inline">\(\sigma_p^2 =
+\frac{1}{n}\sigma^2 + \frac{n-1}{n}\rho\sigma^2\)</span></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="exercise-5-constrained-optimization">Exercise 5: Constrained
+Optimization</h3>
+<p>Prove that the MVP weights sum to one using the formula:</p>
+<p><span class="math display">\[
+w^{\text{MVP}} = \frac{\Sigma^{-1}u}{u^\top \Sigma^{-1}u}
+\]</span></p>
+<p><strong>Steps:</strong></p>
+<ol type="1">
+<li>Take the sum of weights: <span class="math inline">\(\sum_{i=1}^n
+w_i = u^\top w^{\text{MVP}}\)</span></li>
+<li>Substitute the MVP formula</li>
+<li>Simplify to show the result equals 1</li>
+</ol>
+<p>Explain why this property is economically necessary (budget
+constraint).</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="final-takeaways">Final Takeaways</h2>
+<ul>
+<li><p><strong>Multi-asset portfolios require linear
+algebra</strong></p>
+<ul>
+<li>Portfolio return: <span class="math inline">\(\mu_p = w^\top
+\mu\)</span> (linear)</li>
+<li>Portfolio variance: <span class="math inline">\(\sigma_p^2 = w^\top
+\Sigma w\)</span> (quadratic)</li>
+<li>Optimization uses Lagrange multipliers</li>
+</ul></li>
+<li><p><strong>Diversification has limits</strong></p>
+<ul>
+<li>Can eliminate idiosyncratic risk</li>
+<li>Cannot eliminate systematic (correlated) risk</li>
+<li>Benefits diminish as <span class="math inline">\(n\)</span>
+increases</li>
+</ul></li>
+<li><p><strong>The MVP anchors the efficient frontier</strong></p>
+<ul>
+<li>Minimum achievable risk with given assets</li>
+<li>Does not depend on expected returns</li>
+<li>Computationally more stable than mean-variance portfolios</li>
+</ul></li>
+<li><p><strong>The efficient frontier is a curve (without risk-free
+asset)</strong></p>
+<ul>
+<li>Hyperbola in <span class="math inline">\((\sigma^2, \mu)\)</span>
+space</li>
+<li>Only upper branch is efficient</li>
+<li>All efficient portfolios are linear combinations of two basis
+portfolios</li>
+</ul></li>
+<li><p><strong>Adding a risk-free asset collapses the frontier to a
+line</strong></p>
+<ul>
+<li>The Capital Allocation Line (CAL)</li>
+<li>Slope = Sharpe ratio of tangency portfolio</li>
+<li>All investors hold the same risky portfolio (two-fund
+separation)</li>
+</ul></li>
+<li><p><strong>The market portfolio emerges naturally</strong></p>
+<ul>
+<li>Tangency portfolio = market portfolio (in equilibrium)</li>
+<li>Maximizes Sharpe ratio</li>
+<li>Does not depend on risk aversion</li>
+<li>Foundation for CAPM</li>
+</ul></li>
+</ul>
+<p>Next lecture: We will turn these portfolio results into <strong>asset
+pricing theory</strong> via the Capital Asset Pricing Model (CAPM).</p>
+</section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Introduction to Portfolios</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflar.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css" />
+  <link rel="stylesheet" href="wide.css" />
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Introduction to Portfolios</h1>
+</header>
+<style>
+  .slides {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    height: 100vh;
+
+    /* 🔢 Start slide counter */
+    counter-reset: slide;
+  }
+
+  .slide {
+    scroll-snap-align: start;
+    min-height: 100vh;
+    padding: 4rem;
+    padding-top: 1rem;
+    box-sizing: border-box;
+
+    /* Ensure relative positioning for numbering */
+    position: relative;
+  }
+
+  /* Nice-to-have: smoother feel */
+  html { scroll-behavior: smooth; }
+
+  /* 🔢 Automatic slide numbering */
+  .slide::before {
+    counter-increment: slide;
+    content: "Slide " counter(slide);
+    position: absolute;
+    top: 1rem;   /* footer-like placement */
+    right: 2rem;
+    font-size: 1rem;
+    color: #666;`
+  }
+</style>
+
+<div class="slides" markdown="1">
+
+<section class="slide" markdown="1">
+
+<h1 id="introduction-to-portfolios">Introduction to Portfolios</h1>
+<p><strong>Sukrit Mittal</strong> Franklin Templeton Investments</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="1-risk-and-return-the-core-trade-off">1. Risk and Return: The
+Core Trade-Off</h2>
+<p>Finance is not about maximizing return.</p>
+<p>It is about choosing <strong>how much risk you are willing to
+tolerate</strong> for a given return.</p>
+<p>No risk, no reward — but also no free lunches.</p>
+<p>This trade-off has been understood for centuries.</p>
+<p>The mathematics came later.</p>
+<figure style="width: 500px; margin: 2rem auto; display: block;">
+  <img src="https://modelinvesting.com/wp-content/uploads/2024/09/Risk-vs.-Return-1-1.png" alt="Risk vs Return" style="width: 100%; height: auto;">
+  <figcaption style="text-align: center; font-size: 0.95rem; color: #555;">
+    Risk vs Return
+  </figcaption>
+</figure>
+
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="what-do-we-mean-by-return">What Do We Mean by Return?</h3>
+<p>Return answers a simple question:</p>
+<blockquote>
+<p>How much did my investment change in value?</p>
+</blockquote>
+<p>But even simple questions deserve precise definitions.</p>
+<p>Ambiguity here infects everything downstream.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="2-measuring-return">2. Measuring Return</h2>
+<p>Let:</p>
+<ul>
+<li><span class="math inline">\(V(0)\)</span> = initial value</li>
+<li><span class="math inline">\(V(T)\)</span> = value at the end of the
+period</li>
+</ul>
+<p>The <strong>simple return</strong> is:</p>
+<p><span class="math display">\[
+K_V = \frac{V(T)-V(0)}{V(0)}
+\]</span></p>
+<p>This is the object we will work with throughout this lecture.</p>
+<h3 id="random-nature-of-returns">Random Nature of Returns</h3>
+<p>Future returns are unknown today.</p>
+<p>Hence, return is modeled as a <strong>random variable</strong>.</p>
+<p>This is not pessimism.</p>
+<p>It is intellectual honesty.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="3-expected-return">3. Expected Return</h2>
+<p>The <strong>expected return</strong> summarizes the center of the
+return distribution.</p>
+<p>If <span class="math inline">\(K_V\)</span> takes values <span
+class="math inline">\(k_i\)</span> with probabilities <span
+class="math inline">\(p_i\)</span>:</p>
+<p><span class="math display">\[
+\mathbb{E}[K_V] = \sum_{i=1}^n p_i k_i
+\]</span></p>
+<p>It is a weighted average of possible outcomes.</p>
+<h3 id="interpretation-of-expected-return">Interpretation of Expected
+Return</h3>
+<ul>
+<li>Not a guaranteed outcome</li>
+<li>Not the most likely outcome</li>
+<li>A long-run average under repeated trials</li>
+</ul>
+<p>Markets do not promise outcomes.</p>
+<p>They only offer distributions.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="4-measuring-risk-variance">4. Measuring Risk: Variance</h2>
+<p>Risk is about <strong>dispersion</strong>, not direction.</p>
+<p>The classical measure of risk is <strong>variance</strong>.</p>
+<p>Definition:</p>
+<p><span class="math display">\[
+\text{Var}(K_V) = \mathbb{E}[(K_V - \mathbb{E}[K_V])^2]
+\]</span></p>
+<p>Large deviations — up or down — increase variance.</p>
+<h3 id="standard-deviation">Standard Deviation</h3>
+<p>The square root of variance is the <strong>standard
+deviation</strong>:</p>
+<p><span class="math display">\[
+\sigma = \sqrt{\text{Var}(K_V)}
+\]</span></p>
+<p>It has the same units as return.</p>
+<p>This makes it easier to interpret and compare.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="criticism-of-variance">Criticism of Variance</h3>
+<p>Variance treats:</p>
+<ul>
+<li>Upside surprises</li>
+<li>Downside disasters</li>
+</ul>
+<p>as equally undesirable.</p>
+<p>Investors rarely agree with that philosophy.</p>
+<p>This criticism is old — and justified.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="5-downside-risk-and-semi-variance">5. Downside Risk and
+Semi-Variance</h2>
+<p>To focus on losses, we define <strong>semi-variance</strong>.</p>
+<p>Let <span class="math inline">\(\mu\)</span> be a benchmark (often 0
+or the mean).</p>
+<p><span class="math display">\[
+\text{SemiVar}(K_V) = \mathbb{E}[\max(0, \mu - K_V)^2]
+\]</span></p>
+<p>Only downside deviations matter.</p>
+<h3 id="why-semi-variance-is-less-popular">Why Semi-Variance Is Less
+Popular</h3>
+<ul>
+<li>Harder to compute</li>
+<li>Harder to optimize</li>
+<li>Breaks some elegant mathematics</li>
+</ul>
+<p>But conceptually, it is closer to how humans think about risk.</p>
+<p>Beauty and realism rarely coexist.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="6-two-securities-portfolio-return">6. Two Securities: Portfolio
+Return</h2>
+<p>For weights <span class="math inline">\(w_1\)</span>, <span
+class="math inline">\(w_2\)</span> with <span
+class="math inline">\(w_1+w_2=1\)</span>:</p>
+<ul>
+<li>Portfolio return:</li>
+</ul>
+<p><span class="math display">\[
+K_V = w_1K_1 + w_2K_2
+\]</span></p>
+<ul>
+<li>Portfolio expected return:</li>
+</ul>
+<p><span class="math display">\[
+\mu_V = w_1 \mu_1 + w_2 \mu_2
+\]</span></p>
+<ul>
+<li>This is a linear, intuitive relationship.</li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="two-securities-portfolio-risk">Two Securities: Portfolio
+Risk</h2>
+<p>Portfolio variance:</p>
+<p><span class="math display">\[
+\sigma_V^2 = w_1^2 \sigma_1^2 + w_2^2 \sigma_2^2 + 2w_1 w_2
+\operatorname{Cov}(K_1, K_2)
+\]</span></p>
+<p>Using correlation <span class="math inline">\(\rho_{12}\)</span>:</p>
+<p><span class="math display">\[
+\sigma_V^2 = w_1^2 \sigma_1^2 + w_2^2 \sigma_2^2 + 2w_1 w_2 \rho_{12}
+\sigma_1 \sigma_2
+\]</span></p>
+<p><strong>Key insight:</strong> Risk depends on co-movement, not
+individual volatilities alone.</p>
+<div align="center">
+<img src="./Figures/correlated_assets.png" alt="Stock chart" style="width:50%;"/>
+</div>
+
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="diversification-mechanism">Diversification Mechanism</h2>
+<ul>
+<li>The portfolio variance formula: <span class="math display">\[
+\sigma_V^2 = w_1^2 \sigma_1^2 + w_2^2 \sigma_2^2 + 2w_1 w_2 \rho_{12}
+\sigma_1 \sigma_2
+\]</span></li>
+<li>If <span class="math inline">\(\rho_{12} &lt; 1\)</span>,
+diversification reduces portfolio variance.</li>
+<li>The greatest benefit occurs when <span
+class="math inline">\(\rho_{12}\)</span> is negative.</li>
+<li>Even if both assets are individually risky, their combination can be
+less risky than either alone. <em>This insight earned Markowitz the
+Nobel Prize.</em></li>
+</ul>
+<div align="center">
+<img src="Figures/Markovitz.jpg" alt="Stock chart" style="width:40%;"/>
+</div>
+
+<ul>
+<li>Diversification cannot eliminate systematic (market-wide) risk.</li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="two-asset-theory-core-idea">Two-asset Theory: Core Idea</h2>
+<p>Two-Asset Theory states:</p>
+<ul>
+<li>Any efficient portfolio composed of two risky assets must lie on a
+smooth curve in <span class="math inline">\((\sigma, \mu)\)</span>
+space.</li>
+<li>The curve is <strong>parabolic</strong> when variance is plotted
+against weight.</li>
+<li>Every investor choosing between only two risky assets will pick a
+point on this curve based on risk preference.</li>
+<li>All efficient portfolios of two risky assets are <strong>convex
+combinations</strong> of the two assets.</li>
+</ul>
+<div align="center">
+<img src="Figures/EF1.png" alt="Stock chart" style="width:60%;"/>
+</div>
+
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="two-asset-efficient-frontier">Two-asset Efficient Frontier</h2>
+<p>For assets 1 and 2, the efficient frontier is the upper branch of the
+curve generated by:</p>
+<p><span class="math display">\[
+\mu(w) = w \mu_1 + (1-w) \mu_2
+\]</span></p>
+<p><span class="math display">\[
+\sigma^2(w) = w^2 \sigma_1^2 + (1-w)^2 \sigma_2^2 + 2w(1-w) \rho_{12}
+\sigma_1 \sigma_2
+\]</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(w\)</span> is the weight in asset 1 (so
+<span class="math inline">\(1-w\)</span> is the weight in asset 2)</li>
+<li><span class="math inline">\(\mu_1, \mu_2\)</span> are the expected
+returns</li>
+<li><span class="math inline">\(\sigma_1, \sigma_2\)</span> are the
+standard deviations</li>
+<li><span class="math inline">\(\rho_{12}\)</span> is the correlation
+between the two assets</li>
+</ul>
+<p>The <strong>efficient frontier</strong> consists of the portfolios on
+the upper branch of this curve—those with the highest expected return
+for a given level of risk.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="two-asset-efficient-frontier-1">Two-asset Efficient
+Frontier</h2>
+<ul>
+<li>Each point corresponds to a value of <span
+class="math inline">\(w\)</span> (the weight in asset 1).</li>
+<li>The <strong>upper part</strong> of the curve is
+<strong>efficient</strong>—these portfolios offer the best return for a
+given risk.</li>
+<li>The <strong>lower part</strong> of the curve is
+<strong>dominated</strong>—there are always better choices
+available.</li>
+<li>The <strong>endpoints</strong> correspond to holding 100% of one
+asset (either asset 1 or asset 2).</li>
+<li><strong>Diversification</strong> (choosing <span
+class="math inline">\(0 &lt; w &lt; 1\)</span>) improves the risk-return
+trade-off compared to holding a single asset.</li>
+</ul>
+<div align="center">
+<img src="Figures/EF2.png" alt="Stock chart" style="width:50%;"/>
+</div>
+
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="conditions-for-the-efficient-set">Conditions for the Efficient
+Set</h2>
+<p>The conditions for the efficient set (relative to asset 1) are:</p>
+<ol type="1">
+<li><p>If <span class="math inline">\(\frac{\sigma_1}{\sigma_2} &lt;
+\rho_{12} \leq 1\)</span>, then there exists a portfolio <strong>with
+short selling</strong> such that <span class="math inline">\(\sigma_V
+&lt; \sigma_1\)</span>, but for each portfolio <strong>without short
+selling</strong> <span class="math inline">\(\sigma_V \geq
+\sigma_1\)</span> (lines 1 and 2).</p></li>
+<li><p>If <span class="math inline">\(\rho_{12} =
+\frac{\sigma_1}{\sigma_2}\)</span>, then <span
+class="math inline">\(\sigma_V \geq \sigma_1\)</span> for each portfolio
+(line 3).</p></li>
+<li><p>If <span class="math inline">\(-1 \leq \rho_{12} &lt;
+\frac{\sigma_1}{\sigma_2}\)</span>, then there exists a portfolio
+<strong>without short selling</strong> such that <span
+class="math inline">\(\sigma_V &lt; \sigma_1\)</span> (lines 4 and
+5).</p></li>
+</ol>
+<p>These conditions describe when diversification can reduce risk below
+that of the less risky asset, depending on the correlation and the
+possibility of short selling.</p>
+<div align="center">
+<img src="Figures/EF2.png" alt="Stock chart" style="width:50%;"/>
+</div>
+
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="minimum-variance-portfolio-mvp">Minimum Variance Portfolio
+(MVP)</h2>
+<p>The <strong>Minimum Variance Portfolio (MVP)</strong> is the
+portfolio with the lowest possible risk (variance) for given assets.</p>
+<p>The MVP weights are: <span class="math display">\[
+\boxed{
+w_1^* = \frac{\sigma_2^2 - \rho_{12}\sigma_1\sigma_2}{\sigma_1^2 +
+\sigma_2^2 - 2\rho_{12}\sigma_1\sigma_2}, \quad
+w_2^* = \frac{\sigma_1^2 - \rho_{12}\sigma_1\sigma_2}{\sigma_1^2 +
+\sigma_2^2 - 2\rho_{12}\sigma_1\sigma_2}
+}
+\]</span></p>
+<p>This gives the unique portfolio with the lowest possible variance for
+two assets.</p>
+<p><em>How?</em> <strong>Minimize</strong> <span
+class="math inline">\(\sigma_V^2\)</span> subject to <span
+class="math inline">\(w_1 + w_2 = 1\)</span>.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="derivation-using-the-lagrangian">Derivation Using the
+Lagrangian</h3>
+<p>Suppose we have two assets with weights <span
+class="math inline">\(w_1\)</span> and <span class="math inline">\(w_2 =
+1 - w_1\)</span>. The portfolio variance is: <span
+class="math display">\[
+\sigma_V^2 = w_1^2 \sigma_1^2 + (1-w_1)^2 \sigma_2^2 +
+2w_1(1-w_1)\rho_{12}\sigma_1\sigma_2
+\]</span></p>
+<p>We want to <strong>minimize</strong> <span
+class="math inline">\(\sigma_V^2\)</span> subject to <span
+class="math inline">\(w_1 + w_2 = 1\)</span>.</p>
+<h4 id="lagrangian-setup">Lagrangian Setup</h4>
+<p>Let <span class="math inline">\(\lambda\)</span> be the Lagrange
+multiplier: <span class="math display">\[
+\mathcal{L}(w_1, w_2, \lambda) = \sigma_V^2 - \lambda(w_1 + w_2 - 1)
+\]</span></p>
+<p>But since <span class="math inline">\(w_2 = 1 - w_1\)</span>, we can
+write everything in terms of <span class="math inline">\(w_1\)</span>:
+<span class="math display">\[
+\mathcal{L}(w_1, \lambda) = w_1^2 \sigma_1^2 + (1-w_1)^2 \sigma_2^2 +
+2w_1(1-w_1)\rho_{12}\sigma_1\sigma_2 - \lambda(w_1 + (1-w_1) - 1)
+\]</span></p>
+<p>The constraint simplifies to <span class="math inline">\(w_1 + w_2 -
+1 = 0\)</span>, which is always satisfied.</p>
+<h4 id="take-the-derivative">Take the Derivative</h4>
+<p>Set the derivative with respect to <span
+class="math inline">\(w_1\)</span> to zero: <span
+class="math display">\[
+\frac{\partial \mathcal{L}}{\partial w_1} = 2w_1\sigma_1^2 -
+2(1-w_1)\sigma_2^2 + 2(1-2w_1)\rho_{12}\sigma_1\sigma_2 = 0
+\]</span></p>
+<p>Expand and solve for <span class="math inline">\(w_1\)</span>: <span
+class="math display">\[
+2w_1\sigma_1^2 - 2\sigma_2^2 + 2w_1\sigma_2^2 +
+2\rho_{12}\sigma_1\sigma_2 - 4w_1\rho_{12}\sigma_1\sigma_2 = 0
+\]</span></p>
+<p>Group terms: <span class="math display">\[
+2w_1(\sigma_1^2 + \sigma_2^2 - 2\rho_{12}\sigma_1\sigma_2) = 2\sigma_2^2
+- 2\rho_{12}\sigma_1\sigma_2
+\]</span></p>
+<p>Divide both sides by <span class="math inline">\(2(\sigma_1^2 +
+\sigma_2^2 - 2\rho_{12}\sigma_1\sigma_2)\)</span>: <span
+class="math display">\[
+w_1^* = \frac{\sigma_2^2 - \rho_{12}\sigma_1\sigma_2}{\sigma_1^2 +
+\sigma_2^2 - 2\rho_{12}\sigma_1\sigma_2}
+\]</span></p>
+<p>Similarly, <span class="math display">\[
+w_2^* = 1 - w_1^* = \frac{\sigma_1^2 -
+\rho_{12}\sigma_1\sigma_2}{\sigma_1^2 + \sigma_2^2 -
+2\rho_{12}\sigma_1\sigma_2}
+\]</span></p>
+<h4 id="second-order-condition">Second Order Condition</h4>
+<p>To ensure that the critical point found is a <strong>minimum</strong>
+(not a maximum), check the second derivative of <span
+class="math inline">\(\sigma_V^2\)</span> with respect to <span
+class="math inline">\(w_1\)</span>:</p>
+<p><span class="math display">\[
+\frac{d^2 \sigma_V^2}{d w_1^2} = 2\sigma_1^2 + 2\sigma_2^2 -
+4\rho_{12}\sigma_1\sigma_2
+\]</span></p>
+<p>This is positive if:</p>
+<p><span class="math display">\[
+\sigma_1^2 + \sigma_2^2 &gt; 2\rho_{12}\sigma_1\sigma_2
+\]</span></p>
+<p>For <span class="math inline">\(\rho_{12} &lt; 1\)</span>, this
+condition is always satisfied unless the assets are perfectly positively
+correlated and have identical volatilities. Thus, the solution above
+gives the <strong>minimum variance</strong>.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="derivation-efficient-set-conditions">Derivation: Efficient Set
+Conditions</h2>
+<p>To determine when diversification reduces portfolio risk below that
+of the less risky asset, analyze the portfolio variance:</p>
+<p><span class="math display">\[
+\sigma_V^2 = w_1^2 \sigma_1^2 + w_2^2 \sigma_2^2 + 2w_1 w_2 \rho_{12}
+\sigma_1 \sigma_2
+\]</span></p>
+<p>Assume <span class="math inline">\(w_1 + w_2 = 1\)</span> and <span
+class="math inline">\(0 \leq w_1, w_2 \leq 1\)</span> (no short
+selling).</p>
+<h3 id="condition-for-sigma_v--sigma_1-without-short-selling">Condition
+for <span class="math inline">\(\sigma_V &lt; \sigma_1\)</span> without
+short-selling</h3>
+<p><span class="math display">\[
+0 \leq w_1^\ast, w_2^\ast \leq 1
+\]</span></p>
+<p><span class="math display">\[
+0 \leq \frac{\sigma_2^2 - \rho_{12}\sigma_1\sigma_2}{\sigma_1^2 +
+\sigma_2^2 - 2\rho_{12}\sigma_1\sigma_2}, \frac{\sigma_1^2 -
+\rho_{12}\sigma_1\sigma_2}{\sigma_1^2 + \sigma_2^2 -
+2\rho_{12}\sigma_1\sigma_2} \leq 1
+\]</span></p>
+<p>Since <span class="math inline">\(\rho_{12} &lt; 1\)</span>, the
+denominator:</p>
+<p><span class="math display">\[
+\sigma_1^2 + \sigma_2^2 - 2\rho_{12}\sigma_1\sigma_2 &gt; 0
+\]</span></p>
+<p>Hence, the numerators need to satisfy:</p>
+<p><span class="math display">\[
+\sigma_1^2 - \rho_{12}\sigma_1\sigma_2 &gt; 0 \rightarrow \rho_{12} &lt;
+\frac{\sigma_1}{\sigma_2}
+\]</span></p>
+<p><span class="math display">\[
+\sigma_2^2 - \rho_{12}\sigma_1\sigma_2 &gt; 0 \rightarrow \rho_{12} &lt;
+\frac{\sigma_2}{\sigma_1}
+\]</span></p>
+<p>By design, <span class="math inline">\(\sigma_1 &lt;
+\sigma_2\)</span>. This implies <span
+class="math inline">\(\frac{\sigma_1}{\sigma_2} &lt;
+\frac{\sigma_2}{\sigma_1}\)</span>. So, the prevailing condition is:</p>
+<p><span class="math display">\[
+\rho_{12} &lt; \frac{\sigma_1}{\sigma_2}
+\]</span></p>
+<h3 id="summary-of-conditions">Summary of Conditions</h3>
+<ul>
+<li><strong>If <span class="math inline">\(\rho_{12} &lt;
+\frac{\sigma_1}{\sigma_2}\)</span>:</strong> There exists a portfolio
+(without short selling) with risk less than <span
+class="math inline">\(\sigma_1\)</span>.</li>
+<li><strong>If <span class="math inline">\(\rho_{12} =
+\frac{\sigma_1}{\sigma_2}\)</span>:</strong> The minimum risk equals
+<span class="math inline">\(\sigma_1\)</span>; no further reduction is
+possible.</li>
+<li><strong>If <span class="math inline">\(\rho_{12} &gt;
+\frac{\sigma_1}{\sigma_2}\)</span>:</strong> Diversification cannot
+reduce risk below <span class="math inline">\(\sigma_1\)</span> without
+short selling.</li>
+</ul>
+<p>These conditions define when the efficient set includes portfolios
+with risk lower than the least risky asset, depending on correlation and
+asset volatilities.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2
+id="derivation-efficient-frontier-equation-for-two-assets">Derivation:
+Efficient Frontier Equation for Two Assets</h2>
+<p>Consider two risky assets with expected returns <span
+class="math inline">\(\mu_1\)</span>, <span
+class="math inline">\(\mu_2\)</span>, standard deviations <span
+class="math inline">\(\sigma_1\)</span>, <span
+class="math inline">\(\sigma_2\)</span>, and correlation <span
+class="math inline">\(\rho_{12}\)</span>. Let <span
+class="math inline">\(w\)</span> be the weight in asset 1, so <span
+class="math inline">\(1-w\)</span> is the weight in asset 2.</p>
+<h3 id="portfolio-expected-return">Portfolio Expected Return</h3>
+<p>The expected return of the portfolio is: <span
+class="math display">\[
+\mu(w) = w \mu_1 + (1-w) \mu_2
+\]</span></p>
+<h3 id="portfolio-variance">Portfolio Variance</h3>
+<p>The variance of the portfolio is: <span class="math display">\[
+\sigma^2(w) = w^2 \sigma_1^2 + (1-w)^2 \sigma_2^2 +
+2w(1-w)\rho_{12}\sigma_1\sigma_2
+\]</span></p>
+<h3 id="efficient-frontier-equation">Efficient Frontier Equation</h3>
+<p>To express the efficient frontier, eliminate <span
+class="math inline">\(w\)</span> in favor of <span
+class="math inline">\(\mu\)</span>:</p>
+<p>Solve for <span class="math inline">\(w\)</span>: <span
+class="math display">\[
+\mu(w) = w \mu_1 + (1-w) \mu_2 \implies w = \frac{\mu(w) - \mu_2}{\mu_1
+- \mu_2}
+\]</span></p>
+<p>Substitute <span class="math inline">\(w\)</span> into <span
+class="math inline">\(\sigma^2(w)\)</span>:</p>
+<p><span class="math display">\[
+\sigma^2(\mu) =
+\left[
+\frac{\mu - \mu_2}{\mu_1 - \mu_2}
+\right]^2 \sigma_1^2
++
+\left[
+\frac{\mu_1 - \mu}{\mu_1 - \mu_2}
+\right]^2 \sigma_2^2
++
+2
+\left[
+\frac{\mu - \mu_2}{\mu_1 - \mu_2}
+\right]
+\left[
+\frac{\mu_1 - \mu}{\mu_1 - \mu_2}
+\right]
+\rho_{12} \sigma_1 \sigma_2
+\]</span></p>
+<p>This quadratic equation describes the <strong>efficient
+frontier</strong> for all possible portfolios of the two assets.</p>
+<h3 id="interpretation">Interpretation</h3>
+<ul>
+<li>For each target expected return <span
+class="math inline">\(\mu\)</span>, the equation gives the minimum
+achievable risk <span class="math inline">\(\sigma\)</span>.</li>
+<li>The upper branch of this curve (highest <span
+class="math inline">\(\mu\)</span> for each <span
+class="math inline">\(\sigma\)</span>) is the efficient frontier.</li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="final-takeaways">Final Takeaways</h2>
+<ul>
+<li><strong>Risk and return are inseparable:</strong> Every investment
+decision balances potential reward against uncertainty.</li>
+<li><strong>Expected return is simple; risk is subtle:</strong>
+Portfolio return combines linearly, but risk depends on asset
+interactions.</li>
+<li><strong>Variance is a useful but imperfect measure:</strong> It
+captures dispersion, but treats gains and losses equally.</li>
+<li><strong>Diversification is powered by correlation:</strong>
+Combining assets with less-than-perfect correlation reduces overall
+risk.</li>
+<li><strong>Two assets already reveal deep insights:</strong> Even the
+simplest portfolios illustrate the mathematics and intuition of modern
+portfolio theory.</li>
+</ul>
+<p>This foundation sets the stage for exploring more complex portfolios
+and the full efficient frontier.</p>
+</section>
+
+</div>
+</body>
+</html>

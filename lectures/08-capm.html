@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Capital Asset Pricing Model (CAPM)</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflar.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css" />
+  <link rel="stylesheet" href="wide.css" />
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Capital Asset Pricing Model (CAPM)</h1>
+</header>
+<style>
+  .slides {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    height: 100vh;
+
+    /* 🔢 Start slide counter */
+    counter-reset: slide;
+  }
+
+  .slide {
+    scroll-snap-align: start;
+    min-height: 100vh;
+    padding: 4rem;
+    padding-top: 1rem;
+    box-sizing: border-box;
+
+    /* Ensure relative positioning for numbering */
+    position: relative;
+  }
+
+  /* Nice-to-have: smoother feel */
+  html { scroll-behavior: smooth; }
+
+  /* 🔢 Automatic slide numbering */
+  .slide::before {
+    counter-increment: slide;
+    content: "Slide " counter(slide);
+    position: absolute;
+    top: 1rem;   /* footer-like placement */
+    right: 2rem;
+    font-size: 1rem;
+    color: #666;
+  }
+</style>
+
+<div class="slides" markdown="1">
+
+<section class="slide" markdown="1">
+
+<h1 id="capital-asset-pricing-model-capm">Capital Asset Pricing Model
+(CAPM)</h1>
+<p><strong>Sukrit Mittal</strong> Franklin Templeton Investments</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="outline">Outline</h2>
+<ol type="1">
+<li>Why CAPM?</li>
+<li>Assumptions and market setting</li>
+<li>From portfolio choice to equilibrium</li>
+<li>Derivation of CAPM</li>
+<li>Security Market Line (SML)</li>
+<li>Systematic vs idiosyncratic risk</li>
+<li>Characteristic line</li>
+<li>Empirical interpretation and limits</li>
+<li>Exercises</li>
+</ol>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="1-why-capm">1. Why CAPM?</h2>
+<p>Up to now we solved <strong>investor problems</strong>.</p>
+<ul>
+<li>How should I allocate my wealth?</li>
+<li>What is the optimal portfolio given my risk preferences?</li>
+</ul>
+<p>CAPM answers a different question:</p>
+<blockquote>
+<p>How are assets priced <em>in equilibrium</em>?</p>
+</blockquote>
+<p>This is not about optimal portfolios.</p>
+<p>It is about consistency across the entire market.</p>
+<p><strong>The fundamental question:</strong> If all investors are
+mean-variance optimizers, what must expected returns look like?</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="what-capm-isand-is-not">What CAPM Is—and Is Not</h3>
+<p>CAPM is: A model of how risk translates into return</p>
+<p>CAPM is not: A trading strategy</p>
+<p><em>It is a benchmark.</em></p>
+<h3 id="historical-context">Historical Context</h3>
+<p>Developed independently by:</p>
+<ul>
+<li>William Sharpe (1964)</li>
+<li>John Lintner (1965)</li>
+<li>Jan Mossin (1966)</li>
+</ul>
+<p>Sharpe won the Nobel Prize in Economics (1990) for this work.</p>
+<p>The model revolutionized finance by providing a testable theory of
+expected returns.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="2-market-setting-and-assumptions">2. Market Setting and
+Assumptions</h2>
+<p>We assume:</p>
+<ol type="1">
+<li><p><strong>Mean–variance optimization:</strong> All investors choose
+portfolios based only on expected return and variance</p></li>
+<li><p><strong>Homogeneous expectations:</strong> All investors agree
+on:</p>
+<ul>
+<li>Expected returns <span class="math inline">\(\mu\)</span></li>
+<li>Covariance matrix <span class="math inline">\(\Sigma\)</span></li>
+<li>Risk-free rate <span class="math inline">\(R_f\)</span></li>
+</ul></li>
+<li><p><strong>Perfect capital markets:</strong></p>
+<ul>
+<li>No transaction costs</li>
+<li>No taxes</li>
+<li>Assets are infinitely divisible</li>
+<li>All assets are marketable and liquid</li>
+</ul></li>
+<li><p><strong>Single-period horizon:</strong> All investors have the
+same investment horizon</p></li>
+<li><p><strong>Risk-free borrowing and lending:</strong> Investors can
+lend or borrow unlimited amounts at rate <span
+class="math inline">\(R_f\)</span></p></li>
+</ol>
+<p>These assumptions are strong.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="why-these-assumptions">Why These Assumptions?</h3>
+<p><strong>What each assumption enables:</strong></p>
+<ul>
+<li><strong>Mean-variance:</strong> Reduces preferences to two
+dimensions</li>
+<li><strong>Homogeneous expectations:</strong> Ensures all investors
+face same optimization problem</li>
+<li><strong>Perfect markets:</strong> Eliminates frictions that
+complicate pricing</li>
+<li><strong>Single period:</strong> Avoids dynamic complexities</li>
+<li><strong>Risk-free rate:</strong> Creates separation between risk and
+return</li>
+</ul>
+<p>Relaxing these assumptions leads to extensions and alternative
+models.</p>
+<p>But understanding CAPM requires accepting them first.</p>
+<h3 id="critique-of-assumptions">Critique of Assumptions</h3>
+<p><strong>Homogeneous expectations</strong> is the most
+controversial:</p>
+<ul>
+<li>Investors clearly disagree about future returns</li>
+<li>Disagreement is the reason trading occurs</li>
+<li>Yet: if disagreements are "rational," maybe they average out in
+equilibrium</li>
+</ul>
+<p><strong>Perfect markets:</strong></p>
+<ul>
+<li>Transaction costs exist but are small for large investors</li>
+<li>Taxes matter but CAPM can be extended to incorporate them</li>
+<li>The model still provides useful baseline predictions</li>
+</ul>
+<p>The question is not whether assumptions are true.</p>
+<p>The question is whether the model is useful despite them.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="3-from-portfolio-choice-to-equilibrium">3. From Portfolio Choice
+to Equilibrium</h2>
+<p>From Lecture 07, we know:</p>
+<ul>
+<li>All mean-variance investors (with same expectations) hold the same
+risky portfolio</li>
+<li>This portfolio is the <strong>tangency portfolio</strong> (maximizes
+Sharpe ratio)</li>
+<li>Differences arise only via leverage (mix with risk-free asset)</li>
+</ul>
+<p>In equilibrium:</p>
+<blockquote>
+<p>The risky portfolio held by everyone must be the market
+portfolio.</p>
+</blockquote>
+<p><strong>Why?</strong> Market clearing.</p>
+<ul>
+<li>If everyone wants to hold portfolio <span
+class="math inline">\(P\)</span></li>
+<li>But some asset <span class="math inline">\(i\)</span> is not in
+<span class="math inline">\(P\)</span> (or has wrong weight)</li>
+<li>Then there is excess supply or demand for asset <span
+class="math inline">\(i\)</span></li>
+<li>Prices must adjust until <span class="math inline">\(P\)</span>
+equals the market portfolio</li>
+</ul>
+<p>This is the critical step.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="the-market-portfolio">The Market Portfolio</h3>
+<p>The <strong>market portfolio</strong> <span
+class="math inline">\(M\)</span> contains:</p>
+<ul>
+<li>All risky assets</li>
+<li>In proportion to their market values</li>
+</ul>
+<p><strong>Definition:</strong></p>
+<p><span class="math display">\[
+w_i^M = \frac{\text{Market value of asset } i}{\text{Total market value
+of all assets}}
+\]</span></p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>If a stock has market cap 100B USD and total market is 10T USD, then
+<span class="math inline">\(w_i = 0.01\)</span></li>
+<li>The S&amp;P 500 (value-weighted) approximates the U.S. equity market
+portfolio</li>
+<li>A global market portfolio includes all stocks, bonds, real estate,
+etc.</li>
+</ul>
+<p>No asset can escape the market.</p>
+<p>If it exists, it is priced.</p>
+<h3 id="equilibrium-condition">Equilibrium Condition</h3>
+<p>In equilibrium, two conditions must hold:</p>
+<ol type="1">
+<li><p><strong>Optimality:</strong> Each investor holds an optimal
+portfolio given prices</p></li>
+<li><p><strong>Market clearing:</strong> Total demand = Total supply for
+every asset</p></li>
+</ol>
+<p>Combining these:</p>
+<p><span class="math display">\[
+\text{Aggregate holdings} = \text{Market portfolio}
+\]</span></p>
+<p>Since everyone holds the tangency portfolio, it must equal the market
+portfolio.</p>
+<p>This pins down expected returns.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="4-risk-decomposition">4. Risk Decomposition</h2>
+<p>Consider an asset <span class="math inline">\(i\)</span> with return
+<span class="math inline">\(R_i\)</span>.</p>
+<p>Decompose its risk relative to the market <span
+class="math inline">\(R_M\)</span>.</p>
+<p>Only part of this risk matters, rest is diversifiable noise.</p>
+<h3 id="total-risk-decomposition">Total Risk Decomposition</h3>
+<p>Any asset's return can be written as:</p>
+<p><span class="math display">\[
+R_i = \mathbb{E}[R_i] + \beta_i(R_M - \mathbb{E}[R_M]) + \varepsilon_i
+\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(\beta_i(R_M - \mathbb{E}[R_M])\)</span>
+= systematic component (market-driven)</li>
+<li><span class="math inline">\(\varepsilon_i\)</span> = idiosyncratic
+component (asset-specific)</li>
+<li><span class="math inline">\(\mathbb{E}[\varepsilon_i] = 0\)</span>
+and <span class="math inline">\(\text{Cov}(\varepsilon_i, R_M) =
+0\)</span> (by construction)</li>
+</ul>
+<p><strong>Total variance:</strong></p>
+<p><span class="math display">\[
+\text{Var}(R_i) = \beta_i^2 \text{Var}(R_M) + \text{Var}(\varepsilon_i)
+\]</span></p>
+<ul>
+<li>First term: <strong>systematic risk</strong> (cannot diversify
+away)</li>
+<li>Second term: <strong>idiosyncratic risk</strong> (diversifies away
+in large portfolios)</li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="beta-measuring-systematic-risk">Beta: Measuring Systematic
+Risk</h3>
+<p>Define <strong>beta</strong>:</p>
+<p><span class="math display">\[
+\beta_i = \frac{\text{Cov}(R_i, R_M)}{\text{Var}(R_M)}
+\]</span></p>
+<p>Beta measures:</p>
+<blockquote>
+<p>Sensitivity to market movements.</p>
+</blockquote>
+<p><strong>Interpretation:</strong></p>
+<ul>
+<li><span class="math inline">\(\beta_i = 1\)</span>: Asset moves
+one-for-one with the market</li>
+<li><span class="math inline">\(\beta_i &gt; 1\)</span>: Asset is more
+volatile than the market (aggressive)</li>
+<li><span class="math inline">\(\beta_i &lt; 1\)</span>: Asset is less
+volatile than the market (defensive)</li>
+<li><span class="math inline">\(\beta_i = 0\)</span>: Asset is
+uncorrelated with the market</li>
+<li><span class="math inline">\(\beta_i &lt; 0\)</span>: Asset moves
+opposite to the market (rare, e.g., gold)</li>
+</ul>
+<p>This is the only risk investors are paid for.</p>
+<p>Why? Because idiosyncratic risk can be diversified away.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="5-derivation-of-capm">5. Derivation of CAPM</h2>
+<p>Consider the market portfolio <span
+class="math inline">\(M\)</span>.</p>
+<p>For any asset <span class="math inline">\(i\)</span>:</p>
+<ul>
+<li>Adding <span class="math inline">\(i\)</span> to <span
+class="math inline">\(M\)</span> must not improve the Sharpe ratio</li>
+</ul>
+<p>Otherwise, <span class="math inline">\(M\)</span> would not be
+optimal.</p>
+<p>This restriction pins down expected returns.</p>
+<h3 id="derivation-via-marginal-contribution-to-risk">Derivation via
+Marginal Contribution to Risk</h3>
+<p>Consider a portfolio with weight <span
+class="math inline">\(\alpha\)</span> in asset <span
+class="math inline">\(i\)</span> and <span
+class="math inline">\((1-\alpha)\)</span> in the market portfolio <span
+class="math inline">\(M\)</span>.</p>
+<p>Portfolio return:</p>
+<p><span class="math display">\[
+R_p(\alpha) = \alpha R_i + (1-\alpha) R_M
+\]</span></p>
+<p>Portfolio variance:</p>
+<p><span class="math display">\[
+\sigma_p^2(\alpha) = \alpha^2 \sigma_i^2 + (1-\alpha)^2 \sigma_M^2 +
+2\alpha(1-\alpha) \text{Cov}(R_i, R_M)
+\]</span></p>
+<p>At <span class="math inline">\(\alpha = 0\)</span> (pure market
+portfolio), the Sharpe ratio must be maximized.</p>
+<p><strong>First-order condition for maximum Sharpe ratio:</strong></p>
+<p><span class="math display">\[
+\frac{d}{d\alpha}\left[\frac{\mathbb{E}[R_p(\alpha)] -
+R_f}{\sigma_p(\alpha)}\right]\Bigg|_{\alpha=0} = 0
+\]</span></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="derivation-continued">Derivation (continued)</h3>
+<p>The Sharpe ratio of the mixed portfolio is:</p>
+<p><span class="math display">\[
+S(\alpha) = \frac{\mathbb{E}[R_p(\alpha)] - R_f}{\sigma_p(\alpha)}
+\]</span></p>
+<p>For <span class="math inline">\(M\)</span> to be optimal, the
+derivative with respect to <span class="math inline">\(\alpha\)</span>
+must be zero at <span class="math inline">\(\alpha = 0\)</span>.</p>
+<p><strong>Step 1: Derivative of expected return</strong></p>
+<p><span class="math display">\[
+\frac{d\mathbb{E}[R_p]}{d\alpha} = \mathbb{E}[R_i] - \mathbb{E}[R_M]
+\]</span></p>
+<p><strong>Step 2: Derivative of variance</strong></p>
+<p><span class="math display">\[
+\frac{d\sigma_p^2}{d\alpha} = 2\alpha \sigma_i^2 +
+2(1-2\alpha)\sigma_M^2 - 2(1-2\alpha)\text{Cov}(R_i, R_M)\]</span></p>
+<p>At <span class="math inline">\(\alpha = 0\)</span>:</p>
+<p><span class="math display">\[
+\frac{d\sigma_p^2}{d\alpha}\Bigg|_{\alpha=0} = 2[\text{Cov}(R_i, R_M) -
+\sigma_M^2]
+\]</span></p>
+<p><strong>Step 3: Derivative of standard deviation</strong></p>
+<p><span class="math display">\[
+\frac{d\sigma_p}{d\alpha}\Bigg|_{\alpha=0} =
+\frac{1}{\sigma_M}[\text{Cov}(R_i, R_M) - \sigma_M^2]
+\]</span></p>
+<p><strong>Step 4: Apply quotient rule to Sharpe ratio</strong></p>
+<p><span class="math display">\[
+\frac{dS}{d\alpha} = \frac{\frac{d\mathbb{E}[R_p]}{d\alpha} \cdot
+\sigma_p - (\mathbb{E}[R_p] - R_f) \cdot
+\frac{d\sigma_p}{d\alpha}}{\sigma_p^2}
+\]</span></p>
+<p>At <span class="math inline">\(\alpha = 0\)</span>, set numerator to
+zero:</p>
+<p><span class="math display">\[
+[\mathbb{E}[R_i] - \mathbb{E}[R_M]] \sigma_M = [\mathbb{E}[R_M] - R_f]
+\cdot \frac{\text{Cov}(R_i, R_M) - \sigma_M^2}{\sigma_M}
+\]</span></p>
+<p><strong>Step 5: Simplify</strong></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="capm-equation">CAPM Equation</h3>
+<p>Rearranging:</p>
+<p><span class="math display">\[
+\mathbb{E}[R_i] - \mathbb{E}[R_M] = \frac{\mathbb{E}[R_M] -
+R_f}{\sigma_M^2}[\text{Cov}(R_i, R_M) - \sigma_M^2]
+\]</span></p>
+<p>For the market portfolio itself, <span
+class="math inline">\(\text{Cov}(R_M, R_M) = \sigma_M^2\)</span>, so
+this holds with equality.</p>
+<p>For any other asset <span class="math inline">\(i\)</span>:</p>
+<p><span class="math display">\[
+\mathbb{E}[R_i] = \mathbb{E}[R_M] + \frac{\mathbb{E}[R_M] -
+R_f}{\sigma_M^2}[\text{Cov}(R_i, R_M) - \sigma_M^2]
+\]</span></p>
+<p>Rearranging:</p>
+<p><span class="math display">\[
+\mathbb{E}[R_i] = R_f + \frac{\text{Cov}(R_i,
+R_M)}{\sigma_M^2}[\mathbb{E}[R_M] - R_f]
+\]</span></p>
+<p>Using <span class="math inline">\(\beta_i = \frac{\text{Cov}(R_i,
+R_M)}{\sigma_M^2}\)</span>:</p>
+<p><span class="math display">\[
+\boxed{\mathbb{E}[R_i] - R_f = \beta_i\big( \mathbb{E}[R_M] - R_f \big)}
+\]</span></p>
+<p>This is the <strong>CAPM equation</strong>.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="alternative-derivation-equilibrium-pricing">Alternative
+Derivation: Equilibrium Pricing</h3>
+<p><strong>Equilibrium condition:</strong> The market portfolio is the
+tangency portfolio.</p>
+<p>From Lecture 07, the tangency portfolio satisfies:</p>
+<p><span class="math display">\[
+w^M \propto \Sigma^{-1}(\mu - R_f \mathbf{1})
+\]</span></p>
+<p>This means:</p>
+<p><span class="math display">\[
+\mu - R_f \mathbf{1} \propto \Sigma w^M
+\]</span></p>
+<p>The <span class="math inline">\(i\)</span>-th component:</p>
+<p><span class="math display">\[
+\mu_i - R_f \propto \sum_j \Sigma_{ij} w_j^M = \text{Cov}(R_i, R_M)
+\]</span></p>
+<p>The proportionality constant is the same for all assets:</p>
+<p><span class="math display">\[
+\mu_i - R_f = \lambda \cdot \text{Cov}(R_i, R_M)
+\]</span></p>
+<p>For the market portfolio itself:</p>
+<p><span class="math display">\[
+\mu_M - R_f = \lambda \cdot \text{Var}(R_M)
+\]</span></p>
+<p>Therefore:</p>
+<p><span class="math display">\[
+\lambda = \frac{\mu_M - R_f}{\sigma_M^2}
+\]</span></p>
+<p>Substituting back:</p>
+<p><span class="math display">\[
+\mathbb{E}[R_i] - R_f = \frac{\mu_M - R_f}{\sigma_M^2} \cdot
+\text{Cov}(R_i, R_M) = \beta_i(\mu_M - R_f)
+\]</span></p>
+<p>Same result, different path.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="6-security-market-line-sml">6. Security Market Line (SML)</h2>
+<p>Plot expected return against beta.</p>
+<p>The CAPM predicts a straight line:</p>
+<p><span class="math display">\[
+\mathbb{E}[R_i] = R_f + \beta_i (\mathbb{E}[R_M] - R_f)
+\]</span></p>
+<p>This line is the <strong>Security Market Line (SML)</strong>.</p>
+<p><strong>Key points on the SML:</strong></p>
+<ul>
+<li><strong>Risk-free asset:</strong> <span class="math inline">\(\beta
+= 0\)</span>, <span class="math inline">\(\mathbb{E}[R] =
+R_f\)</span></li>
+<li><strong>Market portfolio:</strong> <span class="math inline">\(\beta
+= 1\)</span>, <span class="math inline">\(\mathbb{E}[R] =
+\mathbb{E}[R_M]\)</span></li>
+<li><strong>Aggressive asset:</strong> <span class="math inline">\(\beta
+&gt; 1\)</span>, <span class="math inline">\(\mathbb{E}[R] &gt;
+\mathbb{E}[R_M]\)</span></li>
+<li><strong>Defensive asset:</strong> <span class="math inline">\(0 &lt;
+\beta &lt; 1\)</span>, <span class="math inline">\(R_f &lt;
+\mathbb{E}[R] &lt; \mathbb{E}[R_M]\)</span></li>
+</ul>
+<p><strong>Graphical Representation:</strong></p>
+<div align="center">
+<img src="Figures/security_market_line.png" alt="Security Market Line" style="width:70%;"/>
+</div>
+
+<p><em>Figure: The Security Market Line shows the linear relationship
+between beta and expected return predicted by CAPM. Assets above the
+line are underpriced (positive alpha), while those below are overpriced
+(negative alpha).</em></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="interpretation-of-the-sml">Interpretation of the SML</h3>
+<p><strong>Components:</strong></p>
+<ul>
+<li><strong>Intercept:</strong> <span class="math inline">\(R_f\)</span>
+(risk-free rate)</li>
+<li><strong>Slope:</strong> <span class="math inline">\(\mathbb{E}[R_M]
+- R_f\)</span> (market risk premium)</li>
+</ul>
+<p><strong>Economic interpretation:</strong></p>
+<p><span class="math display">\[
+\text{Expected excess return} = \beta \times \text{Market risk premium}
+\]</span></p>
+<ul>
+<li>You earn the risk-free rate for waiting</li>
+<li>You earn a premium proportional to <strong>systematic risk</strong>
+(<span class="math inline">\(\beta\)</span>)</li>
+<li>Idiosyncratic risk earns no premium (it can be diversified)</li>
+</ul>
+<p><strong>Asset pricing implications:</strong></p>
+<ul>
+<li>Assets <strong>above</strong> the line: underpriced (higher return
+than CAPM predicts)</li>
+<li>Assets <strong>on</strong> the line: fairly priced</li>
+<li>Assets <strong>below</strong> the line: overpriced (lower return
+than CAPM predicts)</li>
+</ul>
+<p>In theory.</p>
+<h3 id="numerical-example-using-the-sml">Numerical Example: Using the
+SML</h3>
+<p>Suppose:</p>
+<ul>
+<li><span class="math inline">\(R_f = 3\%\)</span></li>
+<li><span class="math inline">\(\mathbb{E}[R_M] = 10\%\)</span></li>
+<li>Market risk premium: <span class="math inline">\(\mathbb{E}[R_M] -
+R_f = 7\%\)</span></li>
+</ul>
+<p><strong>Asset A:</strong> <span class="math inline">\(\beta_A =
+0.8\)</span> (defensive)</p>
+<p><span class="math display">\[
+\mathbb{E}[R_A] = 0.03 + 0.8(0.10 - 0.03) = 0.03 + 0.056 = 8.6\%
+\]</span></p>
+<p><strong>Asset B:</strong> <span class="math inline">\(\beta_B =
+1.5\)</span> (aggressive)</p>
+<p><span class="math display">\[
+\mathbb{E}[R_B] = 0.03 + 1.5(0.10 - 0.03) = 0.03 + 0.105 = 13.5\%
+\]</span></p>
+<p><strong>Asset C:</strong> <span class="math inline">\(\beta_C =
+1.2\)</span>, observed return = <span
+class="math inline">\(15\%\)</span></p>
+<p>CAPM prediction:</p>
+<p><span class="math display">\[
+\mathbb{E}[R_C] = 0.03 + 1.2(0.07) = 11.4\%
+\]</span></p>
+<p>Actual return (15%) &gt; CAPM prediction (11.4%)</p>
+<p><strong>Interpretation:</strong> Asset C is underpriced or has
+positive alpha.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="7-systematic-vs-idiosyncratic-risk">7. Systematic vs
+Idiosyncratic Risk</h2>
+<p>Total risk decomposes into:</p>
+<ul>
+<li><strong>Systematic risk</strong> (market-related,
+undiversifiable)</li>
+<li><strong>Idiosyncratic risk</strong> (asset-specific,
+diversifiable)</li>
+</ul>
+<p>Diversification eliminates only the latter.</p>
+<p>Markets pay only for what cannot be diversified.</p>
+<h3 id="mathematical-decomposition">Mathematical Decomposition</h3>
+<p>Recall the risk decomposition:</p>
+<p><span class="math display">\[
+R_i = \mathbb{E}[R_i] + \beta_i(R_M - \mathbb{E}[R_M]) + \varepsilon_i
+\]</span></p>
+<p>Taking variance:</p>
+<p><span class="math display">\[
+\text{Var}(R_i) = \beta_i^2 \text{Var}(R_M) + \text{Var}(\varepsilon_i)
+\]</span></p>
+<p><strong>R-squared:</strong> Fraction of variance explained by the
+market:</p>
+<p><span class="math display">\[
+R^2 = \frac{\beta_i^2 \text{Var}(R_M)}{\text{Var}(R_i)}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(R^2 = 1\)</span>: All risk is systematic
+(perfectly correlated with market)</li>
+<li><span class="math inline">\(R^2 = 0\)</span>: All risk is
+idiosyncratic (uncorrelated with market)</li>
+<li>Typical stock: <span class="math inline">\(R^2 \approx 0.3\)</span>
+(30% of variance is systematic)</li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="why-only-systematic-risk-is-priced">Why Only Systematic Risk Is
+Priced</h3>
+<p><strong>Key insight:</strong> In a well-diversified portfolio,
+idiosyncratic risks cancel out.</p>
+<p>For a portfolio of <span class="math inline">\(n\)</span> assets with
+equal weights:</p>
+<p><span class="math display">\[
+R_p = \frac{1}{n}\sum_{i=1}^n R_i = \mathbb{E}[R_p] + \beta_p(R_M -
+\mathbb{E}[R_M]) + \frac{1}{n}\sum_{i=1}^n \varepsilon_i
+\]</span></p>
+<p>Where <span class="math inline">\(\beta_p = \frac{1}{n}\sum_{i=1}^n
+\beta_i\)</span>.</p>
+<p><strong>Variance of idiosyncratic component:</strong></p>
+<p>If <span class="math inline">\(\varepsilon_i\)</span> are
+uncorrelated with average variance <span
+class="math inline">\(\bar{\sigma}_\varepsilon^2\)</span>:</p>
+<p><span class="math display">\[
+\text{Var}\left(\frac{1}{n}\sum_{i=1}^n \varepsilon_i\right) =
+\frac{\bar{\sigma}_\varepsilon^2}{n} \to 0 \text{ as } n \to \infty
+\]</span></p>
+<p><strong>Conclusion:</strong> Large portfolios eliminate idiosyncratic
+risk.</p>
+<p>Since investors can diversify at zero cost, they won't pay a premium
+for bearing idiosyncratic risk.</p>
+<p><strong>Visual Decomposition:</strong></p>
+<div align="center">
+<img src="Figures/systematic_idiosyncratic_risk.png" alt="Risk Decomposition" style="width:85%;"/>
+</div>
+
+<p><em>Figure: (Left) Risk decomposition for different asset types
+showing systematic and idiosyncratic components. (Right) R²
+interpretation showing the fraction of variance explained by the
+market.</em></p>
+<h3 id="numerical-example-diversification">Numerical Example:
+Diversification</h3>
+<p>Consider 50 stocks, each with:</p>
+<ul>
+<li>Beta: <span class="math inline">\(\beta_i = 1.2\)</span></li>
+<li>Idiosyncratic variance: <span
+class="math inline">\(\text{Var}(\varepsilon_i) = 0.04\)</span></li>
+<li>Market variance: <span class="math inline">\(\sigma_M^2 =
+0.04\)</span></li>
+</ul>
+<p><strong>Individual stock variance:</strong></p>
+<p><span class="math display">\[
+\text{Var}(R_i) = (1.2)^2(0.04) + 0.04 = 0.0576 + 0.04 = 0.0976
+\]</span></p>
+<p>Standard deviation: <span class="math inline">\(\sigma_i =
+31.2\%\)</span></p>
+<p><strong>Equally-weighted portfolio variance:</strong></p>
+<p><span class="math display">\[
+\text{Var}(R_p) = (1.2)^2(0.04) + \frac{0.04}{50} = 0.0576 + 0.0008 =
+0.0584
+\]</span></p>
+<p>Standard deviation: <span class="math inline">\(\sigma_p =
+24.2\%\)</span></p>
+<p><strong>Risk reduction:</strong> From 31.2% to 24.2% (22%
+reduction)</p>
+<ul>
+<li>Systematic risk: <span class="math inline">\(\sqrt{0.0576} =
+24\%\)</span> (unchanged)</li>
+<li>Idiosyncratic risk: nearly eliminated</li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="8-characteristic-line">8. Characteristic Line</h2>
+<p>The <strong>characteristic line</strong> relates an asset's excess
+return to the market's excess return:</p>
+<p><span class="math display">\[
+R_i - R_f = \alpha_i + \beta_i (R_M - R_f) + \varepsilon_i
+\]</span></p>
+<p>This is a <strong>regression equation</strong>.</p>
+<p><strong>Components:</strong></p>
+<ul>
+<li><span class="math inline">\(\alpha_i\)</span> =
+<strong>alpha</strong> (intercept) = abnormal return</li>
+<li><span class="math inline">\(\beta_i\)</span> = <strong>beta</strong>
+(slope) = systematic risk exposure</li>
+<li><span class="math inline">\(\varepsilon_i\)</span> = residual
+(idiosyncratic component)</li>
+</ul>
+<p><strong>Assumptions:</strong></p>
+<ul>
+<li><span class="math inline">\(\mathbb{E}[\varepsilon_i] =
+0\)</span></li>
+<li><span class="math inline">\(\text{Cov}(\varepsilon_i, R_M) =
+0\)</span></li>
+</ul>
+<p>This is <strong>not</strong> just a theoretical construct — it's how
+we estimate beta in practice.</p>
+<p><strong>Graphical Representation:</strong></p>
+<div align="center">
+<img src="Figures/characteristic_line.png" alt="Characteristic Line" style="width:70%;"/>
+</div>
+
+<p><em>Figure: The characteristic line shows the regression of asset
+excess returns against market excess returns. The slope is beta, and the
+intercept is alpha. Positive alpha indicates outperformance relative to
+CAPM predictions.</em></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="interpretation-of-parameters">Interpretation of Parameters</h3>
+<p><strong>Beta (<span
+class="math inline">\(\beta_i\)</span>):</strong></p>
+<ul>
+<li>Measures <strong>systematic exposure</strong> to market risk</li>
+<li><span class="math inline">\(\beta_i = \frac{\text{Cov}(R_i - R_f,
+R_M - R_f)}{\text{Var}(R_M - R_f)}\)</span></li>
+<li>Estimated as the slope in time-series regression</li>
+</ul>
+<p><strong>Alpha (<span
+class="math inline">\(\alpha_i\)</span>):</strong></p>
+<ul>
+<li>Measures <strong>abnormal return</strong> (above or below CAPM
+prediction)</li>
+<li>In CAPM equilibrium: <span class="math inline">\(\alpha_i =
+0\)</span> for all assets</li>
+<li>Nonzero alpha suggests:
+<ul>
+<li>Mispricing</li>
+<li>Model misspecification</li>
+<li>Superior skill (if persistent)</li>
+</ul></li>
+</ul>
+<p><strong>Residual (<span
+class="math inline">\(\varepsilon_i\)</span>):</strong></p>
+<ul>
+<li>Idiosyncratic noise</li>
+<li>Diversifies away in portfolios</li>
+<li>Variance <span
+class="math inline">\(\text{Var}(\varepsilon_i)\)</span> measures
+idiosyncratic risk</li>
+</ul>
+<p>In CAPM:</p>
+<p><span class="math display">\[
+\alpha_i = 0
+\]</span></p>
+<p>Nonzero alpha is a claim.</p>
+<p>Extraordinary claims require extraordinary evidence.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="estimating-beta-time-series-regression">Estimating Beta:
+Time-Series Regression</h3>
+<p><strong>Data:</strong> Historical returns for asset <span
+class="math inline">\(i\)</span> and market <span
+class="math inline">\(M\)</span> over <span
+class="math inline">\(T\)</span> periods</p>
+<p><strong>Regression:</strong></p>
+<p><span class="math display">\[
+r_{i,t} - r_{f,t} = \alpha_i + \beta_i(r_{M,t} - r_{f,t}) +
+\varepsilon_{i,t}
+\]</span></p>
+<p>for <span class="math inline">\(t = 1, 2, \ldots, T\)</span></p>
+<p><strong>Ordinary Least Squares (OLS) estimate:</strong></p>
+<p><span class="math display">\[
+\hat{\beta}_i = \frac{\sum_{t=1}^T (r_{i,t} - \bar{r}_i)(r_{M,t} -
+\bar{r}_M)}{\sum_{t=1}^T (r_{M,t} - \bar{r}_M)^2}
+\]</span></p>
+<p><strong>Standard error:</strong></p>
+<p><span class="math display">\[
+\text{SE}(\hat{\beta}_i) =
+\frac{\hat{\sigma}_\varepsilon}{\sqrt{\sum_{t=1}^T (r_{M,t} -
+\bar{r}_M)^2}}
+\]</span></p>
+<p>Where <span class="math inline">\(\hat{\sigma}_\varepsilon\)</span>
+is the standard deviation of residuals.</p>
+<p><strong>Beta Estimation Examples:</strong></p>
+<div align="center">
+<img src="Figures/beta_estimation.png" alt="Beta Estimation" style="width:90%;"/>
+</div>
+
+<p><em>Figure: Beta estimation for different asset types using
+time-series regression. Each panel shows 60 monthly observations with
+the fitted characteristic line. Note how R² varies with the strength of
+market correlation.</em></p>
+<h3 id="numerical-example-estimating-beta">Numerical Example: Estimating
+Beta</h3>
+<p>Suppose we have 60 monthly returns for Stock XYZ and the S&amp;P
+500.</p>
+<p><strong>Regression results:</strong></p>
+<p><span class="math display">\[
+r_{\text{XYZ},t} - r_{f,t} = 0.005 + 1.35(r_{M,t} - r_{f,t}) +
+\varepsilon_t
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\hat{\alpha} = 0.005\)</span> (0.5% per
+month = 6% per year)</li>
+<li><span class="math inline">\(\hat{\beta} = 1.35\)</span> (more
+volatile than market)</li>
+<li><span class="math inline">\(t\)</span>-statistic for <span
+class="math inline">\(\alpha\)</span>: <span class="math inline">\(t =
+2.1\)</span> (marginally significant)</li>
+<li><span class="math inline">\(R^2 = 0.42\)</span> (42% of variance
+explained by market)</li>
+</ul>
+<p><strong>Interpretation:</strong></p>
+<ul>
+<li>XYZ is an aggressive stock (<span class="math inline">\(\beta &gt;
+1\)</span>)</li>
+<li>It appears to have positive alpha (outperforms CAPM prediction)</li>
+<li>But statistical significance is weak — could be luck</li>
+</ul>
+<p><strong>CAPM prediction:</strong> With <span
+class="math inline">\(R_f = 2\%\)</span> and <span
+class="math inline">\(\mathbb{E}[R_M] = 9\%\)</span>:</p>
+<p><span class="math display">\[
+\mathbb{E}[R_{\text{XYZ}}] = 0.02 + 1.35(0.09 - 0.02) = 11.45\%
+\]</span></p>
+<p>If alpha persists, expected return would be: <span
+class="math inline">\(11.45\% + 6\% = 17.45\%\)</span></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="9-empirical-reality">9. Empirical Reality</h2>
+<p>CAPM is elegant.</p>
+<p>Reality is less cooperative.</p>
+<p>Empirically:</p>
+<ul>
+<li>Betas are unstable over time</li>
+<li>Many anomalies exist (size, value, momentum)</li>
+<li>Alpha is often statistically significant</li>
+</ul>
+<p>But CAPM survives as a benchmark.</p>
+<p>Bad models die.</p>
+<p>Useful models endure.</p>
+<h3 id="empirical-tests-of-capm">Empirical Tests of CAPM</h3>
+<p><strong>Classic tests:</strong></p>
+<ol type="1">
+<li><p><strong>Black, Jensen, Scholes (1972):</strong> Found that
+low-beta stocks earn higher returns than CAPM predicts</p></li>
+<li><p><strong>Fama-French (1992):</strong> Size and book-to-market
+ratio explain returns better than beta alone</p></li>
+<li><p><strong>Roll's critique (1977):</strong> CAPM is untestable
+because the true market portfolio is unobservable</p></li>
+</ol>
+<p><strong>Key empirical findings:</strong></p>
+<ul>
+<li><p><strong>Flat Security Market Line:</strong> Empirically, the SML
+is flatter than CAPM predicts</p>
+<ul>
+<li>Low-beta stocks earn more than predicted</li>
+<li>High-beta stocks earn less than predicted</li>
+</ul></li>
+<li><p><strong>Anomalies:</strong></p>
+<ul>
+<li><strong>Size effect:</strong> Small stocks outperform large stocks
+(controlling for beta)</li>
+<li><strong>Value effect:</strong> High book-to-market stocks outperform
+growth stocks</li>
+<li><strong>Momentum:</strong> Past winners continue to outperform</li>
+</ul></li>
+<li><p><strong>Time-varying betas:</strong> Beta estimates change with
+the sample period</p></li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="why-capm-fails-empirically">Why CAPM Fails Empirically</h3>
+<p><strong>Violated assumptions:</strong></p>
+<ol type="1">
+<li><p><strong>Not all investors are mean-variance
+optimizers</strong></p>
+<ul>
+<li>Some use heuristics, others are constrained</li>
+</ul></li>
+<li><p><strong>Heterogeneous expectations</strong></p>
+<ul>
+<li>Investors disagree about expected returns</li>
+</ul></li>
+<li><p><strong>Market frictions matter</strong></p>
+<ul>
+<li>Transaction costs, taxes, short-sale constraints</li>
+</ul></li>
+<li><p><strong>The market portfolio is unobservable</strong></p>
+<ul>
+<li>S&amp;P 500 ≠ true market portfolio</li>
+<li>Should include bonds, real estate, human capital, etc.</li>
+</ul></li>
+<li><p><strong>Time-varying risk premiums</strong></p>
+<ul>
+<li>Market risk premium changes with economic conditions</li>
+</ul></li>
+</ol>
+<p><strong>Despite failures, CAPM remains useful:</strong></p>
+<ul>
+<li><strong>Benchmark:</strong> Provides a null hypothesis for asset
+pricing</li>
+<li><strong>Risk adjustment:</strong> Beta is still widely used to
+adjust for risk</li>
+<li><strong>Cost of capital:</strong> Companies use CAPM to estimate
+required returns</li>
+<li><strong>Performance evaluation:</strong> Mutual funds are evaluated
+using alpha</li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="extensions-and-alternatives">Extensions and Alternatives</h3>
+<p><strong>Multi-factor models:</strong></p>
+<ul>
+<li><strong>Fama-French 3-factor:</strong> Adds size and value factors
+to CAPM</li>
+<li><strong>Carhart 4-factor:</strong> Adds momentum factor</li>
+<li><strong>Fama-French 5-factor:</strong> Adds profitability and
+investment factors</li>
+</ul>
+<p><strong>Consumption CAPM (CCAPM):</strong></p>
+<ul>
+<li>Relates returns to consumption growth</li>
+<li>More theoretically sound, but harder to test</li>
+</ul>
+<p><strong>Intertemporal CAPM (ICAPM):</strong></p>
+<ul>
+<li>Merton (1973): Extends CAPM to multiple periods</li>
+<li>Assets hedge against changes in investment opportunities</li>
+</ul>
+<p><strong>Arbitrage Pricing Theory (APT):</strong></p>
+<ul>
+<li>Ross (1976): Multiple risk factors, fewer assumptions</li>
+<li>Does not specify what the factors are</li>
+</ul>
+<p><strong>Behavioral models:</strong></p>
+<ul>
+<li>Incorporate investor psychology</li>
+<li>Overconfidence, loss aversion, etc.</li>
+</ul>
+<p>CAPM opened the door.</p>
+<p>Others walked through.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="10-exercises">10. Exercises</h2>
+<h3 id="exercise-1-basic-capm-calculation">Exercise 1: Basic CAPM
+Calculation</h3>
+<p>Given:</p>
+<ul>
+<li>Risk-free rate: <span class="math inline">\(R_f = 3\%\)</span></li>
+<li>Expected market return: <span class="math inline">\(\mathbb{E}[R_M]
+= 11\%\)</span></li>
+<li>Beta of Stock A: <span class="math inline">\(\beta_A =
+1.5\)</span></li>
+<li>Beta of Stock B: <span class="math inline">\(\beta_B =
+0.7\)</span></li>
+</ul>
+<p><strong>Tasks:</strong></p>
+<ol type="1">
+<li>Calculate the expected return for Stock A using CAPM</li>
+<li>Calculate the expected return for Stock B using CAPM</li>
+<li>Which stock has higher expected return? Higher risk? Explain.</li>
+<li>If Stock A's actual expected return is 14%, what is its alpha?</li>
+</ol>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="exercise-2-beta-estimation">Exercise 2: Beta Estimation</h3>
+<p>You have the following data for Stock XYZ over 5 years:</p>
+<table>
+<thead>
+<tr>
+<th>Year</th>
+<th>Stock Return</th>
+<th>Market Return</th>
+<th>Risk-Free Rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>12%</td>
+<td>8%</td>
+<td>2%</td>
+</tr>
+<tr>
+<td>2</td>
+<td>-5%</td>
+<td>-3%</td>
+<td>2%</td>
+</tr>
+<tr>
+<td>3</td>
+<td>18%</td>
+<td>12%</td>
+<td>2%</td>
+</tr>
+<tr>
+<td>4</td>
+<td>8%</td>
+<td>6%</td>
+<td>2%</td>
+</tr>
+<tr>
+<td>5</td>
+<td>15%</td>
+<td>10%</td>
+<td>2%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tasks:</strong></p>
+<ol type="1">
+<li>Calculate excess returns for both stock and market</li>
+<li>Estimate beta using the formula: <span
+class="math inline">\(\hat{\beta} = \frac{\text{Cov}(r_i - r_f, r_M -
+r_f)}{\text{Var}(r_M - r_f)}\)</span></li>
+<li>Estimate alpha from the regression intercept</li>
+<li>What is the R-squared of this relationship?</li>
+<li>Discuss limitations of using only 5 years of data</li>
+</ol>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="exercise-3-security-market-line">Exercise 3: Security Market
+Line</h3>
+<p>An asset lies persistently above the SML.</p>
+<p>List and explain three possible reasons:</p>
+<ol type="1">
+<li><strong>Reason 1:</strong> _____</li>
+<li><strong>Reason 2:</strong> _____</li>
+<li><strong>Reason 3:</strong> _____</li>
+</ol>
+<p>For each reason, discuss:</p>
+<ul>
+<li>Whether it implies market inefficiency</li>
+<li>Whether it's likely to persist</li>
+<li>How an investor might exploit it</li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="exercise-4-risk-decomposition">Exercise 4: Risk
+Decomposition</h3>
+<p>A stock has:</p>
+<ul>
+<li>Total variance: <span class="math inline">\(\sigma_i^2 =
+0.09\)</span> (30% std dev)</li>
+<li>Beta: <span class="math inline">\(\beta_i = 1.2\)</span></li>
+<li>Market variance: <span class="math inline">\(\sigma_M^2 =
+0.04\)</span> (20% std dev)</li>
+</ul>
+<p><strong>Tasks:</strong></p>
+<ol type="1">
+<li>Calculate the systematic risk component: <span
+class="math inline">\(\beta_i^2 \sigma_M^2\)</span></li>
+<li>Calculate the idiosyncratic risk component: <span
+class="math inline">\(\text{Var}(\varepsilon_i)\)</span></li>
+<li>What is the R-squared? Interpret this value.</li>
+<li>If you hold 30 of these stocks (equally weighted, uncorrelated
+idiosyncratic risk), what is the portfolio's total variance?</li>
+<li>How much of the risk is eliminated by diversification?</li>
+</ol>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="exercise-5-portfolio-beta">Exercise 5: Portfolio Beta</h3>
+<p>You have a portfolio with three stocks:</p>
+<table>
+<thead>
+<tr>
+<th>Stock</th>
+<th>Weight</th>
+<th>Beta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>30%</td>
+<td>0.8</td>
+</tr>
+<tr>
+<td>B</td>
+<td>50%</td>
+<td>1.3</td>
+</tr>
+<tr>
+<td>C</td>
+<td>20%</td>
+<td>1.6</td>
+</tr>
+</tbody>
+</table>
+<p>Given <span class="math inline">\(R_f = 4\%\)</span> and <span
+class="math inline">\(\mathbb{E}[R_M] = 12\%\)</span>:</p>
+<p><strong>Tasks:</strong></p>
+<ol type="1">
+<li>Calculate the portfolio beta: <span class="math inline">\(\beta_p =
+\sum_i w_i \beta_i\)</span></li>
+<li>Calculate the expected return of the portfolio using CAPM</li>
+<li>Verify this matches the weighted average of individual expected
+returns</li>
+<li>If you want to achieve <span class="math inline">\(\beta_p =
+1.0\)</span>, how should you adjust the weights?</li>
+</ol>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="exercise-6-capm-and-cost-of-capital">Exercise 6: CAPM and Cost
+of Capital</h3>
+<p>A company is considering a new project with the following
+characteristics:</p>
+<ul>
+<li>Project beta: <span class="math inline">\(\beta = 1.4\)</span></li>
+<li>Risk-free rate: <span class="math inline">\(R_f = 3\%\)</span></li>
+<li>Market risk premium: <span class="math inline">\(\mathbb{E}[R_M] -
+R_f = 8\%\)</span></li>
+</ul>
+<p><strong>Tasks:</strong></p>
+<ol type="1">
+<li>Calculate the required rate of return using CAPM</li>
+<li>The project requires an initial investment of $10M and is expected
+to generate $12M in one year. Should the company accept the
+project?</li>
+<li>What is the NPV of the project?</li>
+<li>What beta would make the project break-even (NPV = 0)?</li>
+</ol>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="final-takeaways">Final Takeaways</h2>
+<ul>
+<li><p><strong>CAPM is an equilibrium model of asset
+pricing</strong></p>
+<ul>
+<li>Derived from mean-variance optimization + market clearing</li>
+<li>Expected return = risk-free rate + beta × market risk premium</li>
+<li><span class="math inline">\(\mathbb{E}[R_i] = R_f +
+\beta_i(\mathbb{E}[R_M] - R_f)\)</span></li>
+</ul></li>
+<li><p><strong>Only systematic risk is priced</strong></p>
+<ul>
+<li>Beta measures sensitivity to market movements</li>
+<li>Idiosyncratic risk can be diversified away at zero cost</li>
+<li>Markets don't pay for risk that can be eliminated</li>
+</ul></li>
+<li><p><strong>The Security Market Line (SML)</strong></p>
+<ul>
+<li>Linear relationship between beta and expected return</li>
+<li>Assets above the line: underpriced (positive alpha)</li>
+<li>Assets below the line: overpriced (negative alpha)</li>
+<li>In equilibrium, all assets lie on the SML</li>
+</ul></li>
+<li><p><strong>The characteristic line connects theory to
+data</strong></p>
+<ul>
+<li><span class="math inline">\(R_i - R_f = \alpha_i + \beta_i(R_M -
+R_f) + \varepsilon_i\)</span></li>
+<li>Beta estimated via time-series regression</li>
+<li>Alpha measures abnormal return (should be zero in equilibrium)</li>
+<li>R-squared shows fraction of variance explained by market</li>
+</ul></li>
+<li><p><strong>CAPM has strong assumptions</strong></p>
+<ul>
+<li>Mean-variance optimization</li>
+<li>Homogeneous expectations</li>
+<li>Perfect markets, no frictions</li>
+<li>Single period</li>
+<li>These assumptions are transparent but unrealistic</li>
+</ul></li>
+<li><p><strong>Empirically, CAPM has problems</strong></p>
+<ul>
+<li>Flat SML (low-beta stocks earn more than predicted)</li>
+<li>Anomalies: size, value, momentum effects</li>
+<li>Time-varying betas and risk premiums</li>
+<li>Market portfolio is unobservable (Roll's critique)</li>
+</ul></li>
+<li><p><strong>Despite failures, CAPM remains foundational</strong></p>
+<ul>
+<li>Benchmark for performance evaluation (alpha)</li>
+<li>Cost of capital estimation</li>
+<li>Risk adjustment in corporate finance</li>
+<li>Starting point for multi-factor models</li>
+</ul></li>
+<li><p><strong>Extensions improve on CAPM</strong></p>
+<ul>
+<li>Fama-French: adds size and value factors</li>
+<li>APT: multiple factors, fewer assumptions</li>
+<li>Consumption CAPM: theoretically superior</li>
+<li>Behavioral models: incorporate psychology</li>
+</ul></li>
+</ul>
+<p><strong>Key insight:</strong> CAPM is wrong, but useful.</p>
+<p>It provides a disciplined way to think about risk and return.</p>
+<p>All models are simplifications.</p>
+<p>Good models clarify thinking even when they fail empirically.</p>
+<p>Next lecture: We move beyond simple models to <strong>utility
+theory</strong> and <strong>risk measurement</strong> via Value-at-Risk
+(VaR).</p>
+<p>The journey from portfolio theory to risk management.</p>
+</section>
+
+</div>
+</body>
+</html>

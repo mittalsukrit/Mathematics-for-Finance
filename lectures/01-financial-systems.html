@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Overview of Financial Systems</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflar.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css" />
+  <link rel="stylesheet" href="wide.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Overview of Financial Systems</h1>
+</header>
+<style>
+  .slides {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    height: 100vh;
+
+    /* 🔢 Start slide counter */
+    counter-reset: slide;
+  }
+
+  .slide {
+    scroll-snap-align: start;
+    min-height: 100vh;
+    padding: 4rem;
+    padding-top: 1rem;
+    box-sizing: border-box;
+
+    /* Ensure relative positioning for numbering */
+    position: relative;
+  }
+
+  /* Nice-to-have: smoother feel */
+  html { scroll-behavior: smooth; }
+
+  /* 🔢 Automatic slide numbering */
+  .slide::before {
+    counter-increment: slide;
+    content: "Slide " counter(slide);
+    position: absolute;
+    top: 1rem;   /* footer-like placement */
+    right: 2rem;
+    font-size: 1rem;
+    color: #666;
+  }
+</style>
+
+<div class="slides" markdown="1">
+
+<section class="slide" markdown="1">
+
+<h1 id="overview-of-financial-systems">Overview of Financial
+Systems</h1>
+<p><strong>Sukrit Mittal</strong><br />
+Franklin Templeton Investments</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="course-introduction">Course Introduction</h2>
+<p>This course introduces the <strong>mathematical foundations of modern
+financial systems</strong>.<br />
+The emphasis is not on rules or recipes, but on <strong>structure,
+abstraction, and rigor</strong>.</p>
+<p>Finance today is inseparable from mathematics, computation, and
+uncertainty.</p>
+<p><strong>What you'll learn:</strong></p>
+<ul>
+<li>How to model financial markets mathematically</li>
+<li>How to quantify and manage risk</li>
+<li>How to value assets under uncertainty</li>
+<li>The computational tools that power modern finance</li>
+</ul>
+<p><strong>What you won't learn:</strong></p>
+<ul>
+<li>How to get rich quick</li>
+<li>Stock tips or market predictions</li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="what-is-quantitative-finance">What is Quantitative Finance?</h2>
+<p>Quantitative finance is the <strong>mathematics, statistics, and
+computing engine</strong> that drives modern financial markets.</p>
+<p>It exists because:</p>
+<ul>
+<li><p><strong>Financial markets have grown too complex for pure
+intuition.</strong><br />
+With thousands of assets, interdependent risks, and global connections,
+human intuition alone cannot process the complexity. Mathematical models
+provide a structured way to understand these systems.</p></li>
+<li><p><strong>Asset prices evolve under uncertainty and randomness —
+precisely what mathematics formalizes.</strong><br />
+We don't know what Apple's stock will be worth tomorrow, but we can
+model the probability distribution of possible outcomes. This is where
+stochastic calculus, probability theory, and statistics become essential
+tools.</p></li>
+<li><p><strong>Computers allow simulation, optimization, and testing at
+massive scale.</strong><br />
+We can backtest strategies on decades of historical data, run Monte
+Carlo simulations with millions of scenarios, and optimize portfolios
+across thousands of assets—all in seconds. This computational power has
+transformed finance from an art to a science.</p></li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<div align="center">
+<img src="Figures/Line chart of Apple .png" alt="Stock chart" style="width:80%;"/>
+</div>
+
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="why-should-you-care-about-financial-systems">Why Should You Care
+About Financial Systems?</h2>
+<p>Finance is no longer a separate industry.<br />
+It is a <strong>mission-critical distributed computing
+system</strong>.</p>
+<h3 id="1-finance-runs-on-code">1. Finance Runs on Code</h3>
+<ul>
+<li>Banks, hedge funds, payment systems, and exchanges are
+software-driven.</li>
+<li>Every trade, card swipe, or UPI transaction is executed by
+code.</li>
+<li>Latency, correctness, and robustness matter as much as capital.</li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="why-should-you-care-about-financial-systems-1">Why Should You
+Care About Financial Systems?</h2>
+<p>Finance is no longer a separate industry.<br />
+It is a <strong>mission-critical distributed computing
+system</strong>.</p>
+<h3 id="2-algorithms-rule-the-battlefield">2. Algorithms Rule the
+Battlefield</h3>
+<ul>
+<li><strong>High-frequency trading:</strong> Algorithms execute
+thousands of trades per second, exploiting tiny price
+discrepancies.</li>
+<li><strong>Fraud detection:</strong> Machine learning models analyze
+transaction patterns in real-time to flag suspicious activity.</li>
+<li><strong>Risk management:</strong> Complex algorithms calculate
+Value-at-Risk (VaR), stress test portfolios, and manage collateral
+requirements.</li>
+<li><strong>Portfolio optimization:</strong> Algorithms balance risk and
+return across hundreds or thousands of securities.</li>
+</ul>
+<p>Many core computer science innovations—low-latency systems, streaming
+pipelines, secure computation—were pioneered in finance. The financial
+industry was building distributed systems and real-time data processing
+long before "big data" became a buzzword.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="financial-literacy-as-career-leverage">Financial Literacy as
+Career Leverage</h2>
+<p>If you understand <strong>both code and capital</strong>, you are
+rare—and rarity has value.</p>
+<p>Old view:</p>
+<blockquote>
+<p>Engineers build apps, finance people handle money.</p>
+</blockquote>
+<p>Current reality:</p>
+<blockquote>
+<p>Those who understand both design the systems that move markets.</p>
+</blockquote>
+<p><strong>Career opportunities at the intersection:</strong></p>
+<ul>
+<li>Quantitative analyst (quant) at hedge funds and banks</li>
+<li>Algorithmic trading developer</li>
+<li>Risk management technologist</li>
+<li>Fintech entrepreneur</li>
+<li>Blockchain developer</li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="what-is-a-financial-system">What is a Financial System?</h2>
+<p>A <strong>financial system</strong> exists to coordinate economic
+activity across <strong>time and uncertainty</strong>.</p>
+<p>At its core, it performs three fundamental functions.</p>
+<p><strong>Think about it this way:</strong></p>
+<ol type="1">
+<li>You have an idea for a startup but no money (<em>capital
+allocation</em> problem)</li>
+<li>A farmer worries about crop prices falling next season (<em>risk
+transfer</em> problem)</li>
+<li>An investor wants to know if Tesla is overvalued (<em>price
+discovery</em> problem)</li>
+</ol>
+<p>The financial system provides mechanisms to solve all three.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<div align="center">
+<img src="Figures/STI_clean_landscape_thumb.avif" alt="Stock chart" style="width:80%;"/>
+</div>
+
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="1-capital-allocation-problem">1. Capital Allocation Problem</h3>
+<p>Deciding <strong>where money should go</strong>.</p>
+<p>Capital is scarce.<br />
+The system must direct it toward projects and assets with the best
+expected return for the risk taken.</p>
+<p>This happens through:</p>
+<ul>
+<li><strong>Investment decisions:</strong> Venture capitalists funding
+startups, institutional investors buying stocks</li>
+<li><strong>Lending:</strong> Banks providing loans to businesses and
+consumers</li>
+<li><strong>Equity financing:</strong> Companies raising capital by
+issuing shares</li>
+</ul>
+<p><strong>Why it matters:</strong> Efficient capital allocation means
+productive companies get funded while failing ones don't. This drives
+economic growth. Misallocation (e.g., real estate bubbles, zombie
+companies) destroys value and causes crises.</p>
+<p><strong>Example:</strong> When you deposit ₹100,000 in a bank, that
+money doesn't sit idle. The bank lends it to businesses or homebuyers.
+Your savings are allocated to productive uses, and you earn interest in
+return.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="2-risk-transfer-problem">2. Risk Transfer Problem</h3>
+<p>Shifting risk from one party to another using financial
+instruments.</p>
+<p>Examples:</p>
+<ul>
+<li><strong>Insurance:</strong> You pay a premium to transfer risk of
+loss to an insurance company</li>
+<li><strong>Derivatives:</strong> A farmer locks in wheat prices using
+futures contracts, transferring price risk to speculators</li>
+<li><strong>Hedging contracts:</strong> An airline buys oil futures to
+protect against rising fuel costs</li>
+</ul>
+<p>Purpose:</p>
+<ul>
+<li><strong>Allow specialization:</strong> A farmer farms, a bank prices
+risk. Each does what they do best.</li>
+<li><strong>Spread risk across many participants:</strong> Instead of
+one person bearing catastrophic loss, risk is distributed across
+thousands of counterparties.</li>
+<li><strong>Enable calculated risk-taking:</strong> Businesses can take
+productive risks (R&amp;D, expansion) while hedging away unproductive
+ones (currency fluctuations, commodity prices).</li>
+</ul>
+<p><strong>Without risk transfer:</strong></p>
+<ul>
+<li>Airlines would face bankruptcy risk from oil price spikes</li>
+<li>Farmers couldn't invest in next season's crop</li>
+<li>International trade would be paralyzed by currency risk</li>
+</ul>
+<p><strong>The mathematical challenge:</strong> How do we price these
+risk transfers fairly? This is where quantitative finance becomes
+critical.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="3-price-discovery-problem">3. Price Discovery Problem</h3>
+<p>Determining <strong>what an asset is worth right now</strong>.</p>
+<p>Markets aggregate: <strong>Information</strong>,
+<strong>Expectations</strong>, <strong>Sentiment</strong>.</p>
+<p>Prices act as <strong>signals</strong>, guiding decisions and
+allocating resources efficiently.</p>
+<p><strong>How it works:</strong></p>
+<ul>
+<li>If a stock is undervalued, buyers bid it up</li>
+<li>If it's overvalued, sellers drive it down</li>
+<li>The equilibrium price reflects the collective wisdom (or folly) of
+all market participants</li>
+</ul>
+<p><strong>Example:</strong> When Apple announces record iPhone sales,
+the stock price rises immediately. The new price incorporates this
+information without any central authority setting it. Millions of
+traders, algorithms, and investors update their valuations, and the
+market finds a new equilibrium in seconds.</p>
+<p><strong>Why it matters:</strong> Price discovery allows resources to
+flow to their most valued uses. If Tesla's stock price falls, it becomes
+harder for the company to raise capital—the market is signaling that
+resources should go elsewhere.</p>
+<p><strong>The dark side:</strong> Price discovery can fail during
+panics, bubbles, or when markets become illiquid. This is why market
+microstructure and behavioral finance are important fields.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="key-components-of-financial-systems">Key Components of Financial
+Systems</h2>
+<ul>
+<li>Money Market</li>
+<li>Capital Market
+<ul>
+<li>Equity Market</li>
+<li>Debt Market</li>
+<li>Derivatives Market</li>
+</ul></li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="money-markets-vs-capital-market">Money Markets vs. Capital
+Market</h2>
+<h3 id="money-market">Money Market</h3>
+<ul>
+<li>Short-term borrowing and lending (maturity ≤ 1 year)</li>
+<li>Primarily regulated by the RBI</li>
+<li>Used to manage liquidity</li>
+</ul>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li><strong>Very low risk:</strong> Short duration means less exposure
+to default or interest rate changes</li>
+<li><strong>Returns linked to policy rates:</strong> Typically close to
+the repo rate or overnight rates</li>
+<li><strong>High liquidity:</strong> Easy to buy and sell quickly</li>
+</ul>
+<p><strong>Common instruments:</strong></p>
+<ul>
+<li>Treasury bills (T-bills)</li>
+<li>Commercial paper (short-term corporate debt)</li>
+<li>Certificates of deposit (CDs)</li>
+<li>Repurchase agreements (repos)</li>
+</ul>
+<p><strong>Purpose:</strong> Money markets are the "working capital" of
+the financial system. Banks use them to manage day-to-day liquidity, and
+the RBI uses them to implement monetary policy.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="money-market-vs-capital-market">Money Market vs. Capital
+Market</h2>
+<h3 id="capital-market">Capital Market</h3>
+<ul>
+<li>Long-term securities (maturity &gt; 1 year)</li>
+<li>Regulated by SEBI (and RBI for certain debt)</li>
+<li>Used to fund growth and infrastructure</li>
+</ul>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li><strong>Higher risk:</strong> Longer time horizon means more
+uncertainty and price volatility</li>
+<li><strong>Higher expected returns:</strong> Investors demand
+compensation for taking on more risk</li>
+<li><strong>Sensitive to economic growth and earnings:</strong>
+Long-term performance drives valuations</li>
+</ul>
+<p><strong>Common instruments:</strong></p>
+<ul>
+<li>Stocks (equity)</li>
+<li>Corporate bonds</li>
+<li>Government bonds with maturity &gt; 1 year</li>
+<li>Mutual funds and ETFs</li>
+</ul>
+<p><strong>Purpose:</strong> Capital markets fund long-term
+investments—building factories, infrastructure projects, R&amp;D.
+Companies raise capital here to grow, while investors seek returns over
+years or decades.</p>
+<p><strong>Key difference from money markets:</strong> Capital markets
+are about <strong>growth and wealth creation</strong>, while money
+markets are about <strong>liquidity management and safety</strong>.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="capital-markets">Capital Markets</h2>
+<h3 id="equity-market">Equity Market</h3>
+<ul>
+<li><strong>What it is:</strong> Ownership in a company. When you buy a
+share, you own a piece of that business.</li>
+<li><strong>Returns:</strong> Dividends (profit sharing) + capital gains
+(increase in stock price)</li>
+<li><strong>Risk:</strong> High, tied to firm performance and market
+sentiment</li>
+</ul>
+<p><strong>Why companies issue equity:</strong> To raise capital without
+taking on debt. Shareholders bear the risk but also get the upside.</p>
+<p><strong>Why investors buy equity:</strong> Potential for high returns
+over long periods. Historically, equities outperform bonds and cash over
+decades.</p>
+<p>Example: Buying shares of Reliance Industries on NSE. You become a
+partial owner of one of India's largest conglomerates.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="capital-markets-1">Capital Markets</h2>
+<h3 id="debt-market">Debt Market</h3>
+<ul>
+<li><strong>What it is:</strong> Lending money in exchange for interest.
+You're a creditor, not an owner.</li>
+<li><strong>Returns:</strong> Fixed interest + principal repayment</li>
+<li><strong>Risk:</strong> Lower than equity, but subject to default
+risk (the borrower might not pay back)</li>
+</ul>
+<p><strong>Why companies/governments issue debt:</strong> To raise
+capital while maintaining control (unlike equity, bondholders don't get
+ownership or voting rights).</p>
+<p><strong>Why investors buy debt:</strong> Stable, predictable income.
+Useful for conservative investors or portfolio diversification.</p>
+<p>Example: Holding a 10-year Government of India bond paying 7% annual
+interest. You lend money to the government, and they promise to pay you
+back with interest.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="capital-markets-2">Capital Markets</h2>
+<h3 id="derivatives-market">Derivatives Market</h3>
+<ul>
+<li>Contracts derived from an underlying asset (stocks, bonds,
+commodities, currencies)</li>
+<li>Used for:
+<ul>
+<li><strong>Hedging:</strong> Reducing risk (e.g., an airline hedging
+fuel costs)</li>
+<li><strong>Speculation:</strong> Betting on price movements with
+leverage</li>
+<li><strong>Arbitrage:</strong> Exploiting price differences between
+markets</li>
+</ul></li>
+</ul>
+<p>Types:</p>
+<ul>
+<li><strong>Futures:</strong> Obligation to buy/sell at a future date at
+a predetermined price</li>
+<li><strong>Options:</strong> Right (not obligation) to buy/sell at a
+predetermined price</li>
+<li><strong>Swaps:</strong> Exchange of cash flows (e.g., fixed vs.
+floating interest rates)</li>
+</ul>
+<p><strong>Power and danger:</strong> Derivatives provide leverage—you
+can control large positions with small capital. This magnifies both
+gains and losses. The 2008 crisis was partly caused by complex
+derivatives that few understood.</p>
+<p><strong>Example:</strong> A Nifty 50 futures contract allows you to
+bet on (or hedge against) the movement of India's benchmark stock index
+without buying all 50 stocks.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="financial-institutions">Financial Institutions</h2>
+<h3 id="banks">Banks</h3>
+<ul>
+<li>Accept deposits</li>
+<li>Make loans</li>
+<li>Provide payment services</li>
+</ul>
+<p>In India, banks are central to:</p>
+<ul>
+<li><strong>Money markets:</strong> Banks are major participants in
+overnight lending</li>
+<li><strong>Government securities:</strong> Major holders of G-Secs</li>
+<li><strong>Credit creation:</strong> Through fractional reserve
+banking, banks create money by lending out deposits</li>
+</ul>
+<p><strong>How banks make money:</strong></p>
+<ul>
+<li>Net interest margin (difference between lending and deposit
+rates)</li>
+<li>Fees (transaction fees, account maintenance)</li>
+<li>Trading and investment income</li>
+</ul>
+<p><strong>Why banks matter:</strong> They're the plumbing of the
+financial system. When banks fail, credit freezes, and economies
+contract. This is why banking regulation is so strict.</p>
+<p>Examples: SBI (India's largest public sector bank), HDFC Bank
+(largest private sector bank).</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="financial-institutions-1">Financial Institutions</h2>
+<h3 id="exchanges">Exchanges</h3>
+<ul>
+<li>Organized platforms for buying and selling securities</li>
+<li>Ensure transparency, liquidity, and price discovery</li>
+</ul>
+<p><strong>What exchanges provide:</strong></p>
+<ul>
+<li><strong>Standardization:</strong> All trades follow the same rules
+and procedures</li>
+<li><strong>Clearing and settlement:</strong> Guarantee that trades are
+completed correctly</li>
+<li><strong>Market surveillance:</strong> Monitor for manipulation and
+insider trading</li>
+<li><strong>Liquidity:</strong> Bring together many buyers and sellers,
+making it easy to trade</li>
+</ul>
+<p><strong>Electronic vs. physical:</strong> Modern exchanges are almost
+entirely electronic. Trading happens in microseconds through matching
+engines.</p>
+<p>Examples:</p>
+<ul>
+<li><strong>India:</strong> NSE (National Stock Exchange - largest by
+volume), BSE (Bombay Stock Exchange - oldest in Asia)</li>
+<li><strong>US:</strong> NYSE (New York Stock Exchange - largest by
+market cap), NASDAQ (tech-heavy, fully electronic)</li>
+</ul>
+<p><strong>Fun fact:</strong> NSE's trading system can handle 40,000
+orders per second. This computational infrastructure is what makes
+modern markets possible.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="financial-institutions-2">Financial Institutions</h2>
+<h3 id="funds">Funds</h3>
+<ul>
+<li>Pool money from multiple investors</li>
+<li>Invest across asset classes</li>
+<li>Provide diversification and professional management</li>
+</ul>
+<p><strong>Types:</strong></p>
+<ul>
+<li><strong>Mutual funds:</strong> Actively or passively managed
+portfolios of stocks, bonds, or other assets</li>
+<li><strong>ETFs (Exchange-Traded Funds):</strong> Trade like stocks but
+hold diversified portfolios</li>
+<li><strong>Hedge funds:</strong> Private funds using sophisticated
+strategies (often restricted to wealthy investors)</li>
+<li><strong>Pension funds:</strong> Long-term investment vehicles for
+retirement savings</li>
+</ul>
+<p><strong>Why funds matter:</strong></p>
+<ul>
+<li><strong>Diversification:</strong> Small investors can own pieces of
+hundreds of companies</li>
+<li><strong>Professional management:</strong> Fund managers have
+expertise and resources individual investors lack</li>
+<li><strong>Economies of scale:</strong> Lower transaction costs and
+better access to research</li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li><strong>Mutual funds:</strong> HDFC Top 100 Fund, ICICI Prudential
+Bluechip Fund</li>
+<li><strong>ETFs:</strong> SBI ETF Nifty 50 (tracks the Nifty
+index)</li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="financial-regulators">Financial Regulators</h2>
+<h3 id="sebi-securities-and-exchange-board-of-india">SEBI (Securities
+and Exchange Board of India)</h3>
+<ul>
+<li>Regulates capital markets (stocks, bonds, mutual funds)</li>
+<li>Enforces disclosure and transparency requirements</li>
+<li>Protects investors from fraud and manipulation</li>
+</ul>
+<p><strong>Key responsibilities:</strong></p>
+<ul>
+<li>Approving IPOs and ensuring proper disclosure</li>
+<li>Regulating mutual funds and portfolio managers</li>
+<li>Monitoring insider trading and market manipulation</li>
+<li>Setting rules for brokers and exchanges</li>
+</ul>
+<p><strong>Recent actions:</strong> SEBI has cracked down on "pump and
+dump" schemes, imposed stricter disclosure norms, and pushed for faster
+settlement (now T+1, meaning trades settle in one day).</p>
+<p>US equivalent: SEC (Securities and Exchange Commission).</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="financial-regulators-1">Financial Regulators</h2>
+<h3 id="rbi-reserve-bank-of-india">RBI (Reserve Bank of India)</h3>
+<ul>
+<li>Central bank of India</li>
+<li>Controls monetary policy (interest rates, money supply)</li>
+<li>Regulates banks and financial institutions</li>
+<li>Oversees money markets and payment systems</li>
+</ul>
+<p><strong>Key tools:</strong></p>
+<ul>
+<li><strong>Repo rate:</strong> The rate at which RBI lends to banks
+(affects all other interest rates)</li>
+<li><strong>Cash Reserve Ratio (CRR):</strong> Fraction of deposits
+banks must hold with RBI</li>
+<li><strong>Open market operations:</strong> Buying/selling government
+bonds to control liquidity</li>
+</ul>
+<p><strong>Why it matters:</strong> The RBI's decisions ripple through
+the entire economy. When RBI raises rates, borrowing becomes expensive,
+which slows growth but controls inflation. When it cuts rates, borrowing
+becomes cheap, stimulating growth.</p>
+<p><strong>Recent focus:</strong> Digital payments (UPI), inflation
+targeting (maintaining CPI around 4%), and financial stability.</p>
+<p>US equivalent: Federal Reserve (The Fed).</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="takeaways">Takeaways</h2>
+<p><strong>Financial markets/instruments:</strong></p>
+<ul>
+<li><strong>Equity</strong> = ownership (high risk, high potential
+return)</li>
+<li><strong>Debt</strong> = lending (lower risk, predictable
+return)</li>
+<li><strong>Derivatives</strong> = risk transfer or speculation
+(leverage and complexity)</li>
+</ul>
+<p><strong>Financial institutions:</strong></p>
+<ul>
+<li><strong>Banks</strong> = move and create money (the plumbing of
+finance)</li>
+<li><strong>Exchanges</strong> = enable trading and price discovery (the
+marketplaces)</li>
+<li><strong>Funds</strong> = pool and allocate capital (diversification
+and management)</li>
+</ul>
+<p><strong>Financial Regulators:</strong></p>
+<ul>
+<li><strong>SEBI</strong> = protect investors and ensure market
+integrity</li>
+<li><strong>RBI</strong> = control monetary policy and banking
+stability</li>
+</ul>
+<p>A financial system is not just about money.<br />
+It is about <strong>coordination, incentives, and control under
+uncertainty</strong>.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="thank-you">Thank you!</h2>
+<div style="height:6rem;"></div>
+
+<h2 id="any-questions">Any questions?</h2>
+</section>
+
+</div>
+</body>
+</html>

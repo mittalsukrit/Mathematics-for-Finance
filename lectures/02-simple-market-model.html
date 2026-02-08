@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>A Simple Market Model</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflar.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css" />
+  <link rel="stylesheet" href="wide.css" />
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">A Simple Market Model</h1>
+</header>
+<style>
+  .slides {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    height: 100vh;
+
+    /* 🔢 Start slide counter */
+    counter-reset: slide;
+  }
+
+  .slide {
+    scroll-snap-align: start;
+    min-height: 100vh;
+    padding: 4rem;
+    padding-top: 1rem;
+    box-sizing: border-box;
+
+    /* Ensure relative positioning for numbering */
+    position: relative;
+  }
+
+  /* Nice-to-have: smoother feel */
+  html { scroll-behavior: smooth; }
+
+  /* 🔢 Automatic slide numbering */
+  .slide::before {
+    counter-increment: slide;
+    content: "Slide " counter(slide);
+    position: absolute;
+    top: 1rem;   /* footer-like placement */
+    right: 2rem;
+    font-size: 1rem;
+    color: #666;
+  }
+</style>
+
+<div class="slides" markdown="1">
+
+<section class="slide" markdown="1">
+
+<h1 id="a-simple-market-model">A Simple Market Model</h1>
+<p><strong>Sukrit Mittal</strong><br />
+Franklin Templeton Investments</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="outline">Outline</h2>
+<ol type="1">
+<li>Basic notions and assumptions</li>
+<li>No-arbitrage principle</li>
+<li>One-step binomial model</li>
+<li>Risk and return</li>
+<li>Forward contracts</li>
+<li>Call and put options</li>
+<li>Foreign exchange</li>
+<li>Managing risk with options</li>
+</ol>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="basic-notions-and-assumptions">Basic Notions and
+Assumptions</h2>
+<h3 id="why-start-simple">Why Start Simple?</h3>
+<p>Before tackling continuous-time models and multiple assets, we need
+to understand:</p>
+<ul>
+<li>How uncertainty affects asset prices</li>
+<li>What prevents arbitrage opportunities</li>
+<li>How derivatives can be priced without predicting the future</li>
+</ul>
+<h3 id="traded-assets">Traded Assets</h3>
+<p>We assume that <strong>two assets</strong> are traded:</p>
+<ul>
+<li><p><strong>One risk-free asset</strong> Think of a bank deposit or a
+government-issued bond. In practice, this could be a treasury bill or a
+savings account with guaranteed interest. The key property: <strong>its
+future value is known today with certainty</strong>.</p></li>
+<li><p><strong>One risky asset</strong> Typically a stock, but it could
+also be a commodity, currency, or any uncertain asset. The key property:
+<strong>its future value is random and unknown today</strong>.</p></li>
+</ul>
+<p>This dichotomy between certainty and uncertainty is fundamental to
+all of finance.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="time-structure">Time Structure</h3>
+<p>We work with only <strong>two points in time</strong>:</p>
+<ul>
+<li>Today: <span class="math inline">\(t = 0\)</span> (the present, when
+we make decisions)</li>
+<li>A future date: <span class="math inline">\(t = T\)</span> (e.g., one
+year from now, when uncertainty resolves)</li>
+</ul>
+<p>This is deliberately simplistic. Real markets trade continuously, but
+the two-period model:</p>
+<ul>
+<li>Eliminates mathematical complications</li>
+<li>Focuses attention on the core logic</li>
+<li>Can be extended to multi-period models later (binomial trees)</li>
+</ul>
+<p><strong>Interpretation</strong>: Between <span
+class="math inline">\(t=0\)</span> and <span
+class="math inline">\(t=T\)</span>, no trading occurs. We set up our
+portfolio at <span class="math inline">\(t=0\)</span>, wait, and observe
+the outcome at <span class="math inline">\(t=T\)</span>. This
+"buy-and-hold" assumption will be relaxed in more advanced models.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="risky-and-risk-free-assets">Risky and Risk-Free Assets</h2>
+<h3 id="risky-asset-stock">Risky Asset (Stock)</h3>
+<ul>
+<li>Described by the number of shares held</li>
+<li>Current price <span class="math inline">\(S(0)\)</span> is known
+(observable in the market)</li>
+<li>Future price <span class="math inline">\(S(T)\)</span> is
+<strong>uncertain</strong> (depends on future states of the world)</li>
+</ul>
+<p><strong>Example</strong>: A share of Apple stock costs <span
+class="math inline">\(S(0) = 175\)</span> today, but its price in one
+year could be anywhere from <span class="math inline">\(150\)</span> to
+<span class="math inline">\(200\)</span> depending on earnings, economic
+conditions, etc.</p>
+<h3 id="risk-free-asset-bond">Risk-Free Asset (Bond)</h3>
+<ul>
+<li>Described by money in a bank account or bonds held</li>
+<li>Current price <span class="math inline">\(A(0)\)</span> is known
+(typically normalized to <span class="math inline">\(1\)</span> or <span
+class="math inline">\(100\)</span>)</li>
+<li>Future price <span class="math inline">\(A(T)\)</span> is
+<strong>known with certainty</strong> via the risk-free rate <span
+class="math inline">\(r_F\)</span></li>
+</ul>
+<p><strong>Example</strong>: A bond with <span
+class="math inline">\(A(0) = 100\)</span> and annual interest rate <span
+class="math inline">\(r = 5\%\)</span> will be worth exactly <span
+class="math inline">\(A(T) = 105\)</span> in one year.</p>
+<h3 id="returns">Returns</h3>
+<p><span class="math display">\[
+K_S = \frac{S(T) - S(0)}{S(0)}, \qquad
+K_A = \frac{A(T) - A(0)}{A(0)} = r_F
+\]</span></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="portfolio">Portfolio</h2>
+<p>Consider an investor holding:</p>
+<ul>
+<li><span class="math inline">\(x\)</span> shares of stock (can be
+fractional)</li>
+<li><span class="math inline">\(y\)</span> units of the risk-free asset
+(e.g., dollars in a bank account)</li>
+</ul>
+<p>The <strong>portfolio value</strong> at time <span
+class="math inline">\(t\)</span> is</p>
+<p><span class="math display">\[
+V(t) = x S(t) + y A(t)
+\]</span></p>
+<p>The pair <span class="math inline">\((x, y)\)</span> is called a
+<strong>portfolio</strong>. Here, <span class="math inline">\(x\)</span>
+and <span class="math inline">\(y\)</span> are called
+<strong>positions</strong>.</p>
+<h3 id="interpretation">Interpretation</h3>
+<ul>
+<li><span class="math inline">\(V(0)\)</span> is the initial wealth (how
+much capital you invest)</li>
+<li><span class="math inline">\(V(T)\)</span> is the final wealth (what
+you end up with)</li>
+<li>The portfolio <span class="math inline">\((x, y)\)</span> is chosen
+at <span class="math inline">\(t=0\)</span> and held until <span
+class="math inline">\(t=T\)</span></li>
+</ul>
+<h3 id="change-in-wealth">Change in Wealth</h3>
+<p>Between <span class="math inline">\(t = 0\)</span> and <span
+class="math inline">\(t = T\)</span>, your wealth changes by:</p>
+<p><span class="math display">\[
+V(T) - V(0) = x\big(S(T) - S(0)\big) + y\big(A(T) - A(0)\big)
+\]</span></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="portfolio-return">Portfolio Return</h3>
+<p>The <strong>return</strong> on the portfolio is:</p>
+<p><span class="math display">\[
+K_V = \frac{V(T) - V(0)}{V(0)} = \frac{x\big(S(T) - S(0)\big) +
+y\big(A(T) - A(0)\big)}{xS(0) + yA(0)}
+\]</span></p>
+<p>This return can be rewritten in terms of asset returns. Dividing
+numerator and denominator appropriately:</p>
+<p><span class="math display">\[
+K_V = w_S K_S + w_A K_A
+\]</span></p>
+<p>where <span class="math inline">\(w_S = \frac{xS(0)}{V(0)}\)</span>
+and <span class="math inline">\(w_A = \frac{yA(0)}{V(0)}\)</span> are
+the <strong>portfolio weights</strong> (fractions of wealth invested in
+each asset). Note that <span class="math inline">\(w_S + w_A =
+1\)</span>.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="some-important-market-assumptions">Some Important Market
+Assumptions</h2>
+<p>These assumptions are idealizations, but they approximate reality in
+liquid, developed markets.</p>
+<h3 id="divisibility">Divisibility</h3>
+<p>Assets can be held in fractional quantities.</p>
+<p><strong>Rationale</strong>: While you cannot buy 0.5 shares of a
+single stock in retail markets, institutional investors trading millions
+of dollars can effectively achieve any fractional exposure through
+various instruments or by treating portfolios as continuous.</p>
+<h3 id="liquidity">Liquidity</h3>
+<p>There are no bounds on <span class="math inline">\(x\)</span> and
+<span class="math inline">\(y\)</span>. Assets can be bought or sold in
+arbitrary quantities at market prices without affecting those
+prices.</p>
+<p><strong>Rationale</strong>: This is the "price taker" assumption. In
+reality, large orders move prices (market impact), but for sufficiently
+liquid markets and moderate position sizes, this effect is
+negligible.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="some-important-market-assumptions-1">Some Important Market
+Assumptions</h2>
+<p>These assumptions are idealizations, but they approximate reality in
+liquid, developed markets.</p>
+<h3 id="solvency">Solvency</h3>
+<p>Investors can always meet their obligations. No bankruptcy or
+counterparty risk.</p>
+<h3 id="no-transaction-costs">No Transaction Costs</h3>
+<p>No fees, taxes, or bid-ask spreads. Every trade executes at the
+quoted price.</p>
+<p><strong>Reality check</strong>: These two assumptions are clearly
+false but simplify the analysis. More realistic models incorporate these
+frictions.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="long-and-short-positions">Long and Short Positions</h2>
+<ul>
+<li><strong>Long position</strong>: <span class="math inline">\(x &gt;
+0\)</span> or <span class="math inline">\(y &gt; 0\)</span>—holding a
+positive quantity of an asset. You profit if the price rises.</li>
+<li><strong>Short position</strong>: <span class="math inline">\(x &lt;
+0\)</span> or <span class="math inline">\(y &lt; 0\)</span>—holding a
+negative quantity. You profit if the price falls.</li>
+</ul>
+<p>Short positions require borrowing assets (for stocks) or money (for
+bonds).</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="shorting-an-asset">Shorting an Asset</h2>
+<p><strong>Can you profit if a stock price goes down?</strong> Yes—by
+short selling.</p>
+<h3 id="mechanics-of-short-selling">Mechanics of Short Selling</h3>
+<p>Steps:</p>
+<ol type="1">
+<li><strong>Borrow</strong> shares from a broker (who lends them from
+their inventory or other clients)</li>
+<li><strong>Sell</strong> them immediately at the current market price
+<span class="math inline">\(S(0)\)</span></li>
+<li><strong>Wait</strong> for the price to (hopefully) fall</li>
+<li><strong>Buy back</strong> the shares at the new price <span
+class="math inline">\(S(T)\)</span></li>
+<li><strong>Return</strong> the borrowed shares to the broker</li>
+</ol>
+<h3 id="profitloss">Profit/Loss</h3>
+<ul>
+<li>If the price <strong>falls</strong> (<span
+class="math inline">\(S(T) &lt; S(0)\)</span>): you profit by <span
+class="math inline">\(S(0) - S(T)\)</span> per share</li>
+<li>If the price <strong>rises</strong> (<span
+class="math inline">\(S(T) &gt; S(0)\)</span>): you lose <span
+class="math inline">\(S(T) - S(0)\)</span> per share</li>
+</ul>
+<p><strong>Example</strong>: Short 100 shares at <span
+class="math inline">\(50\)</span>. If the price drops to <span
+class="math inline">\(40\)</span>, you profit <span
+class="math inline">\(10 \times 100 = 1000\)</span>. If it rises to
+<span class="math inline">\(60\)</span>, you lose <span
+class="math inline">\(10 \times 100 = 1000\)</span>.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="risks-of-short-selling">Risks of Short Selling</h3>
+<ul>
+<li><strong>Unlimited loss potential</strong>: A stock price can rise
+indefinitely, but can only fall to zero</li>
+<li><strong>Margin requirements</strong>: Brokers require collateral to
+ensure you can buy back the shares</li>
+<li><strong>Short squeeze</strong>: If many investors short a stock and
+the price rises, they may all rush to buy back shares, driving the price
+even higher</li>
+</ul>
+<h3 id="portfolio-representation">Portfolio Representation</h3>
+<p>Short positions correspond to <strong>negative holdings</strong>. For
+example, a portfolio with <span class="math inline">\(x = -10\)</span>
+means you are short 10 shares.</p>
+<p>The value is: <span class="math display">\[
+V(t) = -10 \cdot S(t) + y A(t)
+\]</span></p>
+<p>At <span class="math inline">\(t=0\)</span>, shorting 10 shares gives
+you <span class="math inline">\(+10 \cdot S(0)\)</span> in cash, which
+you can invest in bonds or use as collateral.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="2-the-no-arbitrage-principle">2. The No-Arbitrage Principle</h2>
+<h3 id="what-is-arbitrage">What Is Arbitrage?</h3>
+<p><strong>Arbitrage</strong> is the possibility of making a
+<strong>risk-free profit with no net investment</strong>.</p>
+<p>In mathematical terms, arbitrage exists if there is a portfolio <span
+class="math inline">\((x, y)\)</span> such that:</p>
+<ol type="1">
+<li><span class="math inline">\(V(0) = 0\)</span> (no initial
+investment)</li>
+<li><span class="math inline">\(V(T) \geq 0\)</span> with probability 1
+(never lose money)</li>
+<li><span class="math inline">\(V(T) &gt; 0\)</span> with positive
+probability (sometimes make money)</li>
+</ol>
+<p>Classic example:</p>
+<ul>
+<li>Buy gold in Delhi at ₹60,000 per 10g</li>
+<li>Simultaneously sell the same gold in Mumbai at ₹60,300 per 10g</li>
+<li>Pocket the difference instantly: ₹300 profit with zero risk</li>
+</ul>
+<p>Key features:</p>
+<ul>
+<li><strong>Simultaneous transactions</strong> (no time risk)</li>
+<li><strong>No risk</strong> (prices are locked in)</li>
+<li><strong>No capital committed</strong> (borrow to buy, repay from
+sale proceeds)</li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="why-this-is-free-money">Why This Is "Free Money"</h3>
+<p>If such an opportunity existed and was known, rational investors
+would:</p>
+<ol type="1">
+<li>Borrow unlimited money</li>
+<li>Execute the arbitrage</li>
+<li>Scale profits to infinity</li>
+</ol>
+<p>But this would immediately drive prices back into equilibrium (buying
+in Delhi raises prices there, selling in Mumbai lowers prices
+there).</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="why-arbitrage-should-not-exist">Why Arbitrage Should Not
+Exist</h2>
+<p>We assume that markets <strong>do not allow arbitrage
+opportunities</strong>.</p>
+<h3 id="why-this-assumption-is-reasonable">Why This Assumption Is
+Reasonable</h3>
+<ul>
+<li><strong>Speed</strong>: Arbitrage is exploited by high-frequency
+trading algorithms in microseconds</li>
+<li><strong>Competition</strong>: Thousands of traders and algorithms
+scan for arbitrage 24/7</li>
+<li><strong>Self-correcting</strong>: The act of exploiting arbitrage
+eliminates the opportunity
+<ul>
+<li>Buying the cheap asset raises its price</li>
+<li>Selling the expensive asset lowers its price</li>
+<li>Prices converge until the arbitrage disappears</li>
+</ul></li>
+</ul>
+<p><strong>Real-world timing</strong>: In modern electronic markets,
+arbitrage opportunities vanish in <strong>milliseconds</strong>, not
+hours or days.</p>
+<h3 id="exceptions">Exceptions</h3>
+<ul>
+<li><strong>Transaction costs</strong>: Small price differences may
+persist if they're less than the cost to trade</li>
+<li><strong>Market frictions</strong>: Liquidity constraints, margin
+requirements, or regulatory barriers</li>
+<li><strong>Rare events</strong>: During market crashes or flash
+crashes, temporary arbitrage can appear</li>
+</ul>
+<p>But these are exceptions. For liquid, developed markets, the
+no-arbitrage assumption is excellent.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="mathematical-statement">Mathematical Statement</h3>
+<p>There is <strong>no portfolio</strong> <span
+class="math inline">\((x, y)\)</span> such that:</p>
+<ul>
+<li><span class="math inline">\(V(0) = 0\)</span> (zero initial
+cost)</li>
+<li><span class="math inline">\(V(T) \ge 0\)</span> with probability 1
+(never negative)</li>
+<li><span class="math inline">\(V(T) &gt; 0\)</span> with positive
+probability (sometimes positive)</li>
+</ul>
+<p><strong>Equivalent statement</strong> (contrapositive): If two
+portfolios have the same payoff at <span
+class="math inline">\(T\)</span> in all possible states, they must have
+the same price at <span class="math inline">\(t=0\)</span>.</p>
+<p>This principle is the foundation of <strong>derivative
+pricing</strong>: We price options by replicating their payoffs with
+portfolios of simpler assets.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="3-one-step-binomial-model">3. One-Step Binomial Model</h2>
+<h3 id="assumption">Assumption</h3>
+<p>The future stock price can take <strong>only two values</strong>:</p>
+<p><span class="math display">\[
+S(T) =
+\begin{cases}
+S_u(T) &amp; \text{with probability } p \text{ (up state)}\\
+S_d(T) &amp; \text{with probability } 1-p \text{ (down state)}
+\end{cases}
+\]</span></p>
+<p>with <span class="math inline">\(0 &lt; p &lt; 1\)</span> and <span
+class="math inline">\(S_d(T) &lt; S_u(T)\)</span>.</p>
+<h3 id="why-only-two-states">Why Only Two States?</h3>
+<p>This is the <strong>simplest model of uncertainty</strong>:</p>
+<ul>
+<li>One state represents "good news" (stock goes up)</li>
+<li>One state represents "bad news" (stock goes down)</li>
+<li>All information about the future is captured by which state
+occurs</li>
+</ul>
+<p>Despite its simplicity, this model:</p>
+<ul>
+<li>Captures the essence of risk and uncertainty</li>
+<li>Admits no-arbitrage pricing</li>
+<li>Can be extended to multi-period binomial trees (next lectures)</li>
+<li>Converges to continuous-time models (Black-Scholes) as we add more
+periods</li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="example">Example</h2>
+<p>Suppose:</p>
+<ul>
+<li><span class="math inline">\(S(0) = 100\)</span></li>
+<li><span class="math inline">\(A(0) = 100\)</span></li>
+<li><strong>Stock return</strong>:</li>
+</ul>
+<p><span class="math display">\[
+K_S(T)= \begin{cases} 25\% &amp; \text{with probability } p \text{ (up
+state)}\\ 5\% &amp; \text{with probability } 1-p \text{ (down
+state)}\end{cases}
+\]</span></p>
+<ul>
+<li><strong>Risk-free return</strong>: <span class="math inline">\(K_A =
+10\%\)</span> (deterministic, same in both states)</li>
+</ul>
+<h3 id="observations">Observations</h3>
+<ol type="1">
+<li>The stock has <strong>higher average return</strong> (assuming <span
+class="math inline">\(p &gt; 0.5\)</span>): <span
+class="math inline">\(E(K_S) &gt; 10\%\)</span></li>
+<li>But the stock has <strong>risk</strong>: sometimes returns only
+5%</li>
+<li>The bond has <strong>guaranteed return</strong>: always 10%</li>
+<li>Investors face a <strong>risk-return tradeoff</strong></li>
+</ol>
+<h3 id="expected-stock-return">Expected Stock Return</h3>
+<p>If <span class="math inline">\(p = 0.6\)</span> (60% chance of up
+state):</p>
+<p><span class="math display">\[
+E(K_S) = 0.6 \times 25\% + 0.4 \times 5\% = 15\% + 2\% = 17\%
+\]</span></p>
+<p>The <strong>risk premium</strong> is <span class="math inline">\(17\%
+- 10\% = 7\%\)</span>—the extra expected return for bearing risk.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="no-arbitrage-constraint">No-Arbitrage Constraint</h2>
+<p>To avoid arbitrage, the following condition must hold:</p>
+<p><span class="math display">\[
+\frac{S_d(T)}{S(0)} &lt; \frac{A(T)}{A(0)} &lt; \frac{S_u(T)}{S(0)}
+\]</span></p>
+<p><strong>Interpretation</strong>: The risk-free <strong>growth
+factor</strong> <span class="math inline">\((1+r_F) =
+\frac{A(T)}{A(0)}\)</span> must lie <strong>strictly between</strong>
+the down and up growth factors of the stock.</p>
+<p>Equivalently, in terms of returns:</p>
+<p><span class="math display">\[
+K_d &lt; r_F &lt; K_u
+\]</span></p>
+<p>where <span class="math inline">\(K_d = \frac{S_d(T) -
+S(0)}{S(0)}\)</span> and <span class="math inline">\(K_u = \frac{S_u(T)
+- S(0)}{S(0)}\)</span>.</p>
+<h3 id="why-this-must-hold">Why This Must Hold</h3>
+<p><strong>Intuition</strong>:</p>
+<ul>
+<li>If <span class="math inline">\(r \geq K_u\)</span>, the bond
+<strong>dominates</strong> the stock (higher return with no risk) →
+everyone sells the stock</li>
+<li>If <span class="math inline">\(r \leq K_d\)</span>, the stock
+<strong>dominates</strong> the bond (higher return in both states) →
+everyone sells the bond</li>
+</ul>
+<p>Either case creates arbitrage. We'll prove this formally in the next
+slides.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="case-1-arbitrage-when-bond-return-is-too-low">Case-1: Arbitrage
+When Bond Return Is Too Low</h2>
+<p><strong>Suppose</strong> <span
+class="math inline">\(\frac{A(T)}{A(0)} \leq
+\frac{S_d(T)}{S(0)}\)</span> (equivalently, <span
+class="math inline">\(r_F \leq K_d\)</span>).</p>
+<p>This means the stock beats the bond <strong>even in the worst
+case</strong>. That's too good to be true!</p>
+<h3 id="arbitrage-strategy">Arbitrage Strategy</h3>
+<p>At <span class="math inline">\(t=0\)</span>:</p>
+<ul>
+<li><strong>Borrow</strong> the amount <span
+class="math inline">\(S(0)\)</span> at the risk-free rate (short
+bond)</li>
+<li><strong>Buy</strong> one share of stock for <span
+class="math inline">\(S(0)\)</span></li>
+</ul>
+<p><strong>Initial cost</strong>: <span class="math inline">\(V(0) = 1
+\cdot S(0) - \frac{S(0)}{A(0)} \cdot A(0) = 0\)</span> ✓</p>
+<p>Portfolio: <span class="math inline">\(x=1\)</span>, <span
+class="math inline">\(y = -\frac{S(0)}{A(0)}\)</span></p>
+<h3 id="payoff-at-time-t">Payoff at Time <span
+class="math inline">\(T\)</span></h3>
+<p><span class="math display">\[
+V(T) = S(T) - \frac{S(0)}{A(0)} A(T)
+\]</span></p>
+<p>In the up state: <span class="math display">\[
+V(T) = S_u(T) - \frac{S(0)}{A(0)} A(T) &gt; 0 \quad \text{(strictly
+positive)}
+\]</span></p>
+<p>In the down state: <span class="math display">\[
+V(T) = S_d(T) - \frac{S(0)}{A(0)} A(T) \geq 0 \quad \text{(non-negative
+by assumption)}
+\]</span></p>
+<p><strong>Result</strong>: We invested nothing, we never lose money,
+and we sometimes make money. This is arbitrage!</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="case-2-arbitrage-when-bond-return-is-too-high">Case-2: Arbitrage
+When Bond Return Is Too High</h2>
+<p><strong>Suppose</strong> <span
+class="math inline">\(\frac{A(T)}{A(0)} \geq
+\frac{S_u(T)}{S(0)}\)</span> (equivalently, <span
+class="math inline">\(r_F \geq K_u\)</span>).</p>
+<p>This means the bond beats the stock <strong>even in the best
+case</strong>. Why would anyone hold the stock?</p>
+<h3 id="arbitrage-strategy-1">Arbitrage Strategy</h3>
+<p>At <span class="math inline">\(t=0\)</span>:</p>
+<ul>
+<li><strong>Sell short</strong> one share for <span
+class="math inline">\(S(0)\)</span> (borrow and sell the stock)</li>
+<li><strong>Invest</strong> the proceeds <span
+class="math inline">\(S(0)\)</span> at the risk-free rate</li>
+</ul>
+<p><strong>Initial cost</strong>: <span class="math inline">\(V(0) = -1
+\cdot S(0) + \frac{S(0)}{A(0)} \cdot A(0) = 0\)</span> ✓</p>
+<p>Portfolio: <span class="math inline">\(x=-1\)</span>, <span
+class="math inline">\(y = \frac{S(0)}{A(0)}\)</span></p>
+<h3 id="payoff-at-time-t-1">Payoff at Time <span
+class="math inline">\(T\)</span></h3>
+<p>You must buy back the stock to return it. Your portfolio is
+worth:</p>
+<p><span class="math display">\[
+V(T) = -S(T) + \frac{S(0)}{A(0)} A(T)
+\]</span></p>
+<p>In the up state: <span class="math display">\[
+V(T) = -S_u(T) + \frac{S(0)}{A(0)} A(T) \geq 0 \quad \text{(non-negative
+by assumption)}
+\]</span></p>
+<p>In the down state: <span class="math display">\[
+V(T) = -S_d(T) + \frac{S(0)}{A(0)} A(T) &gt; 0 \quad \text{(strictly
+positive)}
+\]</span></p>
+<p><strong>Result</strong>: Again, we have arbitrage!</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="4-risk-and-return">4. Risk and Return</h2>
+<p>How do we measure the <strong>risk</strong> and <strong>expected
+return</strong> of a portfolio? This section introduces the key
+statistical tools.</p>
+<h3 id="example-setup">Example Setup</h3>
+<p>Let:</p>
+<ul>
+<li><span class="math inline">\(A(0) = 100\)</span>; <span
+class="math inline">\(A(T) = 110\)</span> (risk-free rate <span
+class="math inline">\(r_F = 10\%\)</span>)</li>
+<li><span class="math inline">\(S(0) = 80\)</span>;</li>
+</ul>
+<p><span class="math display">\[
+S(T)=\begin{cases} 100 &amp; \text{with probability } 0.8 \\ 60 &amp;
+\text{with probability } 0.2 \end{cases}
+\]</span></p>
+<p><strong>Stock returns</strong>: <span class="math display">\[
+K_S = \begin{cases} \frac{100-80}{80} = 25\% &amp; \text{with
+probability } 0.8 \\ \frac{60-80}{80} = -25\% &amp; \text{with
+probability } 0.2 \end{cases}
+\]</span></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="portfolio-1">Portfolio</h3>
+<p>Suppose you invest <span class="math inline">\(10,000\)</span> with:
+<span class="math inline">\(x = 50\)</span> shares; <span
+class="math inline">\(y = 60\)</span> bonds.</p>
+<p><strong>Initial value</strong>: <span class="math inline">\(V(0) = 50
+\times 80 + 60 \times 100 = 4000 + 6000 = 10{,}000\)</span> ✓</p>
+<p><strong>Weights</strong>: 40% in stocks, 60% in bonds</p>
+<h3 id="portfolio-value-at-t">Portfolio Value at <span
+class="math inline">\(T\)</span></h3>
+<p><span class="math display">\[
+V(T) = 50 \times S(T) + 60 \times 110 = 50 \times S(T) + 6600
+\]</span></p>
+<p><span class="math display">\[
+V(T) =
+\begin{cases}
+50 \times 100 + 6600 = 11{,}600 &amp; \text{if stock goes up} \\
+50 \times 60 + 6600 = 9{,}600 &amp; \text{if stock goes down}
+\end{cases}
+\]</span></p>
+<p><strong>Corresponding returns</strong>:</p>
+<p><span class="math display">\[
+K_V =
+\begin{cases}
+\frac{11600-10000}{10000} = 16\% &amp; \text{with probability } 0.8 \\
+\frac{9600-10000}{10000} = -4\% &amp; \text{with probability } 0.2
+\end{cases}
+\]</span></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="expected-return-and-risk">Expected Return and Risk</h3>
+<p><strong>Expected return</strong> (mean):</p>
+<p><span class="math display">\[
+E(K_V) = 16\% \times 0.8 + (-4\%) \times 0.2 = 12.8\% - 0.8\% = 12\%
+\]</span></p>
+<p><strong>Risk</strong> (standard deviation):</p>
+<p>First, compute the variance:</p>
+<p><span class="math display">\[
+\text{Var}(K_V) = E[(K_V - E(K_V))^2] = (16\% - 12\%)^2 \times 0.8 +
+(-4\%-12\%)^2 \times 0.2
+\]</span></p>
+<p><span class="math display">\[
+= (4\%)^2 \times 0.8 + (-16\%)^2 \times 0.2 = 0.0016 \times 0.8 + 0.0256
+\times 0.2
+\]</span></p>
+<p><span class="math display">\[
+= 0.00128 + 0.00512 = 0.0064
+\]</span></p>
+<p>Standard deviation:</p>
+<p><span class="math display">\[
+\sigma_V = \sqrt{0.0064} = 0.08 = 8\%
+\]</span></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="comparison-with-pure-strategies">Comparison with Pure
+Strategies</h3>
+<ul>
+<li><p><strong>All bonds</strong>:</p>
+<ul>
+<li>Return: <span class="math inline">\(K_A = 10\%\)</span>
+(deterministic)</li>
+<li>Risk: <span class="math inline">\(\sigma_A = 0\%\)</span></li>
+</ul></li>
+<li><p><strong>All stocks</strong>:</p>
+<ul>
+<li>Expected return: <span class="math inline">\(E(K_S) = 25\% \times
+0.8 + (-25\%) \times 0.2 = 20\% - 5\% = 15\%\)</span></li>
+<li>Variance: <span class="math inline">\((25\% - 15\%)^2 \times 0.8 +
+(-25\% - 15\%)^2 \times 0.2 = 0.01 \times 0.8 + 0.16 \times 0.2 =
+0.04\)</span></li>
+<li>Risk: <span class="math inline">\(\sigma_S = \sqrt{0.04} =
+20\%\)</span></li>
+</ul></li>
+</ul>
+<p><strong>Mixed portfolio (60-40)</strong>: <span
+class="math inline">\(E(K_V) = 12\%\)</span>, <span
+class="math inline">\(\sigma_V = 8\%\)</span></p>
+<p><strong>Observation</strong>: The mixed portfolio has
+<strong>intermediate</strong> risk and return, demonstrating
+<strong>diversification</strong>.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="exercise">Exercise</h2>
+<p>Design a portfolio with initial wealth of <span
+class="math inline">\(10{,}000\)</span>, split <strong>50:50 between
+stocks and bonds</strong> (by value).</p>
+<p>Compute:</p>
+<ol type="1">
+<li>The portfolio <span class="math inline">\((x, y)\)</span></li>
+<li>Final portfolio value <span class="math inline">\(V(T)\)</span> in
+each state</li>
+<li>Expected return <span class="math inline">\(E(K_V)\)</span></li>
+<li>Risk (standard deviation) <span
+class="math inline">\(\sigma_V\)</span></li>
+</ol>
+<p>Use the same asset prices as above:</p>
+<ul>
+<li><span class="math inline">\(A(0)=100\)</span> and <span
+class="math inline">\(A(T)=110\)</span> dollars</li>
+<li><span class="math inline">\(S(0)=80\)</span> and</li>
+</ul>
+<p><span class="math display">\[
+S(T) =
+\begin{cases}
+100 &amp; \text{with probability } 0.8 \\
+60 &amp; \text{with probability } 0.2
+\end{cases}
+\]</span></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="solution-sketch">Solution Sketch</h3>
+<p><strong>Initial wealth</strong>: 10,000, split 50-50.</p>
+<ul>
+<li>Stock investment: 5,000 → <span class="math inline">\(x = 5000/80 =
+62.5\)</span> shares</li>
+<li>Bond investment: 5,000 → <span class="math inline">\(y = 5000/100 =
+50\)</span> bonds</li>
+</ul>
+<p><strong>Final value</strong>: <span class="math display">\[
+V(T) = 62.5 \times S(T) + 50 \times 110 = 62.5 \times S(T) + 5500
+\]</span></p>
+<p>Up state: <span class="math inline">\(V(T) = 6250 + 5500 =
+11{,}750\)</span> → Return = 17.5%</p>
+<p>Down state: <span class="math inline">\(V(T) = 3750 + 5500 =
+9{,}250\)</span> → Return = -7.5%</p>
+<p><strong>Expected return</strong>: <span class="math inline">\(E(K_V)
+= 0.8 \times 17.5\% + 0.2 \times (-7.5\%) = 14\% - 1.5\% =
+12.5\%\)</span></p>
+<p><strong>Variance</strong>: <span class="math inline">\((17.5\% -
+12.5\%)^2 \times 0.8 + (-7.5\% - 12.5\%)^2 \times 0.2 = 25 \times 0.8 +
+400 \times 0.2 = 20 + 80 = 100\)</span></p>
+<p><strong>Risk</strong>: <span class="math inline">\(\sigma_V =
+\sqrt{100} = 10\%\)</span></p>
+<p><strong>Insight</strong>: More stocks → higher expected return (12.5%
+vs 12%) but also higher risk (10% vs 8%).</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="5-forward-contracts">5. Forward Contracts</h2>
+<p>A <strong>forward contract</strong> is an agreement to buy or sell a
+risky asset at a specified future time (the <strong>delivery
+date</strong>) for a price <span class="math inline">\(F\)</span> fixed
+today (the <strong>forward price</strong>).</p>
+<h3 id="key-features">Key Features</h3>
+<ul>
+<li><strong>Obligation</strong> (not an option): Both parties must
+complete the transaction</li>
+<li><strong>No upfront payment</strong>: The contract itself costs
+nothing to enter</li>
+<li><strong>Settlement at maturity</strong>: Exchange happens at <span
+class="math inline">\(t=T\)</span></li>
+</ul>
+<h3 id="terminology">Terminology</h3>
+<ul>
+<li><p><strong>Long forward position</strong>: Agrees to
+<strong>buy</strong> the asset at <span
+class="math inline">\(t=T\)</span> for price <span
+class="math inline">\(F\)</span></p>
+<ul>
+<li>Profits if <span class="math inline">\(S(T) &gt; F\)</span> (bought
+cheap)</li>
+<li>Loses if <span class="math inline">\(S(T) &lt; F\)</span>
+(overpaid)</li>
+</ul></li>
+<li><p><strong>Short forward position</strong>: Agrees to
+<strong>sell</strong> the asset at <span
+class="math inline">\(t=T\)</span> for price <span
+class="math inline">\(F\)</span></p>
+<ul>
+<li>Profits if <span class="math inline">\(S(T) &lt; F\)</span> (sold
+high)</li>
+<li>Loses if <span class="math inline">\(S(T) &gt; F\)</span> (sold too
+cheap)</li>
+</ul></li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="payoff-at-maturity">Payoff at Maturity</h3>
+<ul>
+<li><strong>Long forward payoff</strong>: <span
+class="math inline">\(S(T) - F\)</span></li>
+<li><strong>Short forward payoff</strong>: <span class="math inline">\(F
+- S(T)\)</span></li>
+</ul>
+<p>Note these are <strong>symmetric</strong>: one party's gain is the
+other's loss (zero-sum).</p>
+<h3 id="pricing-the-forward">Pricing the Forward</h3>
+<p>What should <span class="math inline">\(F\)</span> be? If <span
+class="math inline">\(F\)</span> is set wrong, one party gets a
+guaranteed advantage—that's arbitrage!</p>
+<p><strong>No-arbitrage forward price</strong>:</p>
+<p><span class="math display">\[
+F = S(0) \cdot \frac{A(T)}{A(0)} = S(0) \cdot (1+r_F)
+\]</span></p>
+<p><strong>Intuition</strong>: The forward price is the current stock
+price "grown" at the risk-free rate.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="derivation">Derivation</h3>
+<p>Consider two strategies to own the stock at time <span
+class="math inline">\(T\)</span>:</p>
+<p><strong>Strategy 1</strong>: Enter a long forward contract (costs
+<span class="math inline">\(0\)</span> today, pay <span
+class="math inline">\(F\)</span> at time <span
+class="math inline">\(T\)</span>)</p>
+<p><strong>Strategy 2</strong>: Buy stock today for <span
+class="math inline">\(S(0)\)</span>, financed by borrowing <span
+class="math inline">\(S(0)\)</span> at rate <span
+class="math inline">\(r_F\)</span> (costs <span
+class="math inline">\(0\)</span> today, owe <span
+class="math inline">\(S(0)(1+r_F)\)</span> at time <span
+class="math inline">\(T\)</span>)</p>
+<p>Both strategies deliver one stock at <span
+class="math inline">\(T\)</span> and cost zero today. By no-arbitrage,
+they must cost the same at <span class="math inline">\(T\)</span>:</p>
+<p><span class="math display">\[
+F = S(0)(1+r_F)
+\]</span></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="comparing-forwards-and-futures">Comparing Forwards and
+Futures</h2>
+<h3 id="forward-contracts">Forward Contracts</h3>
+<ul>
+<li><strong>Definition</strong>: Obligation to buy/sell an asset at a
+predetermined price on a future date</li>
+<li><strong>Standardization</strong>: Customized (OTC -
+over-the-counter)</li>
+<li><strong>Upfront cost</strong>: Zero (no initial payment)</li>
+<li><strong>Payoff</strong>: Symmetric—can be positive or negative</li>
+<li><strong>Obligation</strong>: Binding for both parties</li>
+<li><strong>Settlement</strong>: At maturity (delivery date)</li>
+<li><strong>Counterparty risk</strong>: Yes (default risk exists)</li>
+</ul>
+<h3 id="futures-contracts">Futures Contracts</h3>
+<ul>
+<li><strong>Definition</strong>: Same as forwards but
+exchange-traded</li>
+<li><strong>Standardization</strong>: Highly standardized (contract
+size, expiry dates)</li>
+<li><strong>Upfront cost</strong>: Margin requirement (collateral)</li>
+<li><strong>Payoff</strong>: Same as forwards (symmetric)</li>
+<li><strong>Obligation</strong>: Binding, but can be closed before
+expiry</li>
+<li><strong>Settlement</strong>: Daily mark-to-market (daily
+settlement)</li>
+<li><strong>Counterparty risk</strong>: Minimal (clearinghouse
+guarantee)</li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="6-call-and-put-options">6. Call and Put Options</h2>
+<p>Unlike forward contracts (which are obligations),
+<strong>options</strong> give you <strong>rights without
+obligations</strong>.</p>
+<h3 id="definitions">Definitions</h3>
+<p><strong>Call Option</strong>: The right (but not obligation) to
+<strong>buy</strong> an asset at a predetermined price <span
+class="math inline">\(X\)</span> (the <strong>strike price</strong>) at
+time <span class="math inline">\(T\)</span>.</p>
+<p><strong>Put Option</strong>: The right (but not obligation) to
+<strong>sell</strong> an asset at strike price <span
+class="math inline">\(X\)</span> at time <span
+class="math inline">\(T\)</span>.</p>
+<h3 id="why-option">Why "Option"?</h3>
+<p>You <strong>choose</strong> whether to exercise:</p>
+<ul>
+<li><strong>Call</strong>: Exercise if <span class="math inline">\(S(T)
+&gt; X\)</span> (buy cheap, sell at market price)</li>
+<li><strong>Put</strong>: Exercise if <span class="math inline">\(S(T)
+&lt; X\)</span> (buy at market price, sell high)</li>
+</ul>
+<p>If exercising would lose money, simply walk away—that's the power of
+an option.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="payoff-at-maturity-1">Payoff at Maturity</h3>
+<ul>
+<li><p><strong>Call option payoff</strong>: <span
+class="math display">\[
+C(T) = \max(S(T) - X, 0) = \begin{cases} S(T) - X &amp; \text{if } S(T)
+&gt; X \\ 0 &amp; \text{if } S(T) \leq X \end{cases}
+\]</span></p></li>
+<li><p><strong>Put option payoff</strong>: <span class="math display">\[
+P(T) = \max(X - S(T), 0) = \begin{cases} X - S(T) &amp; \text{if } S(T)
+&lt; X \\ 0 &amp; \text{if } S(T) \geq X \end{cases}
+\]</span></p></li>
+</ul>
+<h3 id="key-observation">Key Observation</h3>
+<p>Options have <strong>asymmetric payoffs</strong>:</p>
+<ul>
+<li>Upside: unlimited (for calls) or up to <span
+class="math inline">\(X\)</span> (for puts)</li>
+<li>Downside: limited to zero (you just don't exercise)</li>
+</ul>
+<p>This asymmetry has <strong>value</strong>, so you must pay a
+<strong>premium</strong> <span class="math inline">\(C(0)\)</span> or
+<span class="math inline">\(P(0)\)</span> to acquire the option.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="example-1">Example</h3>
+<p>Stock at <span class="math inline">\(S(0) =  100\)</span>. Buy a call
+option with strike <span class="math inline">\(X =  100\)</span> for
+premium <span class="math inline">\(C(0) =  10\)</span>.</p>
+<p>At maturity:</p>
+<ul>
+<li>If <span class="math inline">\(S(T) =  120\)</span>: Exercise,
+profit = <span class="math inline">\(120 -  100 -  10
+=  10\)</span></li>
+<li>If <span class="math inline">\(S(T) =  80\)</span>: Don't exercise,
+loss = <span class="math inline">\(- 10\)</span> (just the premium)</li>
+</ul>
+<p><strong>Maximum loss</strong>: 10. <strong>Maximum gain</strong>:
+unlimited!</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="options-pricing-the-replication-method">Options Pricing: The
+Replication Method</h2>
+<p><strong>Goal</strong>: Find the fair price <span
+class="math inline">\(C(0)\)</span> for a call option.</p>
+<p><strong>Key idea</strong>: Construct a portfolio of stocks and bonds
+that <strong>replicates</strong> the option's payoff in every possible
+state. By no-arbitrage, the portfolio and the option must have the same
+price.</p>
+<h3 id="extended-portfolio-representation">Extended Portfolio
+Representation</h3>
+<p>Let us represent portfolios as <span class="math inline">\((x, y,
+z)\)</span> where:</p>
+<ul>
+<li><span class="math inline">\(x\)</span> = shares of stock</li>
+<li><span class="math inline">\(y\)</span> = units of bond</li>
+<li><span class="math inline">\(z\)</span> = options held</li>
+</ul>
+<p>Portfolio value:</p>
+<p><span class="math display">\[V(t) = xS(t) + yA(t) +
+zC(t)\]</span></p>
+<p>To price the option, we find <span
+class="math inline">\(C(0)\)</span> such that a replicating portfolio
+exists.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="example-2">Example</h3>
+<p><span class="math display">\[
+S(0) = 100, \quad S(T) = \begin{cases} 120 &amp; \text{with probability
+} p \\ 80 &amp; \text{with probability } 1-p \end{cases}
+\]</span></p>
+<p>Call option with strike <span class="math inline">\(X =
+100\)</span>:</p>
+<p><span class="math display">\[
+C(T) = \max(S(T) - 100, 0) = \begin{cases} 20 &amp; \text{(up state)} \\
+0 &amp; \text{(down state)} \end{cases}
+\]</span></p>
+<p>Risk-free asset: <span class="math inline">\(A(0) = 100\)</span>,
+<span class="math inline">\(A(T) = 110\)</span> (so <span
+class="math inline">\(r = 10\%\)</span>).</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="replicating-the-option">Replicating the Option</h2>
+<p>We seek a portfolio <span class="math inline">\((x, y)\)</span> such
+that:</p>
+<p><span class="math display">\[
+xS(T) + yA(T) = C(T) \quad \text{in both states}
+\]</span></p>
+<p>This gives us a <strong>system of two equations</strong> (one for
+each state):</p>
+<p><span class="math display">\[
+\begin{cases}
+x \cdot 120 + y \cdot 110 = 20 &amp; \text{(up state)} \\
+x \cdot 80 + y \cdot 110 = 0 &amp; \text{(down state)}
+\end{cases}
+\]</span></p>
+<h3 id="solving-for-x-y">Solving for <span class="math inline">\((x,
+y)\)</span></h3>
+<p><strong>Step 1</strong>: Subtract the second equation from the
+first:</p>
+<p><span class="math display">\[
+x(120 - 80) = 20 - 0 \implies 40x = 20 \implies x = \frac{1}{2}
+\]</span></p>
+<p><strong>Step 2</strong>: Substitute <span class="math inline">\(x =
+1/2\)</span> into the second equation:</p>
+<p><span class="math display">\[
+\frac{1}{2} \cdot 80 + y \cdot 110 = 0 \implies 40 + 110y = 0 \implies y
+= -\frac{40}{110} = -\frac{4}{11}
+\]</span></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="interpretation-1">Interpretation</h3>
+<p>The replicating portfolio is:</p>
+<ul>
+<li><strong>Buy</strong> <span class="math inline">\(1/2\)</span> share
+of stock (costs <span class="math inline">\(\frac{1}{2} \times 100 =
+50\)</span>)</li>
+<li><strong>Short</strong> <span class="math inline">\(4/11\)</span>
+bonds (borrow <span class="math inline">\(\frac{4}{11} \times 100 =
+36.36\)</span>)</li>
+</ul>
+<p><strong>Net cost today</strong>:</p>
+<p><span class="math display">\[
+C(0) = \frac{1}{2} \times 100 - \frac{4}{11} \times 100 = 50 - 36.36 =
+13.64
+\]</span></p>
+<h3 id="verification">Verification</h3>
+<p>Up state: <span class="math inline">\(V(T) = \frac{1}{2} \times 120 -
+\frac{4}{11} \times 110 = 60 - 40 = 20\)</span> ✓</p>
+<p>Down state: <span class="math inline">\(V(T) = \frac{1}{2} \times 80
+- \frac{4}{11} \times 110 = 40 - 40 = 0\)</span> ✓</p>
+<p>The portfolio perfectly replicates the option payoff, so by
+no-arbitrage: <strong><span class="math inline">\(C(0) =
+13.64\)</span></strong>.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="comparing-forwards-futures-and-options">Comparing Forwards,
+Futures, and Options</h2>
+<h3 id="options">Options</h3>
+<ul>
+<li><strong>Definition</strong>: Right (not obligation) to buy (call) or
+sell (put)</li>
+<li><strong>Standardization</strong>: Can be standardized (exchange) or
+customized (OTC)</li>
+<li><strong>Upfront cost</strong>: Premium must be paid</li>
+<li><strong>Payoff</strong>: Asymmetric—non-negative for buyer</li>
+<li><strong>Obligation</strong>: Optional for buyer, binding for
+seller</li>
+<li><strong>Settlement</strong>: At expiry (or can be sold before)</li>
+<li><strong>Counterparty risk</strong>: For OTC options, yes; for
+exchange-traded, minimal</li>
+</ul>
+<h3 id="key-differences-summary">Key Differences Summary</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Forward</th>
+<th>Future</th>
+<th>Option</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Obligation</strong></td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No (for buyer)</td>
+</tr>
+<tr>
+<td><strong>Upfront cost</strong></td>
+<td><span class="math inline">\(0\)</span></td>
+<td>Margin</td>
+<td>Premium</td>
+</tr>
+<tr>
+<td><strong>Loss potential</strong></td>
+<td>Unlimited</td>
+<td>Unlimited</td>
+<td>Limited (premium) for buyer</td>
+</tr>
+<tr>
+<td><strong>Flexibility</strong></td>
+<td>Low</td>
+<td>Medium</td>
+<td>High</td>
+</tr>
+<tr>
+<td><strong>Trading venue</strong></td>
+<td>OTC</td>
+<td>Exchange</td>
+<td>Both</td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="7-foreign-exchange">7. Foreign Exchange</h2>
+<p>Foreign exchange (FX) markets enable trading between currencies. They
+are among the largest and most liquid markets in the world.</p>
+<h3 id="setting">Setting</h3>
+<ul>
+<li><strong>Domestic currency</strong>: Your home currency (e.g., USD,
+INR)</li>
+<li><strong>Foreign currency</strong>: Another currency (e.g., EUR,
+GBP)</li>
+<li><strong>Exchange rate</strong> <span
+class="math inline">\(X(t)\)</span>: Price of one unit of foreign
+currency in domestic currency</li>
+</ul>
+<p><strong>Example</strong>: If <span class="math inline">\(X(t) =
+83\)</span> INR/USD, then 1 USD costs 83 INR.</p>
+<h3 id="assets-in-fx-markets">Assets in FX Markets</h3>
+<ol type="1">
+<li><p><strong>Domestic risk-free asset</strong>: Bank account in
+domestic currency</p>
+<ul>
+<li>Grows at domestic rate: <span class="math inline">\(A_d(T) =
+A_d(0)(1 + r_d)\)</span></li>
+</ul></li>
+<li><p><strong>Foreign risk-free asset</strong>: Bank account in foreign
+currency</p>
+<ul>
+<li>Grows at foreign rate: <span class="math inline">\(A_f(T) = A_f(0)(1
++ r_f)\)</span></li>
+<li>Value in domestic currency: <span class="math inline">\(A_f(t) \cdot
+X(t)\)</span></li>
+</ul></li>
+</ol>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="portfolio-representation-1">Portfolio Representation</h3>
+<p><span class="math display">\[
+V(t) = y_d A_d(t) + y_f A_f(t) X(t)
+\]</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(y_d\)</span> = units of domestic
+currency held</li>
+<li><span class="math inline">\(y_f\)</span> = units of foreign currency
+held</li>
+<li><span class="math inline">\(X(t)\)</span> converts foreign holdings
+to domestic value</li>
+</ul>
+<p><strong>Key insight</strong>: The exchange rate <span
+class="math inline">\(X(t)\)</span> is uncertain, making foreign
+holdings risky from the domestic investor's perspective.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="binomial-model-for-exchange-rate">Binomial Model for Exchange
+Rate</h2>
+<p>Apply the same binomial framework to exchange rates:</p>
+<ul>
+<li>Exchange rate uncertainty:</li>
+</ul>
+<p><span class="math display">\[
+X(T) = \begin{cases} X_u(T) &amp; \text{with probability } p \text{
+(foreign currency appreciates)} \\ X_d(T) &amp; \text{with probability }
+1-p \text{ (foreign currency depreciates)} \end{cases}
+\]</span></p>
+<h3 id="no-arbitrage-condition-interest-rate-parity">No-Arbitrage
+Condition (Interest Rate Parity)</h3>
+<p>By analogy with the stock-bond case, to rule out arbitrage:</p>
+<p><span class="math display">\[
+\frac{X_d(T)}{X(0)} &lt; \frac{1+r_d}{1+r_f} &lt; \frac{X_u(T)}{X(0)}
+\]</span></p>
+<p><strong>Economic interpretation</strong>:</p>
+<p>The ratio <span class="math inline">\(\frac{1+r_d}{1+r_f}\)</span> is
+the <strong>relative interest rate factor</strong>.</p>
+<ul>
+<li>If <span class="math inline">\(r_d &gt; r_f\)</span>: Domestic rates
+are higher, so domestic currency should depreciate (foreign currency
+appreciates) on average</li>
+<li>The expected exchange rate growth should compensate for the interest
+rate differential</li>
+</ul>
+<p>This is the foundation of <strong>covered interest rate
+parity</strong>, one of the most fundamental relationships in
+international finance.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="intuition">Intuition</h3>
+<p>If this condition is violated:</p>
+<ul>
+<li><strong>Borrow</strong> in the low-rate currency</li>
+<li><strong>Invest</strong> in the high-rate currency</li>
+<li><strong>Lock in</strong> the exchange rate</li>
+<li><strong>Profit</strong> risk-free (carry trade arbitrage)</li>
+</ul>
+<p>Such opportunities are immediately exploited by banks and hedge
+funds, keeping exchange rates and interest rates in equilibrium.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="fx-forward-and-option">FX Forward and Option</h2>
+<h3 id="fx-forward-rate">FX Forward Rate</h3>
+<p>By no-arbitrage, the <strong>forward exchange rate</strong> must
+be:</p>
+<p><span class="math display">\[
+F = X(0) \cdot \frac{1+r_d}{1+r_f}
+\]</span></p>
+<p><strong>Interpretation</strong>: If domestic rates are higher (<span
+class="math inline">\(r_d &gt; r_f\)</span>), the foreign currency must
+trade at a <strong>forward premium</strong> (<span
+class="math inline">\(F &gt; X(0)\)</span>) to prevent arbitrage.</p>
+<p><strong>Example</strong>:</p>
+<ul>
+<li>Spot: <span class="math inline">\(X(0) = 80\)</span> INR/USD</li>
+<li>Indian rate: <span class="math inline">\(r_d = 7\%\)</span></li>
+<li>US rate: <span class="math inline">\(r_f = 3\%\)</span></li>
+<li>Forward: <span class="math inline">\(F = 80 \times \frac{1.07}{1.03}
+= 80 \times 1.0388 \approx 83.11\)</span> INR/USD</li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="currency-call-option">Currency Call Option</h3>
+<p>A <strong>currency call option</strong> gives the right to buy
+foreign currency at strike <span class="math inline">\(K\)</span> (in
+domestic currency).</p>
+<p><strong>Payoff</strong>: <span class="math inline">\(C(T) = \max(X(T)
+- K, 0)\)</span></p>
+<p><strong>Use case</strong>: An Indian company expects to pay 1M in one
+year. Buy a call option with strike <span class="math inline">\(K =
+85\)</span> INR/USD to cap the cost.</p>
+<ul>
+<li>If INR weakens (<span class="math inline">\(X(T) = 90\)</span>):
+Exercise, pay only 85 INR/USD (plus premium)</li>
+<li>If INR strengthens (<span class="math inline">\(X(T) = 80\)</span>):
+Don't exercise, buy USD at spot</li>
+</ul>
+<h3 id="replication">Replication</h3>
+<p>Just as with stock options, currency options can be priced by
+replicating their payoff using portfolios of domestic and foreign
+bonds.</p>
+<p>The same algebra applies:</p>
+<ol type="1">
+<li>Set up two equations (one for each state)</li>
+<li>Solve for the replicating portfolio <span
+class="math inline">\((y_d, y_f)\)</span></li>
+<li>Compute the option price as the portfolio cost</li>
+</ol>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="8-managing-risk-with-options">8. Managing Risk with Options</h2>
+<p>Options are not just for speculation—they are powerful tools for
+<strong>risk management</strong> and <strong>designing specific payoff
+profiles</strong>.</p>
+<h3 id="three-key-uses">Three Key Uses</h3>
+<ol type="1">
+<li><strong>Hedging downside risk</strong> (insurance)</li>
+<li><strong>Enhancing yield</strong> (selling options for premium
+income)</li>
+<li><strong>Constructing tailored exposures</strong> (combining options
+with underlying assets)</li>
+</ol>
+<p>Options combine:</p>
+<ul>
+<li><strong>Probabilistic thinking</strong> (understanding states and
+probabilities)</li>
+<li><strong>No-arbitrage logic</strong> (replication and fair
+pricing)</li>
+<li><strong>Strategic flexibility</strong> (choosing when to
+exercise)</li>
+</ul>
+<p>Let's explore some concrete strategies.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="example-1-speculative-use-of-options">Example 1: Speculative Use
+of Options</h2>
+<p><strong>Scenario</strong>: You have <span
+class="math inline">\(1000\)</span> to invest. Stock trades at <span
+class="math inline">\(S(0) = 100\)</span>:</p>
+<p><span class="math display">\[
+S(T) = \begin{cases} 120 &amp; \text{with probability } 0.5 \\ 80 &amp;
+\text{with probability } 0.5 \end{cases}
+\]</span></p>
+<h3 id="strategy-a-buy-stock-directly">Strategy A: Buy Stock
+Directly</h3>
+<p>Buy 10 shares for <span class="math inline">\(1000\)</span>.</p>
+<p><strong>Payoff</strong>:</p>
+<ul>
+<li>Up state: <span class="math inline">\(V(T) = 10 \times 120 =
+1200\)</span> (20% gain)</li>
+<li>Down state: <span class="math inline">\(V(T) = 10 \times 80 =
+800\)</span> (20% loss)</li>
+</ul>
+<p><strong>Expected value</strong>: <span class="math inline">\(E(V) =
+0.5 \times 1200 + 0.5 \times 800 = 1000\)</span> (0% expected
+return—fair bet)</p>
+<p><strong>Risk (std dev)</strong>: <span
+class="math inline">\(200\)</span></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="strategy-b-buy-call-options">Strategy B: Buy Call Options</h3>
+<p>Assume call options (strike <span class="math inline">\(X =
+100\)</span>) cost <span class="math inline">\(C(0) = 13.64\)</span>
+each.</p>
+<p>Buy <span class="math inline">\(\frac{1000}{13.64} \approx
+73.3\)</span> options.</p>
+<p><strong>Payoff</strong>:</p>
+<ul>
+<li>Up state: <span class="math inline">\(V(T) = 73.3 \times (120 - 100)
+= 73.3 \times 20 = 1466\)</span></li>
+<li>Down state: <span class="math inline">\(V(T) = 73.3 \times 0 =
+0\)</span></li>
+</ul>
+<p><strong>Expected value</strong>: <span class="math inline">\(E(V) =
+0.5 \times 1466 + 0.5 \times 0 = 733\)</span></p>
+<p><strong>Risk (std dev)</strong>: <span
+class="math inline">\(733\)</span></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="comparison">Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>Up State</th>
+<th>Down State</th>
+<th>Expected</th>
+<th>Risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stock</td>
+<td><span class="math inline">\(1200\)</span></td>
+<td><span class="math inline">\(800\)</span></td>
+<td><span class="math inline">\(1000\)</span></td>
+<td><span class="math inline">\(200\)</span></td>
+</tr>
+<tr>
+<td>Options</td>
+<td><span class="math inline">\(1466\)</span></td>
+<td><span class="math inline">\(0\)</span></td>
+<td><span class="math inline">\(733\)</span></td>
+<td><span class="math inline">\(733\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Observation</strong>: Options provide
+<strong>leverage</strong>—higher potential upside (1466 vs 1200) but
+also higher risk (can lose everything). The expected return is actually
+<strong>negative</strong> due to the premium you pay.</p>
+<blockquote>
+<p>Purchasing options is <strong>riskier and more speculative</strong>
+than buying the stock directly.</p>
+</blockquote>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="example-2-covered-call-risk-reduction">Example 2: Covered Call
+(Risk Reduction)</h2>
+<p>Now let's see how options can <strong>reduce</strong> risk, not
+increase it.</p>
+<p><strong>Scenario</strong>: You own a volatile stock with <span
+class="math inline">\(S(0) = 100\)</span>:</p>
+<p><span class="math display">\[
+S(T) = \begin{cases} 160 &amp; \text{with probability } 0.5 \text{ (if
+up)} \\ 40 &amp; \text{with probability } 0.5 \text{ (if down)}
+\end{cases}
+\]</span></p>
+<h3 id="strategy-covered-call">Strategy: Covered Call</h3>
+<p><strong>At <span class="math inline">\(t=0\)</span></strong>:</p>
+<ol type="1">
+<li><strong>Own</strong> 1 share of stock (worth <span
+class="math inline">\(100\)</span>)</li>
+<li><strong>Sell</strong> 1 call option (strike <span
+class="math inline">\(X = 100\)</span>) for premium <span
+class="math inline">\(C(0) = 31.81\)</span></li>
+<li><strong>Invest</strong> the premium at 10% risk-free rate</li>
+</ol>
+<p>The <span class="math inline">\(31.81\)</span> premium grows to <span
+class="math inline">\(31.81 \times 1.10 = 35\)</span> by time <span
+class="math inline">\(T\)</span>.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="payoff-at-t">Payoff at <span
+class="math inline">\(T\)</span></h3>
+<p>Your portfolio value is:</p>
+<p><span class="math display">\[
+V(T) = S(T) - C(T) + 35
+\]</span></p>
+<p>where <span class="math inline">\(C(T) = \max(S(T) - 100, 0)\)</span>
+is the call payoff <strong>you owe</strong> (since you sold it).</p>
+<p><strong>Up state</strong> (<span class="math inline">\(S(T) =
+160\)</span>):</p>
+<ul>
+<li>Stock value: <span class="math inline">\(160\)</span></li>
+<li>Call obligation: <span class="math inline">\(-(160 - 100) =
+-60\)</span></li>
+<li>Premium growth: <span class="math inline">\(35\)</span></li>
+<li><strong>Total</strong>: <span class="math inline">\(160 - 60 + 35 =
+135\)</span></li>
+</ul>
+<p><strong>Down state</strong> (<span class="math inline">\(S(T) =
+40\)</span>):</p>
+<ul>
+<li>Stock value: <span class="math inline">\(40\)</span></li>
+<li>Call obligation: <span class="math inline">\(0\)</span> (option
+expires worthless)</li>
+<li>Premium growth: <span class="math inline">\(35\)</span></li>
+<li><strong>Total</strong>: <span class="math inline">\(40 - 0 + 35 =
+75\)</span></li>
+</ul>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="covered-call-risk-analysis">Covered Call: Risk Analysis</h2>
+<p>Let's compare the risk profiles:</p>
+<h3 id="holding-stock-only-no-option">Holding Stock Only (No
+Option)</h3>
+<p>Payoffs: <span class="math inline">\(S(T) \in \{40,
+160\}\)</span></p>
+<p><strong>Range</strong>: <span class="math inline">\(40\)</span> to
+<span class="math inline">\(160\)</span><br />
+<strong>Risk (spread)</strong>: <span class="math inline">\(160 - 40 =
+120\)</span><br />
+<strong>Expected value</strong>: <span class="math inline">\(E(V) = 0.5
+\times 160 + 0.5 \times 40 = 100\)</span></p>
+<h3 id="covered-call-strategy">Covered Call Strategy</h3>
+<p>Payoffs: <span class="math inline">\(V(T) \in \{75,
+135\}\)</span></p>
+<p><strong>Range</strong>: <span class="math inline">\(75\)</span> to
+<span class="math inline">\(135\)</span><br />
+<strong>Risk (spread)</strong>: <span class="math inline">\(135 - 75 =
+60\)</span><br />
+<strong>Expected value</strong>: <span class="math inline">\(E(V) = 0.5
+\times 135 + 0.5 \times 75 = 105\)</span></p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h3 id="key-insights">Key Insights</h3>
+<ol type="1">
+<li><strong>Risk reduced by 50%</strong>: The spread decreased from
+<span class="math inline">\(120\)</span> to <span
+class="math inline">\(60\)</span></li>
+<li><strong>Downside protection</strong>: Worst case improved from <span
+class="math inline">\(40\)</span> to <span
+class="math inline">\(75\)</span> (the premium provides a cushion)</li>
+<li><strong>Capped upside</strong>: You give up gains above <span
+class="math inline">\(135\)</span> (trade-off for receiving
+premium)</li>
+<li><strong>Expected value increased</strong>: From <span
+class="math inline">\(100\)</span> to <span
+class="math inline">\(105\)</span> (you collect premium income)</li>
+</ol>
+<p><strong>Interpretation</strong>: By selling the call, you:</p>
+<ul>
+<li>Give up unlimited upside potential</li>
+<li>In exchange for immediate premium income</li>
+<li>Which cushions against losses</li>
+</ul>
+<p>This is a <strong>risk-reducing</strong> strategy, popular among
+investors who own stocks and want to generate income while limiting
+volatility.</p>
+<p><strong>Real-world use</strong>: Portfolio managers use covered calls
+to enhance yields during sideways markets.</p>
+</section>
+
+<section class="slide" markdown="1">
+
+<h2 id="takeaway">Takeaway</h2>
+<p>Even the simplest market model—two periods, two assets, two
+states—reveals profound insights:</p>
+<h3 id="key-principles-established">Key Principles Established</h3>
+<ol type="1">
+<li><strong>No-arbitrage pricing</strong>: Assets must be priced
+consistently to prevent risk-free profits</li>
+<li><strong>Replication</strong>: Derivatives can be priced by
+constructing portfolios that mimic their payoffs</li>
+<li><strong>Risk-return tradeoff</strong>: Higher expected returns come
+with higher risk</li>
+<li><strong>Diversification</strong>: Combining assets can reduce
+risk</li>
+</ol>
+<h3 id="mathematical-tools-introduced">Mathematical Tools
+Introduced</h3>
+<ul>
+<li>Portfolio representation: <span class="math inline">\(V(t) = xS(t) +
+yA(t)\)</span></li>
+<li>Expected value and variance for measuring risk</li>
+<li>Systems of linear equations for replication</li>
+<li>No-arbitrage constraints</li>
+</ul>
+<h3 id="derivative-insights">Derivative Insights</h3>
+<ul>
+<li>Forwards lock in future prices</li>
+<li>Options provide asymmetric payoffs (limited downside, unlimited
+upside)</li>
+<li>Options have value due to this asymmetry</li>
+<li>Strategies combining options and stocks can either increase or
+decrease risk</li>
+</ul>
+</section>
+
+</div>
+</body>
+</html>

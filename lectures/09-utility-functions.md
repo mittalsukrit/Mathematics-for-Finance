@@ -69,11 +69,7 @@ Franklin Templeton Investments
 
 ## 1. Why Utility?
 
-Up to now, we used **mean–variance preferences**.
-
-They were convenient.
-
-They were also restrictive.
+Up to now, we used **mean–variance preferences**. Convenient but restrictive. 
 
 Utility theory answers a deeper question:
 
@@ -81,7 +77,7 @@ Utility theory answers a deeper question:
 
 ### Limitations of Mean–Variance
 
-Recall from Lecture 06 that we used:
+Recall:
 
 $$
 U(\mu, \sigma^2) = \mu - \frac{\gamma}{2}\sigma^2
@@ -128,25 +124,19 @@ Utility is not:
 
 Utility is a **numerical representation of preferences**.
 
-Nothing more. Nothing less.
-
 **Key insight:** Utility is **ordinal**, not cardinal.
 
 If $u(W_1) > u(W_2)$, we only know: $W_1$ is preferred to $W_2$.
 
 The magnitude of the difference has no intrinsic meaning.
 
-### From Lecture 06 to Now
-
-In Lecture 06, we used indifference curves to represent preferences graphically:
+We used indifference curves to represent preferences graphically:
 
 $$
 \mu = \bar{U} + \frac{\gamma}{2}\sigma^2
 $$
 
-This was a **special case** of utility theory.
-
-Now we generalize.
+This was a **special case** of utility theory. Now we generalize.
 
 </section>
 
@@ -172,6 +162,18 @@ Consider three wealth outcomes:
 * **Lottery 1**: 50% chance of \$0, 50% chance of \$200
 * **Lottery 2**: 60% chance of \$80, 40% chance of \$150
 
+</section>
+
+<section class="slide" markdown="1">
+
+### Example: Simple Preference Ranking
+
+Consider three wealth outcomes:
+
+* **Certain \$100**
+* **Lottery 1**: 50% chance of \$0, 50% chance of \$200
+* **Lottery 2**: 60% chance of \$80, 40% chance of \$150
+
 An investor ranks them: Lottery 2 $\succ$ Certain \$100 $\succ$ Lottery 1
 
 Expected values:
@@ -187,14 +189,10 @@ Expected values:
 
 ### Rationality as Consistency
 
-Rationality does not mean intelligence.
-
-It means:
+Rationality does not mean intelligence. It means:
 
 * **Consistent choices**: No preference cycles
 * **Stable preferences**: Today's choices consistent with tomorrow's
-
-Economics asks for coherence, not wisdom.
 
 ### What Rationality Rules Out
 
@@ -217,7 +215,7 @@ Why is this problematic?
 
 This is a **money pump**—you can be exploited.
 
-Rationality prevents this.
+Consistency prevents this.
 
 </section>
 
@@ -281,7 +279,7 @@ Continuity says: there's some $p$ where you're indifferent between:
 
 For most people, $p \approx 0.11$ (roughly).
 
-**Critique:** Philosophically controversial. What about "sacred values"?
+**Critique:** Philosophically controversial.
 
 But mathematically necessary for utility representation.
 
@@ -332,7 +330,7 @@ $$
 
 * Preferences can be summarized by a single function $u$
 * Choice reduces to maximizing expected utility
-* This is a **representation result**, not a psychological claim
+* This is a **representation result**
 
 ### Why This Matters
 
@@ -389,6 +387,10 @@ where $R$ is the vector of asset returns.
 **Key difference:**
 * Mean-variance: assumes quadratic utility or normal returns
 * Expected utility: works for any distribution and any $u$
+
+</section>
+
+<section class="slide" markdown="1">
 
 ### Example: Portfolio Choice with Exponential Utility
 

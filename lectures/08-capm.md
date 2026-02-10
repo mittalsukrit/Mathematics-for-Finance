@@ -433,58 +433,6 @@ This is the **CAPM equation**.
 
 <section class="slide" markdown="1">
 
-### Alternative Derivation: Equilibrium Pricing
-
-**Equilibrium condition:** The market portfolio is the tangency portfolio.
-
-From Lecture 07, the tangency portfolio satisfies:
-
-$$
-w^M \propto \Sigma^{-1}(\mu - R_f \mathbf{1})
-$$
-
-This means:
-
-$$
-\mu - R_f \mathbf{1} \propto \Sigma w^M
-$$
-
-The $i$-th component:
-
-$$
-\mu_i - R_f \propto \sum_j \Sigma_{ij} w_j^M = \text{Cov}(R_i, R_M)
-$$
-
-The proportionality constant is the same for all assets:
-
-$$
-\mu_i - R_f = \lambda \cdot \text{Cov}(R_i, R_M)
-$$
-
-For the market portfolio itself:
-
-$$
-\mu_M - R_f = \lambda \cdot \text{Var}(R_M)
-$$
-
-Therefore:
-
-$$
-\lambda = \frac{\mu_M - R_f}{\sigma_M^2}
-$$
-
-Substituting back:
-
-$$
-\mathbb{E}[R_i] - R_f = \frac{\mu_M - R_f}{\sigma_M^2} \cdot \text{Cov}(R_i, R_M) = \beta_i(\mu_M - R_f)
-$$
-
-Same result, different path.
-
-</section>
-
-<section class="slide" markdown="1">
-
 ## 6. Security Market Line (SML)
 
 Plot expected return against beta.
@@ -700,8 +648,6 @@ This is a **regression equation**.
 * $\mathbb{E}[\varepsilon_i] = 0$
 * $\text{Cov}(\varepsilon_i, R_M) = 0$
 
-This is **not** just a theoretical construct — it's how we estimate beta in practice.
-
 **Graphical Representation:**
 
 <div align="center">
@@ -820,9 +766,7 @@ If alpha persists, expected return would be: $11.45\% + 6\% = 17.45\%$
 
 ## 9. Empirical Reality
 
-CAPM is elegant.
-
-Reality is less cooperative.
+CAPM is elegant. Reality is less cooperative.
 
 Empirically:
 
@@ -832,19 +776,13 @@ Empirically:
 
 But CAPM survives as a benchmark.
 
-Bad models die.
-
-Useful models endure.
-
 ### Empirical Tests of CAPM
 
 **Classic tests:**
 
 1. **Black, Jensen, Scholes (1972):** Found that low-beta stocks earn higher returns than CAPM predicts
 
-2. **Fama-French (1992):** Size and book-to-market ratio explain returns better than beta alone
-
-3. **Roll's critique (1977):** CAPM is untestable because the true market portfolio is unobservable
+2. **Roll's critique (1977):** CAPM is untestable because the true market portfolio is unobservable
 
 **Key empirical findings:**
 
@@ -889,42 +827,6 @@ Useful models endure.
 * **Risk adjustment:** Beta is still widely used to adjust for risk
 * **Cost of capital:** Companies use CAPM to estimate required returns
 * **Performance evaluation:** Mutual funds are evaluated using alpha
-
-</section>
-
-<section class="slide" markdown="1">
-
-### Extensions and Alternatives
-
-**Multi-factor models:**
-
-* **Fama-French 3-factor:** Adds size and value factors to CAPM
-* **Carhart 4-factor:** Adds momentum factor
-* **Fama-French 5-factor:** Adds profitability and investment factors
-
-**Consumption CAPM (CCAPM):**
-
-* Relates returns to consumption growth
-* More theoretically sound, but harder to test
-
-**Intertemporal CAPM (ICAPM):**
-
-* Merton (1973): Extends CAPM to multiple periods
-* Assets hedge against changes in investment opportunities
-
-**Arbitrage Pricing Theory (APT):**
-
-* Ross (1976): Multiple risk factors, fewer assumptions
-* Does not specify what the factors are
-
-**Behavioral models:**
-
-* Incorporate investor psychology
-* Overconfidence, loss aversion, etc.
-
-CAPM opened the door.
-
-Others walked through.
 
 </section>
 

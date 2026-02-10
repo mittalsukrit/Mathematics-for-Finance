@@ -448,44 +448,6 @@ R_M)}{\sigma_M^2}\)</span>:</p>
 
 <section class="slide" markdown="1">
 
-<h3 id="alternative-derivation-equilibrium-pricing">Alternative
-Derivation: Equilibrium Pricing</h3>
-<p><strong>Equilibrium condition:</strong> The market portfolio is the
-tangency portfolio.</p>
-<p>From Lecture 07, the tangency portfolio satisfies:</p>
-<p><span class="math display">\[
-w^M \propto \Sigma^{-1}(\mu - R_f \mathbf{1})
-\]</span></p>
-<p>This means:</p>
-<p><span class="math display">\[
-\mu - R_f \mathbf{1} \propto \Sigma w^M
-\]</span></p>
-<p>The <span class="math inline">\(i\)</span>-th component:</p>
-<p><span class="math display">\[
-\mu_i - R_f \propto \sum_j \Sigma_{ij} w_j^M = \text{Cov}(R_i, R_M)
-\]</span></p>
-<p>The proportionality constant is the same for all assets:</p>
-<p><span class="math display">\[
-\mu_i - R_f = \lambda \cdot \text{Cov}(R_i, R_M)
-\]</span></p>
-<p>For the market portfolio itself:</p>
-<p><span class="math display">\[
-\mu_M - R_f = \lambda \cdot \text{Var}(R_M)
-\]</span></p>
-<p>Therefore:</p>
-<p><span class="math display">\[
-\lambda = \frac{\mu_M - R_f}{\sigma_M^2}
-\]</span></p>
-<p>Substituting back:</p>
-<p><span class="math display">\[
-\mathbb{E}[R_i] - R_f = \frac{\mu_M - R_f}{\sigma_M^2} \cdot
-\text{Cov}(R_i, R_M) = \beta_i(\mu_M - R_f)
-\]</span></p>
-<p>Same result, different path.</p>
-</section>
-
-<section class="slide" markdown="1">
-
 <h2 id="6-security-market-line-sml">6. Security Market Line (SML)</h2>
 <p>Plot expected return against beta.</p>
 <p>The CAPM predicts a straight line:</p>
@@ -708,8 +670,6 @@ R_i - R_f = \alpha_i + \beta_i (R_M - R_f) + \varepsilon_i
 <li><span class="math inline">\(\text{Cov}(\varepsilon_i, R_M) =
 0\)</span></li>
 </ul>
-<p>This is <strong>not</strong> just a theoretical construct — it's how
-we estimate beta in practice.</p>
 <p><strong>Graphical Representation:</strong></p>
 <div align="center">
 <img src="Figures/characteristic_line.png" alt="Characteristic Line" style="width:70%;"/>
@@ -839,8 +799,7 @@ class="math inline">\(11.45\% + 6\% = 17.45\%\)</span></p>
 <section class="slide" markdown="1">
 
 <h2 id="9-empirical-reality">9. Empirical Reality</h2>
-<p>CAPM is elegant.</p>
-<p>Reality is less cooperative.</p>
+<p>CAPM is elegant. Reality is less cooperative.</p>
 <p>Empirically:</p>
 <ul>
 <li>Betas are unstable over time</li>
@@ -848,15 +807,11 @@ class="math inline">\(11.45\% + 6\% = 17.45\%\)</span></p>
 <li>Alpha is often statistically significant</li>
 </ul>
 <p>But CAPM survives as a benchmark.</p>
-<p>Bad models die.</p>
-<p>Useful models endure.</p>
 <h3 id="empirical-tests-of-capm">Empirical Tests of CAPM</h3>
 <p><strong>Classic tests:</strong></p>
 <ol type="1">
 <li><p><strong>Black, Jensen, Scholes (1972):</strong> Found that
 low-beta stocks earn higher returns than CAPM predicts</p></li>
-<li><p><strong>Fama-French (1992):</strong> Size and book-to-market
-ratio explain returns better than beta alone</p></li>
 <li><p><strong>Roll's critique (1977):</strong> CAPM is untestable
 because the true market portfolio is unobservable</p></li>
 </ol>
@@ -920,41 +875,6 @@ required returns</li>
 <li><strong>Performance evaluation:</strong> Mutual funds are evaluated
 using alpha</li>
 </ul>
-</section>
-
-<section class="slide" markdown="1">
-
-<h3 id="extensions-and-alternatives">Extensions and Alternatives</h3>
-<p><strong>Multi-factor models:</strong></p>
-<ul>
-<li><strong>Fama-French 3-factor:</strong> Adds size and value factors
-to CAPM</li>
-<li><strong>Carhart 4-factor:</strong> Adds momentum factor</li>
-<li><strong>Fama-French 5-factor:</strong> Adds profitability and
-investment factors</li>
-</ul>
-<p><strong>Consumption CAPM (CCAPM):</strong></p>
-<ul>
-<li>Relates returns to consumption growth</li>
-<li>More theoretically sound, but harder to test</li>
-</ul>
-<p><strong>Intertemporal CAPM (ICAPM):</strong></p>
-<ul>
-<li>Merton (1973): Extends CAPM to multiple periods</li>
-<li>Assets hedge against changes in investment opportunities</li>
-</ul>
-<p><strong>Arbitrage Pricing Theory (APT):</strong></p>
-<ul>
-<li>Ross (1976): Multiple risk factors, fewer assumptions</li>
-<li>Does not specify what the factors are</li>
-</ul>
-<p><strong>Behavioral models:</strong></p>
-<ul>
-<li>Incorporate investor psychology</li>
-<li>Overconfidence, loss aversion, etc.</li>
-</ul>
-<p>CAPM opened the door.</p>
-<p>Others walked through.</p>
 </section>
 
 <section class="slide" markdown="1">

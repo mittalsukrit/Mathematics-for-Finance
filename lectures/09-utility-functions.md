@@ -124,7 +124,7 @@ Utility is not:
 
 Utility is a **numerical representation of preferences**.
 
-**Key insight:** Utility is **ordinal**, not cardinal.
+**Key insight:** Under certainty, utility is **ordinal**. Under expected utility over lotteries, it is **cardinal up to a positive affine transformation**.
 
 If $u(W_1) > u(W_2)$, we only know: $W_1$ is preferred to $W_2$.
 
@@ -154,7 +154,7 @@ An investor can rank them:
 
 Utility assigns numbers consistent with these rankings.
 
-### Example: Simple Preference Ranking
+### Example: Simple Preference Ranking (Setup)
 
 Consider three wealth outcomes:
 
@@ -166,7 +166,7 @@ Consider three wealth outcomes:
 
 <section class="slide" markdown="1">
 
-### Example: Simple Preference Ranking
+### Example: Simple Preference Ranking (Interpretation)
 
 Consider three wealth outcomes:
 
@@ -227,7 +227,7 @@ To represent preferences by expected utility, we assume four axioms.
 
 These axioms were formalized by **von Neumann and Morgenstern (1944)**.
 
-They won a Nobel Prize for this work.
+This axiomatization became foundational in modern economics and finance.
 
 ### Axiom 1: Completeness
 
@@ -238,7 +238,7 @@ They won a Nobel Prize for this work.
 
 **Interpretation:** The investor can always compare and rank alternatives.
 
-No "I don't know" or "incomparable" allowed.
+This rules out "incomparable" lottery pairs.
 
 **Critique:** Strong assumption. In practice, people often face hard-to-compare choices.
 
@@ -266,7 +266,7 @@ $$
 
 **Interpretation:** No outcome is infinitely better or worse than another.
 
-Everything has a price.
+No outcome is treated as lexicographically infinite in value.
 
 **Example:**
 * $A$ = win \$1 million
@@ -277,7 +277,7 @@ Continuity says: there's some $p$ where you're indifferent between:
 * Guaranteed \$100,000
 * Lottery giving $p$ chance of \$1M, $(1-p)$ chance of \$0
 
-For most people, $p \approx 0.11$ (roughly).
+In this example, $p \approx 0.10$ makes the two options approximately comparable.
 
 **Critique:** Philosophically controversial.
 
@@ -401,12 +401,12 @@ Suppose:
 
 Let $w$ = fraction in risky asset.
 
-Terminal wealth: $W = W_0[w R_S + (1-w)R_f]$
+Terminal wealth: $W = W_0[1 + w R_S + (1-w)R_f]$
 
 **Objective:**
 
 $$
-\max_w \mathbb{E}[-e^{-\gamma W_0[w R_S + (1-w)R_f]}]
+\max_w \mathbb{E}[-e^{-\gamma W_0[1 + w R_S + (1-w)R_f]}]
 $$
 
 For normally distributed returns, this simplifies to:
@@ -429,7 +429,7 @@ $$
 
 <section class="slide" markdown="1">
 
-### Utility Is Ordinal
+### Utility Under Affine Transformations
 
 If $u$ represents preferences, so does:
 
@@ -451,9 +451,7 @@ $$
 
 The ranking is preserved.
 
-**Consequence:** Only rankings matter. Levels do not.
-
-This subtle point is often forgotten.
+**Consequence:** Preference rankings are preserved under positive affine transformations.
 
 **Example:**
 
@@ -564,7 +562,7 @@ Since $u'(W) = 1 - \gamma W$, marginal utility becomes **negative** for $W > 1/\
 
 **Interpretation:** Beyond a certain wealth level, more money makes you worse off!
 
-This is absurd.
+This is not economically plausible.
 
 **Example:** If $\gamma = 0.01$, then $u'(W) < 0$ for $W > 100$.
 
@@ -585,7 +583,7 @@ Despite these flaws, quadratic utility is used because:
 * Mean-variance is tractable
 * CAPM requires it
 
-Pragmatism over realism.
+This reflects a tractability-realism tradeoff.
 
 ### Numerical Example: Quadratic Utility
 
@@ -685,7 +683,7 @@ But CARA predicts **both should make the same choice**.
 
 Why? Because risk aversion depends only on $\gamma$, not on $W$.
 
-This violates intuition and evidence.
+This pattern is inconsistent with most empirical evidence.
 
 Wealthy people take bigger risks (in dollar terms) than poor people.
 
@@ -810,9 +808,13 @@ $$
 \Delta u = -0.005 - (-0.01) = 0.005
 $$
 
-**Observation:** The utility gain from doubling wealth decreases, but the **percentage increase in utility** is constant.
+**Observation:** The utility gain from doubling wealth decreases.
 
-This is what "constant relative risk aversion" means.
+For CRRA utility, the key property is:
+$$
+R(W) = -W\frac{u''(W)}{u'(W)} = \gamma
+$$
+so **relative risk aversion is constant**.
 
 ### Log Utility ($\gamma = 1$)
 
@@ -1326,11 +1328,9 @@ $$
 \mathbb{E}[u(W)] = \int_{-\infty}^{\infty} u(W_0(1+r)) \frac{1}{\sqrt{2\pi\sigma_p^2}} e^{-\frac{(r-\mu_p)^2}{2\sigma_p^2}} dr
 $$
 
-This integral **depends only on** $\mu_p$ and $\sigma_p^2$.
+Under normality, the distribution of $W$ is fully characterized by $\mu_p$ and $\sigma_p^2$.
 
-(The shape of $u$ matters, but the ranking of portfolios depends only on $(\mu_p, \sigma_p^2)$.)
-
-**Implication:** Under normality, all investors with the same risk aversion $\gamma$ rank portfolios identically.
+So portfolio comparisons can be summarized in $(\mu_p, \sigma_p^2)$ space (for a fixed utility specification).
 
 Preferences can be summarized by indifference curves in $(\sigma, \mu)$ space.
 
@@ -1395,7 +1395,7 @@ Where $\beta_i = \frac{\text{Cov}(R_i, R_M)}{\text{Var}(R_M)}$.
 Assumption #1 (mean-variance) is justified by:
 
 * **Quadratic utility**, or
-* **Normal returns + concave utility**
+* **Normal returns** (which make mean-variance summaries sufficient under expected utility)
 
 Without one of these, mean-variance optimization is just a heuristic.
 
@@ -1495,7 +1495,7 @@ The benefit: More realistic.
 | 06 | Risk-free + risky assets, CAL | Mean-variance (implicit) |
 | 07 | Multi-asset portfolios, MVP | Mean-variance (implicit) |
 | 08 | CAPM, beta pricing | Quadratic or normality |
-| **09** | **General expected utility** | **Any concave $u$** |
+| **09** | **General expected utility** | **Expected utility with concave $u$ (risk-averse case)** |
 
 **Progression:**
 
@@ -1515,11 +1515,9 @@ When these fail, we need richer models.
 
 But mean-variance remains the benchmark.
 
-CAPM is elegant.
+CAPM is elegant, but real-world return distributions are richer than mean-variance summaries.
 
-Reality is messy.
-
-Utility theory explains why.
+Utility theory clarifies both the strengths and limits of the CAPM benchmark.
 
 <div align="center">
 <img src="Figures/portfolio_allocation_utilities.png" alt="Portfolio Allocation with Different Utilities" style="width:90%;"/>
@@ -1756,8 +1754,8 @@ So both investors rank portfolios identically under normality.
 
 Consider two investments with the same mean ($\mu = 10\%$) and variance ($\sigma^2 = 4\%$):
 
-* **Investment A:** Normally distributed
-* **Investment B:** Right-skewed (70% chance of 5%, 30% chance of 20%)
+* **Investment A (symmetric):** 50% chance of -10%, 50% chance of +30%
+* **Investment B (right-skewed):** 80% chance of 0%, 20% chance of +50%
 
 **Part (a):** Verify that both have $\mu = 10\%$ and $\sigma^2 = 4\%$.
 
@@ -1767,48 +1765,39 @@ Consider two investments with the same mean ($\mu = 10\%$) and variance ($\sigma
 
 **Solution:**
 
-**(a)** Investment B:
-
+**(a)** Investment A:
 $$
-\mu_B = 0.7(0.05) + 0.3(0.20) = 0.035 + 0.060 = 0.095 \approx 10\%
+\mu_A = 0.5(-0.10) + 0.5(0.30) = 0.10
 $$
-
 $$
-\sigma_B^2 = 0.7(0.05-0.095)^2 + 0.3(0.20-0.095)^2 = 0.7(0.002025) + 0.3(0.011025)
+\sigma_A^2 = 0.5(-0.10-0.10)^2 + 0.5(0.30-0.10)^2 = 0.5(0.04) + 0.5(0.04) = 0.04
 $$
-
-$$
-= 0.0014 + 0.0033 = 0.0047 \approx 0.5\%
-$$
-
-(Hmm, this doesn't match. Let me recalculate correctly.)
-
-Actually, to get $\sigma^2 = 4\%$, we need different probabilities. Let's use:
-
-* 60% chance of 2%, 40% chance of 21%
-
-$$
-\mu = 0.6(0.02) + 0.4(0.21) = 0.012 + 0.084 = 0.096 \approx 10\%
-$$
-
-$$
-\sigma^2 = 0.6(0.02-0.096)^2 + 0.4(0.21-0.096)^2 = 0.6(0.00578) + 0.4(0.01300) = 0.0087 \approx 0.9\%
-$$
-
-Let me use a simpler example: 50% chance of -10%, 50% chance of +30% gives $\mu = 10\%$, $\sigma^2 = 4\%$.
-
-**(b)** For $W_0 = 100$:
-
-Investment A (normal): Using numerical integration or approximation.
 
 Investment B:
 $$
-\mathbb{E}[\ln(W)] = 0.5\ln(90) + 0.5\ln(130) = 0.5(4.500) + 0.5(4.868) = 4.684
+\mu_B = 0.8(0.00) + 0.2(0.50) = 0.10
+$$
+$$
+\sigma_B^2 = 0.8(0.00-0.10)^2 + 0.2(0.50-0.10)^2 = 0.8(0.01) + 0.2(0.16) = 0.04
 $$
 
-**(c)** Mean-variance treats them identically, but utility-maximizing investors care about the shape of the distribution.
+So both have identical mean and variance, but different skewness.
 
-The right-skewed investment may be preferred if the investor values upside potential.
+**(b)** For $W_0 = 100$:
+
+Investment A gives wealth outcomes $90$ and $130$:
+$$
+\mathbb{E}[\ln(W_A)] = 0.5\ln(90) + 0.5\ln(130) \approx 4.684
+$$
+
+Investment B gives wealth outcomes $100$ and $150$:
+$$
+\mathbb{E}[\ln(W_B)] = 0.8\ln(100) + 0.2\ln(150) \approx 4.686
+$$
+
+**(c)** The investor prefers **Investment B** since $4.686 > 4.684$.
+
+Mean-variance fails because it uses only $(\mu,\sigma^2)$ and ignores higher moments (here, skewness), while expected utility is sensitive to full distributional shape.
 
 </section>
 
@@ -1881,7 +1870,7 @@ For each utility function below, calculate $A(100)$ and $R(100)$:
 
 **Part (b):** Which utility exhibits CRRA? Identify the $\gamma$ parameter.
 
-**Part (c):** Explain why $u_1$ and $u_3$ can represent the same preferences.
+**Part (c):** Show that $u_3(W) = -1/W$ is the CRRA form with $\gamma = 2$.
 
 **Solution:**
 
@@ -1900,9 +1889,15 @@ For each utility function below, calculate $A(100)$ and $R(100)$:
 
 **(b)** All three exhibit CRRA with $\gamma = 0.5, 1, 2$ respectively.
 
-**(c)** Note that $u_3(W) = -W^{-1} = -\frac{1}{W}$ can be rewritten as an affine transformation of $u(W) = \frac{W^{-1}}{-1} = \frac{W^{1-2}}{1-2}$.
-
-Since affine transformations preserve preferences, $u_3$ and the standard CRRA form $\frac{W^{-1}}{-1}$ represent identical preferences.
+**(c)** The CRRA family is
+$$
+u(W)=\frac{W^{1-\gamma}}{1-\gamma}.
+$$
+Setting $\gamma=2$ gives
+$$
+u(W)=\frac{W^{-1}}{-1}=-\frac{1}{W}=u_3(W).
+$$
+So $u_3$ is exactly CRRA with $\gamma=2$.
 
 </section>
 
@@ -1912,8 +1907,8 @@ Since affine transformations preserve preferences, $u_3$ and the standard CRRA f
 
 * **Utility formalizes rational choice under uncertainty**
   - von Neumann-Morgenstern axioms provide foundation
-  - Expected utility is the correct decision criterion
-  - Ordinal representation (only rankings matter)
+  - Expected utility is the standard criterion under vNM axioms
+  - Utility is unique up to positive affine transformations
 
 * **Risk aversion is equivalent to concavity**
   - $u''(W) < 0$ captures dislike for risk

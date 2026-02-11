@@ -151,8 +151,9 @@ portfolio theory.</p>
 </ul>
 <p>Utility is a <strong>numerical representation of
 preferences</strong>.</p>
-<p><strong>Key insight:</strong> Utility is <strong>ordinal</strong>,
-not cardinal.</p>
+<p><strong>Key insight:</strong> Under certainty, utility is
+<strong>ordinal</strong>. Under expected utility over lotteries, it is
+<strong>cardinal up to a positive affine transformation</strong>.</p>
 <p>If <span class="math inline">\(u(W_1) &gt; u(W_2)\)</span>, we only
 know: <span class="math inline">\(W_1\)</span> is preferred to <span
 class="math inline">\(W_2\)</span>.</p>
@@ -182,8 +183,8 @@ class="math inline">\(B\)</span> is preferred to <span
 class="math inline">\(A\)</span> or indifference"</li>
 </ul>
 <p>Utility assigns numbers consistent with these rankings.</p>
-<h3 id="example-simple-preference-ranking">Example: Simple Preference
-Ranking</h3>
+<h3 id="example-simple-preference-ranking-setup">Example: Simple
+Preference Ranking (Setup)</h3>
 <p>Consider three wealth outcomes:</p>
 <ul>
 <li><strong>Certain $100</strong></li>
@@ -196,8 +197,8 @@ $150</li>
 
 <section class="slide" markdown="1">
 
-<h3 id="example-simple-preference-ranking-1">Example: Simple Preference
-Ranking</h3>
+<h3 id="example-simple-preference-ranking-interpretation">Example:
+Simple Preference Ranking (Interpretation)</h3>
 <p>Consider three wealth outcomes:</p>
 <ul>
 <li><strong>Certain $100</strong></li>
@@ -266,7 +267,8 @@ class="math inline">\(A\)</span> (since <span class="math inline">\(A
 axioms.</p>
 <p>These axioms were formalized by <strong>von Neumann and Morgenstern
 (1944)</strong>.</p>
-<p>They won a Nobel Prize for this work.</p>
+<p>This axiomatization became foundational in modern economics and
+finance.</p>
 <h3 id="axiom-1-completeness">Axiom 1: Completeness</h3>
 <p><strong>Statement:</strong> For any two lotteries <span
 class="math inline">\(A\)</span> and <span
@@ -278,7 +280,7 @@ class="math inline">\(B\)</span>, either:</p>
 </ul>
 <p><strong>Interpretation:</strong> The investor can always compare and
 rank alternatives.</p>
-<p>No "I don't know" or "incomparable" allowed.</p>
+<p>This rules out "incomparable" lottery pairs.</p>
 <p><strong>Critique:</strong> Strong assumption. In practice, people
 often face hard-to-compare choices.</p>
 <h3 id="axiom-2-transitivity">Axiom 2: Transitivity</h3>
@@ -304,7 +306,7 @@ B \sim pA + (1-p)C
 \]</span></p>
 <p><strong>Interpretation:</strong> No outcome is infinitely better or
 worse than another.</p>
-<p>Everything has a price.</p>
+<p>No outcome is treated as lexicographically infinite in value.</p>
 <p><strong>Example:</strong></p>
 <ul>
 <li><span class="math inline">\(A\)</span> = win $1 million</li>
@@ -318,8 +320,8 @@ where you're indifferent between:</p>
 <li>Lottery giving <span class="math inline">\(p\)</span> chance of $1M,
 <span class="math inline">\((1-p)\)</span> chance of $0</li>
 </ul>
-<p>For most people, <span class="math inline">\(p \approx 0.11\)</span>
-(roughly).</p>
+<p>In this example, <span class="math inline">\(p \approx 0.10\)</span>
+makes the two options approximately comparable.</p>
 <p><strong>Critique:</strong> Philosophically controversial.</p>
 <p>But mathematically necessary for utility representation.</p>
 <h3 id="axiom-4-independence">Axiom 4: Independence</h3>
@@ -443,11 +445,11 @@ with <span class="math inline">\(\gamma = 0.01\)</span></li>
 </ul>
 <p>Let <span class="math inline">\(w\)</span> = fraction in risky
 asset.</p>
-<p>Terminal wealth: <span class="math inline">\(W = W_0[w R_S +
+<p>Terminal wealth: <span class="math inline">\(W = W_0[1 + w R_S +
 (1-w)R_f]\)</span></p>
 <p><strong>Objective:</strong></p>
 <p><span class="math display">\[
-\max_w \mathbb{E}[-e^{-\gamma W_0[w R_S + (1-w)R_f]}]
+\max_w \mathbb{E}[-e^{-\gamma W_0[1 + w R_S + (1-w)R_f]}]
 \]</span></p>
 <p>For normally distributed returns, this simplifies to:</p>
 <p><span class="math display">\[
@@ -466,7 +468,8 @@ by borrowing 75% at <span class="math inline">\(R_f\)</span>).</p>
 
 <section class="slide" markdown="1">
 
-<h3 id="utility-is-ordinal">Utility Is Ordinal</h3>
+<h3 id="utility-under-affine-transformations">Utility Under Affine
+Transformations</h3>
 <p>If <span class="math inline">\(u\)</span> represents preferences, so
 does:</p>
 <p><span class="math display">\[
@@ -486,9 +489,8 @@ with <span class="math inline">\(a &gt; 0\)</span>:</p>
 + b = \mathbb{E}[\tilde{u}(B)]
 \]</span></p>
 <p>The ranking is preserved.</p>
-<p><strong>Consequence:</strong> Only rankings matter. Levels do
-not.</p>
-<p>This subtle point is often forgotten.</p>
+<p><strong>Consequence:</strong> Preference rankings are preserved under
+positive affine transformations.</p>
 <p><strong>Example:</strong></p>
 <p>If <span class="math inline">\(u(W) = \ln(W)\)</span> represents your
 preferences, so does:</p>
@@ -592,7 +594,7 @@ marginal utility becomes <strong>negative</strong> for <span
 class="math inline">\(W &gt; 1/\gamma\)</span>.</p>
 <p><strong>Interpretation:</strong> Beyond a certain wealth level, more
 money makes you worse off!</p>
-<p>This is absurd.</p>
+<p>This is not economically plausible.</p>
 <p><strong>Example:</strong> If <span class="math inline">\(\gamma =
 0.01\)</span>, then <span class="math inline">\(u&#39;(W) &lt;
 0\)</span> for <span class="math inline">\(W &gt; 100\)</span>.</p>
@@ -612,7 +614,7 @@ ways.</p>
 <li>Mean-variance is tractable</li>
 <li>CAPM requires it</li>
 </ul>
-<p>Pragmatism over realism.</p>
+<p>This reflects a tractability-realism tradeoff.</p>
 <h3 id="numerical-example-quadratic-utility">Numerical Example:
 Quadratic Utility</h3>
 <p>Suppose <span class="math inline">\(\gamma = 0.01\)</span> and
@@ -710,7 +712,7 @@ choice</strong>.</p>
 <p>Why? Because risk aversion depends only on <span
 class="math inline">\(\gamma\)</span>, not on <span
 class="math inline">\(W\)</span>.</p>
-<p>This violates intuition and evidence.</p>
+<p>This pattern is inconsistent with most empirical evidence.</p>
 <p>Wealthy people take bigger risks (in dollar terms) than poor
 people.</p>
 <p><strong>Despite this flaw:</strong> Exponential utility is widely
@@ -837,9 +839,10 @@ u(200) = -1/200 = -0.005
 \Delta u = -0.005 - (-0.01) = 0.005
 \]</span></p>
 <p><strong>Observation:</strong> The utility gain from doubling wealth
-decreases, but the <strong>percentage increase in utility</strong> is
-constant.</p>
-<p>This is what "constant relative risk aversion" means.</p>
+decreases.</p>
+<p>For CRRA utility, the key property is: <span class="math display">\[
+R(W) = -W\frac{u&#39;&#39;(W)}{u&#39;(W)} = \gamma
+\]</span> so <strong>relative risk aversion is constant</strong>.</p>
 <h3 id="log-utility-gamma--1">Log Utility (<span
 class="math inline">\(\gamma = 1\)</span>)</h3>
 <p><span class="math display">\[
@@ -1478,15 +1481,13 @@ W_0^2\sigma_p^2)\)</span>.</p>
 \mathbb{E}[u(W)] = \int_{-\infty}^{\infty} u(W_0(1+r))
 \frac{1}{\sqrt{2\pi\sigma_p^2}} e^{-\frac{(r-\mu_p)^2}{2\sigma_p^2}} dr
 \]</span></p>
-<p>This integral <strong>depends only on</strong> <span
+<p>Under normality, the distribution of <span
+class="math inline">\(W\)</span> is fully characterized by <span
 class="math inline">\(\mu_p\)</span> and <span
 class="math inline">\(\sigma_p^2\)</span>.</p>
-<p>(The shape of <span class="math inline">\(u\)</span> matters, but the
-ranking of portfolios depends only on <span
-class="math inline">\((\mu_p, \sigma_p^2)\)</span>.)</p>
-<p><strong>Implication:</strong> Under normality, all investors with the
-same risk aversion <span class="math inline">\(\gamma\)</span> rank
-portfolios identically.</p>
+<p>So portfolio comparisons can be summarized in <span
+class="math inline">\((\mu_p, \sigma_p^2)\)</span> space (for a fixed
+utility specification).</p>
 <p>Preferences can be summarized by indifference curves in <span
 class="math inline">\((\sigma, \mu)\)</span> space.</p>
 <p><strong>Key insight:</strong> This justification doesn't require
@@ -1557,7 +1558,8 @@ R_M)}{\text{Var}(R_M)}\)</span>.</p>
 <p>Assumption #1 (mean-variance) is justified by:</p>
 <ul>
 <li><strong>Quadratic utility</strong>, or</li>
-<li><strong>Normal returns + concave utility</strong></li>
+<li><strong>Normal returns</strong> (which make mean-variance summaries
+sufficient under expected utility)</li>
 </ul>
 <p>Without one of these, mean-variance optimization is just a
 heuristic.</p>
@@ -1683,8 +1685,8 @@ Utility Foundations of Portfolio Theory</h3>
 <tr>
 <td><strong>09</strong></td>
 <td><strong>General expected utility</strong></td>
-<td><strong>Any concave <span
-class="math inline">\(u\)</span></strong></td>
+<td><strong>Expected utility with concave <span
+class="math inline">\(u\)</span> (risk-averse case)</strong></td>
 </tr>
 </tbody>
 </table>
@@ -1702,9 +1704,10 @@ class="math inline">\(u\)</span></strong></td>
 </ol>
 <p>When these fail, we need richer models.</p>
 <p>But mean-variance remains the benchmark.</p>
-<p>CAPM is elegant.</p>
-<p>Reality is messy.</p>
-<p>Utility theory explains why.</p>
+<p>CAPM is elegant, but real-world return distributions are richer than
+mean-variance summaries.</p>
+<p>Utility theory clarifies both the strengths and limits of the CAPM
+benchmark.</p>
 <div align="center">
 <img src="Figures/portfolio_allocation_utilities.png" alt="Portfolio Allocation with Different Utilities" style="width:90%;"/>
 </div>
@@ -1929,9 +1932,10 @@ terms).</p>
 class="math inline">\(\mu = 10\%\)</span>) and variance (<span
 class="math inline">\(\sigma^2 = 4\%\)</span>):</p>
 <ul>
-<li><strong>Investment A:</strong> Normally distributed</li>
-<li><strong>Investment B:</strong> Right-skewed (70% chance of 5%, 30%
-chance of 20%)</li>
+<li><strong>Investment A (symmetric):</strong> 50% chance of -10%, 50%
+chance of +30%</li>
+<li><strong>Investment B (right-skewed):</strong> 80% chance of 0%, 20%
+chance of +50%</li>
 </ul>
 <p><strong>Part (a):</strong> Verify that both have <span
 class="math inline">\(\mu = 10\%\)</span> and <span
@@ -1943,46 +1947,38 @@ both investments.</p>
 <p><strong>Part (c):</strong> Which investment does the investor prefer?
 Why does mean-variance fail here?</p>
 <p><strong>Solution:</strong></p>
-<p><strong>(a)</strong> Investment B:</p>
-<p><span class="math display">\[
-\mu_B = 0.7(0.05) + 0.3(0.20) = 0.035 + 0.060 = 0.095 \approx 10\%
+<p><strong>(a)</strong> Investment A: <span class="math display">\[
+\mu_A = 0.5(-0.10) + 0.5(0.30) = 0.10
+\]</span> <span class="math display">\[
+\sigma_A^2 = 0.5(-0.10-0.10)^2 + 0.5(0.30-0.10)^2 = 0.5(0.04) +
+0.5(0.04) = 0.04
 \]</span></p>
-<p><span class="math display">\[
-\sigma_B^2 = 0.7(0.05-0.095)^2 + 0.3(0.20-0.095)^2 = 0.7(0.002025) +
-0.3(0.011025)
+<p>Investment B: <span class="math display">\[
+\mu_B = 0.8(0.00) + 0.2(0.50) = 0.10
+\]</span> <span class="math display">\[
+\sigma_B^2 = 0.8(0.00-0.10)^2 + 0.2(0.50-0.10)^2 = 0.8(0.01) + 0.2(0.16)
+= 0.04
 \]</span></p>
-<p><span class="math display">\[
-= 0.0014 + 0.0033 = 0.0047 \approx 0.5\%
-\]</span></p>
-<p>(Hmm, this doesn't match. Let me recalculate correctly.)</p>
-<p>Actually, to get <span class="math inline">\(\sigma^2 = 4\%\)</span>,
-we need different probabilities. Let's use:</p>
-<ul>
-<li>60% chance of 2%, 40% chance of 21%</li>
-</ul>
-<p><span class="math display">\[
-\mu = 0.6(0.02) + 0.4(0.21) = 0.012 + 0.084 = 0.096 \approx 10\%
-\]</span></p>
-<p><span class="math display">\[
-\sigma^2 = 0.6(0.02-0.096)^2 + 0.4(0.21-0.096)^2 = 0.6(0.00578) +
-0.4(0.01300) = 0.0087 \approx 0.9\%
-\]</span></p>
-<p>Let me use a simpler example: 50% chance of -10%, 50% chance of +30%
-gives <span class="math inline">\(\mu = 10\%\)</span>, <span
-class="math inline">\(\sigma^2 = 4\%\)</span>.</p>
+<p>So both have identical mean and variance, but different skewness.</p>
 <p><strong>(b)</strong> For <span class="math inline">\(W_0 =
 100\)</span>:</p>
-<p>Investment A (normal): Using numerical integration or
-approximation.</p>
-<p>Investment B: <span class="math display">\[
-\mathbb{E}[\ln(W)] = 0.5\ln(90) + 0.5\ln(130) = 0.5(4.500) + 0.5(4.868)
-= 4.684
+<p>Investment A gives wealth outcomes <span
+class="math inline">\(90\)</span> and <span
+class="math inline">\(130\)</span>: <span class="math display">\[
+\mathbb{E}[\ln(W_A)] = 0.5\ln(90) + 0.5\ln(130) \approx 4.684
 \]</span></p>
-<p><strong>(c)</strong> Mean-variance treats them identically, but
-utility-maximizing investors care about the shape of the
-distribution.</p>
-<p>The right-skewed investment may be preferred if the investor values
-upside potential.</p>
+<p>Investment B gives wealth outcomes <span
+class="math inline">\(100\)</span> and <span
+class="math inline">\(150\)</span>: <span class="math display">\[
+\mathbb{E}[\ln(W_B)] = 0.8\ln(100) + 0.2\ln(150) \approx 4.686
+\]</span></p>
+<p><strong>(c)</strong> The investor prefers <strong>Investment
+B</strong> since <span class="math inline">\(4.686 &gt;
+4.684\)</span>.</p>
+<p>Mean-variance fails because it uses only <span
+class="math inline">\((\mu,\sigma^2)\)</span> and ignores higher moments
+(here, skewness), while expected utility is sensitive to full
+distributional shape.</p>
 </section>
 
 <section class="slide" markdown="1">
@@ -2055,10 +2051,9 @@ class="math inline">\(R(100)\)</span>:</p>
 <span class="math inline">\(W = 100\)</span>.</p>
 <p><strong>Part (b):</strong> Which utility exhibits CRRA? Identify the
 <span class="math inline">\(\gamma\)</span> parameter.</p>
-<p><strong>Part (c):</strong> Explain why <span
-class="math inline">\(u_1\)</span> and <span
-class="math inline">\(u_3\)</span> can represent the same
-preferences.</p>
+<p><strong>Part (c):</strong> Show that <span
+class="math inline">\(u_3(W) = -1/W\)</span> is the CRRA form with <span
+class="math inline">\(\gamma = 2\)</span>.</p>
 <p><strong>Solution:</strong></p>
 <p><strong>(a)</strong></p>
 <ol type="1">
@@ -2079,14 +2074,13 @@ class="math display">\[A(100) = \frac{2}{100} = 0.02, \quad R(100) =
 class="math inline">\(u_3 &gt; u_2 &gt; u_1\)</span></p>
 <p><strong>(b)</strong> All three exhibit CRRA with <span
 class="math inline">\(\gamma = 0.5, 1, 2\)</span> respectively.</p>
-<p><strong>(c)</strong> Note that <span class="math inline">\(u_3(W) =
--W^{-1} = -\frac{1}{W}\)</span> can be rewritten as an affine
-transformation of <span class="math inline">\(u(W) = \frac{W^{-1}}{-1} =
-\frac{W^{1-2}}{1-2}\)</span>.</p>
-<p>Since affine transformations preserve preferences, <span
-class="math inline">\(u_3\)</span> and the standard CRRA form <span
-class="math inline">\(\frac{W^{-1}}{-1}\)</span> represent identical
-preferences.</p>
+<p><strong>(c)</strong> The CRRA family is <span class="math display">\[
+u(W)=\frac{W^{1-\gamma}}{1-\gamma}.
+\]</span> Setting <span class="math inline">\(\gamma=2\)</span> gives
+<span class="math display">\[
+u(W)=\frac{W^{-1}}{-1}=-\frac{1}{W}=u_3(W).
+\]</span> So <span class="math inline">\(u_3\)</span> is exactly CRRA
+with <span class="math inline">\(\gamma=2\)</span>.</p>
 </section>
 
 <section class="slide" markdown="1">
@@ -2097,8 +2091,8 @@ preferences.</p>
 uncertainty</strong></p>
 <ul>
 <li>von Neumann-Morgenstern axioms provide foundation</li>
-<li>Expected utility is the correct decision criterion</li>
-<li>Ordinal representation (only rankings matter)</li>
+<li>Expected utility is the standard criterion under vNM axioms</li>
+<li>Utility is unique up to positive affine transformations</li>
 </ul></li>
 <li><p><strong>Risk aversion is equivalent to concavity</strong></p>
 <ul>

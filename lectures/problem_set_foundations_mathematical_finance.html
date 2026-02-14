@@ -24,10 +24,12 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflar.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css" />
-  <link rel="stylesheet" href="wide.css" />
+  <link rel="stylesheet" href="lecture-theme.css" />
 </head>
 <body>
+<header id="title-block-header">
+<h1 class="title">problem_set_foundations_mathematical_finance</h1>
+</header>
 <h1 id="problem-set-foundations-of-mathematical-finance">Problem Set:
 Foundations of Mathematical Finance</h1>
 <p><strong>Course:</strong> Mathematics for Finance<br />
@@ -43,31 +45,26 @@ Structured Product Design at a Investment Bank</h2>
 <p>You work in the Product Development team at a major investment bank.
 A wealthy client approaches you with an interesting request:</p>
 <blockquote>
-<p>"I want to invest ₹1 crore in a 1-year structured product. I'm
+<p>“I want to invest ₹1 crore in a 1-year structured product. I’m
 worried about downside risk—if the market crashes, I want a cushion. But
 I also want to participate in any upside. Can you design something that
-costs exactly ₹1 crore today?"</p>
+costs exactly ₹1 crore today?”</p>
 </blockquote>
 <p>Your team has identified a suitable underlying risky bond for this
 product. The bond currently trades at ₹100. Market analysis shows it
 could reach ₹130 (if conditions improve) or ₹70 (if they deteriorate) in
 one year. The risk-free rate is 5% per annum.</p>
-<p><strong>What You Know:</strong></p>
-<ul>
-<li>Underlying bond: current price ₹100, future values ₹130 (up) or ₹70
-(down)</li>
-<li>Risk-free rate: 5% per annum</li>
-<li>Product budget: Must cost exactly ₹100 (sells at par)</li>
-<li>Client's preferences: Downside protection + upside
-participation</li>
-</ul>
+<p><strong>What You Know:</strong> - Underlying bond: current price
+₹100, future values ₹130 (up) or ₹70 (down) - Risk-free rate: 5% per
+annum - Product budget: Must cost exactly ₹100 (sells at par) - Client’s
+preferences: Downside protection + upside participation</p>
 <p><strong>Your Task:</strong></p>
 <p>Your boss walks into your office and says:</p>
 <blockquote>
-<p>"Design a payoff structure that satisfies the client. Figure out what
+<p>“Design a payoff structure that satisfies the client. Figure out what
 guarantees we can offer and what upside the client can capture. Then
-verify your design actually works—make sure there's no hidden arbitrage.
-Use pricing theory, not guesses."</p>
+verify your design actually works—make sure there’s no hidden arbitrage.
+Use pricing theory, not guesses.”</p>
 </blockquote>
 <p><strong>What to deliver:</strong></p>
 <ol type="1">
@@ -75,7 +72,7 @@ Use pricing theory, not guesses."</p>
 participation rate</li>
 <li>Proof that your design is arbitrage-free</li>
 <li>Verification that your product prices at exactly ₹100</li>
-<li>A brief explanation to the client (non-technical) of why they can't
+<li>A brief explanation to the client (non-technical) of why they can’t
 have 100% downside protection AND 100% upside participation
 simultaneously</li>
 </ol>
@@ -84,7 +81,7 @@ simultaneously</li>
 id="problem-2-currency-hedging-strategy-for-a-multinational-corporation">Problem
 2: Currency Hedging Strategy for a Multinational Corporation</h2>
 <p><strong>The Scenario:</strong></p>
-<p>You're a treasurer at a multinational corporation. Your company has
+<p>You’re a treasurer at a multinational corporation. Your company has
 just acquired subsidiaries in three countries and inherited their debt
 obligations. You now manage a mixed-currency bond portfolio:</p>
 <table>
@@ -123,23 +120,19 @@ obligations. You now manage a mixed-currency bond portfolio:</p>
 </table>
 <p>Your CFO just sent you this message:</p>
 <blockquote>
-<p>"We have foreign currency risk now. Our shareholders are in India, so
+<p>“We have foreign currency risk now. Our shareholders are in India, so
 our P&amp;L is in INR. Every time the rupee strengthens, we lose on our
 USD and EUR bonds. Every time it weakens, we gain. This is
-unpredictable. Should we hedge? What's our true economic exposure? And
-how much would hedging cost us?"</p>
+unpredictable. Should we hedge? What’s our true economic exposure? And
+how much would hedging cost us?”</p>
 </blockquote>
-<p>Current market conditions:</p>
-<ul>
-<li>INR rate: 5.5% (continuously compounded)</li>
-<li>USD rate: 2.5%</li>
-<li>EUR rate: 3.0%</li>
-<li>Spot rates: 83 INR/USD, 90 INR/EUR</li>
-</ul>
+<p>Current market conditions: - INR rate: 5.5% (continuously compounded)
+- USD rate: 2.5% - EUR rate: 3.0% - Spot rates: 83 INR/USD, 90
+INR/EUR</p>
 <p><strong>Your Task:</strong></p>
 <ol type="1">
 <li><p><strong>Value the portfolio:</strong> Convert everything to INR.
-What's the total value today?</p></li>
+What’s the total value today?</p></li>
 <li><p><strong>Identify the exposure:</strong> What does interest rate
 parity tell you about expected currency movements? Is the rupee likely
 to appreciate or depreciate?</p></li>
@@ -155,7 +148,7 @@ dollar?</li>
 </ul></li>
 <li><p><strong>Hedging recommendation:</strong> Based on your analysis,
 should the corporation hedge its foreign exposure? What would be the
-trade-offs of hedging vs. not hedging?</p></li>
+trade-offs of hedging vs. not hedging?</p></li>
 </ol>
 <p><strong>What you deliver:</strong></p>
 <ul>

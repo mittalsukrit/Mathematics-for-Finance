@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Time Value of Money</title>
+  <title>03-time-value-of-money</title>
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,15 +24,14 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflar.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css" />
-  <link rel="stylesheet" href="wide.css" />
+  <link rel="stylesheet" href="lecture-theme.css" />
   <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">Time Value of Money</h1>
+<h1 class="title">03-time-value-of-money</h1>
 </header>
 <style>
   .slides {
@@ -69,18 +68,13 @@
     color: #666;
   }
 </style>
-
-<div class="slides" markdown="1">
-
-<section class="slide" markdown="1">
-
+<div class="slides" data-markdown="1">
+<section class="slide">
 <h1 id="time-value-of-money">Time Value of Money</h1>
 <p><strong>Sukrit Mittal</strong><br />
 Franklin Templeton Investments</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="outline">Outline</h2>
 <ol type="1">
 <li>Introduction and motivation</li>
@@ -92,11 +86,8 @@ Franklin Templeton Investments</p>
 <li>Applications</li>
 </ol>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="1-introduction-and-motivation">1. Introduction and
-Motivation</h2>
+<section class="slide">
+<h2 id="introduction-and-motivation">1. Introduction and Motivation</h2>
 <h3 id="why-is-money-time-dependent">Why Is Money Time-Dependent?</h3>
 <p>A dollar today is worth <strong>more</strong> than a dollar tomorrow.
 Why?</p>
@@ -113,9 +104,7 @@ time?</p>
 present value, or <strong>compound</strong> present values to future
 equivalents. A typical example is forward contracts.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="the-fundamental-trade-off">The Fundamental Trade-Off</h2>
 <p>Consider two offers:</p>
 <ul>
@@ -134,24 +123,19 @@ take 110 next year</li>
 future values.</p>
 <h3 id="the-indifference-rate">The Indifference Rate</h3>
 <p>We can solve for the <strong>break-even</strong> interest rate where
-you'd be indifferent:</p>
+you’d be indifferent:</p>
 <p><span class="math display">\[100(1 + r) = 110 \implies r = 0.10 =
 10\%\]</span></p>
 <p>At exactly 10%, both options are equivalent.</p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="2-simple-interest">2. Simple Interest</h2>
+<section class="slide">
+<h2 id="simple-interest">2. Simple Interest</h2>
 <h3 id="definition">Definition</h3>
 <p>Under <strong>simple interest</strong>, the interest earned is
-proportional to:</p>
-<ul>
-<li>Principal amount <span class="math inline">\(P\)</span></li>
-<li>Interest rate <span class="math inline">\(r\)</span> (per
-period)</li>
-<li>Time <span class="math inline">\(t\)</span></li>
-</ul>
+proportional to: * Principal amount <span
+class="math inline">\(P\)</span> * Interest rate <span
+class="math inline">\(r\)</span> (per period) * Time <span
+class="math inline">\(t\)</span></p>
 <h3 id="formula">Formula</h3>
 <p><span class="math display">\[A(t) = P(1 + rt)\]</span></p>
 <p>where: <span class="math inline">\(A(t)\)</span> = amount at time
@@ -163,9 +147,7 @@ accumulated interest.</li>
 <li>This is a <strong>linear</strong> growth model.</li>
 </ul>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="limitations-of-simple-interest">Limitations of Simple
 Interest</h2>
 <p>Simple interest ignores the fact that interest earned can itself earn
@@ -180,26 +162,19 @@ interest.</p>
 <p>But what if you could reinvest the $80 earned in Year 1?</p>
 <p>This leads us to <strong>compound interest</strong>.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="the-power-of-compounding">The Power of Compounding</h2>
-<p><em>"Compound interest is the eighth wonder of the world. He who
-understands it, earns it; he who doesn't, pays it."</em></p>
+<p><em>“Compound interest is the eighth wonder of the world. He who
+understands it, earns it; he who doesn’t, pays it.”</em></p>
 <h3 id="illustration-the-rule-of-72">Illustration: The Rule of 72</h3>
 <p><strong>Approximate time to double</strong> your money:</p>
 <p><span class="math display">\[t \approx \frac{72}{r\%}\]</span></p>
 <p>where <span class="math inline">\(r\%\)</span> is the annual
 percentage rate.</p>
-<p><strong>Examples:</strong></p>
-<ul>
-<li>At 6%: <span class="math inline">\(t \approx 72/6 = 12\)</span>
-years</li>
-<li>At 8%: <span class="math inline">\(t \approx 72/8 = 9\)</span>
-years</li>
-<li>At 12%: <span class="math inline">\(t \approx 72/12 = 6\)</span>
-years</li>
-</ul>
+<p><strong>Examples:</strong> - At 6%: <span class="math inline">\(t
+\approx 72/6 = 12\)</span> years - At 8%: <span class="math inline">\(t
+\approx 72/8 = 9\)</span> years - At 12%: <span class="math inline">\(t
+\approx 72/12 = 6\)</span> years</p>
 <p><strong>Verification at 8%:</strong> <span
 class="math inline">\((1.08)^9 = 1.999 \approx 2\)</span> ✓</p>
 <h3 id="derivation">Derivation</h3>
@@ -211,10 +186,8 @@ class="math inline">\(t\)</span>:</p>
 class="math inline">\(t \approx \frac{69.3}{r\%}\)</span>. The rule of
 72 is easier to use and quite accurate for rates between 6-10%.</p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="3-periodic-compounding">3. Periodic Compounding</h2>
+<section class="slide">
+<h2 id="periodic-compounding">3. Periodic Compounding</h2>
 <h3 id="definition-1">Definition</h3>
 <p>With <strong>compound interest</strong>, interest is added to the
 principal periodically, and subsequent interest is earned on the new
@@ -222,14 +195,10 @@ total.</p>
 <h3 id="formula-1">Formula</h3>
 <p><span class="math display">\[A = P\left(1 +
 \frac{r}{n}\right)^{nt}\]</span></p>
-<p>where:</p>
-<ul>
-<li><span class="math inline">\(n\)</span> = number of compounding
-periods per year</li>
-<li><span class="math inline">\(t\)</span> = number of years</li>
-<li><span class="math inline">\(r\)</span> = annual interest rate
-(a.k.a. APR: annual percentage rate)</li>
-</ul>
+<p>where: * <span class="math inline">\(n\)</span> = number of
+compounding periods per year * <span class="math inline">\(t\)</span> =
+number of years * <span class="math inline">\(r\)</span> = annual
+interest rate (a.k.a. APR: annual percentage rate)</p>
 <h3 id="why-does-this-work">Why Does This Work?</h3>
 <p>Each period, the amount is multiplied by <span
 class="math inline">\(\left(1 + \frac{r}{n}\right)\)</span>. After <span
@@ -239,9 +208,7 @@ class="math inline">\(nt\)</span> periods:</p>
 \rightarrow \cdots \rightarrow P\left(1 +
 \frac{r}{n}\right)^{nt}\]</span></p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="compounding-frequencies">Compounding Frequencies</h2>
 <table>
 <thead>
@@ -278,9 +245,7 @@ class="math inline">\(n\)</span> increases, the final amount <span
 class="math inline">\(A\)</span> increases, but with diminishing
 returns.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="example-periodic-compounding">Example: Periodic Compounding</h2>
 <p>Invest $1,000 at 8% annual interest for 3 years under different
 compounding frequencies.</p>
@@ -304,9 +269,7 @@ class="math inline">\(n\)</span> increases.</p>
 <p><span class="math display">\[A = 1{,}000\left(1 +
 \frac{0.08}{12}\right)^{36} = \$1{,}270.24\]</span></p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="effective-annual-rate-ear">Effective Annual Rate (EAR)</h2>
 <p>The <strong>effective annual rate</strong> is the actual annual
 return accounting for compounding within the year.</p>
@@ -330,10 +293,8 @@ consumers compare products.</p>
 <p>A credit card charges 18% APR with daily compounding. What is the
 effective annual rate?</p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="4-continuous-compounding">4. Continuous Compounding</h2>
+<section class="slide">
+<h2 id="continuous-compounding">4. Continuous Compounding</h2>
 <h3 id="what-happens-as-n-to-infty">What Happens as <span
 class="math inline">\(n \to \infty\)</span>?</h3>
 <p>As compounding becomes more frequent, we approach <strong>continuous
@@ -358,28 +319,21 @@ class="math inline">\(m \to \infty\)</span>:</p>
 <p>The number <span class="math inline">\(e\)</span> naturally arises as
 the base for continuous growth processes.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="continuous-compounding-formula">Continuous Compounding
 Formula</h2>
 <p><span class="math display">\[A = Pe^{rt}\]</span></p>
-<p>where:</p>
-<ul>
-<li><span class="math inline">\(e \approx 2.71828\)</span> (Euler's
-number)</li>
-<li><span class="math inline">\(r\)</span> = annual interest rate</li>
-<li><span class="math inline">\(t\)</span> = time in years</li>
-</ul>
+<p>where: * <span class="math inline">\(e \approx 2.71828\)</span>
+(Euler’s number) * <span class="math inline">\(r\)</span> = annual
+interest rate * <span class="math inline">\(t\)</span> = time in
+years</p>
 <h3 id="example">Example</h3>
 <p>Invest $1,000 at 8% continuously compounded for 3 years:</p>
 <p><span class="math display">\[A = 1{,}000 \cdot e^{0.08 \times 3} =
 1{,}000 \cdot e^{0.24} = \$1{,}271.25\]</span></p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="real-vs-nominal-interest-rates">Real vs. Nominal Interest
+<section class="slide">
+<h2 id="real-vs.-nominal-interest-rates">Real vs. Nominal Interest
 Rates</h2>
 <h3 id="nominal-rate">Nominal Rate</h3>
 <p>The stated interest rate, <strong>not adjusted</strong> for
@@ -407,9 +361,7 @@ class="math inline">\(r_{\text{real}} \approx 8\% - 3\% =
 rates</strong> provide the true comparison of purchasing power
 gains.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="present-value-with-continuous-compounding">Present Value with
 Continuous Compounding</h2>
 <p>If <span class="math inline">\(A = Pe^{rt}\)</span>, then solving for
@@ -423,15 +375,13 @@ received in 5 years at 6% continuous rate?</p>
 1{,}500 \cdot e^{-0.3} = \$1{,}109.96\]</span></p>
 <h3 id="interpretation">Interpretation</h3>
 <p>The discount factor <span class="math inline">\(e^{-rt}\)</span>
-represents the "weight" we assign to future cash. As <span
+represents the “weight” we assign to future cash. As <span
 class="math inline">\(t\)</span> or <span
 class="math inline">\(r\)</span> increases, this weight decreases
 exponentially.</p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="5-comparing-compounding-methods">5. Comparing Compounding
+<section class="slide">
+<h2 id="comparing-compounding-methods">5. Comparing Compounding
 Methods</h2>
 <h3 id="comparison-table">Comparison Table</h3>
 <p>Invest $1,000 at 8% for 3 years:</p>
@@ -479,9 +429,7 @@ Methods</h2>
 <p><strong>Observation:</strong> More frequent compounding yields higher
 returns, but the gains diminish.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="converting-between-compounding-frequencies">Converting Between
 Compounding Frequencies</h2>
 <h3 id="from-periodic-to-continuous">From Periodic to Continuous</h3>
@@ -497,9 +445,7 @@ is:</p>
 <p><span class="math display">\[r_n = n\left(e^{r_c/n} -
 1\right)\]</span></p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="converting-between-compounding-frequencies-1">Converting Between
 Compounding Frequencies</h2>
 <h3 id="from-periodic-to-continuous-1">From Periodic to Continuous</h3>
@@ -525,10 +471,8 @@ is:</p>
 <p><span class="math display">\[e^{r_c/n} = 1 + \frac{r_n}{n} \implies
 r_n = n(e^{r_c/n} - 1)\]</span></p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="6-streams-of-payments">6. Streams of Payments</h2>
+<section class="slide">
+<h2 id="streams-of-payments">6. Streams of Payments</h2>
 <p>So far: single payment at time 0.</p>
 <p>In practice, many financial instruments involve <strong>multiple cash
 flows</strong> over time:</p>
@@ -548,9 +492,7 @@ PV(C_2)\]</span></p>
 <p>This allows us to value complex cash flow streams by breaking them
 into components.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="present-value-of-cash-flow-stream">Present Value of Cash Flow
 Stream</h2>
 <p>Consider cash flows <span class="math inline">\(C_1, C_2, \ldots,
@@ -573,9 +515,7 @@ class="math inline">\(t=3\)</span>. Rate: 5% (annual compounding).</p>
 <p><span class="math display">\[= 95.24 + 181.41 + 129.58 =
 \$406.23\]</span></p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="annuities">Annuities</h2>
 <p>An <strong>annuity</strong> is a sequence of <strong>equal</strong>
 payments at <strong>regular</strong> intervals.</p>
@@ -594,9 +534,7 @@ period</li>
 <li><span class="math inline">\(n\)</span> = number of periods</li>
 </ul>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="present-value-of-ordinary-annuity">Present Value of Ordinary
 Annuity</h2>
 <p><strong>Formula:</strong></p>
@@ -621,9 +559,7 @@ class="math inline">\(n\)</span> terms.</p>
 \frac{1-(1+r)^{-n}}{\frac{r}{1+r}} = C \cdot \frac{1 -
 (1+r)^{-n}}{r}\]</span></p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="example-ordinary-annuity">Example: Ordinary Annuity</h2>
 <p>You will receive $500 at the end of each year for 5 years. The
 interest rate is 6%.</p>
@@ -635,9 +571,7 @@ interest rate is 6%.</p>
 <p><span class="math display">\[= 500 \times 4.212 =
 \$2{,}106.00\]</span></p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="future-value-of-ordinary-annuity">Future Value of Ordinary
 Annuity</h2>
 <p><strong>Formula:</strong></p>
@@ -659,9 +593,7 @@ years at 6%.</p>
 <p><strong>Verification:</strong> This is <span
 class="math inline">\(2,106.00 \times (1.06)^5 = 2,818.50\)</span> ✓</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="annuity-due">Annuity Due</h2>
 <p>Payments occur at the <strong>beginning</strong> of each period.</p>
 <p><strong>Present Value of Annuity Due:</strong></p>
@@ -682,15 +614,10 @@ class="math inline">\(t=1\)</span>:</p>
 \frac{C}{(1+r)^2} + \cdots + \frac{C}{(1+r)^n}\right] = (1+r) \cdot
 PV_{\text{ordinary}}\]</span></p>
 <h3 id="example-3">Example</h3>
-<p>Using our earlier example ($500/year for 5 years at 6%):</p>
-<ul>
-<li>Ordinary annuity: $2,106.00</li>
-<li>Annuity due: $2,106.00 \times 1.06 = $2,232.36</li>
-</ul>
+<p>Using our earlier example ($500/year for 5 years at 6%): - Ordinary
+annuity: $2,106.00 - Annuity due: $2,106.00 = $2,232.36</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="perpetuities">Perpetuities</h2>
 <p>A <strong>perpetuity</strong> is an annuity that continues
 <strong>forever</strong>.</p>
@@ -710,11 +637,9 @@ interest.</p>
 \$1{,}000\]</span></p>
 <h3 id="intuition">Intuition</h3>
 <p>At 5%, a $1,000 investment yields 50 annually forever—exactly
-matching the perpetuity's cash flows.</p>
+matching the perpetuity’s cash flows.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="growing-perpetuity">Growing Perpetuity</h2>
 <p>A <strong>growing perpetuity</strong> has payments that increase at
 rate <span class="math inline">\(g\)</span> each period.</p>
@@ -740,10 +665,8 @@ discount rate 8%.</p>
 <p><span class="math display">\[PV = \frac{100}{0.08 - 0.03} =
 \frac{100}{0.05} = \$2{,}000\]</span></p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="7-applications">7. Applications</h2>
+<section class="slide">
+<h2 id="applications">7. Applications</h2>
 <h3 id="bond-valuation">Bond Valuation</h3>
 <p>A bond pays periodic coupons plus face value at maturity.</p>
 <p><span class="math display">\[\text{Bond Price} = PV(\text{coupons}) +
@@ -768,9 +691,7 @@ class="math inline">\(n\)</span>:</p>
 <p>This is derived by solving <span class="math inline">\(L =
 PV(\text{payments})\)</span>.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="application-mortgage-example">Application: Mortgage Example</h2>
 <p>You borrow $300,000 for 30 years at 4.5% annual rate (compounded
 monthly).</p>
@@ -783,21 +704,16 @@ Number of payments: <span class="math inline">\(n = 30 \times 12 =
 <p><span class="math display">\[= 300{,}000 \cdot \frac{0.00375}{1 -
 0.2556} = 300{,}000 \times 0.005067 = \$1{,}520.06\]</span></p>
 <h3 id="amortization-insight">Amortization Insight</h3>
-<p><strong>Total paid:</strong> $1,520.06 \times 360 = $547,220.40<br />
+<p><strong>Total paid:</strong> $1,520.06 = $547,220.40<br />
 <strong>Interest paid:</strong> $547,220.40 - $300,000 = $247,220.40</p>
-<p>Over the loan's life, you pay <strong>82% of the principal</strong>
+<p>Over the loan’s life, you pay <strong>82% of the principal</strong>
 in interest!</p>
-<p><strong>First payment breakdown:</strong></p>
-<ul>
-<li>Interest: $300,000 \times 0.00375 = $1,125.00</li>
-<li>Principal: $1,520.06 - $1,125.00 = $395.06</li>
-</ul>
+<p><strong>First payment breakdown:</strong> - Interest: $300,000 =
+$1,125.00 - Principal: $1,520.06 - $1,125.00 = $395.06</p>
 <p>Early payments are mostly interest; later payments are mostly
 principal.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="net-present-value-npv">Net Present Value (NPV)</h2>
 <h3 id="definition-2">Definition</h3>
 <p>The <strong>Net Present Value</strong> of a project is the sum of all
@@ -824,9 +740,7 @@ value)</li>
 3{,}969 = \$176\]</span></p>
 <p><strong>Decision:</strong> Accept (positive NPV).</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="internal-rate-of-return-irr">Internal Rate of Return (IRR)</h2>
 <h3 id="definition-3">Definition</h3>
 <p>The <strong>Internal Rate of Return</strong> is the discount rate
@@ -857,9 +771,7 @@ once</li>
 <li>NPV is generally preferred for ranking projects</li>
 </ul>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="summary-formulas">Summary Formulas</h2>
 <table>
 <thead>
@@ -902,9 +814,7 @@ once</li>
 </tbody>
 </table>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="key-takeaways">Key Takeaways</h2>
 <ol type="1">
 <li><strong>Time value of money</strong> is fundamental to all financial
@@ -918,47 +828,35 @@ valuation formulas</li>
 <li>All valuations reduce to: <strong>sum of discounted cash
 flows</strong></li>
 </ol>
-<p>These tools form the foundation for:</p>
-<ul>
-<li>Bond pricing</li>
-<li>Stock valuation (dividend discount models)</li>
-<li>Derivatives pricing</li>
-<li>Capital budgeting</li>
-</ul>
+<p>These tools form the foundation for: * Bond pricing * Stock valuation
+(dividend discount models) * Derivatives pricing * Capital budgeting</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="practice-problems">Practice Problems</h2>
 <h3 id="problem-1-comparing-options">Problem 1: Comparing Options</h3>
-<p>You win a lottery with two payout options:</p>
-<ul>
-<li>Option A: $500,000 today</li>
-<li>Option B: $50,000 per year for 15 years (first payment in 1
-year)</li>
-</ul>
+<p>You win a lottery with two payout options: - Option A: $500,000 today
+- Option B: $50,000 per year for 15 years (first payment in 1 year)</p>
 <p>At what discount rate are you indifferent between the two
 options?</p>
 <p><em>Hint: Set the PV of option B equal to 500,000 and solve for <span
 class="math inline">\(r\)</span>.</em></p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="practice-problems-continued">Practice Problems (continued)</h2>
 <h3 id="problem-2-retirement-planning">Problem 2: Retirement
 Planning</h3>
 <p>You want $2 million when you retire in 30 years. You plan to invest
 in an account earning 7% annually (compounded monthly).</p>
-<p>(a) If you make a single deposit today, how much do you need?</p>
-<p>(b) If you make equal monthly deposits, how much per month?</p>
+<ol type="a">
+<li><p>If you make a single deposit today, how much do you
+need?</p></li>
+<li><p>If you make equal monthly deposits, how much per month?</p></li>
+</ol>
 <h3 id="problem-3-rate-equivalence">Problem 3: Rate Equivalence</h3>
 <p>What semi-annual compounding rate is equivalent to 6% continuously
 compounded?</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="practice-problems-continued-1">Practice Problems
 (continued)</h2>
 <h3 id="problem-4-growing-annuity">Problem 4: Growing Annuity</h3>
@@ -974,9 +872,7 @@ and subtract the tail.</em></p>
 <p>A 10-year bond with face value $1,000 pays 8% annual coupons. If the
 yield is 6%, what is the bond price? What if the yield is 10%?</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="advanced-topic-duration-preview">Advanced Topic: Duration
 (Preview)</h2>
 <h3 id="macaulay-duration">Macaulay Duration</h3>
@@ -986,14 +882,14 @@ received:</p>
 PV(C_t)}{\sum_{t=1}^{n} PV(C_t)} = \frac{\sum_{t=1}^{n} t \cdot
 \frac{C_t}{(1+r)^t}}{PV}\]</span></p>
 <h3 id="why-duration-matters">Why Duration Matters</h3>
-<p>Duration measures the <strong>sensitivity</strong> of a bond's price
+<p>Duration measures the <strong>sensitivity</strong> of a bond’s price
 to interest rate changes:</p>
 <p><span class="math display">\[\frac{\Delta P}{P} \approx -D \cdot
 \frac{\Delta r}{1+r}\]</span></p>
 <h3 id="example-interpretation">Example Interpretation</h3>
 <p>A bond with duration 7 years will lose approximately 7% in value if
 interest rates rise by 1 percentage point.</p>
-<h3 id="applications">Applications</h3>
+<h3 id="applications-1">Applications</h3>
 <ul>
 <li><strong>Immunization</strong>: Match asset and liability durations
 to hedge interest rate risk</li>
@@ -1005,9 +901,7 @@ exposure</li>
 <p><em>This will be covered in detail in later lectures on fixed
 income.</em></p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="hints-for-practice-problems">Hints for Practice Problems</h2>
 <h3 id="problem-1-lottery-options">Problem 1 (Lottery Options)</h3>
 <p>Set up: <span class="math inline">\(500{,}000 = 50{,}000 \cdot
@@ -1016,11 +910,13 @@ Solve numerically: <span class="math inline">\(r \approx
 7.23\%\)</span></p>
 <h3 id="problem-2-retirement-planning-1">Problem 2 (Retirement
 Planning)</h3>
-<p>(a) <span class="math inline">\(PV = 2{,}000{,}000 / (1 +
-0.07/12)^{360} \approx 245{,}975\)</span></p>
-<p>(b) Solve: <span class="math inline">\(2{,}000{,}000 = PMT \cdot
+<ol type="a">
+<li><p><span class="math inline">\(PV = 2{,}000{,}000 / (1 +
+0.07/12)^{360} \approx 245{,}975\)</span></p></li>
+<li><p>Solve: <span class="math inline">\(2{,}000{,}000 = PMT \cdot
 \frac{(1+0.07/12)^{360}-1}{0.07/12}\)</span>, giving <span
-class="math inline">\(PMT \approx 1{,}633\)</span></p>
+class="math inline">\(PMT \approx 1{,}633\)</span></p></li>
+</ol>
 <h3 id="problem-3-rate-equivalence-1">Problem 3 (Rate Equivalence)</h3>
 <p><span class="math inline">\(r_2 = 2(e^{0.06/2} - 1) = 2(e^{0.03} - 1)
 \approx 6.09\%\)</span></p>
@@ -1030,7 +926,6 @@ class="math inline">\(PMT \approx 1{,}633\)</span></p>
 <p>When coupon rate &gt; yield, bond trades at premium; when coupon rate
 &lt; yield, bond trades at discount.</p>
 </section>
-
 </div>
 </body>
 </html>

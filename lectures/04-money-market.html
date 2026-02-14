@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Money Market</title>
+  <title>04-money-market</title>
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,15 +24,14 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflar.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css" />
-  <link rel="stylesheet" href="wide.css" />
+  <link rel="stylesheet" href="lecture-theme.css" />
   <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">Money Market</h1>
+<h1 class="title">04-money-market</h1>
 </header>
 <style>
   .slides {
@@ -69,17 +68,12 @@
     color: #666;
   }
 </style>
-
-<div class="slides" markdown="1">
-
-<section class="slide" markdown="1">
-
+<div class="slides" data-markdown="1">
+<section class="slide">
 <h1 id="money-market">Money Market</h1>
 <p><strong>Sukrit Mittal</strong> Franklin Templeton Investments</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="outline">Outline</h2>
 <ol type="1">
 <li>Motivation: why money markets matter</li>
@@ -94,11 +88,9 @@
 <li>Exercises</li>
 </ol>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="1-motivation-why-study-the-money-market">1. Motivation: Why
-Study the Money Market?</h2>
+<section class="slide">
+<h2 id="motivation-why-study-the-money-market">1. Motivation: Why Study
+the Money Market?</h2>
 <p>The money market is where <strong>time itself is priced</strong>.</p>
 <p>Before equities, before derivatives, before fancy models, finance had
 one problem:</p>
@@ -124,10 +116,8 @@ numerology.</p>
 </ul>
 <p>Boring markets are the most important ones.</p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="2-risk-free-assets-and-modeling-assumptions">2. Risk-Free Assets
+<section class="slide">
+<h2 id="risk-free-assets-and-modeling-assumptions">2. Risk-Free Assets
 and Modeling Assumptions</h2>
 <p>In theory, we assume the existence of a <strong>risk-free
 asset</strong>.</p>
@@ -140,10 +130,10 @@ asset</strong>.</p>
 <p>In reality, nothing is perfectly risk-free.</p>
 <p>But theory is about <strong>controlled lies</strong>.</p>
 <h3 id="what-makes-an-asset-risk-free">What Makes an Asset
-"Risk-Free"?</h3>
+“Risk-Free”?</h3>
 <p>Three conditions must hold:</p>
 <ol type="1">
-<li><strong>Deterministic payoff</strong>: We know exactly what we'll
+<li><strong>Deterministic payoff</strong>: We know exactly what we’ll
 receive</li>
 <li><strong>Zero credit risk</strong>: The counterparty cannot
 default</li>
@@ -159,10 +149,8 @@ dates</li>
 <p>The approximation is good enough for modeling. Perfect is the enemy
 of useful.</p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="3-zero-coupon-bonds">3. Zero-Coupon Bonds</h2>
+<section class="slide">
+<h2 id="zero-coupon-bonds">3. Zero-Coupon Bonds</h2>
 <p>A <strong>zero-coupon bond</strong> is the cleanest financial
 instrument imaginable.</p>
 <p>Definition:</p>
@@ -187,9 +175,7 @@ class="math inline">\(T\)</span></li>
 </ul>
 <p>They are the atoms of fixed income.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="recap-pricing-with-continuous-compounding">Recap: Pricing with
 Continuous Compounding</h3>
 <p>Assume a constant continuously compounded rate <span
@@ -221,13 +207,11 @@ P(0,T) = \lim_{n \to \infty} (1-r\cdot T/n)^{-n}
 \]</span></p>
 <p>Setting <span class="math inline">\(x = -rT\)</span> gives <span
 class="math inline">\(P(0,T) = e^{-rT}\)</span>.</p>
-<p>This isn't arbitrary. It's the only way to make time-consistent
+<p>This isn’t arbitrary. It’s the only way to make time-consistent
 discounting work.</p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="4-discount-factors-and-term-structure">4. Discount Factors and
+<section class="slide">
+<h2 id="discount-factors-and-term-structure">4. Discount Factors and
 Term Structure</h2>
 <p>Each maturity <span class="math inline">\(T\)</span> has its own
 discount factor <span class="math inline">\(P(0,T)\)</span>.</p>
@@ -236,7 +220,7 @@ discount factor <span class="math inline">\(P(0,T)\)</span>.</p>
 \{P(0,T) : T &gt; 0\}
 \]</span></p>
 <p>is called the <strong>term structure of interest rates</strong>.</p>
-<p>This curve encodes the market's view of time and liquidity.</p>
+<p>This curve encodes the market’s view of time and liquidity.</p>
 <h3 id="properties-of-discount-factors">Properties of Discount
 Factors</h3>
 <p>Well-behaved term structures satisfy:</p>
@@ -248,27 +232,20 @@ today)</li>
 &gt; P(0,T_2)\)</span> if <span class="math inline">\(T_1 &lt;
 T_2\)</span> (longer waits mean deeper discounts)</li>
 <li><strong>Positivity</strong>: <span class="math inline">\(P(0,T) &gt;
-0\)</span> for all <span class="math inline">\(T\)</span> (money doesn't
+0\)</span> for all <span class="math inline">\(T\)</span> (money doesn’t
 become worthless)</li>
 <li><strong>Smoothness</strong>: <span
 class="math inline">\(P(0,T)\)</span> varies continuously in <span
 class="math inline">\(T\)</span></li>
 </ol>
-<p>These aren't assumptions. They're <strong>arbitrage-free
+<p>These aren’t assumptions. They’re <strong>arbitrage-free
 requirements</strong>.</p>
 <p>If <span class="math inline">\(P(0,2) &gt; P(0,1)\)</span>, you
-could:</p>
-<ul>
-<li>Borrow at 2 years</li>
-<li>Lend at 1 year</li>
-<li>Relend for another year</li>
-<li>Lock in risk-free profit</li>
-</ul>
+could: * Borrow at 2 years * Lend at 1 year * Relend for another year *
+Lock in risk-free profit</p>
 <p>Markets eliminate such opportunities quickly.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="spot-rates">Spot Rates</h3>
 <p>Define the <strong>spot rate</strong> <span
 class="math inline">\(r(0,T)\)</span> by:</p>
@@ -292,9 +269,7 @@ r(0,3) = -\frac{1}{3} \ln(0.85) = -\frac{1}{3}(-0.1625) \approx 0.0542 =
 <p>This is the annualized continuously compounded rate for 3-year
 money.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="forward-rates">Forward Rates</h3>
 <p>We can also define <strong>forward rates</strong> <span
 class="math inline">\(f(0,T_1,T_2)\)</span>: the rate agreed today for
@@ -310,10 +285,8 @@ f(0,T_1,T_2) = \frac{\ln P(0,T_1) - \ln P(0,T_2)}{T_2-T_1}
 \]</span></p>
 <p>Forward rates let you lock in future borrowing costs today.</p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="5-coupon-bonds">5. Coupon Bonds</h2>
+<section class="slide">
+<h2 id="coupon-bonds">5. Coupon Bonds</h2>
 <p>A <strong>coupon bond</strong> pays periodic interest plus
 principal.</p>
 <p>Parameters:</p>
@@ -328,9 +301,7 @@ c, c, \dots, c, 1 + c
 \]</span></p>
 <p>This is a bundle, not a primitive object.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="coupon-bonds-as-portfolios">Coupon Bonds as Portfolios</h3>
 <p>A coupon bond is a portfolio of zero-coupon bonds.</p>
 <p>Price at time 0:</p>
@@ -340,21 +311,14 @@ P = \sum_{t=1}^{T} c \cdot P(0,t) + P(0,T)
 <p>No assumptions. No probabilities. No equilibrium.</p>
 <p>Just accounting and no-arbitrage.</p>
 <p><strong>Decomposition logic:</strong></p>
-<p>Think of buying:</p>
-<ul>
-<li><span class="math inline">\(c\)</span> units of 1-year zeros</li>
-<li><span class="math inline">\(c\)</span> units of 2-year zeros</li>
-<li>...</li>
-<li><span class="math inline">\(c\)</span> units of <span
-class="math inline">\(T\)</span>-year zeros</li>
-<li>1 unit of <span class="math inline">\(T\)</span>-year zero (for
-principal)</li>
-</ul>
+<p>Think of buying: * <span class="math inline">\(c\)</span> units of
+1-year zeros * <span class="math inline">\(c\)</span> units of 2-year
+zeros * … * <span class="math inline">\(c\)</span> units of <span
+class="math inline">\(T\)</span>-year zeros * 1 unit of <span
+class="math inline">\(T\)</span>-year zero (for principal)</p>
 <p>Total cost must equal bond price, otherwise arbitrage exists.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <p><strong>Example with numbers:</strong></p>
 <p>Suppose we have a 3-year bond with <span
 class="math inline">\(c=0.05\)</span> (5% coupon) and discount
@@ -382,10 +346,8 @@ Matters</h3>
 </ul>
 <p>If you price bonds any other way, you are guessing.</p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="6-yield-to-maturity-ytm">6. Yield to Maturity (YTM)</h2>
+<section class="slide">
+<h2 id="yield-to-maturity-ytm">6. Yield to Maturity (YTM)</h2>
 <p>Market convention compresses all cash flows into a single number.</p>
 <p><span class="math inline">\(y\)</span> solves:</p>
 <p><span class="math display">\[
@@ -394,21 +356,15 @@ P = \sum_{t=1}^{T} \frac{c}{(1+y)^t} + \frac{1}{(1+y)^T}
 <p>This number is convenient.</p>
 <p>It is also dangerous.</p>
 <p><strong>What YTM represents:</strong></p>
-<p>It's the internal rate of return (IRR) of the bond's cash flows.</p>
-<p>If you:</p>
-<ul>
-<li>Buy the bond at price <span class="math inline">\(P\)</span></li>
-<li>Hold to maturity</li>
-<li>Reinvest all coupons at rate <span
-class="math inline">\(y\)</span></li>
-</ul>
+<p>It’s the internal rate of return (IRR) of the bond’s cash flows.</p>
+<p>If you: * Buy the bond at price <span
+class="math inline">\(P\)</span> * Hold to maturity * Reinvest all
+coupons at rate <span class="math inline">\(y\)</span></p>
 <p>Then your realized return equals <span
 class="math inline">\(y\)</span>.</p>
-<p>That's a lot of "ifs".</p>
+<p>That’s a lot of “ifs”.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="limitations-of-ytm">Limitations of YTM</h3>
 <ul>
 <li>Assumes flat term structure</li>
@@ -421,11 +377,11 @@ class="math inline">\(y\)</span>.</p>
 <li><p><strong>Flat term structure</strong>: YTM treats all maturities
 as having the same discount rate. Reality: 1-year rates ≠ 10-year
 rates.</p></li>
-<li><p><strong>Reinvestment assumption</strong>: If you can't reinvest
+<li><p><strong>Reinvestment assumption</strong>: If you can’t reinvest
 coupons at <span class="math inline">\(y\)</span>, your realized return
 differs from YTM.</p></li>
 <li><p><strong>Non-additivity</strong>: If Bond A has YTM = 5% and Bond
-B has YTM = 6%, their portfolio doesn't have YTM = 5.5%.</p></li>
+B has YTM = 6%, their portfolio doesn’t have YTM = 5.5%.</p></li>
 </ol>
 <p><strong>When YTM is useful:</strong></p>
 <ul>
@@ -440,10 +396,8 @@ B has YTM = 6%, their portfolio doesn't have YTM = 5.5%.</p></li>
 <li>Hedging calculations</li>
 </ul>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="7-money-market-account">7. Money Market Account</h2>
+<section class="slide">
+<h2 id="money-market-account">7. Money Market Account</h2>
 <p>The <strong>money market account</strong> models continuous
 reinvestment.</p>
 <p>Let <span class="math inline">\(A(t)\)</span> denote its value.</p>
@@ -453,27 +407,21 @@ A(t) = A(0)e^{rt}
 \]</span></p>
 <p>This asset defines the baseline growth of wealth.</p>
 <p><strong>Interpretation:</strong></p>
-<p>Imagine a bank account where:</p>
-<ul>
-<li>Interest is credited continuously</li>
-<li>You never withdraw</li>
-<li>The rate stays constant</li>
-</ul>
-<p>This is the "risk-free growth process."</p>
+<p>Imagine a bank account where: * Interest is credited continuously *
+You never withdraw * The rate stays constant</p>
+<p>This is the “risk-free growth process.”</p>
 <p><strong>Why it matters:</strong></p>
 <ul>
-<li>It's the benchmark for all other returns</li>
+<li>It’s the benchmark for all other returns</li>
 <li>In derivatives pricing, we discount at this rate</li>
-<li>It defines what "risk-neutral" means</li>
+<li>It defines what “risk-neutral” means</li>
 </ul>
 <p>Starting with <span class="math inline">\(A(0) = 1\)</span>, we get
 <span class="math inline">\(A(t) = e^{rt}\)</span>.</p>
 <p>The reciprocal <span class="math inline">\(e^{-rt}\)</span> is
 exactly our discount factor.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="discrete-time-version">Discrete-Time Version</h3>
 <p>In discrete time:</p>
 <p><span class="math display">\[
@@ -493,15 +441,10 @@ brings it back.</p>
 A(t) \cdot P(0,t) = (1+r)^t \cdot (1+r)^{-t} = 1
 \]</span></p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <p><strong>Preview of risk-neutral pricing:</strong></p>
-<p>Pricing derivatives by:</p>
-<ol type="1">
-<li>Computing expected payoffs</li>
-<li>Discounting at the risk-free rate</li>
-</ol>
+<p>Pricing derivatives by: 1. Computing expected payoffs 2. Discounting
+at the risk-free rate</p>
 <p>The money market account is the denominator in that calculation.</p>
 <p>For example:</p>
 <ul>
@@ -531,13 +474,11 @@ S^d(T)}{S^u(T) - S^d(T)} = \frac{1.10 \times 100 - 80}{120 - 80} =
 13.64\]</span></p>
 <p>The risk-neutral probability <span
 class="math inline">\(q=0.75\)</span> is <em>not</em> the real-world
-probability. It's the probability that makes the discounted expected
+probability. It’s the probability that makes the discounted expected
 value equal the market price.</p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="8-no-arbitrage-relationships">8. No-Arbitrage Relationships</h2>
+<section class="slide">
+<h2 id="no-arbitrage-relationships">8. No-Arbitrage Relationships</h2>
 <p>No-arbitrage principle:</p>
 <blockquote>
 <p>Identical cash flows must have identical prices.</p>
@@ -550,26 +491,17 @@ value equal the market price.</p>
 </ul>
 <p>Break consistency, and arbitrage strategies appear.</p>
 <p><strong>What is arbitrage?</strong></p>
-<p>A trading strategy that:</p>
-<ul>
-<li>Costs nothing (or makes money) today</li>
-<li>Never loses money in the future</li>
-<li>Makes money with positive probability</li>
-</ul>
+<p>A trading strategy that: * Costs nothing (or makes money) today *
+Never loses money in the future * Makes money with positive
+probability</p>
 <p><strong>Example of arbitrage:</strong></p>
-<p>Suppose:</p>
-<ul>
-<li>A 1-year zero-coupon bond costs <span class="math inline">\(P_1 =
-0.95\)</span></li>
-<li>A 2-year zero-coupon bond costs <span class="math inline">\(P_2 =
-0.91\)</span></li>
-<li>A 1-year forward contract starting in 1 year costs <span
-class="math inline">\(F = 0.94\)</span></li>
-</ul>
+<p>Suppose: * A 1-year zero-coupon bond costs <span
+class="math inline">\(P_1 = 0.95\)</span> * A 2-year zero-coupon bond
+costs <span class="math inline">\(P_2 = 0.91\)</span> * A 1-year forward
+contract starting in 1 year costs <span class="math inline">\(F =
+0.94\)</span></p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <p>No-arbitrage requires: <span class="math inline">\(P_2 = P_1 \cdot
 F\)</span>, so <span class="math inline">\(F = P_2/P_1 = 0.91/0.95
 \approx 0.9579\)</span>.</p>
@@ -577,7 +509,7 @@ F\)</span>, so <span class="math inline">\(F = P_2/P_1 = 0.91/0.95
 0.9579\)</span>, the forward is <strong>underpriced</strong>.</p>
 <p><strong>Arbitrage strategy:</strong></p>
 <ul>
-<li><p><strong>Today (t=0):</strong></p>
+<li><strong>Today (t=0):</strong>
 <ul>
 <li>Borrow <span class="math inline">\(P_2 = 0.91\)</span> for 2 years
 (short the 2-year zero)</li>
@@ -589,7 +521,7 @@ class="math inline">\(F = 0.94\)</span> from year 1 to year 2 (costs
 <li><strong>Net cash outflow:</strong> <span class="math inline">\(0.95
 - 0.91 = 0.04\)</span> (borrow an additional 0.04 at 2-year rate)</li>
 </ul></li>
-<li><p><strong>Year 1 (t=1):</strong></p>
+<li><strong>Year 1 (t=1):</strong>
 <ul>
 <li>Receive 1 unit from maturing 1-year zero</li>
 <li>Pay <span class="math inline">\(F = 0.94\)</span> for forward
@@ -597,7 +529,7 @@ contract (invest for 1 more year)</li>
 <li><strong>Net cash flow:</strong> <span class="math inline">\(1 - 0.94
 = 0.06\)</span> (free cash!)</li>
 </ul></li>
-<li><p><strong>Year 2 (t=2):</strong></p>
+<li><strong>Year 2 (t=2):</strong>
 <ul>
 <li>Receive 1 unit from forward contract investment</li>
 <li>Repay 1 unit on the 2-year borrowing</li>
@@ -618,13 +550,11 @@ rate starting at year 1 of:</p>
 <p>But the no-arbitrage forward rate should be:</p>
 <p><span class="math display">\[\frac{1}{F_{fair}} - 1 =
 \frac{1}{0.9579} - 1 \approx 4.39\%\]</span></p>
-<p>You're getting better borrowing terms (6.38%) than the market implies
+<p>You’re getting better borrowing terms (6.38%) than the market implies
 (4.39%), creating arbitrage.</p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="9-worked-example">9. Worked Example</h2>
+<section class="slide">
+<h2 id="worked-example">9. Worked Example</h2>
 <p>Suppose:</p>
 <ul>
 <li><span class="math inline">\(P(0,1)=0.95\)</span></li>
@@ -641,7 +571,7 @@ rate starting at year 1 of:</p>
 P = 0.04(0.95+0.90+0.85)+0.85 = 0.04(2.70)+0.85 = 0.958
 \]</span></p>
 <p>Nothing mystical happened.</p>
-<p><strong>Let's extend this example:</strong></p>
+<p><strong>Let’s extend this example:</strong></p>
 <p><strong>Part (a): Extract spot rates</strong></p>
 <p><span class="math display">\[
 r(0,1) = -\ln(0.95) \approx 0.0513 = 5.13\%
@@ -660,15 +590,12 @@ f(0,1,2) = \frac{\ln P(0,1) - \ln P(0,2)}{2-1} = \ln(0.95) - \ln(0.90)
 \]</span></p>
 <p><strong>Part (c): What if the bond traded at <span
 class="math inline">\(P = 0.95\)</span>?</strong></p>
-<p>Then it's mispriced relative to the discount curve.</p>
-<p>Arbitrage:</p>
-<ul>
-<li>Sell the bond for <span class="math inline">\(0.95\)</span></li>
-<li>Buy the replicating portfolio for <span
-class="math inline">\(0.958\)</span></li>
-<li>Lock in <span class="math inline">\(0.95 - 0.958 =
--0.008\)</span>... wait, that's a loss.</li>
-</ul>
+<p>Then it’s mispriced relative to the discount curve.</p>
+<p>Arbitrage: * Sell the bond for <span
+class="math inline">\(0.95\)</span> * Buy the replicating portfolio for
+<span class="math inline">\(0.958\)</span> * Lock in <span
+class="math inline">\(0.95 - 0.958 = -0.008\)</span>… wait, that’s a
+loss.</p>
 <p>Actually: sell the replicating portfolio, buy the bond.</p>
 <ul>
 <li>Buy bond for <span class="math inline">\(0.95\)</span></li>
@@ -688,9 +615,7 @@ class="math inline">\(0.958\)</span></li>
 risk-free profit.</p>
 <p>At maturity, bond pays exactly what shorts require. Free money.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="macaulay-duration">Macaulay Duration</h2>
 <p><strong>Duration formula:</strong></p>
 <p><span class="math display">\[
@@ -700,12 +625,10 @@ D = \frac{1}{P} \sum_{t=1}^{T} t \cdot C_t \cdot P(0,t)
 time <span class="math inline">\(t\)</span>.</p>
 <p>Duration measures the sensitivity of bond prices to interest rate
 changes.</p>
-<p>It's the "center of mass" of the bond's cash flows.</p>
+<p>It’s the “center of mass” of the bond’s cash flows.</p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="10-exercises">10. Exercises</h2>
+<section class="slide">
+<h2 id="exercises">10. Exercises</h2>
 <h3 id="exercise-1">Exercise 1</h3>
 <p>Compute <span class="math inline">\(P(0,5)\)</span> for a zero-coupon
 bond under:</p>
@@ -724,9 +647,7 @@ class="math inline">\(r=6\%\)</span></li>
 </ol>
 <p>Observe how the differences grow with maturity.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="exercise-2">Exercise 2</h3>
 <p>Given discount factors:</p>
 <table>
@@ -754,23 +675,23 @@ class="math inline">\(r=6\%\)</span></li>
 <p>Price a 3-year coupon bond with <span
 class="math inline">\(c=0.05\)</span>.</p>
 <p><strong>Extended parts:</strong></p>
-<p>(a) Compute the spot rates <span
+<ol type="a">
+<li><p>Compute the spot rates <span
 class="math inline">\(r(0,1)\)</span>, <span
 class="math inline">\(r(0,2)\)</span>, <span
-class="math inline">\(r(0,3)\)</span>.</p>
-<p>(b) Compute forward rates: <span
+class="math inline">\(r(0,3)\)</span>.</p></li>
+<li><p>Compute forward rates: <span
 class="math inline">\(f(0,1,2)\)</span> and <span
-class="math inline">\(f(0,2,3)\)</span>.</p>
-<p>(c) If this bond trades at <span
+class="math inline">\(f(0,2,3)\)</span>.</p></li>
+<li><p>If this bond trades at <span
 class="math inline">\(P=1.02\)</span>, describe the arbitrage
-strategy.</p>
-<p>(d) What coupon rate <span class="math inline">\(c^*\)</span> would
+strategy.</p></li>
+<li><p>What coupon rate <span class="math inline">\(c^*\)</span> would
 make the bond trade at par (<span
-class="math inline">\(P=1\)</span>)?</p>
+class="math inline">\(P=1\)</span>)?</p></li>
+</ol>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="exercise-3">Exercise 3</h3>
 <p>A bond trades at price <span class="math inline">\(0.92\)</span>
 with:</p>
@@ -790,18 +711,12 @@ calculator.</p>
 <p><strong>Answer:</strong> <span class="math inline">\(y \approx
 9.23\%\)</span></p>
 <p><strong>Explanation part:</strong></p>
-<p>Two bonds with same YTM but different prices could have:</p>
-<ul>
-<li>Different coupon rates</li>
-<li>Different maturities</li>
-<li>Different credit quality (if not truly risk-free)</li>
-<li>Different liquidity</li>
-</ul>
+<p>Two bonds with same YTM but different prices could have: * Different
+coupon rates * Different maturities * Different credit quality (if not
+truly risk-free) * Different liquidity</p>
 <p>YTM is not a complete descriptor of a bond.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="exercise-4-bootstrapping-the-yield-curve">Exercise 4:
 Bootstrapping the Yield Curve</h3>
 <p>You observe the following par bonds (bonds trading at face
@@ -838,15 +753,13 @@ class="math inline">\(P(0,3)\)</span>.</p>
 P(0,1)\)</span></li>
 <li>Year 2: <span class="math inline">\(100 = 5 \cdot P(0,1) + 5 \cdot
 P(0,2) + 100 \cdot P(0,2)\)</span></li>
-<li>And so on...</li>
+<li>And so on…</li>
 </ul>
 <p>Solve recursively.</p>
 <p>This is how market practitioners build the term structure from
 observable bond prices.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="exercise-5-arbitrage-detection">Exercise 5: Arbitrage
 Detection</h3>
 <p>Consider three bonds:</p>
@@ -868,9 +781,7 @@ Detection</h3>
 <p><strong>Arbitrage:</strong> Buy Bond C, sell replicating
 portfolio.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="final-takeaways">Final Takeaways</h2>
 <ul>
 <li>Money markets price time, not risk</li>
@@ -880,9 +791,7 @@ portfolio.</p>
 <li>No-arbitrage enforces discipline</li>
 </ul>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="summary-key-formulas">Summary: Key Formulas</h2>
 <p><strong>Zero-coupon bond pricing:</strong> <span
 class="math display">\[P(0,T) = e^{-r(0,T) \cdot T}\]</span></p>
@@ -898,7 +807,6 @@ class="math display">\[B(t) = e^{rt}\]</span></p>
 <p>These five formulas are your toolkit.</p>
 <p>Master them, and the money market becomes transparent.</p>
 </section>
-
 </div>
 </body>
 </html>

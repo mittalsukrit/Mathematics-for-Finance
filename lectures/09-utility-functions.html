@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Utility Functions and Risk Aversion</title>
+  <title>09-utility-functions</title>
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,15 +24,14 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflar.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css" />
-  <link rel="stylesheet" href="wide.css" />
+  <link rel="stylesheet" href="lecture-theme.css" />
   <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">Utility Functions and Risk Aversion</h1>
+<h1 class="title">09-utility-functions</h1>
 </header>
 <style>
   .slides {
@@ -69,18 +68,13 @@
     color: #666;
   }
 </style>
-
-<div class="slides" markdown="1">
-
-<section class="slide" markdown="1">
-
+<div class="slides" data-markdown="1">
+<section class="slide">
 <h1 id="utility-functions-and-risk-aversion">Utility Functions and Risk
 Aversion</h1>
 <p><strong>Sukrit Mittal</strong> Franklin Templeton Investments</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="outline">Outline</h2>
 <ol type="1">
 <li>Why utility?</li>
@@ -93,10 +87,8 @@ Aversion</h1>
 <li>Exercises</li>
 </ol>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="1-why-utility">1. Why Utility?</h2>
+<section class="slide">
+<h2 id="why-utility">1. Why Utility?</h2>
 <p>Up to now, we used <strong>mean–variance preferences</strong>.
 Convenient but restrictive.</p>
 <p>Utility theory answers a deeper question:</p>
@@ -139,15 +131,13 @@ CAPM)</li>
 <p>Utility theory is the <strong>rigorous foundation</strong> beneath
 portfolio theory.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="what-utility-is-not">What Utility Is Not</h3>
 <p>Utility is not:</p>
 <ul>
-<li>Money (more money doesn't always mean more utility)</li>
+<li>Money (more money doesn’t always mean more utility)</li>
 <li>Happiness (utility is not psychology)</li>
-<li>Psychological satisfaction (it's a mathematical construct)</li>
+<li>Psychological satisfaction (it’s a mathematical construct)</li>
 </ul>
 <p>Utility is a <strong>numerical representation of
 preferences</strong>.</p>
@@ -165,22 +155,20 @@ class="math inline">\(W_2\)</span>.</p>
 <p>This was a <strong>special case</strong> of utility theory. Now we
 generalize.</p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="2-preferences-and-choice">2. Preferences and Choice</h2>
+<section class="slide">
+<h2 id="preferences-and-choice">2. Preferences and Choice</h2>
 <p>Consider uncertain outcomes (lotteries).</p>
 <p>An investor can rank them:</p>
 <ul>
-<li><span class="math inline">\(A \succ B\)</span>: "<span
+<li><span class="math inline">\(A \succ B\)</span>: “<span
 class="math inline">\(A\)</span> is preferred to <span
-class="math inline">\(B\)</span>"</li>
-<li><span class="math inline">\(A \sim B\)</span>: "indifferent between
+class="math inline">\(B\)</span>”</li>
+<li><span class="math inline">\(A \sim B\)</span>: “indifferent between
 <span class="math inline">\(A\)</span> and <span
-class="math inline">\(B\)</span>"</li>
-<li><span class="math inline">\(A \preceq B\)</span>: "<span
+class="math inline">\(B\)</span>”</li>
+<li><span class="math inline">\(A \preceq B\)</span>: “<span
 class="math inline">\(B\)</span> is preferred to <span
-class="math inline">\(A\)</span> or indifference"</li>
+class="math inline">\(A\)</span> or indifference”</li>
 </ul>
 <p>Utility assigns numbers consistent with these rankings.</p>
 <h3 id="example-simple-preference-ranking-setup">Example: Simple
@@ -194,9 +182,7 @@ $200</li>
 $150</li>
 </ul>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="example-simple-preference-ranking-interpretation">Example:
 Simple Preference Ranking (Interpretation)</h3>
 <p>Consider three wealth outcomes:</p>
@@ -210,41 +196,31 @@ $150</li>
 <p>An investor ranks them: Lottery 2 <span
 class="math inline">\(\succ\)</span> Certain $100 <span
 class="math inline">\(\succ\)</span> Lottery 1</p>
-<p>Expected values:</p>
-<ul>
-<li>Certain: $100</li>
-<li>Lottery 1: <span class="math inline">\(0.5(0) + 0.5(200) =
-\$100\)</span></li>
-<li>Lottery 2: <span class="math inline">\(0.6(80) + 0.4(150) =
-\$108\)</span></li>
-</ul>
+<p>Expected values: * Certain: $100 * Lottery 1: <span
+class="math inline">\(0.5(0) + 0.5(200) = \$100\)</span> * Lottery 2:
+<span class="math inline">\(0.6(80) + 0.4(150) = \$108\)</span></p>
 <p><strong>Note:</strong> Despite equal expected value, Certain $100
 <span class="math inline">\(\succ\)</span> Lottery 1 reveals
 <strong>risk aversion</strong>.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="rationality-as-consistency">Rationality as Consistency</h3>
 <p>Rationality does not mean intelligence. It means:</p>
 <ul>
 <li><strong>Consistent choices</strong>: No preference cycles</li>
-<li><strong>Stable preferences</strong>: Today's choices consistent with
-tomorrow's</li>
+<li><strong>Stable preferences</strong>: Today’s choices consistent with
+tomorrow’s</li>
 </ul>
 <h3 id="what-rationality-rules-out">What Rationality Rules Out</h3>
 <p><strong>Example of irrational behavior:</strong></p>
-<p>Suppose an investor states:</p>
-<ul>
-<li><span class="math inline">\(A \succ B\)</span></li>
-<li><span class="math inline">\(B \succ C\)</span></li>
-<li><span class="math inline">\(C \succ A\)</span></li>
-</ul>
+<p>Suppose an investor states: * <span class="math inline">\(A \succ
+B\)</span> * <span class="math inline">\(B \succ C\)</span> * <span
+class="math inline">\(C \succ A\)</span></p>
 <p>This violates <strong>transitivity</strong> (one of our axioms
 below).</p>
 <p>Why is this problematic?</p>
 <ul>
-<li>You'd trade <span class="math inline">\(A\)</span> for <span
+<li>You’d trade <span class="math inline">\(A\)</span> for <span
 class="math inline">\(C\)</span> (since <span class="math inline">\(C
 \succ A\)</span>)</li>
 <li>Then trade <span class="math inline">\(C\)</span> for <span
@@ -259,10 +235,8 @@ class="math inline">\(A\)</span> (since <span class="math inline">\(A
 <p>This is a <strong>money pump</strong>—you can be exploited.</p>
 <p>Consistency prevents this.</p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="3-axioms-of-expected-utility">3. Axioms of Expected Utility</h2>
+<section class="slide">
+<h2 id="axioms-of-expected-utility">3. Axioms of Expected Utility</h2>
 <p>To represent preferences by expected utility, we assume four
 axioms.</p>
 <p>These axioms were formalized by <strong>von Neumann and Morgenstern
@@ -272,15 +246,13 @@ finance.</p>
 <h3 id="axiom-1-completeness">Axiom 1: Completeness</h3>
 <p><strong>Statement:</strong> For any two lotteries <span
 class="math inline">\(A\)</span> and <span
-class="math inline">\(B\)</span>, either:</p>
-<ul>
-<li><span class="math inline">\(A \succ B\)</span>, or</li>
-<li><span class="math inline">\(B \succ A\)</span>, or</li>
-<li><span class="math inline">\(A \sim B\)</span></li>
-</ul>
+class="math inline">\(B\)</span>, either: * <span
+class="math inline">\(A \succ B\)</span>, or * <span
+class="math inline">\(B \succ A\)</span>, or * <span
+class="math inline">\(A \sim B\)</span></p>
 <p><strong>Interpretation:</strong> The investor can always compare and
 rank alternatives.</p>
-<p>This rules out "incomparable" lottery pairs.</p>
+<p>This rules out “incomparable” lottery pairs.</p>
 <p><strong>Critique:</strong> Strong assumption. In practice, people
 often face hard-to-compare choices.</p>
 <h3 id="axiom-2-transitivity">Axiom 2: Transitivity</h3>
@@ -289,14 +261,12 @@ B\)</span> and <span class="math inline">\(B \succ C\)</span>, then
 <span class="math inline">\(A \succ C\)</span>.</p>
 <p><strong>Interpretation:</strong> Preferences are consistent. No
 cycles.</p>
-<p>Without this, you're vulnerable to money pumps (as shown
+<p>Without this, you’re vulnerable to money pumps (as shown
 earlier).</p>
 <p><strong>Critique:</strong> Reasonable. Violations indicate incoherent
 preferences.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="axiom-3-continuity">Axiom 3: Continuity</h3>
 <p><strong>Statement:</strong> If <span class="math inline">\(A \succ B
 \succ C\)</span>, there exists some probability <span
@@ -307,19 +277,13 @@ B \sim pA + (1-p)C
 <p><strong>Interpretation:</strong> No outcome is infinitely better or
 worse than another.</p>
 <p>No outcome is treated as lexicographically infinite in value.</p>
-<p><strong>Example:</strong></p>
-<ul>
-<li><span class="math inline">\(A\)</span> = win $1 million</li>
-<li><span class="math inline">\(B\)</span> = win $100,000</li>
-<li><span class="math inline">\(C\)</span> = win $0</li>
-</ul>
-<p>Continuity says: there's some <span class="math inline">\(p\)</span>
-where you're indifferent between:</p>
-<ul>
-<li>Guaranteed $100,000</li>
-<li>Lottery giving <span class="math inline">\(p\)</span> chance of $1M,
-<span class="math inline">\((1-p)\)</span> chance of $0</li>
-</ul>
+<p><strong>Example:</strong> * <span class="math inline">\(A\)</span> =
+win $1 million * <span class="math inline">\(B\)</span> = win $100,000 *
+<span class="math inline">\(C\)</span> = win $0</p>
+<p>Continuity says: there’s some <span class="math inline">\(p\)</span>
+where you’re indifferent between: * Guaranteed $100,000 * Lottery giving
+<span class="math inline">\(p\)</span> chance of $1M, <span
+class="math inline">\((1-p)\)</span> chance of $0</p>
 <p>In this example, <span class="math inline">\(p \approx 0.10\)</span>
 makes the two options approximately comparable.</p>
 <p><strong>Critique:</strong> Philosophically controversial.</p>
@@ -333,29 +297,21 @@ pA + (1-p)C \succ pB + (1-p)C
 \]</span></p>
 <p><strong>Interpretation:</strong> Mixing both lotteries with a third
 option <span class="math inline">\(C\)</span> preserves the ranking.</p>
-<p><strong>Example:</strong></p>
-<ul>
-<li><span class="math inline">\(A\)</span> = $100 for sure</li>
-<li><span class="math inline">\(B\)</span> = 50% chance of $200, 50%
-chance of $0</li>
-<li><span class="math inline">\(C\)</span> = $50 for sure</li>
-</ul>
+<p><strong>Example:</strong> * <span class="math inline">\(A\)</span> =
+$100 for sure * <span class="math inline">\(B\)</span> = 50% chance of
+$200, 50% chance of $0 * <span class="math inline">\(C\)</span> = $50
+for sure</p>
 <p>If you prefer <span class="math inline">\(A\)</span> to <span
 class="math inline">\(B\)</span>, then independence says you also
-prefer:</p>
-<ul>
-<li>50% chance of <span class="math inline">\(A\)</span>, 50% chance of
-<span class="math inline">\(C\)</span></li>
-<li>to: 50% chance of <span class="math inline">\(B\)</span>, 50% chance
-of <span class="math inline">\(C\)</span></li>
-</ul>
+prefer: * 50% chance of <span class="math inline">\(A\)</span>, 50%
+chance of <span class="math inline">\(C\)</span> * to: 50% chance of
+<span class="math inline">\(B\)</span>, 50% chance of <span
+class="math inline">\(C\)</span></p>
 <p><strong>Critique:</strong> This is the most controversial axiom.</p>
 <p>Violated by many experimental subjects (Allais paradox).</p>
 <p>But necessary for expected utility representation.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="expected-utility-theorem">Expected Utility Theorem</h3>
 <p><strong>von Neumann–Morgenstern Theorem:</strong></p>
 <p>If preferences satisfy the four axioms, then:</p>
@@ -394,10 +350,8 @@ existence.</p>
 like.</p>
 <p>That requires additional assumptions or estimation.</p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="4-expected-utility-maximization">4. Expected Utility
+<section class="slide">
+<h2 id="expected-utility-maximization">4. Expected Utility
 Maximization</h2>
 <p>Given wealth <span class="math inline">\(W\)</span> as a random
 variable:</p>
@@ -422,27 +376,19 @@ class="math inline">\(u\)</span>:</p>
 \]</span></p>
 <p>where <span class="math inline">\(R\)</span> is the vector of asset
 returns.</p>
-<p><strong>Key difference:</strong></p>
-<ul>
-<li>Mean-variance: assumes quadratic utility or normal returns</li>
-<li>Expected utility: works for any distribution and any <span
-class="math inline">\(u\)</span></li>
-</ul>
+<p><strong>Key difference:</strong> * Mean-variance: assumes quadratic
+utility or normal returns * Expected utility: works for any distribution
+and any <span class="math inline">\(u\)</span></p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="example-portfolio-choice-with-exponential-utility">Example:
 Portfolio Choice with Exponential Utility</h3>
-<p>Suppose:</p>
-<ul>
-<li>Two assets: risk-free at <span class="math inline">\(R_f =
+<p>Suppose: * Two assets: risk-free at <span class="math inline">\(R_f =
 5\%\)</span> and risky with <span class="math inline">\(\mu =
-12\%\)</span>, <span class="math inline">\(\sigma = 20\%\)</span></li>
-<li>Utility: <span class="math inline">\(u(W) = -e^{-\gamma W}\)</span>
-with <span class="math inline">\(\gamma = 0.01\)</span></li>
-<li>Initial wealth: <span class="math inline">\(W_0 = 100\)</span></li>
-</ul>
+12\%\)</span>, <span class="math inline">\(\sigma = 20\%\)</span> *
+Utility: <span class="math inline">\(u(W) = -e^{-\gamma W}\)</span> with
+<span class="math inline">\(\gamma = 0.01\)</span> * Initial wealth:
+<span class="math inline">\(W_0 = 100\)</span></p>
 <p>Let <span class="math inline">\(w\)</span> = fraction in risky
 asset.</p>
 <p>Terminal wealth: <span class="math inline">\(W = W_0[1 + w R_S +
@@ -465,9 +411,7 @@ w^* = \frac{0.12 - 0.05}{0.01 \times 0.04 \times 100} =
 <p><strong>Interpretation:</strong> Invest 175% in risky asset (leverage
 by borrowing 75% at <span class="math inline">\(R_f\)</span>).</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="utility-under-affine-transformations">Utility Under Affine
 Transformations</h3>
 <p>If <span class="math inline">\(u\)</span> represents preferences, so
@@ -504,45 +448,29 @@ preferences, so does:</p>
 <p>Only the <strong>shape</strong> of the utility curve matters, not its
 scale or location.</p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="5-common-utility-functions">5. Common Utility Functions</h2>
+<section class="slide">
+<h2 id="common-utility-functions">5. Common Utility Functions</h2>
 <p>Three utility functions dominate finance theory and practice.</p>
 <p>Each has strengths and weaknesses.</p>
 <p>None is universally correct.</p>
-<div align="center">
-<img src="Figures/utility_function_shapes.png" alt="Utility Function Shapes" style="width:90%;"/>
+<div data-align="center">
+<p><img src="Figures/utility_function_shapes.png" alt="Utility Function Shapes" style="width:90%;"/></p>
 </div>
-
 <p><em>Figure: The three main utility functions used in finance.
 Quadratic has a satiation point (problematic), exponential is always
 increasing but wealth-independent, and power/log utilities are
 empirically most realistic.</em></p>
 <h3 id="why-these-three">Why These Three?</h3>
-<p><strong>Quadratic:</strong></p>
-<ul>
-<li>Analytically tractable</li>
-<li>Justifies mean-variance (Lecture 06)</li>
-<li>Connection to CAPM (Lecture 08)</li>
-</ul>
-<p><strong>Exponential (CARA):</strong></p>
-<ul>
-<li>Tractable under normal distributions</li>
-<li>Constant risk aversion</li>
-<li>Popular in derivatives pricing</li>
-</ul>
-<p><strong>Power (CRRA):</strong></p>
-<ul>
-<li>Empirically more realistic</li>
-<li>Used in asset pricing models</li>
-<li>Standard in macroeconomics</li>
-</ul>
-<p>Let's examine each in detail.</p>
+<p><strong>Quadratic:</strong> * Analytically tractable * Justifies
+mean-variance (Lecture 06) * Connection to CAPM (Lecture 08)</p>
+<p><strong>Exponential (CARA):</strong> * Tractable under normal
+distributions * Constant risk aversion * Popular in derivatives
+pricing</p>
+<p><strong>Power (CRRA):</strong> * Empirically more realistic * Used in
+asset pricing models * Standard in macroeconomics</p>
+<p>Let’s examine each in detail.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="quadratic-utility">Quadratic Utility</h2>
 <p><span class="math display">\[
 u(W) = W - \frac{\gamma}{2}W^2, \quad \gamma &gt; 0
@@ -583,9 +511,7 @@ this reduces to:</p>
 \]</span></p>
 <p>This is exactly the mean-variance criterion from Lecture 06!</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="problems-with-quadratic-utility">Problems with Quadratic
 Utility</h3>
 <p><strong>Problem 1: Satiation</strong></p>
@@ -608,12 +534,8 @@ dollars.</p>
 <p><strong>Problem 3: Asymmetry</strong></p>
 <p>Quadratic treats gains and losses asymmetrically in problematic
 ways.</p>
-<p>Despite these flaws, quadratic utility is used because:</p>
-<ul>
-<li>It delivers mean-variance</li>
-<li>Mean-variance is tractable</li>
-<li>CAPM requires it</li>
-</ul>
+<p>Despite these flaws, quadratic utility is used because: * It delivers
+mean-variance * Mean-variance is tractable * CAPM requires it</p>
 <p>This reflects a tractability-realism tradeoff.</p>
 <h3 id="numerical-example-quadratic-utility">Numerical Example:
 Quadratic Utility</h3>
@@ -637,13 +559,11 @@ class="math inline">\(u(100) = 50\)</span></li>
 class="math inline">\(u(150) = 150 - 0.005(22500) = 150 - 112.5 =
 37.5\)</span></li>
 </ul>
-<p><strong>Utility "gain":</strong> <span class="math inline">\(37.5 -
+<p><strong>Utility “gain”:</strong> <span class="math inline">\(37.5 -
 50 = -12.5\)</span> (utility decreases!)</p>
 <p>This illustrates the satiation problem.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="exponential-utility-cara">Exponential Utility (CARA)</h2>
 <p><span class="math display">\[
 u(W) = -e^{-\gamma W}, \quad \gamma &gt; 0
@@ -664,7 +584,7 @@ u(W) = -\frac{1}{\gamma}e^{-\gamma W}
 </ul>
 <p><strong>Name:</strong> CARA = <strong>Constant Absolute Risk
 Aversion</strong></p>
-<p>We'll see why shortly.</p>
+<p>We’ll see why shortly.</p>
 <h3 id="why-exponential-utility">Why Exponential Utility?</h3>
 <p><strong>Advantage 1: Tractability under normality</strong></p>
 <p>If <span class="math inline">\(W \sim N(\mu, \sigma^2)\)</span>,
@@ -688,12 +608,10 @@ preferences):</p>
 <p><strong>Mean-variance optimization again!</strong></p>
 <p>But now without the satiation problem.</p>
 <p><strong>Advantage 2: Wealth-independent risk attitudes</strong></p>
-<p>With CARA, risk tolerance doesn't change with wealth level.</p>
+<p>With CARA, risk tolerance doesn’t change with wealth level.</p>
 <p>This simplifies many models.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="problems-with-exponential-utility">Problems with Exponential
 Utility</h3>
 <p><strong>Main Issue:</strong> Constant absolute risk aversion is
@@ -716,12 +634,8 @@ class="math inline">\(W\)</span>.</p>
 <p>Wealthy people take bigger risks (in dollar terms) than poor
 people.</p>
 <p><strong>Despite this flaw:</strong> Exponential utility is widely
-used in:</p>
-<ul>
-<li>Option pricing models</li>
-<li>Portfolio optimization under normality</li>
-<li>Theoretical analysis (tractability)</li>
-</ul>
+used in: * Option pricing models * Portfolio optimization under
+normality * Theoretical analysis (tractability)</p>
 <h3 id="numerical-example-exponential-utility">Numerical Example:
 Exponential Utility</h3>
 <p>Let <span class="math inline">\(\gamma = 0.0001\)</span> and
@@ -750,9 +664,7 @@ u&#39;(100,000) = 0.0001 e^{-10} \approx 0.00000454
 <strong>ratio</strong> of marginal utilities to wealth remains
 constant.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="power-utility-crra">Power Utility (CRRA)</h2>
 <p><span class="math display">\[
 u(W) = \frac{W^{1-\gamma}}{1-\gamma}, \quad \gamma &gt; 0, \gamma \neq 1
@@ -792,7 +704,7 @@ W_A)^{1-\gamma}}{1-\gamma}\right] =
 comparing.</p>
 <p><strong>Interpretation:</strong> If all prices and wealth double,
 behavior is unchanged.</p>
-<p>This matches real-world observations: rich people don't become
+<p>This matches real-world observations: rich people don’t become
 infinitely risk-averse.</p>
 <p><strong>Advantage 2: Empirically realistic</strong></p>
 <p>Studies suggest <span class="math inline">\(\gamma \in [1,
@@ -800,20 +712,13 @@ infinitely risk-averse.</p>
 <p>Log utility (<span class="math inline">\(\gamma = 1\)</span>) is a
 common benchmark.</p>
 <p><strong>Advantage 3: Used in asset pricing</strong></p>
-<p>Power utility appears in:</p>
-<ul>
-<li>Consumption CAPM (CCAPM)</li>
-<li>Long-run risk models</li>
-<li>Habit formation models</li>
-</ul>
-<p>It's the workhorse of modern macrofinance.</p>
+<p>Power utility appears in: * Consumption CAPM (CCAPM) * Long-run risk
+models * Habit formation models</p>
+<p>It’s the workhorse of modern macrofinance.</p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h3 id="numerical-example-power-utility-with-gamma--2">Numerical
-Example: Power Utility with <span class="math inline">\(\gamma =
-2\)</span></h3>
+<section class="slide">
+<h3 id="numerical-example-power-utility-with-gamma-2">Numerical Example:
+Power Utility with <span class="math inline">\(\gamma = 2\)</span></h3>
 <p><span class="math display">\[
 u(W) = \frac{W^{-1}}{-1} = -\frac{1}{W}
 \]</span></p>
@@ -843,7 +748,7 @@ decreases.</p>
 <p>For CRRA utility, the key property is: <span class="math display">\[
 R(W) = -W\frac{u&#39;&#39;(W)}{u&#39;(W)} = \gamma
 \]</span> so <strong>relative risk aversion is constant</strong>.</p>
-<h3 id="log-utility-gamma--1">Log Utility (<span
+<h3 id="log-utility-gamma-1">Log Utility (<span
 class="math inline">\(\gamma = 1\)</span>)</h3>
 <p><span class="math display">\[
 u(W) = \ln(W)
@@ -855,7 +760,7 @@ u(W) = \ln(W)
 <li><span class="math inline">\(u&#39;&#39;(W) = -1/W^2\)</span></li>
 <li>Often used as a benchmark</li>
 </ul>
-<p><strong>"Kelly Criterion" connection:</strong></p>
+<p><strong>“Kelly Criterion” connection:</strong></p>
 <p>Maximizing <span class="math inline">\(\mathbb{E}[\ln(W)]\)</span> is
 equivalent to maximizing long-run geometric growth rate.</p>
 <p>This is the foundation of the Kelly betting strategy.</p>
@@ -873,12 +778,16 @@ class="math inline">\(\gamma = 1\)</span>:</p>
 class="math inline">\(\ln(2) \approx 0.693\)</span>, regardless of
 starting point.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="comparing-the-three-utility-functions">Comparing the Three
 Utility Functions</h3>
 <table>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 20%" />
+<col style="width: 35%" />
+<col style="width: 26%" />
+</colgroup>
 <thead>
 <tr>
 <th>Feature</th>
@@ -956,10 +865,8 @@ tractability</li>
 </ul>
 <p>Most modern research uses power utility.</p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="6-risk-aversion">6. Risk Aversion</h2>
+<section class="slide">
+<h2 id="risk-aversion">6. Risk Aversion</h2>
 <p>Risk aversion captures dislike for uncertainty.</p>
 <p>Formally:</p>
 <blockquote>
@@ -975,37 +882,22 @@ u(\mathbb{E}[W]) \geq \mathbb{E}[u(W)]
 <h3 id="three-types-of-risk-attitudes">Three Types of Risk
 Attitudes</h3>
 <p><strong>Risk-averse:</strong> <span
-class="math inline">\(u(\mathbb{E}[W]) &gt;
-\mathbb{E}[u(W)]\)</span></p>
-<ul>
-<li>Prefers certainty</li>
-<li>Most investors</li>
-</ul>
+class="math inline">\(u(\mathbb{E}[W]) &gt; \mathbb{E}[u(W)]\)</span> *
+Prefers certainty * Most investors</p>
 <p><strong>Risk-neutral:</strong> <span
-class="math inline">\(u(\mathbb{E}[W]) = \mathbb{E}[u(W)]\)</span></p>
-<ul>
-<li>Indifferent between certainty and fair gambles</li>
-<li>Rare in practice</li>
-<li>Utility is linear: <span class="math inline">\(u(W) = aW +
-b\)</span></li>
-</ul>
+class="math inline">\(u(\mathbb{E}[W]) = \mathbb{E}[u(W)]\)</span> *
+Indifferent between certainty and fair gambles * Rare in practice *
+Utility is linear: <span class="math inline">\(u(W) = aW +
+b\)</span></p>
 <p><strong>Risk-loving:</strong> <span
-class="math inline">\(u(\mathbb{E}[W]) &lt;
-\mathbb{E}[u(W)]\)</span></p>
-<ul>
-<li>Prefers risk over certainty</li>
-<li>Gamblers, some entrepreneurs</li>
-<li>Utility is convex: <span class="math inline">\(u&#39;&#39;(W) &gt;
-0\)</span></li>
-</ul>
+class="math inline">\(u(\mathbb{E}[W]) &lt; \mathbb{E}[u(W)]\)</span> *
+Prefers risk over certainty * Gamblers, some entrepreneurs * Utility is
+convex: <span class="math inline">\(u&#39;&#39;(W) &gt; 0\)</span></p>
 <p>From here on, we focus on risk-averse investors.</p>
 <h3 id="example-risk-aversion-in-action">Example: Risk Aversion in
 Action</h3>
-<p>Consider two options:</p>
-<ul>
-<li><strong>Option A:</strong> $50 for certain</li>
-<li><strong>Option B:</strong> 50% chance of $100, 50% chance of $0</li>
-</ul>
+<p>Consider two options: * <strong>Option A:</strong> $50 for certain *
+<strong>Option B:</strong> 50% chance of $100, 50% chance of $0</p>
 <p>Expected value of both: $50</p>
 <p><strong>Risk-averse investor:</strong> Chooses Option A
 (certainty)</p>
@@ -1013,9 +905,7 @@ Action</h3>
 <p><strong>Risk-loving investor:</strong> Chooses Option B (gamble)</p>
 <p>Most people choose Option A—evidence of risk aversion.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="concavity-and-risk-aversion">Concavity and Risk Aversion</h2>
 <p><strong>Theorem:</strong> An investor is risk-averse if and only if
 <span class="math inline">\(u\)</span> is concave.</p>
@@ -1027,7 +917,7 @@ u&#39;&#39;(W) \leq 0
 <p><strong>Direction 1:</strong> Concavity <span
 class="math inline">\(\implies\)</span> Risk aversion</p>
 <p>Suppose <span class="math inline">\(u\)</span> is concave. By
-<strong>Jensen's inequality</strong>:</p>
+<strong>Jensen’s inequality</strong>:</p>
 <p><span class="math display">\[
 u(\mathbb{E}[W]) \geq \mathbb{E}[u(W)]
 \]</span></p>
@@ -1048,10 +938,9 @@ u\left(\frac{W_1 + W_2}{2}\right) \geq \frac{1}{2}u(W_1) +
 <p>Extending to continuous case gives <span
 class="math inline">\(u&#39;&#39;(W) \leq 0\)</span>. ✓</p>
 <h3 id="graphical-interpretation">Graphical Interpretation</h3>
-<div align="center">
-<img src="Figures/concavity_risk_aversion.png" alt="Concavity and Risk Aversion" style="width:85%;"/>
+<div data-align="center">
+<p><img src="Figures/concavity_risk_aversion.png" alt="Concavity and Risk Aversion" style="width:85%;"/></p>
 </div>
-
 <p><em>Figure: Concave utility functions generate risk aversion. The
 utility of expected wealth u(E[W]) exceeds the expected utility E[u(W)],
 creating a risk premium. The investor prefers the certainty equivalent
@@ -1067,9 +956,7 @@ creating a risk premium. The investor prefers the certainty equivalent
 <p>Losing $10 hurts more than gaining $10 feels good.</p>
 <p>This asymmetry explains risk aversion.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="certainty-equivalent-and-risk-premium">Certainty Equivalent and
 Risk Premium</h3>
 <p><strong>Certainty Equivalent (CE):</strong></p>
@@ -1119,14 +1006,11 @@ RP = 62.5 - 50 = 12.5
 $12.50 to avoid the risk and receive $50 for certain instead of the
 gamble with expected value $62.50.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="diminishing-marginal-utility">Diminishing Marginal Utility</h3>
-<div align="center">
-<img src="Figures/marginal_utility.png" alt="Marginal Utility" style="width:90%;"/>
+<div data-align="center">
+<p><img src="Figures/marginal_utility.png" alt="Marginal Utility" style="width:90%;"/></p>
 </div>
-
 <p><em>Figure: (Left) Log utility and its derivative showing diminishing
 marginal utility. (Right) Comparison of marginal utilities across
 different utility functions. All concave utilities exhibit decreasing
@@ -1135,9 +1019,7 @@ marginal utility, but at different rates.</em></p>
 than the millionth dollar.</p>
 <p>This is the foundation of risk aversion.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="arrowpratt-measures-of-risk-aversion">Arrow–Pratt Measures of
 Risk Aversion</h2>
 <p>Two measures quantify <strong>how risk-averse</strong> an investor
@@ -1198,19 +1080,16 @@ wealth, same dollar risk tolerance</li>
 wealth, double dollar risk tolerance</li>
 </ul>
 <p>CRRA is more realistic.</p>
-<div align="center">
-<img src="Figures/risk_aversion_measures.png" alt="Risk Aversion Measures" style="width:90%;"/>
+<div data-align="center">
+<p><img src="Figures/risk_aversion_measures.png" alt="Risk Aversion Measures" style="width:90%;"/></p>
 </div>
-
 <p><em>Figure: (Left) Absolute risk aversion A(W) for different utility
 functions. CARA has constant A(W), while CRRA has decreasing A(W).
 (Right) Relative risk aversion R(W). CRRA utilities have constant R(W),
 matching empirical evidence that investors maintain constant portfolio
 fractions.</em></p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="computing-ara-and-rra-for-common-functions">Computing ARA and
 RRA for Common Functions</h3>
 <p><strong>1. Quadratic:</strong> <span class="math inline">\(u(W) = W -
@@ -1242,13 +1121,10 @@ A(W) = -\frac{-\gamma^2 e^{-\gamma W}}{\gamma e^{-\gamma W}} = \gamma
 <p><span class="math display">\[
 R(W) = W \cdot \gamma
 \]</span></p>
-<p><strong>Observation:</strong></p>
-<ul>
-<li><span class="math inline">\(A(W) = \gamma\)</span> is
-<strong>constant</strong> (CARA—as the name suggests) ✓</li>
-<li><span class="math inline">\(R(W) = \gamma W\)</span>
-<strong>increases</strong> linearly with wealth (IRRA) ✗</li>
-</ul>
+<p><strong>Observation:</strong> * <span class="math inline">\(A(W) =
+\gamma\)</span> is <strong>constant</strong> (CARA—as the name suggests)
+✓ * <span class="math inline">\(R(W) = \gamma W\)</span>
+<strong>increases</strong> linearly with wealth (IRRA) ✗</p>
 <p>CARA is tractable but not empirically realistic.</p>
 <p><strong>3. Power (CRRA):</strong> <span class="math inline">\(u(W) =
 \frac{W^{1-\gamma}}{1-\gamma}\)</span></p>
@@ -1261,13 +1137,10 @@ A(W) = -\frac{-\gamma W^{-\gamma-1}}{W^{-\gamma}} = \frac{\gamma}{W}
 <p><span class="math display">\[
 R(W) = W \cdot \frac{\gamma}{W} = \gamma
 \]</span></p>
-<p><strong>Observation:</strong></p>
-<ul>
-<li><span class="math inline">\(A(W) = \gamma/W\)</span>
-<strong>decreases</strong> with wealth (DARA—realistic!) ✓</li>
-<li><span class="math inline">\(R(W) = \gamma\)</span> is
-<strong>constant</strong> (CRRA—as the name suggests) ✓</li>
-</ul>
+<p><strong>Observation:</strong> * <span class="math inline">\(A(W) =
+\gamma/W\)</span> <strong>decreases</strong> with wealth
+(DARA—realistic!) ✓ * <span class="math inline">\(R(W) = \gamma\)</span>
+is <strong>constant</strong> (CRRA—as the name suggests) ✓</p>
 <p>Power utility has the best empirical properties.</p>
 <h3 id="special-case-log-utility">Special Case: Log Utility</h3>
 <p>For <span class="math inline">\(u(W) = \ln(W)\)</span> (which is CRRA
@@ -1279,11 +1152,9 @@ u&#39;(W) = \frac{1}{W}, \quad u&#39;&#39;(W) = -\frac{1}{W^2}
 A(W) = \frac{1}{W}, \quad R(W) = 1
 \]</span></p>
 <p><strong>Interpretation:</strong> Relative risk aversion of 1.</p>
-<p>This is often considered a "moderate" level of risk aversion.</p>
+<p>This is often considered a “moderate” level of risk aversion.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="numerical-example-comparing-risk-aversion">Numerical Example:
 Comparing Risk Aversion</h3>
 <p>Consider three investors at <span class="math inline">\(W =
@@ -1327,6 +1198,12 @@ Comparing Risk Aversion</h3>
 </table>
 <p>Now at <span class="math inline">\(W = 200\)</span>:</p>
 <table>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 27%" />
+<col style="width: 27%" />
+<col style="width: 21%" />
+</colgroup>
 <thead>
 <tr>
 <th>Utility</th>
@@ -1413,19 +1290,16 @@ class="math inline">\(\gamma\)</span> (RRA)</h3>
 require <span class="math inline">\(\gamma &gt; 10\)</span> to match
 historical stock returns.</p>
 <p>This seems implausibly high—ongoing research topic.</p>
-<div align="center">
-<img src="Figures/risk_premiums_comparison.png" alt="Risk Premiums Comparison" style="width:90%;"/>
+<div data-align="center">
+<p><img src="Figures/risk_premiums_comparison.png" alt="Risk Premiums Comparison" style="width:90%;"/></p>
 </div>
-
 <p><em>Figure: Risk premiums for the same lottery under different CRRA
 utility functions. Higher γ (more risk aversion) leads to larger risk
 premiums. The investor with γ=3 demands much more compensation to accept
 risk than the investor with γ=0.5.</em></p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="7-utility-meanvariance-and-capm">7. Utility, Mean–Variance, and
+<section class="slide">
+<h2 id="utility-meanvariance-and-capm">7. Utility, Mean–Variance, and
 CAPM</h2>
 <p>Mean-variance optimization (Lectures 06-07) and CAPM (Lecture 08)
 assumed investors care only about <span
@@ -1462,11 +1336,9 @@ class="math inline">\(\mu^2\)</span> term is approximately constant.</p>
 <p>This is exactly the mean-variance criterion from Lecture 06.</p>
 <p><strong>Limitation:</strong> Quadratic utility has serious flaws
 (satiation, IARA).</p>
-<p>So we need an alternative justification...</p>
+<p>So we need an alternative justification…</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="condition-2-normal-returns">Condition 2: Normal Returns</h3>
 <p><strong>Theorem:</strong> If returns are normally distributed, then
 any risk-averse investor behaves as if maximizing mean-variance
@@ -1490,7 +1362,7 @@ class="math inline">\((\mu_p, \sigma_p^2)\)</span> space (for a fixed
 utility specification).</p>
 <p>Preferences can be summarized by indifference curves in <span
 class="math inline">\((\sigma, \mu)\)</span> space.</p>
-<p><strong>Key insight:</strong> This justification doesn't require
+<p><strong>Key insight:</strong> This justification doesn’t require
 quadratic utility!</p>
 <p>Works with exponential, power, or any concave <span
 class="math inline">\(u\)</span>.</p>
@@ -1499,47 +1371,38 @@ class="math inline">\(u\)</span>.</p>
 <strong>not</strong> perfectly normal.</p>
 <p><strong>Deviations from normality:</strong></p>
 <ul>
-<li><p><strong>Fat tails:</strong> Extreme events more common than
-normal predicts</p>
+<li><strong>Fat tails:</strong> Extreme events more common than normal
+predicts
 <ul>
 <li>Crashes, crises</li>
-<li>"Black swan" events</li>
+<li>“Black swan” events</li>
 </ul></li>
-<li><p><strong>Skewness:</strong> Return distributions often
-asymmetric</p>
+<li><strong>Skewness:</strong> Return distributions often asymmetric
 <ul>
 <li>Some assets have positive skew (lottery-like payoffs)</li>
 <li>Others have negative skew (crash risk)</li>
 </ul></li>
-<li><p><strong>Time-varying volatility:</strong> Variance is not
-constant</p>
+<li><strong>Time-varying volatility:</strong> Variance is not constant
 <ul>
 <li>Volatility clustering</li>
 </ul></li>
 </ul>
 <p><strong>Despite violations:</strong> Normal approximation is often
-"good enough" for:</p>
-<ul>
-<li>Portfolio optimization</li>
-<li>Risk measurement (for moderate horizons)</li>
-<li>Asset pricing (as a baseline)</li>
-</ul>
+“good enough” for: * Portfolio optimization * Risk measurement (for
+moderate horizons) * Asset pricing (as a baseline)</p>
 <p>But for tail risk, derivatives pricing, and crisis periods, normality
 fails badly.</p>
-<div align="center">
-<img src="Figures/normal_vs_skewed_returns.png" alt="Normal vs Skewed Returns" style="width:90%;"/>
+<div data-align="center">
+<p><img src="Figures/normal_vs_skewed_returns.png" alt="Normal vs Skewed Returns" style="width:90%;"/></p>
 </div>
-
 <p><em>Figure: (Left) Two return distributions with identical mean and
 variance but different skewness. (Right) Expected utility comparison
 shows that mean-variance optimization misses important preference
 information. Investors with CRRA utility may prefer the skewed
 distribution despite identical mean-variance characteristics.</em></p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="8-utility-and-capm">8. Utility and CAPM</h2>
+<section class="slide">
+<h2 id="utility-and-capm">8. Utility and CAPM</h2>
 <p>Recall CAPM from Lecture 08:</p>
 <p><span class="math display">\[
 \mathbb{E}[R_i] - R_f = \beta_i(\mathbb{E}[R_M] - R_f)
@@ -1563,11 +1426,9 @@ sufficient under expected utility)</li>
 </ul>
 <p>Without one of these, mean-variance optimization is just a
 heuristic.</p>
-<p>With these, it's <strong>optimal</strong> behavior.</p>
+<p>With these, it’s <strong>optimal</strong> behavior.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="connecting-utility-to-capm">Connecting Utility to CAPM</h3>
 <p>From Lecture 08, all investors hold:</p>
 <ol type="1">
@@ -1581,13 +1442,13 @@ class="math inline">\(\gamma\)</span> (from Lecture 06):</p>
 w^* = \frac{\mu_M - R_f}{\gamma \sigma_M^2}
 \]</span></p>
 <p><strong>Equilibrium condition:</strong> Market clearing requires the
-market portfolio to be optimal for the "representative investor."</p>
+market portfolio to be optimal for the “representative investor.”</p>
 <p>This pins down the relationship between expected returns and
 betas.</p>
 <p><strong>Key result:</strong> If all investors maximize expected
 utility under quadratic or normal assumptions, CAPM holds in
 equilibrium.</p>
-<h3 id="what-if-returns-arent-normal">What if Returns Aren't
+<h3 id="what-if-returns-arent-normal">What if Returns Aren’t
 Normal?</h3>
 <p>CAPM breaks down when:</p>
 <ul>
@@ -1607,9 +1468,7 @@ of systematic risk)</li>
 <p>These generalizations move beyond mean-variance.</p>
 <p>But they lose the elegance and tractability of CAPM.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="what-changes-with-general-utility">What Changes with General
 Utility?</h3>
 <p>Moving beyond quadratic/normal assumptions:</p>
@@ -1653,12 +1512,15 @@ substitution)</li>
 <p>The cost: Much less tractable than CAPM.</p>
 <p>The benefit: More realistic.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="summary-utility-foundations-of-portfolio-theory">Summary:
 Utility Foundations of Portfolio Theory</h3>
 <table>
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 28%" />
+<col style="width: 48%" />
+</colgroup>
 <thead>
 <tr>
 <th>Lecture</th>
@@ -1708,10 +1570,9 @@ class="math inline">\(u\)</span> (risk-averse case)</strong></td>
 mean-variance summaries.</p>
 <p>Utility theory clarifies both the strengths and limits of the CAPM
 benchmark.</p>
-<div align="center">
-<img src="Figures/portfolio_allocation_utilities.png" alt="Portfolio Allocation with Different Utilities" style="width:90%;"/>
+<div data-align="center">
+<p><img src="Figures/portfolio_allocation_utilities.png" alt="Portfolio Allocation with Different Utilities" style="width:90%;"/></p>
 </div>
-
 <p><em>Figure: (Left) Portfolio allocation as a fraction of wealth. CARA
 investors reduce their allocation as wealth increases, while CRRA
 investors maintain constant fractions. (Right) Dollar investment in
@@ -1723,19 +1584,17 @@ behavior.</p>
 <p>Rich people invest more dollars in risky assets, but maintain similar
 portfolio fractions to poorer investors.</p>
 </section>
-
-<section class="slide" markdown="1">
-
-<h2 id="9-exercises">9. Exercises</h2>
+<section class="slide">
+<h2 id="exercises">9. Exercises</h2>
 <h3 id="exercise-1-risk-aversion-and-concavity">Exercise 1: Risk
 Aversion and Concavity</h3>
 <p><strong>Part (a):</strong> Show that concavity of <span
-class="math inline">\(u\)</span> implies risk aversion using Jensen's
+class="math inline">\(u\)</span> implies risk aversion using Jensen’s
 inequality.</p>
 <p><strong>Part (b):</strong> Give an example of a risk-averse investor
 rejecting a fair gamble.</p>
 <p><strong>Solution:</strong></p>
-<p><strong>(a)</strong> By Jensen's inequality, for a concave function
+<p><strong>(a)</strong> By Jensen’s inequality, for a concave function
 <span class="math inline">\(u\)</span> and random variable <span
 class="math inline">\(W\)</span>:</p>
 <p><span class="math display">\[
@@ -1761,9 +1620,7 @@ u(100) = \ln(100) \approx 4.605
 <p>Since <span class="math inline">\(4.605 &gt; 4.585\)</span>, the
 investor rejects the fair gamble.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="exercise-2-arrow-pratt-measures">Exercise 2: Arrow-Pratt
 Measures</h3>
 <p><strong>Part (a):</strong> Compute absolute and relative risk
@@ -1771,7 +1628,7 @@ aversion for exponential utility:</p>
 <p><span class="math display">\[
 u(W) = -e^{-\gamma W}
 \]</span></p>
-<p><strong>Part (b):</strong> Interpret why this is called "CARA"
+<p><strong>Part (b):</strong> Interpret why this is called “CARA”
 (Constant Absolute Risk Aversion).</p>
 <p><strong>Part (c):</strong> Show that for power utility <span
 class="math inline">\(u(W) = \frac{W^{1-\gamma}}{1-\gamma}\)</span>,
@@ -1807,11 +1664,9 @@ u&#39;(W) = W^{-\gamma}, \quad u&#39;&#39;(W) = -\gamma W^{-\gamma-1}
 R(W) = -W\frac{u&#39;&#39;(W)}{u&#39;(W)} = -W\frac{-\gamma
 W^{-\gamma-1}}{W^{-\gamma}} = \gamma
 \]</span></p>
-<p>Constant in <span class="math inline">\(W\)</span>—hence "CRRA."</p>
+<p>Constant in <span class="math inline">\(W\)</span>—hence “CRRA.”</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="exercise-3-certainty-equivalent-and-risk-premium">Exercise 3:
 Certainty Equivalent and Risk Premium</h3>
 <p>An investor with <span class="math inline">\(u(W) = W^{0.5}\)</span>
@@ -1864,9 +1719,7 @@ class="math inline">\(\gamma = 1\)</span>) exhibits more risk aversion
 than square-root utility (<span class="math inline">\(\gamma =
 0.5\)</span>).</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="exercise-4-mean-variance-and-normal-returns">Exercise 4:
 Mean-Variance and Normal Returns</h3>
 <p>Suppose returns are normally distributed: <span
@@ -1924,9 +1777,7 @@ W_0^2\sigma^2]
 terms).</p>
 <p>So both investors rank portfolios identically under normality.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="exercise-5-skewed-returns">Exercise 5: Skewed Returns</h3>
 <p>Consider two investments with the same mean (<span
 class="math inline">\(\mu = 10\%\)</span>) and variance (<span
@@ -1980,9 +1831,7 @@ class="math inline">\((\mu,\sigma^2)\)</span> and ignores higher moments
 (here, skewness), while expected utility is sensitive to full
 distributional shape.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="exercise-6-portfolio-choice-with-crra">Exercise 6: Portfolio
 Choice with CRRA</h3>
 <p>An investor with <span class="math inline">\(u(W) =
@@ -2025,18 +1874,13 @@ w^* = \frac{\mu - R_f}{\gamma \sigma^2 W_0} = \frac{0.10}{0.02 \times
 \]</span></p>
 <p>Same optimal weight! But this is a special case where parameters
 align.</p>
-<p>In general:</p>
-<ul>
-<li>CRRA: <span class="math inline">\(w\)</span> independent of <span
-class="math inline">\(W_0\)</span> (scale-invariant)</li>
-<li>CARA: <span class="math inline">\(w\)</span> decreases with <span
-class="math inline">\(W_0\)</span> (richer people take less risk as a
-fraction)</li>
-</ul>
+<p>In general: * CRRA: <span class="math inline">\(w\)</span>
+independent of <span class="math inline">\(W_0\)</span>
+(scale-invariant) * CARA: <span class="math inline">\(w\)</span>
+decreases with <span class="math inline">\(W_0\)</span> (richer people
+take less risk as a fraction)</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h3 id="exercise-7-comparing-utility-functions">Exercise 7: Comparing
 Utility Functions</h3>
 <p>For each utility function below, calculate <span
@@ -2082,59 +1926,55 @@ u(W)=\frac{W^{-1}}{-1}=-\frac{1}{W}=u_3(W).
 \]</span> So <span class="math inline">\(u_3\)</span> is exactly CRRA
 with <span class="math inline">\(\gamma=2\)</span>.</p>
 </section>
-
-<section class="slide" markdown="1">
-
+<section class="slide">
 <h2 id="final-takeaways">Final Takeaways</h2>
 <ul>
-<li><p><strong>Utility formalizes rational choice under
-uncertainty</strong></p>
+<li><strong>Utility formalizes rational choice under
+uncertainty</strong>
 <ul>
 <li>von Neumann-Morgenstern axioms provide foundation</li>
 <li>Expected utility is the standard criterion under vNM axioms</li>
 <li>Utility is unique up to positive affine transformations</li>
 </ul></li>
-<li><p><strong>Risk aversion is equivalent to concavity</strong></p>
+<li><strong>Risk aversion is equivalent to concavity</strong>
 <ul>
 <li><span class="math inline">\(u&#39;&#39;(W) &lt; 0\)</span> captures
 dislike for risk</li>
 <li>Arrow-Pratt measures quantify risk aversion</li>
-<li>Absolute vs. relative risk aversion</li>
+<li>Absolute vs. relative risk aversion</li>
 </ul></li>
-<li><p><strong>Three utility functions dominate practice</strong></p>
+<li><strong>Three utility functions dominate practice</strong>
 <ul>
 <li>Quadratic: Mean-variance, but flawed (satiation, IARA)</li>
 <li>Exponential (CARA): Tractable, constant absolute risk aversion</li>
 <li>Power (CRRA): Empirically realistic, constant relative risk
 aversion</li>
 </ul></li>
-<li><p><strong>Mean–variance is a special case of expected
-utility</strong></p>
+<li><strong>Mean–variance is a special case of expected utility</strong>
 <ul>
 <li>Justified by quadratic utility or normal returns</li>
 <li>When these assumptions fail, need general utility</li>
 <li>CAPM relies on mean-variance foundation</li>
 </ul></li>
-<li><p><strong>Connection to portfolio theory</strong></p>
+<li><strong>Connection to portfolio theory</strong>
 <ul>
 <li>Lectures 06-08 assumed mean-variance implicitly</li>
 <li>Lecture 09 provided rigorous utility foundation</li>
 <li>Modern asset pricing uses CRRA utility</li>
 </ul></li>
-<li><p><strong>Beyond CAPM</strong></p>
+<li><strong>Beyond CAPM</strong>
 <ul>
 <li>Non-normal returns require general utility</li>
 <li>Skewness, kurtosis, tail risk matter</li>
 <li>Factor models and higher-moment CAPM</li>
 </ul></li>
 </ul>
-<p><strong>Key insight:</strong> Utility theory is not psychology—it's a
+<p><strong>Key insight:</strong> Utility theory is not psychology—it’s a
 mathematical framework for consistent choice under uncertainty.</p>
 <p>Next lecture: We explore specific risk measures beyond
 variance—Value-at-Risk (VaR) and coherent risk measures.</p>
 <p>Because investors care about downside risk, not just volatility.</p>
 </section>
-
 </div>
 </body>
 </html>

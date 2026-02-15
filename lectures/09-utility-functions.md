@@ -124,7 +124,7 @@ Utility is not:
 
 Utility is a **numerical representation of preferences**.
 
-**Key insight:** Under certainty, utility is **ordinal**. Under expected utility over lotteries, it is **cardinal up to a positive affine transformation**.
+**Key insight:** Under certainty, utility is **ordinal**. Under expected utility over lotteries, it is **cardinal** up to a point.
 
 If $u(W_1) > u(W_2)$, we only know: $W_1$ is preferred to $W_2$.
 
@@ -177,6 +177,7 @@ Consider three wealth outcomes:
 An investor ranks them: Lottery 2 $\succ$ Certain \$100 $\succ$ Lottery 1
 
 Expected values:
+
 * Certain: \$100
 * Lottery 1: $0.5(0) + 0.5(200) = \$100$
 * Lottery 2: $0.6(80) + 0.4(150) = \$108$
@@ -199,6 +200,7 @@ Rationality does not mean intelligence. It means:
 **Example of irrational behavior:**
 
 Suppose an investor states:
+
 * $A \succ B$
 * $B \succ C$
 * $C \succ A$
@@ -212,10 +214,6 @@ Why is this problematic?
 * Then trade $B$ for $A$ (since $A \succ B$)
 * Pay transaction costs each time
 * End up back where you started, but poorer
-
-This is a **money pump**—you can be exploited.
-
-Consistency prevents this.
 
 </section>
 
@@ -231,10 +229,7 @@ This axiomatization became foundational in modern economics and finance.
 
 ### Axiom 1: Completeness
 
-**Statement:** For any two lotteries $A$ and $B$, either:
-* $A \succ B$, or
-* $B \succ A$, or
-* $A \sim B$
+**Statement:** For any two lotteries $A$ and $B$, either: $A \succ B$, or $B \succ A$, or $A \sim B$
 
 **Interpretation:** The investor can always compare and rank alternatives.
 
@@ -268,20 +263,20 @@ $$
 
 No outcome is treated as lexicographically infinite in value.
 
-**Example:**
-* $A$ = win \$1 million
-* $B$ = win \$100,000
-* $C$ = win \$0
+**Example:** $A$ = win \$1 million; $B$ = get \$100,000; $C$ = win \$0
 
 Continuity says: there's some $p$ where you're indifferent between:
+
 * Guaranteed \$100,000
 * Lottery giving $p$ chance of \$1M, $(1-p)$ chance of \$0
 
 In this example, $p \approx 0.10$ makes the two options approximately comparable.
 
-**Critique:** Philosophically controversial.
+**Critique:** Philosophically controversial. But mathematically necessary for utility representation.
 
-But mathematically necessary for utility representation.
+</section>
+
+<section class="slide" markdown="1">
 
 ### Axiom 4: Independence
 
@@ -294,27 +289,23 @@ $$
 **Interpretation:** Mixing both lotteries with a third option $C$ preserves the ranking.
 
 **Example:**
+
 * $A$ = \$100 for sure
 * $B$ = 50% chance of \$200, 50% chance of \$0
 * $C$ = \$50 for sure
 
 If you prefer $A$ to $B$, then independence says you also prefer:
+
 * 50% chance of $A$, 50% chance of $C$
 * to: 50% chance of $B$, 50% chance of $C$
 
-**Critique:** This is the most controversial axiom.
-
-Violated by many experimental subjects (Allais paradox).
-
-But necessary for expected utility representation.
+**Critique:** This is the most controversial axiom. Violated by many experimental subjects ([Allais paradox](https://en.wikipedia.org/wiki/Allais_paradox)). But necessary for expected utility representation.
 
 </section>
 
 <section class="slide" markdown="1">
 
-### Expected Utility Theorem
-
-**von Neumann–Morgenstern Theorem:**
+### Expected Utility Theorem (von Neumann–Morgenstern Theorem)
 
 If preferences satisfy the four axioms, then:
 
@@ -385,6 +376,7 @@ $$
 where $R$ is the vector of asset returns.
 
 **Key difference:**
+
 * Mean-variance: assumes quadratic utility or normal returns
 * Expected utility: works for any distribution and any $u$
 
@@ -521,31 +513,41 @@ $$
 For a random wealth $W$ with $\mathbb{E}[W] = \mu$ and $\text{Var}(W) = \sigma^2$:
 
 $$
-\mathbb{E}[u(W)] = \mathbb{E}[W - \frac{\gamma}{2}W^2]
+\mathbb{E}[u(W)] = \mathbb{E}\left[W - \frac{\gamma}{2}W^2\right] = \mathbb{E}[W] - \frac{\gamma}{2}\mathbb{E}[W^2]
 $$
 
-Expand $W^2 = (W - \mu + \mu)^2$:
+**Expand $W^2$ about the mean:**
+
+$$
+W^2 = (W - \mu + \mu)^2 = (W-\mu)^2 + 2\mu(W-\mu) + \mu^2
+$$
+
+Taking expectations:
+
+$$
+\mathbb{E}[W^2] = \mathbb{E}[(W-\mu)^2] + 2\mu\mathbb{E}[W-\mu] + \mu^2
+$$
+
+Since $\mathbb{E}[W-\mu] = 0$ (by definition of expected value):
 
 $$
 \mathbb{E}[W^2] = \mathbb{E}[(W-\mu)^2] + \mu^2 = \sigma^2 + \mu^2
 $$
 
-Therefore:
+**Substitute back into expected utility:**
 
 $$
 \mathbb{E}[u(W)] = \mu - \frac{\gamma}{2}(\sigma^2 + \mu^2)
 $$
 
-Maximizing expected utility:
-
 $$
-\max \quad \mu - \frac{\gamma}{2}\sigma^2 - \frac{\gamma}{2}\mu^2
+= \mu - \frac{\gamma}{2}\sigma^2 - \frac{\gamma}{2}\mu^2
 $$
 
-For small $\mu^2$ (or treating $\mu$ as approximately constant), this reduces to:
+For small values of $\mu^2$:
 
 $$
-\max \quad \mu - \frac{\gamma}{2}\sigma^2
+\max_w \left[\mu - \frac{\gamma}{2}\sigma^2 - \frac{\gamma}{2}\mu^2\right] \quad \iff \quad \max_w \left[\mu - \frac{\gamma}{2}\sigma^2\right]
 $$
 
 This is exactly the mean-variance criterion from Lecture 06!

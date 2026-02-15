@@ -143,7 +143,7 @@ portfolio theory.</p>
 preferences</strong>.</p>
 <p><strong>Key insight:</strong> Under certainty, utility is
 <strong>ordinal</strong>. Under expected utility over lotteries, it is
-<strong>cardinal up to a positive affine transformation</strong>.</p>
+<strong>cardinal</strong> up to a point.</p>
 <p>If <span class="math inline">\(u(W_1) &gt; u(W_2)\)</span>, we only
 know: <span class="math inline">\(W_1\)</span> is preferred to <span
 class="math inline">\(W_2\)</span>.</p>
@@ -196,9 +196,14 @@ $150</li>
 <p>An investor ranks them: Lottery 2 <span
 class="math inline">\(\succ\)</span> Certain $100 <span
 class="math inline">\(\succ\)</span> Lottery 1</p>
-<p>Expected values: * Certain: $100 * Lottery 1: <span
-class="math inline">\(0.5(0) + 0.5(200) = \$100\)</span> * Lottery 2:
-<span class="math inline">\(0.6(80) + 0.4(150) = \$108\)</span></p>
+<p>Expected values:</p>
+<ul>
+<li>Certain: $100</li>
+<li>Lottery 1: <span class="math inline">\(0.5(0) + 0.5(200) =
+\$100\)</span></li>
+<li>Lottery 2: <span class="math inline">\(0.6(80) + 0.4(150) =
+\$108\)</span></li>
+</ul>
 <p><strong>Note:</strong> Despite equal expected value, Certain $100
 <span class="math inline">\(\succ\)</span> Lottery 1 reveals
 <strong>risk aversion</strong>.</p>
@@ -213,9 +218,12 @@ tomorrow’s</li>
 </ul>
 <h3 id="what-rationality-rules-out">What Rationality Rules Out</h3>
 <p><strong>Example of irrational behavior:</strong></p>
-<p>Suppose an investor states: * <span class="math inline">\(A \succ
-B\)</span> * <span class="math inline">\(B \succ C\)</span> * <span
-class="math inline">\(C \succ A\)</span></p>
+<p>Suppose an investor states:</p>
+<ul>
+<li><span class="math inline">\(A \succ B\)</span></li>
+<li><span class="math inline">\(B \succ C\)</span></li>
+<li><span class="math inline">\(C \succ A\)</span></li>
+</ul>
 <p>This violates <strong>transitivity</strong> (one of our axioms
 below).</p>
 <p>Why is this problematic?</p>
@@ -232,8 +240,6 @@ class="math inline">\(A\)</span> (since <span class="math inline">\(A
 <li>Pay transaction costs each time</li>
 <li>End up back where you started, but poorer</li>
 </ul>
-<p>This is a <strong>money pump</strong>—you can be exploited.</p>
-<p>Consistency prevents this.</p>
 </section>
 <section class="slide">
 <h2 id="axioms-of-expected-utility">3. Axioms of Expected Utility</h2>
@@ -246,10 +252,9 @@ finance.</p>
 <h3 id="axiom-1-completeness">Axiom 1: Completeness</h3>
 <p><strong>Statement:</strong> For any two lotteries <span
 class="math inline">\(A\)</span> and <span
-class="math inline">\(B\)</span>, either: * <span
-class="math inline">\(A \succ B\)</span>, or * <span
-class="math inline">\(B \succ A\)</span>, or * <span
-class="math inline">\(A \sim B\)</span></p>
+class="math inline">\(B\)</span>, either: <span class="math inline">\(A
+\succ B\)</span>, or <span class="math inline">\(B \succ A\)</span>, or
+<span class="math inline">\(A \sim B\)</span></p>
 <p><strong>Interpretation:</strong> The investor can always compare and
 rank alternatives.</p>
 <p>This rules out “incomparable” lottery pairs.</p>
@@ -277,17 +282,22 @@ B \sim pA + (1-p)C
 <p><strong>Interpretation:</strong> No outcome is infinitely better or
 worse than another.</p>
 <p>No outcome is treated as lexicographically infinite in value.</p>
-<p><strong>Example:</strong> * <span class="math inline">\(A\)</span> =
-win $1 million * <span class="math inline">\(B\)</span> = win $100,000 *
+<p><strong>Example:</strong> <span class="math inline">\(A\)</span> =
+win $1 million; <span class="math inline">\(B\)</span> = get $100,000;
 <span class="math inline">\(C\)</span> = win $0</p>
 <p>Continuity says: there’s some <span class="math inline">\(p\)</span>
-where you’re indifferent between: * Guaranteed $100,000 * Lottery giving
-<span class="math inline">\(p\)</span> chance of $1M, <span
-class="math inline">\((1-p)\)</span> chance of $0</p>
+where you’re indifferent between:</p>
+<ul>
+<li>Guaranteed $100,000</li>
+<li>Lottery giving <span class="math inline">\(p\)</span> chance of $1M,
+<span class="math inline">\((1-p)\)</span> chance of $0</li>
+</ul>
 <p>In this example, <span class="math inline">\(p \approx 0.10\)</span>
 makes the two options approximately comparable.</p>
-<p><strong>Critique:</strong> Philosophically controversial.</p>
-<p>But mathematically necessary for utility representation.</p>
+<p><strong>Critique:</strong> Philosophically controversial. But
+mathematically necessary for utility representation.</p>
+</section>
+<section class="slide">
 <h3 id="axiom-4-independence">Axiom 4: Independence</h3>
 <p><strong>Statement:</strong> If <span class="math inline">\(A \succ
 B\)</span>, then for any lottery <span class="math inline">\(C\)</span>
@@ -297,23 +307,31 @@ pA + (1-p)C \succ pB + (1-p)C
 \]</span></p>
 <p><strong>Interpretation:</strong> Mixing both lotteries with a third
 option <span class="math inline">\(C\)</span> preserves the ranking.</p>
-<p><strong>Example:</strong> * <span class="math inline">\(A\)</span> =
-$100 for sure * <span class="math inline">\(B\)</span> = 50% chance of
-$200, 50% chance of $0 * <span class="math inline">\(C\)</span> = $50
-for sure</p>
+<p><strong>Example:</strong></p>
+<ul>
+<li><span class="math inline">\(A\)</span> = $100 for sure</li>
+<li><span class="math inline">\(B\)</span> = 50% chance of $200, 50%
+chance of $0</li>
+<li><span class="math inline">\(C\)</span> = $50 for sure</li>
+</ul>
 <p>If you prefer <span class="math inline">\(A\)</span> to <span
 class="math inline">\(B\)</span>, then independence says you also
-prefer: * 50% chance of <span class="math inline">\(A\)</span>, 50%
-chance of <span class="math inline">\(C\)</span> * to: 50% chance of
-<span class="math inline">\(B\)</span>, 50% chance of <span
-class="math inline">\(C\)</span></p>
-<p><strong>Critique:</strong> This is the most controversial axiom.</p>
-<p>Violated by many experimental subjects (Allais paradox).</p>
-<p>But necessary for expected utility representation.</p>
+prefer:</p>
+<ul>
+<li>50% chance of <span class="math inline">\(A\)</span>, 50% chance of
+<span class="math inline">\(C\)</span></li>
+<li>to: 50% chance of <span class="math inline">\(B\)</span>, 50% chance
+of <span class="math inline">\(C\)</span></li>
+</ul>
+<p><strong>Critique:</strong> This is the most controversial axiom.
+Violated by many experimental subjects (<a
+href="https://en.wikipedia.org/wiki/Allais_paradox">Allais paradox</a>).
+But necessary for expected utility representation.</p>
 </section>
 <section class="slide">
-<h3 id="expected-utility-theorem">Expected Utility Theorem</h3>
-<p><strong>von Neumann–Morgenstern Theorem:</strong></p>
+<h3
+id="expected-utility-theorem-von-neumannmorgenstern-theorem">Expected
+Utility Theorem (von Neumann–Morgenstern Theorem)</h3>
 <p>If preferences satisfy the four axioms, then:</p>
 <blockquote>
 <p>There exists a utility function <span
@@ -376,9 +394,12 @@ class="math inline">\(u\)</span>:</p>
 \]</span></p>
 <p>where <span class="math inline">\(R\)</span> is the vector of asset
 returns.</p>
-<p><strong>Key difference:</strong> * Mean-variance: assumes quadratic
-utility or normal returns * Expected utility: works for any distribution
-and any <span class="math inline">\(u\)</span></p>
+<p><strong>Key difference:</strong></p>
+<ul>
+<li>Mean-variance: assumes quadratic utility or normal returns</li>
+<li>Expected utility: works for any distribution and any <span
+class="math inline">\(u\)</span></li>
+</ul>
 </section>
 <section class="slide">
 <h3 id="example-portfolio-choice-with-exponential-utility">Example:
@@ -488,26 +509,35 @@ u(W) = W - \frac{\gamma}{2}W^2, \quad \gamma &gt; 0
 class="math inline">\(\mathbb{E}[W] = \mu\)</span> and <span
 class="math inline">\(\text{Var}(W) = \sigma^2\)</span>:</p>
 <p><span class="math display">\[
-\mathbb{E}[u(W)] = \mathbb{E}[W - \frac{\gamma}{2}W^2]
+\mathbb{E}[u(W)] = \mathbb{E}\left[W - \frac{\gamma}{2}W^2\right] =
+\mathbb{E}[W] - \frac{\gamma}{2}\mathbb{E}[W^2]
 \]</span></p>
-<p>Expand <span class="math inline">\(W^2 = (W - \mu +
-\mu)^2\)</span>:</p>
+<p><strong>Expand <span class="math inline">\(W^2\)</span> about the
+mean:</strong></p>
+<p><span class="math display">\[
+W^2 = (W - \mu + \mu)^2 = (W-\mu)^2 + 2\mu(W-\mu) + \mu^2
+\]</span></p>
+<p>Taking expectations:</p>
+<p><span class="math display">\[
+\mathbb{E}[W^2] = \mathbb{E}[(W-\mu)^2] + 2\mu\mathbb{E}[W-\mu] + \mu^2
+\]</span></p>
+<p>Since <span class="math inline">\(\mathbb{E}[W-\mu] = 0\)</span> (by
+definition of expected value):</p>
 <p><span class="math display">\[
 \mathbb{E}[W^2] = \mathbb{E}[(W-\mu)^2] + \mu^2 = \sigma^2 + \mu^2
 \]</span></p>
-<p>Therefore:</p>
+<p><strong>Substitute back into expected utility:</strong></p>
 <p><span class="math display">\[
 \mathbb{E}[u(W)] = \mu - \frac{\gamma}{2}(\sigma^2 + \mu^2)
 \]</span></p>
-<p>Maximizing expected utility:</p>
 <p><span class="math display">\[
-\max \quad \mu - \frac{\gamma}{2}\sigma^2 - \frac{\gamma}{2}\mu^2
+= \mu - \frac{\gamma}{2}\sigma^2 - \frac{\gamma}{2}\mu^2
 \]</span></p>
-<p>For small <span class="math inline">\(\mu^2\)</span> (or treating
-<span class="math inline">\(\mu\)</span> as approximately constant),
-this reduces to:</p>
+<p>For small values of <span class="math inline">\(\mu^2\)</span>:</p>
 <p><span class="math display">\[
-\max \quad \mu - \frac{\gamma}{2}\sigma^2
+\max_w \left[\mu - \frac{\gamma}{2}\sigma^2 -
+\frac{\gamma}{2}\mu^2\right] \quad \iff \quad \max_w \left[\mu -
+\frac{\gamma}{2}\sigma^2\right]
 \]</span></p>
 <p>This is exactly the mean-variance criterion from Lecture 06!</p>
 </section>

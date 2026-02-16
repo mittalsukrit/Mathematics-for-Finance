@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
@@ -920,10 +920,15 @@ class="math inline">\(u(\mathbb{E}[W]) &lt; \mathbb{E}[u(W)]\)</span> *
 Prefers risk over certainty * Gamblers, some entrepreneurs * Utility is
 convex: <span class="math inline">\(u&#39;&#39;(W) &gt; 0\)</span></p>
 <p>From here on, we focus on risk-averse investors.</p>
+</section>
+<section class="slide">
 <h3 id="example-risk-aversion-in-action">Example: Risk Aversion in
 Action</h3>
-<p>Consider two options: * <strong>Option A:</strong> $50 for certain *
-<strong>Option B:</strong> 50% chance of $100, 50% chance of $0</p>
+<p>Consider two options:</p>
+<ul>
+<li><strong>Option A:</strong> $50 for certain</li>
+<li><strong>Option B:</strong> 50% chance of $100, 50% chance of $0</li>
+</ul>
 <p>Expected value of both: $50</p>
 <p><strong>Risk-averse investor:</strong> Chooses Option A
 (certainty)</p>
@@ -934,17 +939,15 @@ Action</h3>
 <section class="slide">
 <h2 id="concavity-and-risk-aversion">Concavity and Risk Aversion</h2>
 <p><strong>Theorem:</strong> An investor is risk-averse if and only if
-<span class="math inline">\(u\)</span> is concave.</p>
-<p><span class="math display">\[
+<span class="math inline">\(u\)</span> is concave. <span
+class="math display">\[
 u&#39;&#39;(W) \leq 0
 \]</span></p>
-<p>This single inequality drives everything.</p>
 <h3 id="proof">Proof</h3>
 <p><strong>Direction 1:</strong> Concavity <span
 class="math inline">\(\implies\)</span> Risk aversion</p>
 <p>Suppose <span class="math inline">\(u\)</span> is concave. By
-<strong>Jensen’s inequality</strong>:</p>
-<p><span class="math display">\[
+<strong>Jensen’s inequality</strong>: <span class="math display">\[
 u(\mathbb{E}[W]) \geq \mathbb{E}[u(W)]
 \]</span></p>
 <p>This is exactly the definition of risk aversion. ✓</p>
@@ -952,20 +955,20 @@ u(\mathbb{E}[W]) \geq \mathbb{E}[u(W)]
 class="math inline">\(\implies\)</span> Concavity</p>
 <p>Suppose <span class="math inline">\(u(\mathbb{E}[W]) \geq
 \mathbb{E}[u(W)]\)</span> for all <span
-class="math inline">\(W\)</span>.</p>
-<p>Consider a 50-50 lottery between <span
+class="math inline">\(W\)</span>. Consider a 50-50 lottery between <span
 class="math inline">\(W_1\)</span> and <span
-class="math inline">\(W_2\)</span>:</p>
-<p><span class="math display">\[
+class="math inline">\(W_2\)</span>: <span class="math display">\[
 u\left(\frac{W_1 + W_2}{2}\right) \geq \frac{1}{2}u(W_1) +
 \frac{1}{2}u(W_2)
 \]</span></p>
-<p>This is the definition of concavity (for discrete case).</p>
-<p>Extending to continuous case gives <span
-class="math inline">\(u&#39;&#39;(W) \leq 0\)</span>. ✓</p>
+<p>This is the definition of concavity (for discrete case). Extending to
+continuous case gives <span class="math inline">\(u&#39;&#39;(W) \leq
+0\)</span>. ✓</p>
+</section>
+<section class="slide">
 <h3 id="graphical-interpretation">Graphical Interpretation</h3>
 <div data-align="center">
-<p><img src="Figures/concavity_risk_aversion.png" alt="Concavity and Risk Aversion" style="width:85%;"/></p>
+<p><img src="Figures/concavity_risk_aversion.png" alt="Concavity and Risk Aversion" style="width:55%;"/></p>
 </div>
 <p><em>Figure: Concave utility functions generate risk aversion. The
 utility of expected wealth u(E[W]) exceeds the expected utility E[u(W)],
@@ -978,9 +981,8 @@ creating a risk premium. The investor prefers the certainty equivalent
 <strong>decreasing</strong></li>
 <li>More wealth provides less additional satisfaction</li>
 </ul>
-<p><strong>Key insight:</strong></p>
-<p>Losing $10 hurts more than gaining $10 feels good.</p>
-<p>This asymmetry explains risk aversion.</p>
+<p><strong>Key insight:</strong> Losing $10 hurts more than gaining $10
+feels good. This asymmetry explains risk aversion.</p>
 </section>
 <section class="slide">
 <h3 id="certainty-equivalent-and-risk-premium">Certainty Equivalent and

@@ -854,9 +854,14 @@ for all random wealth $W$.
 
 From here on, we focus on risk-averse investors.
 
+</section>
+
+<section class="slide" markdown="1">
+
 ### Example: Risk Aversion in Action
 
 Consider two options:
+
 * **Option A:** \$50 for certain
 * **Option B:** 50% chance of \$100, 50% chance of \$0
 
@@ -877,19 +882,15 @@ Most people choose Option A—evidence of risk aversion.
 ## Concavity and Risk Aversion
 
 **Theorem:** An investor is risk-averse if and only if $u$ is concave.
-
 $$
 u''(W) \leq 0
 $$
-
-This single inequality drives everything.
 
 ### Proof
 
 **Direction 1:** Concavity $\implies$ Risk aversion
 
 Suppose $u$ is concave. By **Jensen's inequality**:
-
 $$
 u(\mathbb{E}[W]) \geq \mathbb{E}[u(W)]
 $$
@@ -898,22 +899,21 @@ This is exactly the definition of risk aversion. ✓
 
 **Direction 2:** Risk aversion $\implies$ Concavity
 
-Suppose $u(\mathbb{E}[W]) \geq \mathbb{E}[u(W)]$ for all $W$.
-
-Consider a 50-50 lottery between $W_1$ and $W_2$:
-
+Suppose $u(\mathbb{E}[W]) \geq \mathbb{E}[u(W)]$ for all $W$. Consider a 50-50 lottery between $W_1$ and $W_2$:
 $$
 u\left(\frac{W_1 + W_2}{2}\right) \geq \frac{1}{2}u(W_1) + \frac{1}{2}u(W_2)
 $$
 
-This is the definition of concavity (for discrete case).
+This is the definition of concavity (for discrete case). Extending to continuous case gives $u''(W) \leq 0$. ✓
 
-Extending to continuous case gives $u''(W) \leq 0$. ✓
+</section>
+
+<section class="slide" markdown="1">
 
 ### Graphical Interpretation
 
 <div align="center">
-<img src="Figures/concavity_risk_aversion.png" alt="Concavity and Risk Aversion" style="width:85%;"/>
+<img src="Figures/concavity_risk_aversion.png" alt="Concavity and Risk Aversion" style="width:55%;"/>
 </div>
 
 *Figure: Concave utility functions generate risk aversion. The utility of expected wealth u(E[W]) exceeds the expected utility E[u(W)], creating a risk premium. The investor prefers the certainty equivalent (CE) over the risky lottery.*
@@ -924,11 +924,7 @@ For a concave function:
 * Marginal utility $u'(W)$ is **decreasing**
 * More wealth provides less additional satisfaction
 
-**Key insight:**
-
-Losing \$10 hurts more than gaining \$10 feels good.
-
-This asymmetry explains risk aversion.
+**Key insight:** Losing \$10 hurts more than gaining \$10 feels good. This asymmetry explains risk aversion.
 
 </section>
 

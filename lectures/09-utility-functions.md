@@ -45,8 +45,8 @@ title: Utility Functions and Risk Aversion
 
 # Utility Functions and Risk Aversion
 
-**Sukrit Mittal**
-Franklin Templeton Investments
+**Sukrit Mittal** \
+Guest Faculty, IIIT Hyderabad
 
 </section>
 
@@ -90,6 +90,10 @@ This framework:
 * Ignores skewness, kurtosis, tail risk
 * Assumes quadratic preferences (problematic)
 
+</section>
+
+<section class="slide" markdown="1">
+
 **Example where mean-variance fails:**
 
 Consider two investments, both with $\mu = 10\%$ and $\sigma = 15\%$:
@@ -124,7 +128,7 @@ Utility is not:
 
 Utility is a **numerical representation of preferences**.
 
-**Key insight:** Under certainty, utility is **ordinal**. Under expected utility over lotteries, it is **cardinal** up to a point.
+**Key insight:** Under certainty, utility is **ordinal**. Under expected utility over lotteries, it is **cardinal** up to a positive affine transformation.
 
 If $u(W_1) > u(W_2)$, we only know: $W_1$ is preferred to $W_2$.
 
@@ -237,6 +241,10 @@ This rules out "incomparable" lottery pairs.
 
 **Critique:** Strong assumption. In practice, people often face hard-to-compare choices.
 
+</section>
+
+<section class="slide" markdown="1">
+
 ### Axiom 2: Transitivity
 
 **Statement:** If $A \succ B$ and $B \succ C$, then $A \succ C$.
@@ -323,6 +331,10 @@ $$
 * Choice reduces to maximizing expected utility
 * This is a **representation result**
 
+</section>
+
+<section class="slide" markdown="1">
+
 ### Why This Matters
 
 This theorem tells us:
@@ -345,35 +357,25 @@ That requires additional assumptions or estimation.
 
 ## 4. Expected Utility Maximization
 
-Given wealth $W$ as a random variable:
-
-The investor chooses portfolios to:
+Given wealth $W$ as a random variable, the investor chooses portfolios to maximize expected utility, subject to budget constraints:
 
 $$
 \max \mathbb{E}[u(W)]
 $$
 
-Subject to budget constraints.
-
 This is the most general formulation of choice under uncertainty.
 
 ### Connection to Portfolio Theory
 
-Recall from Lecture 07 that we found the optimal portfolio by solving:
-
+Recall that we found the optimal portfolio by solving mean-variance optimization:
 $$
 \max_w \quad w^\top \mu - \frac{\gamma}{2} w^\top \Sigma w
 $$
 
-This was mean-variance optimization.
-
 Now we generalize: for any utility function $u$:
-
 $$
-\max_w \quad \mathbb{E}[u(w^\top R)]
+\max_w \quad \mathbb{E}[u(w^\top \mu)]
 $$
-
-where $R$ is the vector of asset returns.
 
 **Key difference:**
 
@@ -386,31 +388,21 @@ where $R$ is the vector of asset returns.
 
 ### Example: Portfolio Choice with Exponential Utility
 
-Suppose:
-* Two assets: risk-free at $R_f = 5\%$ and risky with $\mu = 12\%$, $\sigma = 20\%$
-* Utility: $u(W) = -e^{-\gamma W}$ with $\gamma = 0.01$
-* Initial wealth: $W_0 = 100$
+Suppose, two assets: risk-free at $R_f = 5\%$ and risky with $\mu = 12\%$, $\sigma = 20\%$; utility: $u(W) = -e^{-\gamma W}$ with $\gamma = 0.01$; initial wealth: $W_0 = 100$
 
-Let $w$ = fraction in risky asset.
-
-Terminal wealth: $W = W_0[1 + w R_S + (1-w)R_f]$
+Terminal wealth: $W = W_0[1 + w R_S + (1-w)R_f]$, where $w$ is the weight on the risky asset and $R_S$ is its return.
 
 **Objective:**
-
 $$
 \max_w \mathbb{E}[-e^{-\gamma W_0[1 + w R_S + (1-w)R_f]}]
 $$
 
-For normally distributed returns, this simplifies to:
-
+For normally distributed returns, using moment generating function of normal distribution, this simplifies to:
 $$
 w^* = \frac{\mu - R_f}{\gamma \sigma^2 W_0}
 $$
 
-(Derivation: use moment generating function of normal distribution)
-
 Plugging in numbers:
-
 $$
 w^* = \frac{0.12 - 0.05}{0.01 \times 0.04 \times 100} = \frac{0.07}{0.04} = 1.75
 $$
@@ -424,19 +416,16 @@ $$
 ### Utility Under Affine Transformations
 
 If $u$ represents preferences, so does:
-
 $$
 \tilde u = a u + b \quad (a>0)
 $$
 
 **Proof sketch:** If lottery $A$ is preferred to $B$ under $u$:
-
 $$
 \mathbb{E}[u(A)] > \mathbb{E}[u(B)]
 $$
 
 Then under $\tilde{u} = au + b$ with $a > 0$:
-
 $$
 \mathbb{E}[\tilde{u}(A)] = a\mathbb{E}[u(A)] + b > a\mathbb{E}[u(B)] + b = \mathbb{E}[\tilde{u}(B)]
 $$
@@ -447,12 +436,7 @@ The ranking is preserved.
 
 **Example:**
 
-If $u(W) = \ln(W)$ represents your preferences, so does:
-
-* $\tilde{u}(W) = 10 \ln(W) + 5$
-* $\hat{u}(W) = 0.5 \ln(W) - 3$
-
-All three give identical choices.
+If $u(W) = \ln(W)$ represents your preferences, so does: (a) $\tilde{u}(W) = 10 \ln(W) + 5$; (b) $\hat{u}(W) = 0.5 \ln(W) - 3$.
 
 Only the **shape** of the utility curve matters, not its scale or location.
 
@@ -462,11 +446,7 @@ Only the **shape** of the utility curve matters, not its scale or location.
 
 ## 5. Common Utility Functions
 
-Three utility functions dominate finance theory and practice.
-
-Each has strengths and weaknesses.
-
-None is universally correct.
+Three utility functions dominate finance theory and practice. Each with strengths and weaknesses; and none is universally correct.
 
 <div align="center">
 <img src="Figures/utility_function_shapes.png" alt="Utility Function Shapes" style="width:90%;"/>
@@ -476,20 +456,11 @@ None is universally correct.
 
 ### Why These Three?
 
-**Quadratic:**
-* Analytically tractable
-* Justifies mean-variance (Lecture 06)
-* Connection to CAPM (Lecture 08)
+| Utility Function         | **Quadratic**                                   | **Exponential (CARA)**                        | **Power (CRRA)**                |
+|-------------------------|-------------------------------------------------|------------------------------------------------|----------------------------------|
+| **Key Features**        | Analytically tractable<br>Justifies mean-variance<br>Connection to CAPM | Tractable under normal distributions<br>Constant risk aversion<br>Popular in derivatives pricing | Empirically more realistic<br>Used in asset pricing models<br>Standard in macroeconomics |
+| **Typical Uses**        | Mean-variance analysis, CAPM                    | Derivatives pricing, theoretical models         | Asset pricing, macroeconomics    |
 
-**Exponential (CARA):**
-* Tractable under normal distributions
-* Constant risk aversion
-* Popular in derivatives pricing
-
-**Power (CRRA):**
-* Empirically more realistic
-* Used in asset pricing models
-* Standard in macroeconomics
 
 Let's examine each in detail.
 
@@ -498,59 +469,36 @@ Let's examine each in detail.
 <section class="slide" markdown="1">
 
 ## Quadratic Utility
-
 $$
 u(W) = W - \frac{\gamma}{2}W^2, \quad \gamma > 0
 $$
-
 **Properties:**
 
 * $u'(W) = 1 - \gamma W > 0$ (increasing) for $W < 1/\gamma$
 * $u''(W) = -\gamma < 0$ (concave, risk-averse)
 
-**Mean–Variance Connection:**
-
-For a random wealth $W$ with $\mathbb{E}[W] = \mu$ and $\text{Var}(W) = \sigma^2$:
-
+**Mean–Variance Connection:** For a random wealth $W$ with $\mathbb{E}[W] = \mu$ and $\text{Var}(W) = \sigma^2$:
 $$
 \mathbb{E}[u(W)] = \mathbb{E}\left[W - \frac{\gamma}{2}W^2\right] = \mathbb{E}[W] - \frac{\gamma}{2}\mathbb{E}[W^2]
 $$
-
 **Expand $W^2$ about the mean:**
-
 $$
 W^2 = (W - \mu + \mu)^2 = (W-\mu)^2 + 2\mu(W-\mu) + \mu^2
 $$
-
 Taking expectations:
-
 $$
-\mathbb{E}[W^2] = \mathbb{E}[(W-\mu)^2] + 2\mu\mathbb{E}[W-\mu] + \mu^2
+\mathbb{E}[W^2] = \mathbb{E}[(W-\mu)^2] + 2\mu\mathbb{E}[W-\mu] + \mu^2 = \sigma^2 + \mu^2
 $$
-
-Since $\mathbb{E}[W-\mu] = 0$ (by definition of expected value):
-
-$$
-\mathbb{E}[W^2] = \mathbb{E}[(W-\mu)^2] + \mu^2 = \sigma^2 + \mu^2
-$$
+since $\mathbb{E}[W-\mu] = 0$ (by definition of expected value). 
 
 **Substitute back into expected utility:**
-
 $$
-\mathbb{E}[u(W)] = \mu - \frac{\gamma}{2}(\sigma^2 + \mu^2)
+\mathbb{E}[u(W)] = \mu - \frac{\gamma}{2}(\sigma^2 + \mu^2) = \mu - \frac{\gamma}{2}\sigma^2 - \frac{\gamma}{2}\mu^2
 $$
-
-$$
-= \mu - \frac{\gamma}{2}\sigma^2 - \frac{\gamma}{2}\mu^2
-$$
-
 For small values of $\mu^2$:
-
 $$
 \max_w \left[\mu - \frac{\gamma}{2}\sigma^2 - \frac{\gamma}{2}\mu^2\right] \quad \iff \quad \max_w \left[\mu - \frac{\gamma}{2}\sigma^2\right]
 $$
-
-This is exactly the mean-variance criterion from Lecture 06!
 
 </section>
 
@@ -587,6 +535,10 @@ Despite these flaws, quadratic utility is used because:
 
 This reflects a tractability-realism tradeoff.
 
+</section>
+
+<section class="slide" markdown="1">
+
 ### Numerical Example: Quadratic Utility
 
 Suppose $\gamma = 0.01$ and consider two wealth levels:
@@ -610,7 +562,6 @@ This illustrates the satiation problem.
 <section class="slide" markdown="1">
 
 ## Exponential Utility (CARA)
-
 $$
 u(W) = -e^{-\gamma W}, \quad \gamma > 0
 $$
@@ -632,33 +583,27 @@ $$
 
 We'll see why shortly.
 
+</section>
+
+<section class="slide" markdown="1">
+
 ### Why Exponential Utility?
 
 **Advantage 1: Tractability under normality**
 
 If $W \sim N(\mu, \sigma^2)$, then:
-
 $$
 \mathbb{E}[e^{-\gamma W}] = e^{-\gamma \mu + \frac{1}{2}\gamma^2\sigma^2}
 $$
-
-This is the moment generating function of the normal distribution.
-
-Therefore:
-
+This is the moment generating function of the normal distribution. Therefore:
 $$
 \mathbb{E}[u(W)] = -e^{-\gamma \mu + \frac{1}{2}\gamma^2\sigma^2}
 $$
-
 Taking logarithm (monotonic transformation preserves preferences):
-
 $$
 \max \mathbb{E}[u(W)] \iff \max \left[\mu - \frac{\gamma}{2}\sigma^2\right]
 $$
-
-**Mean-variance optimization again!**
-
-But now without the satiation problem.
+**Mean-variance optimization again!** But now without the satiation problem.
 
 **Advantage 2: Wealth-independent risk attitudes**
 
@@ -693,6 +638,10 @@ Wealthy people take bigger risks (in dollar terms) than poor people.
 * Option pricing models
 * Portfolio optimization under normality
 * Theoretical analysis (tractability)
+
+</section>
+
+<section class="slide" markdown="1">
 
 ### Numerical Example: Exponential Utility
 
@@ -742,18 +691,20 @@ $$
 
 **Name:** CRRA = **Constant Relative Risk Aversion**
 
+</section>
+
+<section class="slide" markdown="1">
+
 ### Why Power Utility?
 
 **Advantage 1: Scale invariance**
 
-Consider scaling all payoffs by a constant $\lambda > 0$.
-
-With power utility, preferences are unchanged.
+Consider scaling all payoffs by a constant $\lambda > 0$. With power utility, preferences are unchanged.
 
 **Proof:** Compare two lotteries $A$ and $B$.
 
 $$
-\mathbb{E}[u(\lambda W_A)] = \mathbb{E}\left[\frac{(\lambda W_A)^{1-\gamma}}{1-\gamma}\right] = \frac{\lambda^{1-\gamma}}{1-\gamma}\mathbb{E}[W_A^{1-\gamma}]
+\mathbb{E}[u(\lambda W_A)] = \mathbb{E}\left[\frac{(\lambda W_A)^{1-\gamma}}{1-\gamma}\right] = \lambda^{1-\gamma}\mathbb{E}\left[\frac{W_A^{1-\gamma}}{1-\gamma}\right]
 $$
 
 Similarly for $B$. The factor $\lambda^{1-\gamma}$ cancels when comparing.
@@ -764,9 +715,7 @@ This matches real-world observations: rich people don't become infinitely risk-a
 
 **Advantage 2: Empirically realistic**
 
-Studies suggest $\gamma \in [1, 10]$ for most investors.
-
-Log utility ($\gamma = 1$) is a common benchmark.
+Studies suggest $\gamma \in [1, 10]$ for most investors. Log utility ($\gamma = 1$) is a common benchmark.
 
 **Advantage 3: Used in asset pricing**
 
@@ -782,13 +731,9 @@ It's the workhorse of modern macrofinance.
 <section class="slide" markdown="1">
 
 ### Numerical Example: Power Utility with $\gamma = 2$
-
 $$
 u(W) = \frac{W^{-1}}{-1} = -\frac{1}{W}
 $$
-
-(Using $\gamma = 2$ for simplicity)
-
 Evaluate at different wealth levels:
 
 * $W_1 = 50$: $u(50) = -0.02$
@@ -796,16 +741,10 @@ Evaluate at different wealth levels:
 * $W_3 = 1000$: $u(1000) = -0.001$
 
 **Utility gain from doubling wealth (50 to 100):**
-
 $$
 \Delta u = -0.01 - (-0.02) = 0.01
 $$
-
 **Utility gain from doubling again (100 to 200):**
-
-$$
-u(200) = -1/200 = -0.005
-$$
 $$
 \Delta u = -0.005 - (-0.01) = 0.005
 $$
@@ -817,6 +756,10 @@ $$
 R(W) = -W\frac{u''(W)}{u'(W)} = \gamma
 $$
 so **relative risk aversion is constant**.
+
+</section>
+
+<section class="slide" markdown="1">
 
 ### Log Utility ($\gamma = 1$)
 

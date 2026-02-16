@@ -2,18 +2,22 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   margin: 0;
   background-color: #f0f0f0;
+  scroll-snap-type: y mandatory;
 }
 
 .slides {
-  scroll-snap-type: y mandatory;
-  overflow-y: scroll;
-  height: 100vh;
+  /* Keep the document as the primary scroll container so browsers can
+     restore position after reload. Inline lecture styles are overridden. */
+  scroll-snap-type: none !important;
+  overflow-y: visible !important;
+  height: auto !important;
   counter-reset: slide;
 }
 

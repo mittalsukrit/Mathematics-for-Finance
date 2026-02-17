@@ -69,8 +69,7 @@
 <section class="slide">
 <h1 id="utility-functions-and-risk-aversion">Utility Functions and Risk
 Aversion</h1>
-<p><strong>Sukrit Mittal</strong><br />
-Guest Faculty, IIIT Hyderabad</p>
+<p><strong>Sukrit Mittal</strong></p>
 </section>
 <section class="slide">
 <h2 id="outline">Outline</h2>
@@ -84,6 +83,25 @@ Guest Faculty, IIIT Hyderabad</p>
 <li>Utility, mean–variance, and CAPM</li>
 <li>Exercises</li>
 </ol>
+</section>
+<section class="slide">
+<div data-align="center">
+<p><img src="Figures/Lottery (2).png" alt="Preference Ranking of Lotteries" style="width:35%;"/></p>
+</div>
+<p><em>Figure: If you have $100, would you invest in this
+lottery?</em></p>
+</section>
+<section class="slide">
+<div data-align="center">
+<p><img src="Figures/Lottery (3).png" alt="Preference Ranking of Lotteries" style="width:60%;"/></p>
+</div>
+<p><em>Figure: If you have $100, which one would you invest in?</em></p>
+</section>
+<section class="slide">
+<div data-align="center">
+<p><img src="Figures/Lottery (1).png" alt="Preference Ranking of Lotteries" style="width:50%;"/></p>
+</div>
+<p><em>Figure: If you have $100, which one would you invest in?</em></p>
 </section>
 <section class="slide">
 <h2 id="why-utility">1. Why Utility?</h2>
@@ -621,12 +639,13 @@ Aversion</strong></p>
 <section class="slide">
 <h3 id="why-exponential-utility">Why Exponential Utility?</h3>
 <p><strong>Advantage 1: Tractability under normality</strong></p>
-<p>If <span class="math inline">\(W \sim N(\mu, \sigma^2)\)</span>,
-then: <span class="math display">\[
-\mathbb{E}[e^{-\gamma W}] = e^{-\gamma \mu +
-\frac{1}{2}\gamma^2\sigma^2}
-\]</span> This is the moment generating function of the normal
-distribution. Therefore: <span class="math display">\[
+<p>For <span class="math inline">\(W \sim N(\mu, \sigma^2)\)</span>, the
+moment generating function is: <span class="math display">\[
+\mathbb{E}[e^{tW}] = e^{t\mu + \frac{1}{2}t^2\sigma^2}
+\]</span> Setting <span class="math inline">\(t = -\gamma\)</span>:
+<span class="math display">\[
+\mathbb{E}[e^{-\gamma W}] = e^{-\gamma\mu + \frac{1}{2}\gamma^2\sigma^2}
+\]</span> Therefore: <span class="math display">\[
 \mathbb{E}[u(W)] = -e^{-\gamma \mu + \frac{1}{2}\gamma^2\sigma^2}
 \]</span> Taking logarithm (monotonic transformation preserves
 preferences): <span class="math display">\[

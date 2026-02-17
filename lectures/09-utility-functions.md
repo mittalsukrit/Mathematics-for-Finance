@@ -45,8 +45,7 @@ title: Utility Functions and Risk Aversion
 
 # Utility Functions and Risk Aversion
 
-**Sukrit Mittal** \
-Guest Faculty, IIIT Hyderabad
+**Sukrit Mittal** 
 
 </section>
 
@@ -62,6 +61,36 @@ Guest Faculty, IIIT Hyderabad
 6. Risk aversion
 7. Utility, mean–variance, and CAPM
 8. Exercises
+
+</section>
+
+<section class="slide" markdown="1">
+
+<div align="center">
+<img src="Figures/Lottery (2).png" alt="Preference Ranking of Lotteries" style="width:35%;"/>
+</div>
+
+*Figure: If you have \$100, would you invest in this lottery?*
+
+</section>
+
+<section class="slide" markdown="1">
+
+<div align="center">
+<img src="Figures/Lottery (3).png" alt="Preference Ranking of Lotteries" style="width:60%;"/>
+</div>
+
+*Figure: If you have \$100, which one would you invest in?*
+
+</section>
+
+<section class="slide" markdown="1">
+
+<div align="center">
+<img src="Figures/Lottery (1).png" alt="Preference Ranking of Lotteries" style="width:50%;"/>
+</div>
+
+*Figure: If you have \$100, which one would you invest in?*
 
 </section>
 
@@ -591,11 +620,15 @@ We'll see why shortly.
 
 **Advantage 1: Tractability under normality**
 
-If $W \sim N(\mu, \sigma^2)$, then:
+For $W \sim N(\mu, \sigma^2)$, the moment generating function is:
 $$
-\mathbb{E}[e^{-\gamma W}] = e^{-\gamma \mu + \frac{1}{2}\gamma^2\sigma^2}
+\mathbb{E}[e^{tW}] = e^{t\mu + \frac{1}{2}t^2\sigma^2}
 $$
-This is the moment generating function of the normal distribution. Therefore:
+Setting $t = -\gamma$:
+$$
+\mathbb{E}[e^{-\gamma W}] = e^{-\gamma\mu + \frac{1}{2}\gamma^2\sigma^2}
+$$
+Therefore:
 $$
 \mathbb{E}[u(W)] = -e^{-\gamma \mu + \frac{1}{2}\gamma^2\sigma^2}
 $$

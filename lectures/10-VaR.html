@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>10-VaR</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="lecture-theme.css" />
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<style>
+  .slides {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    height: 100vh;
+
+    /* 🔢 Start slide counter */
+    counter-reset: slide;
+  }
+
+  .slide {
+    scroll-snap-align: start;
+    min-height: 100vh;
+    padding: 4rem;
+    padding-top: 1rem;
+    box-sizing: border-box;
+
+    /* Ensure relative positioning for numbering */
+    position: relative;
+  }
+
+  /* Nice-to-have: smoother feel */
+  html { scroll-behavior: smooth; }
+
+  /* 🔢 Automatic slide numbering */
+  .slide::before {
+    counter-increment: slide;
+    content: "Slide " counter(slide);
+    position: absolute;
+    top: 1rem;   /* footer-like placement */
+    right: 2rem;
+    font-size: 1rem;
+    color: #666;
+  }
+</style>
+<div class="slides" data-markdown="1">
+<section class="slide">
+<h1 id="value-at-risk-var">Value at Risk (VaR)</h1>
+<p><strong>Sukrit Mittal</strong> Franklin Templeton Investments</p>
+</section>
+<section class="slide">
+<h2 id="outline">Outline</h2>
+<ol type="1">
+<li>Motivation: why downside risk?</li>
+<li>From portfolio theory to risk management</li>
+<li>Loss distributions and quantiles</li>
+<li>Definition of Value at Risk</li>
+<li>Computing VaR: three methods</li>
+<li>Parametric VaR with normal returns</li>
+<li>Historical simulation VaR</li>
+<li>Monte Carlo VaR</li>
+<li>Mathematical properties of VaR</li>
+<li>Limitations and critique of VaR</li>
+<li>Exercises</li>
+</ol>
+</section>
+<section class="slide">
+<h2 id="motivation-why-downside-risk">1. Motivation: Why Downside
+Risk?</h2>
+<p>Variance treats upside and downside symmetrically; Investors do
+not.</p>
+<p>Losses hurt more than gains feel good—this asymmetry is fundamental
+to human psychology.</p>
+<h3 id="the-problem-with-variance">The Problem with Variance</h3>
+<p>It measures <strong>total volatility</strong>—both upside and
+downside. <span class="math display">\[
+\text{Portfolio risk} = \sigma_p^2 = w^\top \Sigma w
+\]</span></p>
+<p><strong>Example:</strong> Consider two one-year return
+distributions:</p>
+<ul>
+<li><strong>Portfolio A:</strong> <span
+class="math inline">\(-10\%\)</span> with probability <span
+class="math inline">\(50\%\)</span>, <span
+class="math inline">\(+10\%\)</span> with probability <span
+class="math inline">\(50\%\)</span></li>
+<li><strong>Portfolio B:</strong> <span
+class="math inline">\(-20\%\)</span> with probability <span
+class="math inline">\(20\%\)</span>, <span
+class="math inline">\(+5\%\)</span> with probability <span
+class="math inline">\(80\%\)</span></li>
+</ul>
+<p>Both have the same mean and variance:</p>
+<p><span class="math display">\[
+\mathbb{E}[R_A]=\mathbb{E}[R_B]=0,\qquad
+\mathrm{Var}(R_A)=\mathrm{Var}(R_B)=0.01
+\]</span></p>
+<p>So variance can label them as equally risky, even though
+<strong>B</strong> has a much more severe left tail.</p>
+</section>
+<section class="slide">
+<h3 id="why-focus-on-downside">Why Focus on Downside?</h3>
+<p>Risk management addresses specific questions:</p>
+<blockquote>
+<p>How much can we lose?</p>
+</blockquote>
+<blockquote>
+<p>With what probability?</p>
+</blockquote>
+<blockquote>
+<p>Over what horizon?</p>
+</blockquote>
+<p>These questions require <strong>downside risk measures</strong>, not
+total volatility.</p>
+<p><strong>Real-world applications:</strong></p>
+<ul>
+<li><strong>Banks:</strong> Need to hold capital against potential
+losses</li>
+<li><strong>Pension funds:</strong> Must ensure they can meet future
+obligations</li>
+<li><strong>Hedge funds:</strong> Face redemptions if losses exceed
+thresholds</li>
+<li><strong>Regulators:</strong> Monitor systemic risk in financial
+institutions</li>
+</ul>
+<p>All of these focus on <strong>left-tail risk</strong>—extreme losses,
+not extreme gains.</p>
+</section>
+<section class="slide">
+<h3 id="historical-context-the-rise-of-var">Historical Context: The Rise
+of VaR</h3>
+<p><strong>Late 1980s-early 1990s:</strong> Financial institutions
+sought a unified risk metric.</p>
+<p><strong>Problem:</strong></p>
+<ul>
+<li>Trading desks used different risk measures</li>
+<li>Senior management couldn’t compare risks across asset classes</li>
+<li>No single number summarized total firm-wide risk</li>
+</ul>
+<p><strong>Solution:</strong> JP Morgan developed RiskMetrics (1994)</p>
+<ul>
+<li>Standardized VaR calculation</li>
+<li>Published volatility and correlation data</li>
+<li>Made VaR the industry standard</li>
+</ul>
+<p><strong>Result:</strong></p>
+<ul>
+<li>Basel Committee adopted VaR for bank capital requirements (Basel II,
+2004)</li>
+<li>VaR became the dominant risk measure worldwide</li>
+</ul>
+<p>Despite known flaws, VaR persists because:</p>
+<ol type="1">
+<li>It’s simple to communicate (one number)</li>
+<li>It’s widely understood by regulators and managers</li>
+<li>It works reasonably well in normal market conditions</li>
+</ol>
+<p>But it fails catastrophically in crises.</p>
+</section>
+<section class="slide">
+<h2 id="from-portfolio-choice-to-risk-management">2. From Portfolio
+Choice to Risk Management</h2>
+<h3 id="the-shift-in-perspective">The Shift in Perspective</h3>
+<p><strong>Portfolio optimization</strong></p>
+<ul>
+<li>Objective: Maximize <span
+class="math inline">\(\mathbb{E}[U(W)]\)</span> or <span
+class="math inline">\(\mu - \frac{\gamma}{2}\sigma^2\)</span></li>
+<li>Output: Optimal portfolio weights <span
+class="math inline">\(w^*\)</span></li>
+<li>Focus: <strong>Upside potential</strong> balanced against risk</li>
+</ul>
+<p><strong>Risk management</strong></p>
+<ul>
+<li>Objective: Measure and control downside risk</li>
+<li>Output: Risk metrics (VaR, ES, etc.)</li>
+<li>Focus: <strong>Downside protection</strong> and loss prevention</li>
+</ul>
+<p><strong>Key difference:</strong></p>
+<ul>
+<li>Portfolio theory: <em>How should I invest to maximize
+return?</em></li>
+<li>Risk management: <em>How much can I lose, and can I survive
+it?</em></li>
+</ul>
+<p>This is not a contradiction—they’re complementary perspectives.</p>
+</section>
+<section class="slide">
+<h3 id="connection-to-utility-theory">Connection to Utility Theory</h3>
+<p>Risk aversion can be characterized by a concave utility function
+<span class="math inline">\(u(W)\)</span>, where <span
+class="math display">\[
+u(\mathbb{E}[W]) &gt; \mathbb{E}[u(W)]
+\]</span></p>
+<p><strong>Key insight:</strong> The concavity of <span
+class="math inline">\(u\)</span> is strongest in the loss region.</p>
+<p>For CRRA utility <span class="math inline">\(u(W) =
+\frac{W^{1-\gamma}}{1-\gamma}\)</span>: <span class="math display">\[
+u&#39;(W) = W^{-\gamma}
+\]</span></p>
+<p><strong>Interpretation:</strong> The first dollar lost hurts much
+more than the last dollar gained feels good.</p>
+<p>This asymmetry motivates downside risk measures.</p>
+<p><strong>Risk premium revisited:</strong> <span
+class="math display">\[
+RP = \mathbb{E}[W] - CE
+\]</span></p>
+<p>The risk premium reflects willingness to pay to avoid the
+<strong>downside</strong>.</p>
+<p>VaR attempts to quantify this downside directly.</p>
+</section>
+<section class="slide">
+<h2 id="loss-distributions-and-quantiles">3. Loss Distributions and
+Quantiles</h2>
+<p>Let <span class="math inline">\(R_p\)</span> denote the portfolio
+return over a fixed horizon <span class="math inline">\(T\)</span>
+(e.g., 1 day, 10 days). Define <strong>loss</strong> as: <span
+class="math display">\[
+L = -R_p
+\]</span></p>
+<p><strong>Sign convention:</strong> * Positive <span
+class="math inline">\(L\)</span> = Loss * Negative <span
+class="math inline">\(L\)</span> = Gain</p>
+<p>The distribution of <span class="math inline">\(L\)</span> encodes
+all risk information.</p>
+<h3 id="the-loss-distribution">The Loss Distribution</h3>
+<p>For a portfolio with initial value <span
+class="math inline">\(V_0\)</span>: <span class="math display">\[
+\text{Profit/Loss} = V_0 R_p = -V_0 L
+\]</span></p>
+<p><strong>Example:</strong> If <span class="math inline">\(R_p \sim
+N(0.001, 0.01^2)\)</span> (daily), then <span class="math display">\[
+L \sim N(-0.001, 0.01^2)
+\]</span></p>
+<p>The left tail of <span class="math inline">\(R_p\)</span> corresponds
+to the right tail of <span class="math inline">\(L\)</span>.</p>
+</section>
+<section class="slide">
+<h3 id="quantiles-of-a-distribution">Quantiles of a Distribution</h3>
+<p>For a random variable <span class="math inline">\(X\)</span> with CDF
+<span class="math inline">\(F_X(x) = \mathbb{P}(X \le x)\)</span>, the
+<span class="math inline">\(\alpha\)</span><strong>-quantile</strong>
+is:</p>
+<p><span class="math display">\[
+q_\alpha = \inf\{x : F_X(x) \ge \alpha\} = F_X^{-1}(\alpha)
+\]</span></p>
+<p><strong>Interpretation:</strong></p>
+<p>With probability <span class="math inline">\(\alpha\)</span>, the
+outcome does not exceed <span
+class="math inline">\(q_\alpha\)</span>.</p>
+<p><strong>Common quantiles:</strong></p>
+<ul>
+<li><span class="math inline">\(q_{0.5}\)</span> = median</li>
+<li><span class="math inline">\(q_{0.95}\)</span> = 95th percentile
+(exceeded 5% of the time)</li>
+<li><span class="math inline">\(q_{0.99}\)</span> = 99th percentile
+(exceeded 1% of the time)</li>
+</ul>
+<p>For the <strong>standard normal</strong> <span
+class="math inline">\(Z \sim N(0,1)\)</span>:</p>
+<ul>
+<li><span class="math inline">\(q_{0.95} \approx 1.645\)</span></li>
+<li><span class="math inline">\(q_{0.99} \approx 2.326\)</span></li>
+<li><span class="math inline">\(q_{0.999} \approx 3.090\)</span></li>
+</ul>
+</section>
+<section class="slide">
+<h3 id="visualizing-quantiles">Visualizing Quantiles</h3>
+<div data-align="center">
+<p><img src="Figures/loss_distribution_quantiles.png" alt="Loss Distribution and Quantiles" style="width:85%;"/></p>
+</div>
+<p><em>Figure: Loss distribution with VaR at 95% and 99% confidence
+levels. The shaded regions show the probability mass beyond each VaR
+threshold. VaR captures a single quantile but ignores the severity of
+losses beyond that point.</em></p>
+<p><strong>Key observation:</strong></p>
+<p>VaR tells us <strong>where</strong> the <span
+class="math inline">\(\alpha\)</span>-quantile is, but not <strong>how
+bad</strong> losses can be beyond that point.</p>
+<p>This is a fundamental limitation (more on this later).</p>
+</section>
+<section class="slide">
+<h2 id="definition-of-value-at-risk">4. Definition of Value at Risk</h2>
+<p>The <strong>Value at Risk</strong> at confidence level <span
+class="math inline">\(\alpha\)</span> over horizon <span
+class="math inline">\(T\)</span> is:</p>
+<p><span class="math display">\[
+\text{VaR}_\alpha(L) = \inf\{x : \mathbb{P}(L \le x) \ge \alpha\}
+\]</span></p>
+<p><strong>Alternative formulation:</strong> For continuous
+distributions,</p>
+<p><span class="math display">\[
+\mathbb{P}(L \le \text{VaR}_\alpha) = \alpha
+\]</span></p>
+<p>In words:</p>
+<blockquote>
+<p>VaR is the worst loss not exceeded with probability <span
+class="math inline">\(\alpha\)</span>.</p>
+</blockquote>
+<p>Or equivalently:</p>
+<blockquote>
+<p>VaR is exceeded with probability <span
+class="math inline">\(1-\alpha\)</span>.</p>
+</blockquote>
+</section>
+<section class="slide">
+<h3 id="interpretation-and-conventions">Interpretation and
+Conventions</h3>
+<p><strong>Standard choices:</strong></p>
+<ul>
+<li><strong>Confidence level:</strong> <span
+class="math inline">\(\alpha = 95\%\)</span> or <span
+class="math inline">\(99\%\)</span></li>
+<li><strong>Horizon:</strong> 1 day, 10 days, or 1 year</li>
+</ul>
+<p><strong>Example statement:</strong></p>
+<p>“The 1-day 99% VaR is $2 million.”</p>
+<p><strong>Meaning:</strong></p>
+<ul>
+<li>Horizon: 1 day</li>
+<li>Confidence: 99%</li>
+<li>Interpretation: We expect to lose more than $2M on only 1% of
+days</li>
+</ul>
+<p><strong>Two sign conventions:</strong></p>
+<ol type="1">
+<li><strong>Loss convention</strong> (used here): VaR is a positive
+number representing potential loss</li>
+<li><strong>Return convention:</strong> VaR is negative, representing
+the return threshold</li>
+</ol>
+<p>We use the loss convention: <span
+class="math inline">\(\text{VaR}_\alpha(L) &gt; 0\)</span> means
+potential loss.</p>
+</section>
+<section class="slide">
+<h3 id="var-in-terms-of-returns">VaR in Terms of Returns</h3>
+<p>If we work with returns <span class="math inline">\(R_p\)</span>
+instead of losses <span class="math inline">\(L = -R_p\)</span>:</p>
+<p><span class="math display">\[
+\text{VaR}_\alpha = -F_R^{-1}(1-\alpha)
+\]</span></p>
+<p>where <span class="math inline">\(F_R\)</span> is the CDF of
+returns.</p>
+<p><strong>Example:</strong> For <span class="math inline">\(\alpha =
+95\%\)</span>:</p>
+<p><span class="math display">\[
+\text{VaR}_{0.95} = -q_{0.05}^R
+\]</span></p>
+<p>where <span class="math inline">\(q_{0.05}^R\)</span> is the 5th
+percentile of the return distribution.</p>
+<p><strong>For dollar VaR:</strong></p>
+<p><span class="math display">\[
+\text{VaR}_\alpha^{\$} = V_0 \times \text{VaR}_\alpha
+\]</span></p>
+<p>where <span class="math inline">\(V_0\)</span> is the portfolio
+value.</p>
+</section>
+<section class="slide">
+<h3 id="relationship-to-utility-theory">Relationship to Utility
+Theory</h3>
+<p>VaR can be connected to utility through the <strong>certainty
+equivalent</strong> concept.</p>
+<p>Recall from Lecture 09:</p>
+<p><span class="math display">\[
+u(CE) = \mathbb{E}[u(W)]
+\]</span></p>
+<p>VaR is related but simpler—it ignores utility curvature and focuses
+solely on the quantile.</p>
+<p><strong>Key difference:</strong></p>
+<ul>
+<li><strong>Certainty equivalent:</strong> Captures full risk aversion
+via <span class="math inline">\(u\)</span></li>
+<li><strong>VaR:</strong> Captures only distributional location
+(quantile)</li>
+</ul>
+<p>VaR is easier to compute but loses information about preferences.</p>
+<p><strong>Example:</strong> Two investors with different <span
+class="math inline">\(u\)</span> will have different CEs for the same
+lottery, but identical VaR.</p>
+<p>VaR is <strong>preference-free</strong>—it describes the
+distribution, not the investor’s attitude toward risk.</p>
+</section>
+<section class="slide">
+<h2 id="computing-var-three-methods">5. Computing VaR: Three
+Methods</h2>
+<p>There are three main approaches to computing VaR:</p>
+<ol type="1">
+<li><strong>Parametric (Variance-Covariance) Method</strong>
+<ul>
+<li>Assume returns follow a known distribution (usually normal)</li>
+<li>Use analytical formulas</li>
+<li>Fast but relies on distributional assumptions</li>
+</ul></li>
+<li><strong>Historical Simulation</strong>
+<ul>
+<li>Use empirical distribution of past returns</li>
+<li>No distributional assumptions</li>
+<li>Simple but assumes past predicts future</li>
+</ul></li>
+<li><strong>Monte Carlo Simulation</strong>
+<ul>
+<li>Simulate returns from a specified model</li>
+<li>Flexible and accurate</li>
+<li>Computationally intensive</li>
+</ul></li>
+</ol>
+<p>We’ll cover each in detail.</p>
+</section>
+<section class="slide">
+<h2 id="parametric-var-with-normal-returns">6. Parametric VaR with
+Normal Returns</h2>
+<p>Assume portfolio returns are normally distributed:</p>
+<p><span class="math display">\[
+R_p \sim N(\mu, \sigma^2)
+\]</span></p>
+<p>Then losses <span class="math inline">\(L = -R_p\)</span> are also
+normal:</p>
+<p><span class="math display">\[
+L \sim N(-\mu, \sigma^2)
+\]</span></p>
+<h3 id="derivation-of-normal-var">Derivation of Normal VaR</h3>
+<p>For <span class="math inline">\(L \sim N(-\mu, \sigma^2)\)</span>,
+the <span class="math inline">\(\alpha\)</span>-quantile is:</p>
+<p><span class="math display">\[
+\text{VaR}_\alpha = -\mu + \sigma \cdot z_\alpha
+\]</span></p>
+<p>where <span class="math inline">\(z_\alpha =
+\Phi^{-1}(\alpha)\)</span> is the <span
+class="math inline">\(\alpha\)</span>-quantile of the standard normal
+<span class="math inline">\(N(0,1)\)</span>.</p>
+<p><strong>Proof:</strong></p>
+<p>Standardize <span class="math inline">\(L\)</span>:</p>
+<p><span class="math display">\[
+\frac{L - (-\mu)}{\sigma} = \frac{L + \mu}{\sigma} \sim N(0,1)
+\]</span></p>
+<p>The <span class="math inline">\(\alpha\)</span>-quantile
+satisfies:</p>
+<p><span class="math display">\[
+\mathbb{P}(L \le \text{VaR}_\alpha) = \alpha
+\]</span></p>
+<p><span class="math display">\[
+\mathbb{P}\left(\frac{L + \mu}{\sigma} \le \frac{\text{VaR}_\alpha +
+\mu}{\sigma}\right) = \alpha
+\]</span></p>
+<p><span class="math display">\[
+\Phi\left(\frac{\text{VaR}_\alpha + \mu}{\sigma}\right) = \alpha
+\]</span></p>
+<p><span class="math display">\[
+\frac{\text{VaR}_\alpha + \mu}{\sigma} = z_\alpha
+\]</span></p>
+<p><span class="math display">\[
+\text{VaR}_\alpha = -\mu + \sigma z_\alpha
+\]</span></p>
+</section>
+<section class="slide">
+<h3 id="standard-normal-quantiles">Standard Normal Quantiles</h3>
+<p>For reference:</p>
+<table>
+<thead>
+<tr>
+<th>Confidence <span class="math inline">\(\alpha\)</span></th>
+<th><span class="math inline">\(z_\alpha\)</span></th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>90%</td>
+<td>1.282</td>
+<td>Exceeded 10% of the time</td>
+</tr>
+<tr>
+<td>95%</td>
+<td>1.645</td>
+<td>Exceeded 5% of the time</td>
+</tr>
+<tr>
+<td>99%</td>
+<td>2.326</td>
+<td>Exceeded 1% of the time</td>
+</tr>
+<tr>
+<td>99.5%</td>
+<td>2.576</td>
+<td>Exceeded 0.5% of the time</td>
+</tr>
+<tr>
+<td>99.9%</td>
+<td>3.090</td>
+<td>Exceeded 0.1% of the time</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note:</strong> These are for the <strong>upper tail</strong>
+of <span class="math inline">\(N(0,1)\)</span>.</p>
+<p>For the lower tail (relevant for returns), we use <span
+class="math inline">\(z_{1-\alpha} = -z_\alpha\)</span>.</p>
+</section>
+<section class="slide">
+<h3 id="parametric-var-formula-summary">Parametric VaR Formula
+(Summary)</h3>
+<p>For returns <span class="math inline">\(R_p \sim N(\mu,
+\sigma^2)\)</span>:</p>
+<p><span class="math display">\[
+\boxed{\text{VaR}_\alpha = \sigma z_\alpha - \mu}
+\]</span></p>
+<p>Often <span class="math inline">\(\mu\)</span> is small relative to
+<span class="math inline">\(\sigma z_\alpha\)</span>, so:</p>
+<p><span class="math display">\[
+\text{VaR}_\alpha \approx \sigma z_\alpha
+\]</span></p>
+<p><strong>Dollar VaR:</strong></p>
+<p><span class="math display">\[
+\text{VaR}_\alpha^{\$} = V_0(\sigma z_\alpha - \mu)
+\]</span></p>
+<p><strong>Approximation for small <span
+class="math inline">\(\mu\)</span>:</strong></p>
+<p><span class="math display">\[
+\text{VaR}_\alpha^{\$} \approx V_0 \sigma z_\alpha
+\]</span></p>
+<p>This is the form most commonly used in practice.</p>
+</section>
+<section class="slide">
+<h3 id="numerical-example-1-single-asset-var">Numerical Example 1:
+Single Asset VaR</h3>
+<p>Consider a portfolio invested in a single stock:</p>
+<ul>
+<li>Initial value: <span class="math inline">\(V_0 =
+\$1,000,000\)</span></li>
+<li>Expected daily return: <span class="math inline">\(\mu =
+0.05\%\)</span> (roughly 12% annualized)</li>
+<li>Daily volatility: <span class="math inline">\(\sigma =
+2\%\)</span></li>
+<li>Confidence level: <span class="math inline">\(\alpha =
+95\%\)</span></li>
+</ul>
+<p><strong>Compute 1-day 95% VaR:</strong></p>
+<p><span class="math display">\[
+\text{VaR}_{0.95} = \sigma z_{0.95} - \mu = 0.02 \times 1.645 - 0.0005 =
+0.0329 - 0.0005 = 0.0324 = 3.24\%
+\]</span></p>
+<p><strong>Dollar VaR:</strong></p>
+<p><span class="math display">\[
+\text{VaR}_{0.95}^{\$} = 1,000,000 \times 0.0324 = \$32,400
+\]</span></p>
+<p><strong>Interpretation:</strong> We expect to lose more than $32,400
+on 5% of days (roughly 1 day per month).</p>
+</section>
+<section class="slide">
+<h3 id="numerical-example-2-multi-asset-portfolio-var">Numerical Example
+2: Multi-Asset Portfolio VaR</h3>
+<p>Consider a portfolio with two assets:</p>
+<ul>
+<li>Asset 1: <span class="math inline">\(w_1 = 60\%\)</span>, <span
+class="math inline">\(\sigma_1 = 15\%\)</span> (annual)</li>
+<li>Asset 2: <span class="math inline">\(w_2 = 40\%\)</span>, <span
+class="math inline">\(\sigma_2 = 25\%\)</span> (annual)</li>
+<li>Correlation: <span class="math inline">\(\rho_{12} =
+0.4\)</span></li>
+<li>Initial value: <span class="math inline">\(V_0 =
+\$5,000,000\)</span></li>
+<li>Expected annual return: <span class="math inline">\(\mu_p =
+8\%\)</span></li>
+<li>Horizon: 1 year</li>
+<li>Confidence: 99%</li>
+</ul>
+<p><strong>Step 1: Calculate portfolio variance</strong></p>
+<p><span class="math display">\[
+\sigma_p^2 = w_1^2 \sigma_1^2 + w_2^2 \sigma_2^2 + 2w_1 w_2 \rho_{12}
+\sigma_1 \sigma_2
+\]</span></p>
+<p><span class="math display">\[
+= (0.6)^2(0.15)^2 + (0.4)^2(0.25)^2 + 2(0.6)(0.4)(0.4)(0.15)(0.25)
+\]</span></p>
+<p><span class="math display">\[
+= 0.0081 + 0.01 + 0.0036 = 0.0217
+\]</span></p>
+<p><span class="math display">\[
+\sigma_p = \sqrt{0.0217} = 14.73\%
+\]</span></p>
+<p><strong>Step 2: Calculate VaR</strong></p>
+<p><span class="math display">\[
+\text{VaR}_{0.99} = \sigma_p z_{0.99} - \mu_p = 0.1473 \times 2.326 -
+0.08 = 0.3427 - 0.08 = 0.2627 = 26.27\%
+\]</span></p>
+<p><strong>Step 3: Dollar VaR</strong></p>
+<p><span class="math display">\[
+\text{VaR}_{0.99}^{\$} = 5,000,000 \times 0.2627 = \$1,313,500
+\]</span></p>
+<p><strong>Interpretation:</strong> With 99% confidence, annual losses
+will not exceed $1.31M.</p>
+<p>Or: We expect to lose more than $1.31M in 1 out of 100 years.</p>
+</section>
+<section class="slide">
+<h3 id="time-scaling-of-var">Time Scaling of VaR</h3>
+<p>A common (but imperfect) approximation: VaR scales with the
+<strong>square root of time</strong>.</p>
+<p>For a <span class="math inline">\(T\)</span>-period horizon:</p>
+<p><span class="math display">\[
+\text{VaR}_\alpha(T) = \sqrt{T} \times \text{VaR}_\alpha(1)
+\]</span></p>
+<p><strong>Assumptions:</strong></p>
+<ul>
+<li>Returns are i.i.d. normal</li>
+<li>No autocorrelation</li>
+<li>No time-varying volatility</li>
+</ul>
+<p><strong>Example:</strong> Scale 1-day VaR to 10-day VaR:</p>
+<p><span class="math display">\[
+\text{VaR}_{10} = \sqrt{10} \times \text{VaR}_1 \approx 3.16 \times
+\text{VaR}_1
+\]</span></p>
+<p><strong>Warning:</strong> This scaling is approximate and breaks down
+for:</p>
+<ul>
+<li>Non-normal distributions (especially fat tails)</li>
+<li>Portfolios with options (nonlinear payoffs)</li>
+<li>Mean-reverting assets</li>
+</ul>
+<p><strong>Better approach:</strong> Compute VaR directly for the
+desired horizon using the full model.</p>
+</section>
+<section class="slide">
+<h3 id="parametric-var-for-portfolios-general-formula">Parametric VaR
+for Portfolios: General Formula</h3>
+<p>For a portfolio with weights <span class="math inline">\(w \in
+\mathbb{R}^n\)</span> and return covariance matrix <span
+class="math inline">\(\Sigma\)</span>:</p>
+<p><span class="math display">\[
+\sigma_p = \sqrt{w^\top \Sigma w}
+\]</span></p>
+<p><span class="math display">\[
+\text{VaR}_\alpha = \sigma_p z_\alpha - w^\top \mu
+\]</span></p>
+<p><strong>Marginal VaR:</strong> Contribution of asset <span
+class="math inline">\(i\)</span> to portfolio VaR:</p>
+<p><span class="math display">\[
+\frac{\partial \text{VaR}_\alpha}{\partial w_i} = z_\alpha \frac{(\Sigma
+w)_i}{\sigma_p} - \mu_i
+\]</span></p>
+<p>This measures how VaR changes when we increase allocation to asset
+<span class="math inline">\(i\)</span>.</p>
+<p><strong>Component VaR:</strong> How much of total VaR is attributable
+to asset <span class="math inline">\(i\)</span>:</p>
+<p><span class="math display">\[
+\text{CVaR}_i = w_i \times \frac{\partial \text{VaR}_\alpha}{\partial
+w_i}
+\]</span></p>
+<p><strong>Property:</strong> Component VaRs sum to total VaR:</p>
+<p><span class="math display">\[
+\sum_{i=1}^n \text{CVaR}_i = \text{VaR}_\alpha
+\]</span></p>
+<p>This decomposition is useful for risk attribution and portfolio
+management.</p>
+</section>
+<section class="slide">
+<h2 id="historical-simulation-var">7. Historical Simulation VaR</h2>
+<p><strong>Idea:</strong> Use the empirical distribution of past returns
+to estimate VaR.</p>
+<p><strong>Assumptions:</strong></p>
+<ul>
+<li>The past is representative of the future</li>
+<li>No distributional assumptions (non-parametric)</li>
+</ul>
+<h3 id="algorithm">Algorithm</h3>
+<ol type="1">
+<li><p>Collect historical returns: <span class="math inline">\(r_1, r_2,
+\ldots, r_T\)</span> (e.g., daily returns over past 250 days)</p></li>
+<li><p>Convert to losses: <span class="math inline">\(\ell_t =
+-r_t\)</span> for <span class="math inline">\(t = 1, \ldots,
+T\)</span></p></li>
+<li><p>Sort losses in ascending order: <span
+class="math inline">\(\ell_{(1)} \le \ell_{(2)} \le \cdots \le
+\ell_{(T)}\)</span></p></li>
+<li><p>Find the <span class="math inline">\(\alpha\)</span>-quantile:
+<span class="math inline">\(\text{VaR}_\alpha = \ell_{(\lceil \alpha T
+\rceil)}\)</span></p></li>
+</ol>
+<p>where <span class="math inline">\(\lceil x \rceil\)</span> denotes
+rounding up to the nearest integer.</p>
+<p><strong>Example:</strong> For 95% VaR with <span
+class="math inline">\(T = 250\)</span> days:</p>
+<p><span class="math display">\[
+\lceil 0.95 \times 250 \rceil = 238
+\]</span></p>
+<p>So <span class="math inline">\(\text{VaR}_{0.95}\)</span> is the
+238th worst loss out of 250 observations.</p>
+</section>
+<section class="slide">
+<h3 id="numerical-example-historical-simulation">Numerical Example:
+Historical Simulation</h3>
+<p>Suppose we have 100 days of historical returns for a portfolio. Here
+are the 10 worst returns:</p>
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Return</th>
+<th>Loss</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>-5.2%</td>
+<td>5.2%</td>
+</tr>
+<tr>
+<td>2</td>
+<td>-4.8%</td>
+<td>4.8%</td>
+</tr>
+<tr>
+<td>3</td>
+<td>-4.1%</td>
+<td>4.1%</td>
+</tr>
+<tr>
+<td>4</td>
+<td>-3.7%</td>
+<td>3.7%</td>
+</tr>
+<tr>
+<td>5</td>
+<td>-3.5%</td>
+<td>3.5%</td>
+</tr>
+<tr>
+<td>6</td>
+<td>-3.2%</td>
+<td>3.2%</td>
+</tr>
+<tr>
+<td>7</td>
+<td>-2.9%</td>
+<td>2.9%</td>
+</tr>
+<tr>
+<td>8</td>
+<td>-2.7%</td>
+<td>2.7%</td>
+</tr>
+<tr>
+<td>9</td>
+<td>-2.5%</td>
+<td>2.5%</td>
+</tr>
+<tr>
+<td>10</td>
+<td>-2.3%</td>
+<td>2.3%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>95% VaR:</strong> <span class="math inline">\(\lceil 0.95
+\times 100 \rceil = 95\)</span>th worst loss</p>
+<p>Looking at our sorted data, the 95th observation (5th worst return)
+gives:</p>
+<p><span class="math display">\[
+\text{VaR}_{0.95} = 3.5\%
+\]</span></p>
+<p><strong>99% VaR:</strong> <span class="math inline">\(\lceil 0.99
+\times 100 \rceil = 99\)</span>th worst loss</p>
+<p><span class="math display">\[
+\text{VaR}_{0.99} = 4.8\%
+\]</span></p>
+<p><strong>For dollar VaR with <span class="math inline">\(V_0 =
+\$2,000,000\)</span>:</strong></p>
+<p><span class="math display">\[
+\text{VaR}_{0.95}^{\$} = 2,000,000 \times 0.035 = \$70,000
+\]</span></p>
+<p><span class="math display">\[
+\text{VaR}_{0.99}^{\$} = 2,000,000 \times 0.048 = \$96,000
+\]</span></p>
+</section>
+<section class="slide">
+<h3
+id="advantages-and-disadvantages-of-historical-simulation">Advantages
+and Disadvantages of Historical Simulation</h3>
+<p><strong>Advantages:</strong></p>
+<ol type="1">
+<li><strong>No distributional assumptions:</strong> Works for any return
+distribution</li>
+<li><strong>Captures fat tails:</strong> If historical data has extreme
+events, they’re reflected in VaR</li>
+<li><strong>Simple to implement:</strong> Just sort and pick the
+quantile</li>
+<li><strong>Captures empirical correlations:</strong> No need to
+estimate a covariance matrix</li>
+</ol>
+<p><strong>Disadvantages:</strong></p>
+<ol type="1">
+<li><strong>Past ≠ Future:</strong> Historical returns may not represent
+future risks</li>
+<li><strong>Limited data:</strong> With only <span
+class="math inline">\(T\)</span> observations, we can’t estimate
+quantiles beyond <span class="math inline">\(1/T\)</span>
+<ul>
+<li>Example: With 250 days of data, we can’t reliably estimate 99.9%
+VaR</li>
+</ul></li>
+<li><strong>Discrete jumps:</strong> Adding or removing an extreme
+observation changes VaR discontinuously</li>
+<li><strong>Ignores current conditions:</strong> Treats all historical
+periods equally</li>
+<li><strong>Ghost effects:</strong> Extreme events 1 year ago still
+affect VaR today, then suddenly drop out</li>
+</ol>
+<p><strong>Improvements:</strong></p>
+<ul>
+<li><strong>Weighted historical simulation:</strong> Give more weight to
+recent observations</li>
+<li><strong>Filtered historical simulation:</strong> Adjust returns for
+time-varying volatility (GARCH)</li>
+</ul>
+</section>
+<section class="slide">
+<h2 id="monte-carlo-var">8. Monte Carlo VaR</h2>
+<p><strong>Idea:</strong> Simulate many paths of portfolio returns from
+a specified model, then compute VaR from the simulated distribution.</p>
+<h3 id="algorithm-1">Algorithm</h3>
+<ol type="1">
+<li><p><strong>Specify a model</strong> for return dynamics (e.g.,
+geometric Brownian motion, GARCH, jump-diffusion)</p></li>
+<li><p><strong>Estimate parameters</strong> from historical
+data</p></li>
+<li><p><strong>Simulate <span class="math inline">\(N\)</span>
+paths</strong> of returns over horizon <span
+class="math inline">\(T\)</span>: <span class="math display">\[
+r_1^{(1)}, r_2^{(1)}, \ldots, r_N^{(1)}
+\]</span></p></li>
+<li><p><strong>Compute losses:</strong> <span
+class="math inline">\(\ell_i = -r_i^{(1)}\)</span> for <span
+class="math inline">\(i = 1, \ldots, N\)</span></p></li>
+<li><p><strong>Sort and extract quantile:</strong> As in historical
+simulation</p></li>
+</ol>
+<p><strong>Typical choice:</strong> <span class="math inline">\(N =
+10,000\)</span> to <span class="math inline">\(100,000\)</span>
+simulations</p>
+</section>
+<section class="slide">
+<h3 id="example-monte-carlo-var-with-geometric-brownian-motion">Example:
+Monte Carlo VaR with Geometric Brownian Motion</h3>
+<p>Assume the portfolio value follows:</p>
+<p><span class="math display">\[
+dS_t = \mu S_t dt + \sigma S_t dW_t
+\]</span></p>
+<p>Over a small time step <span class="math inline">\(\Delta t\)</span>,
+the return is approximately:</p>
+<p><span class="math display">\[
+r_t \approx \mu \Delta t + \sigma \sqrt{\Delta t} Z_t, \quad Z_t \sim
+N(0,1)
+\]</span></p>
+<p><strong>Algorithm:</strong></p>
+<ol type="1">
+<li><p>Set parameters: <span class="math inline">\(\mu = 0.08\)</span>,
+<span class="math inline">\(\sigma = 0.2\)</span>, <span
+class="math inline">\(\Delta t = 1/252\)</span> (1 trading day)</p></li>
+<li><p>Simulate <span class="math inline">\(N = 10,000\)</span> returns:
+<span class="math display">\[
+r_i = 0.08 \times \frac{1}{252} + 0.2 \times \sqrt{\frac{1}{252}} \times
+Z_i, \quad Z_i \sim N(0,1)
+\]</span></p></li>
+<li><p>Convert to losses: <span class="math inline">\(\ell_i =
+-r_i\)</span></p></li>
+<li><p>Sort: <span class="math inline">\(\ell_{(1)} \le \ell_{(2)} \le
+\cdots \le \ell_{(10000)}\)</span></p></li>
+<li><p>Extract 95% VaR: <span class="math inline">\(\text{VaR}_{0.95} =
+\ell_{(9500)}\)</span></p></li>
+</ol>
+<p><strong>Result:</strong> With these parameters, Monte Carlo
+simulation gives approximately the same result as the parametric method
+(since we assumed normality).</p>
+<p>Monte Carlo is more powerful when the model is
+<strong>non-normal</strong> or when the portfolio contains
+<strong>options</strong>.</p>
+</section>
+<section class="slide">
+<h3 id="monte-carlo-var-with-fat-tails">Monte Carlo VaR with Fat
+Tails</h3>
+<p><strong>Motivation:</strong> Empirical returns often have heavier
+tails than normal (more extreme events).</p>
+<p><strong>Model:</strong> Use a <strong>Student’s
+t-distribution</strong> with <span class="math inline">\(\nu\)</span>
+degrees of freedom:</p>
+<p><span class="math display">\[
+r_t \sim t_\nu(\mu, \sigma^2)
+\]</span></p>
+<p>For <span class="math inline">\(\nu &lt; \infty\)</span>, this has
+fatter tails than normal. As <span class="math inline">\(\nu \to
+\infty\)</span>, it converges to normal.</p>
+<p><strong>Typical values:</strong> <span class="math inline">\(\nu =
+4\)</span> to <span class="math inline">\(10\)</span> for financial
+returns</p>
+<p><strong>Simulation:</strong></p>
+<ol type="1">
+<li><p>Generate <span class="math inline">\(Z_i \sim
+t_\nu\)</span></p></li>
+<li><p>Compute returns: <span class="math inline">\(r_i = \mu + \sigma
+Z_i\)</span></p></li>
+<li><p>Proceed as before</p></li>
+</ol>
+<p><strong>Result:</strong> VaR estimates are <strong>larger</strong>
+with fat-tailed distributions.</p>
+<p><strong>Example:</strong> For <span class="math inline">\(\mu =
+0\)</span>, <span class="math inline">\(\sigma = 2\%\)</span> daily:</p>
+<ul>
+<li><strong>Normal distribution:</strong> <span
+class="math inline">\(\text{VaR}_{0.99} = 2\% \times 2.326 =
+4.65\%\)</span></li>
+<li><strong>t-distribution (<span class="math inline">\(\nu =
+5\)</span>):</strong> <span class="math inline">\(\text{VaR}_{0.99}
+\approx 2\% \times 3.36 = 6.72\%\)</span></li>
+</ul>
+<p>Fat tails increase VaR by about 45% in this example.</p>
+</section>
+<section class="slide">
+<h3 id="advantages-and-disadvantages-of-monte-carlo">Advantages and
+Disadvantages of Monte Carlo</h3>
+<p><strong>Advantages:</strong></p>
+<ol type="1">
+<li><strong>Flexible:</strong> Can incorporate complex dynamics (jumps,
+stochastic volatility, regime switches)</li>
+<li><strong>Handles nonlinearity:</strong> Works for portfolios with
+options and derivatives</li>
+<li><strong>Captures path dependence:</strong> Can model barriers, Asian
+options, etc.</li>
+<li><strong>Stress testing:</strong> Can simulate specific
+scenarios</li>
+<li><strong>Arbitrary quantiles:</strong> With enough simulations, can
+estimate any quantile</li>
+</ol>
+<p><strong>Disadvantages:</strong></p>
+<ol type="1">
+<li><strong>Computationally intensive:</strong> Requires thousands of
+simulations</li>
+<li><strong>Model risk:</strong> Results depend on the chosen model</li>
+<li><strong>Parameter estimation:</strong> Requires careful
+calibration</li>
+<li><strong>No closed-form solution:</strong> Unlike parametric VaR</li>
+<li><strong>Convergence:</strong> Accuracy depends on number of
+simulations</li>
+</ol>
+<p><strong>Rule of thumb:</strong> To estimate the <span
+class="math inline">\(\alpha\)</span>-quantile with reasonable accuracy,
+need at least <span class="math inline">\(N \sim 100/(1-\alpha)\)</span>
+simulations.</p>
+<ul>
+<li>For 95% VaR: <span class="math inline">\(N \ge 2,000\)</span></li>
+<li>For 99% VaR: <span class="math inline">\(N \ge 10,000\)</span></li>
+<li>For 99.9% VaR: <span class="math inline">\(N \ge
+100,000\)</span></li>
+</ul>
+</section>
+<section class="slide">
+<h3 id="comparison-of-the-three-methods">Comparison of the Three
+Methods</h3>
+<table>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 27%" />
+<col style="width: 25%" />
+<col style="width: 31%" />
+</colgroup>
+<thead>
+<tr>
+<th>Method</th>
+<th>Assumptions</th>
+<th>Advantages</th>
+<th>Best Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Parametric</strong></td>
+<td>Normal returns</td>
+<td>Fast, analytical</td>
+<td>Simple portfolios, stable markets</td>
+</tr>
+<tr>
+<td><strong>Historical</strong></td>
+<td>Past = future</td>
+<td>No model needed</td>
+<td>When concerned about model risk</td>
+</tr>
+<tr>
+<td><strong>Monte Carlo</strong></td>
+<td>Specified model</td>
+<td>Very flexible</td>
+<td>Complex portfolios, options, stress testing</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Practical advice:</strong></p>
+<ul>
+<li><strong>Start with parametric VaR:</strong> Quick estimate, useful
+as a baseline</li>
+<li><strong>Check with historical VaR:</strong> See if normality
+assumption is reasonable</li>
+<li><strong>Use Monte Carlo for:</strong>
+<ul>
+<li>Options and nonlinear payoffs</li>
+<li>Fat-tailed or skewed distributions</li>
+<li>Portfolios with complex risk factors</li>
+</ul></li>
+<li><strong>Report multiple VaR estimates:</strong> Compare methods to
+assess model uncertainty</li>
+</ul>
+<p>In practice, sophisticated institutions use all three methods and
+compare results.</p>
+</section>
+<section class="slide">
+<h2 id="mathematical-properties-of-var">9. Mathematical Properties of
+VaR</h2>
+<p>We now examine VaR’s formal properties and see where it fails to be a
+“coherent” risk measure.</p>
+<h3 id="property-1-positive-homogeneity">Property 1: Positive
+Homogeneity</h3>
+<p>For any <span class="math inline">\(\lambda &gt; 0\)</span>:</p>
+<p><span class="math display">\[
+\text{VaR}_\alpha(\lambda L) = \lambda \, \text{VaR}_\alpha(L)
+\]</span></p>
+<p><strong>Proof:</strong> If <span class="math inline">\(\mathbb{P}(L
+\le x) = \alpha\)</span>, then <span
+class="math inline">\(\mathbb{P}(\lambda L \le \lambda x) =
+\alpha\)</span>.</p>
+<p>Therefore, <span class="math inline">\(\text{VaR}_\alpha(\lambda L) =
+\lambda x = \lambda \, \text{VaR}_\alpha(L)\)</span>. ✓</p>
+<p><strong>Interpretation:</strong> Doubling position size doubles
+VaR.</p>
+<p>This is intuitive and desirable.</p>
+</section>
+<section class="slide">
+<h3 id="property-2-translation-invariance">Property 2: Translation
+Invariance</h3>
+<p>For any constant <span class="math inline">\(c\)</span>:</p>
+<p><span class="math display">\[
+\text{VaR}_\alpha(L + c) = \text{VaR}_\alpha(L) + c
+\]</span></p>
+<p><strong>Proof:</strong> <span class="math inline">\(\mathbb{P}(L + c
+\le x) = \mathbb{P}(L \le x - c) = \alpha\)</span> when <span
+class="math inline">\(x - c = \text{VaR}_\alpha(L)\)</span>.</p>
+<p>So <span class="math inline">\(\text{VaR}_\alpha(L + c) =
+\text{VaR}_\alpha(L) + c\)</span>. ✓</p>
+<p><strong>Interpretation:</strong> Adding a certain loss <span
+class="math inline">\(c\)</span> increases VaR by exactly <span
+class="math inline">\(c\)</span>.</p>
+<p>This is also intuitive.</p>
+</section>
+<section class="slide">
+<h3 id="property-3-monotonicity">Property 3: Monotonicity</h3>
+<p>If <span class="math inline">\(L_1 \le L_2\)</span> almost surely,
+then:</p>
+<p><span class="math display">\[
+\text{VaR}_\alpha(L_1) \le \text{VaR}_\alpha(L_2)
+\]</span></p>
+<p><strong>Proof:</strong> For any <span
+class="math inline">\(x\)</span>:</p>
+<p><span class="math display">\[
+\{L_1 \le x\} \supseteq \{L_2 \le x\}
+\]</span></p>
+<p>So <span class="math inline">\(\mathbb{P}(L_1 \le x) \ge
+\mathbb{P}(L_2 \le x)\)</span>.</p>
+<p>This implies <span class="math inline">\(\text{VaR}_\alpha(L_1) \le
+\text{VaR}_\alpha(L_2)\)</span>. ✓</p>
+<p><strong>Interpretation:</strong> A portfolio that always has smaller
+losses has lower VaR.</p>
+<p>Reasonable.</p>
+</section>
+<section class="slide">
+<h3 id="property-4-lack-of-subadditivity">Property 4: Lack of
+Subadditivity</h3>
+<p><strong>Subadditivity</strong> would require:</p>
+<p><span class="math display">\[
+\text{VaR}_\alpha(L_1 + L_2) \le \text{VaR}_\alpha(L_1) +
+\text{VaR}_\alpha(L_2)
+\]</span></p>
+<p><strong>Interpretation:</strong> Combining two portfolios should not
+increase total risk.</p>
+<p>This is the <strong>diversification principle</strong>.</p>
+<p><strong>Bad news:</strong> VaR is <strong>not subadditive</strong> in
+general.</p>
+<p><strong>Counterexample:</strong> See next slide.</p>
+</section>
+<section class="slide">
+<h3 id="counterexample-var-violates-subadditivity">Counterexample: VaR
+Violates Subadditivity</h3>
+<p>Consider two independent bonds, each with:</p>
+<ul>
+<li>Value: $100</li>
+<li>Default probability: 4%</li>
+<li>Recovery: $0 if default, $100 if no default</li>
+</ul>
+<p><strong>Individual VaR at 95%:</strong></p>
+<p>Each bond has:</p>
+<p><span class="math display">\[
+\mathbb{P}(\text{loss} = 0) = 0.96, \quad \mathbb{P}(\text{loss} = 100)
+= 0.04
+\]</span></p>
+<p>Since <span class="math inline">\(\mathbb{P}(\text{loss} \le 0) =
+0.96 &gt; 0.95\)</span>:</p>
+<p><span class="math display">\[
+\text{VaR}_{0.95}(\text{one bond}) = 0
+\]</span></p>
+<p><strong>Portfolio VaR at 95%:</strong></p>
+<p>For two independent bonds, the joint distribution is:</p>
+<ul>
+<li>Loss = 0 with probability <span class="math inline">\(0.96^2 =
+0.9216\)</span></li>
+<li>Loss = 100 with probability <span class="math inline">\(2 \times
+0.96 \times 0.04 = 0.0768\)</span></li>
+<li>Loss = 200 with probability <span class="math inline">\(0.04^2 =
+0.0016\)</span></li>
+</ul>
+<p>Since <span class="math inline">\(\mathbb{P}(\text{loss} \le 0) =
+0.9216 &lt; 0.95\)</span>, we need the next threshold:</p>
+<p><span class="math display">\[
+\mathbb{P}(\text{loss} \le 100) = 0.9216 + 0.0768 = 0.9984 &gt; 0.95
+\]</span></p>
+<p>So:</p>
+<p><span class="math display">\[
+\text{VaR}_{0.95}(\text{two bonds}) = 100
+\]</span></p>
+<p><strong>Subadditivity fails:</strong></p>
+<p><span class="math display">\[
+100 = \text{VaR}_{0.95}(L_1 + L_2) &gt; \text{VaR}_{0.95}(L_1) +
+\text{VaR}_{0.95}(L_2) = 0 + 0 = 0
+\]</span></p>
+<p><strong>Interpretation:</strong> Diversifying (holding two bonds
+instead of one) <strong>increases</strong> VaR!</p>
+<p>This is paradoxical and violates the diversification principle.</p>
+</section>
+<section class="slide">
+<h3 id="why-var-fails-subadditivity">Why VaR Fails Subadditivity</h3>
+<p>The problem is that VaR <strong>ignores the tail beyond the
+quantile</strong>.</p>
+<p>In the bond example:</p>
+<ul>
+<li>Holding one bond: 95% of the time you lose nothing</li>
+<li>Holding two bonds: You’re more likely to lose <em>something</em>
+(small losses from one default)</li>
+<li>But the <em>worst case</em> (two defaults) is rare enough to not
+matter at 95%</li>
+</ul>
+<p>VaR sees only that you’re more likely to exceed the threshold, not
+that the worst outcome is still bounded.</p>
+<p><strong>Key insight:</strong> VaR measures “probability of exceeding
+a threshold” but not “severity of exceedance.”</p>
+<p>This is why we need <strong>Expected Shortfall</strong> (Lecture
+11)—it captures tail severity.</p>
+</section>
+<section class="slide">
+<h3 id="when-is-var-subadditive">When Is VaR Subadditive?</h3>
+<p>VaR <strong>is</strong> subadditive under specific conditions:</p>
+<p><strong>Theorem:</strong> If returns are jointly <strong>elliptically
+distributed</strong> (e.g., multivariate normal), then VaR is
+subadditive.</p>
+<p><strong>Proof sketch:</strong> For elliptical distributions,
+portfolio VaR can be written as:</p>
+<p><span class="math display">\[
+\text{VaR}_\alpha(w^\top R) = w^\top \mu + z_\alpha \sqrt{w^\top \Sigma
+w}
+\]</span></p>
+<p>By the triangle inequality for norms:</p>
+<p><span class="math display">\[
+\sqrt{(w_1 + w_2)^\top \Sigma (w_1 + w_2)} \le \sqrt{w_1^\top \Sigma
+w_1} + \sqrt{w_2^\top \Sigma w_2}
+\]</span></p>
+<p>So subadditivity holds for normal returns. ✓</p>
+<p><strong>But:</strong> Real returns are not normal, especially in the
+tails.</p>
+<p>So VaR fails subadditivity in realistic settings.</p>
+</section>
+<section class="slide">
+<h3 id="summary-properties-of-var">Summary: Properties of VaR</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>VaR Satisfies?</th>
+<th>Implication</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Positive homogeneity</td>
+<td>✓ Yes</td>
+<td>Scales correctly with position size</td>
+</tr>
+<tr>
+<td>Translation invariance</td>
+<td>✓ Yes</td>
+<td>Adding cash affects VaR correctly</td>
+</tr>
+<tr>
+<td>Monotonicity</td>
+<td>✓ Yes</td>
+<td>More loss → higher VaR</td>
+</tr>
+<tr>
+<td><strong>Subadditivity</strong></td>
+<td>✗ No</td>
+<td><strong>May penalize diversification</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The failure of subadditivity is a <strong>critical flaw</strong>.</p>
+<p>It means VaR can:</p>
+<ul>
+<li>Discourage diversification</li>
+<li>Lead to incorrect risk aggregation across divisions</li>
+<li>Violate the principle that “the whole is less risky than the sum of
+parts”</li>
+</ul>
+<p>This motivated the development of <strong>coherent risk
+measures</strong> (Lecture 11).</p>
+</section>
+<section class="slide">
+<h2 id="limitations-and-critique-of-var">10. Limitations and Critique of
+VaR</h2>
+<p>VaR is the most widely used risk measure, but it has serious
+limitations.</p>
+<h3 id="limitation-1-ignores-tail-severity">Limitation 1: Ignores Tail
+Severity</h3>
+<p>VaR tells us the threshold, but not what happens beyond it.</p>
+<p><strong>Example:</strong> Two portfolios with the same VaR:</p>
+<ul>
+<li><strong>Portfolio A:</strong> 99% VaR = $1M; beyond VaR, losses are
+$1.1M</li>
+<li><strong>Portfolio B:</strong> 99% VaR = $1M; beyond VaR, losses can
+reach $100M</li>
+</ul>
+<p>VaR treats these identically, but Portfolio B is far riskier.</p>
+<p><strong>Solution:</strong> Use <strong>Expected Shortfall
+(ES)</strong>, which averages losses beyond VaR.</p>
+</section>
+<section class="slide">
+<h3 id="limitation-2-not-subadditive">Limitation 2: Not Subadditive</h3>
+<p>As we’ve seen, VaR can discourage diversification.</p>
+<p><strong>Real-world consequence:</strong></p>
+<ul>
+<li>Banks with multiple divisions compute VaR for each</li>
+<li>Sum of divisional VaRs may exceed consolidated VaR</li>
+<li>This creates perverse incentives</li>
+</ul>
+<p><strong>Regulatory response:</strong> Basel III moved toward Expected
+Shortfall for this reason.</p>
+</section>
+<section class="slide">
+<h3 id="limitation-3-sensitive-to-distributional-assumptions">Limitation
+3: Sensitive to Distributional Assumptions</h3>
+<p>Parametric VaR assumes normality.</p>
+<p>But returns have:</p>
+<ul>
+<li><strong>Fat tails:</strong> More extreme events than normal
+predicts</li>
+<li><strong>Skewness:</strong> Asymmetric distributions</li>
+<li><strong>Time-varying volatility:</strong> Variance changes over
+time</li>
+</ul>
+<p><strong>Example:</strong> During the 2008 financial crisis, many
+banks exceeded their 99% daily VaR <strong>multiple times per
+week</strong>.</p>
+<p>If VaR were correct, this should happen once per 100 days (2-3 times
+per year).</p>
+<p><strong>Implication:</strong> Parametric VaR can severely
+underestimate risk during crises.</p>
+</section>
+<section class="slide">
+<h3 id="limitation-4-procyclicality">Limitation 4: Procyclicality</h3>
+<p>VaR is <strong>procyclical</strong>—it amplifies market cycles.</p>
+<p><strong>Mechanism:</strong></p>
+<ol type="1">
+<li><strong>Calm markets:</strong> Low historical volatility → Low VaR →
+Traders take more risk</li>
+<li><strong>Market shock:</strong> Volatility spikes → VaR increases
+dramatically</li>
+<li><strong>Forced deleveraging:</strong> Traders must reduce positions
+to meet VaR limits</li>
+<li><strong>Fire sales:</strong> Selling drives prices down, increasing
+volatility further</li>
+<li><strong>Feedback loop:</strong> Higher volatility → Higher VaR →
+More selling</li>
+</ol>
+<p>This happened in:</p>
+<ul>
+<li><strong>1998:</strong> Long-Term Capital Management crisis</li>
+<li><strong>2007-2008:</strong> Financial crisis</li>
+<li><strong>2020:</strong> March COVID-19 sell-off</li>
+</ul>
+<p>VaR-based risk management can <strong>destabilize markets</strong>
+during stress.</p>
+</section>
+<section class="slide">
+<h3 id="limitation-5-model-risk">Limitation 5: Model Risk</h3>
+<p>All VaR methods rely on models or assumptions:</p>
+<ul>
+<li><strong>Parametric:</strong> Assumes normal returns</li>
+<li><strong>Historical:</strong> Assumes past predicts future</li>
+<li><strong>Monte Carlo:</strong> Assumes the specified model is
+correct</li>
+</ul>
+<p><strong>Model risk</strong> is the risk that the model is wrong.</p>
+<p><strong>Example:</strong> In August 2007, Goldman Sachs’ quantitative
+equity funds lost money on multiple days that their models said were
+“25-sigma events” (should happen once per 10^135 years).</p>
+<p>The models were wrong.</p>
+<p><strong>Mitigation:</strong></p>
+<ul>
+<li>Use multiple models and compare</li>
+<li>Stress test beyond VaR</li>
+<li>Supplement with scenario analysis</li>
+</ul>
+</section>
+<section class="slide">
+<h3 id="limitation-6-gaming-and-manipulation">Limitation 6: Gaming and
+Manipulation</h3>
+<p>VaR can be manipulated by:</p>
+<ol type="1">
+<li><strong>Choosing a favorable model:</strong> Use the method that
+gives the lowest VaR</li>
+<li><strong>Selling out-of-the-money options:</strong> Collects premium,
+increases VaR only slightly (but adds extreme tail risk)</li>
+<li><strong>Using longer horizons:</strong> 10-day VaR scales by <span
+class="math inline">\(\sqrt{10}\)</span>, not linearly</li>
+<li><strong>Data selection:</strong> Cherry-pick historical periods with
+low volatility</li>
+</ol>
+<p><strong>Regulatory arbitrage:</strong> Banks optimize portfolios to
+minimize regulatory capital (VaR-based), not actual risk.</p>
+<p><strong>Consequence:</strong> VaR can create a false sense of
+security.</p>
+</section>
+<section class="slide">
+<h3 id="the-2008-financial-crisis-and-var">The 2008 Financial Crisis and
+VaR</h3>
+<p><strong>Before the crisis:</strong></p>
+<ul>
+<li>Banks relied heavily on VaR for risk management</li>
+<li>VaR models showed acceptable risk levels</li>
+<li>CDOs and mortgage-backed securities had low VaR (high credit
+ratings)</li>
+</ul>
+<p><strong>During the crisis:</strong></p>
+<ul>
+<li>VaR was exceeded repeatedly</li>
+<li>Historical correlations broke down</li>
+<li>Tail events occurred far more frequently than models predicted</li>
+</ul>
+<p><strong>Post-crisis consensus:</strong></p>
+<ul>
+<li>VaR is necessary but not sufficient</li>
+<li>Must be supplemented with:
+<ul>
+<li>Stress testing</li>
+<li>Scenario analysis</li>
+<li>Expected Shortfall</li>
+<li>Qualitative risk assessment</li>
+</ul></li>
+</ul>
+<p><strong>Quote from Nassim Taleb:</strong></p>
+<blockquote>
+<p>“VaR is like an airbag that works in a crash, except when you need it
+most.”</p>
+</blockquote>
+</section>
+<section class="slide">
+<h3 id="despite-limitations-var-persists">Despite Limitations, VaR
+Persists</h3>
+<p>Why does VaR remain the industry standard?</p>
+<ol type="1">
+<li><strong>Simplicity:</strong> One number summarizes risk</li>
+<li><strong>Communication:</strong> Easily understood by non-technical
+managers and regulators</li>
+<li><strong>Comparability:</strong> Standardized across
+institutions</li>
+<li><strong>Regulatory acceptance:</strong> Required by Basel
+accords</li>
+<li><strong>Historical momentum:</strong> Infrastructure and systems
+built around it</li>
+</ol>
+<p><strong>Modern best practice:</strong></p>
+<ul>
+<li>Use VaR as <strong>one tool among many</strong></li>
+<li>Supplement with Expected Shortfall</li>
+<li>Conduct regular stress tests</li>
+<li>Maintain adequate capital buffers</li>
+<li>Don’t optimize to minimize VaR—optimize for actual risk</li>
+</ul>
+<p>VaR is a useful risk metric, but a dangerous risk management
+strategy.</p>
+</section>
+<section class="slide">
+<h2 id="exercises">11. Exercises</h2>
+<h3 id="exercise-1-parametric-var-calculation">Exercise 1: Parametric
+VaR Calculation</h3>
+<p>A portfolio has:</p>
+<ul>
+<li>Expected annual return: <span class="math inline">\(\mu =
+10\%\)</span></li>
+<li>Annual volatility: <span class="math inline">\(\sigma =
+25\%\)</span></li>
+<li>Current value: <span class="math inline">\(V_0 =
+\$10,000,000\)</span></li>
+</ul>
+<p>Assume returns are normally distributed.</p>
+<p><strong>Tasks:</strong></p>
+<ol type="1">
+<li>Calculate the 1-year 95% VaR</li>
+<li>Calculate the 1-year 99% VaR</li>
+<li>Calculate the 1-day 95% VaR (assuming 252 trading days per
+year)</li>
+<li>Interpret each result in plain English</li>
+<li>What assumptions are critical for these calculations?</li>
+</ol>
+</section>
+<section class="slide">
+<h3 id="exercise-2-portfolio-var-with-correlation">Exercise 2: Portfolio
+VaR with Correlation</h3>
+<p>Consider a portfolio with two assets:</p>
+<ul>
+<li>Asset A: <span class="math inline">\(w_A = 70\%\)</span>, <span
+class="math inline">\(\sigma_A = 20\%\)</span></li>
+<li>Asset B: <span class="math inline">\(w_B = 30\%\)</span>, <span
+class="math inline">\(\sigma_B = 35\%\)</span></li>
+<li>Correlation: <span class="math inline">\(\rho = 0.3\)</span></li>
+<li>Portfolio value: <span class="math inline">\(V_0 =
+\$5,000,000\)</span></li>
+</ul>
+<p><strong>Tasks:</strong></p>
+<ol type="1">
+<li>Calculate the portfolio volatility <span
+class="math inline">\(\sigma_p\)</span></li>
+<li>Calculate the 99% 1-year VaR</li>
+<li>Recalculate VaR assuming <span class="math inline">\(\rho =
+0\)</span> (uncorrelated assets)</li>
+<li>Recalculate VaR assuming <span class="math inline">\(\rho =
+1\)</span> (perfectly correlated)</li>
+<li>Discuss how correlation affects VaR</li>
+</ol>
+</section>
+<section class="slide">
+<h3 id="exercise-3-historical-simulation-var">Exercise 3: Historical
+Simulation VaR</h3>
+<p>You have the following 20 daily returns (in %):</p>
+<p><span class="math display">\[
+1.2, 0.8, -0.5, 2.1, -1.3, 0.3, -2.8, 1.5, 0.7, -0.9,
+\]</span></p>
+<p><span class="math display">\[
+1.8, -1.7, 0.4, -3.5, 2.3, -0.6, 1.1, -2.1, 0.9, -1.0
+\]</span></p>
+<p><strong>Tasks:</strong></p>
+<ol type="1">
+<li>Sort the returns from worst to best</li>
+<li>Identify the 95% VaR (use the return that is exceeded 5% of the
+time)</li>
+<li>Identify the 90% VaR</li>
+<li>For a portfolio value of $1,000,000, what is the dollar 95%
+VaR?</li>
+<li>What are the main limitations of using only 20 observations?</li>
+</ol>
+</section>
+<section class="slide">
+<h3 id="exercise-4-var-scaling">Exercise 4: VaR Scaling</h3>
+<p>A portfolio has a 1-day 95% VaR of $50,000.</p>
+<p><strong>Tasks:</strong></p>
+<ol type="1">
+<li>Estimate the 10-day 95% VaR using the square-root-of-time rule</li>
+<li>Estimate the 1-month (21 trading days) 95% VaR</li>
+<li>Estimate the 1-year (252 trading days) 95% VaR</li>
+<li>What assumptions are required for this scaling to be valid?</li>
+<li>Give two examples where this scaling would fail</li>
+</ol>
+</section>
+<section class="slide">
+<h3 id="exercise-5-subadditivity-failure">Exercise 5: Subadditivity
+Failure</h3>
+<p>Consider two independent lotteries:</p>
+<ul>
+<li><strong>Lottery A:</strong> Loss of $100 with 3% probability, $0
+otherwise</li>
+<li><strong>Lottery B:</strong> Loss of $100 with 3% probability, $0
+otherwise</li>
+</ul>
+<p><strong>Tasks:</strong></p>
+<ol type="1">
+<li>Calculate <span class="math inline">\(\text{VaR}_{0.95}(A)\)</span>
+and <span class="math inline">\(\text{VaR}_{0.95}(B)\)</span></li>
+<li>Calculate the distribution of losses for the combined position <span
+class="math inline">\(A + B\)</span></li>
+<li>Calculate <span class="math inline">\(\text{VaR}_{0.95}(A +
+B)\)</span></li>
+<li>Show that <span class="math inline">\(\text{VaR}_{0.95}(A + B) &gt;
+\text{VaR}_{0.95}(A) + \text{VaR}_{0.95}(B)\)</span></li>
+<li>Explain intuitively why VaR increases with diversification in this
+case</li>
+<li>How would Expected Shortfall handle this example differently?</li>
+</ol>
+</section>
+<section class="slide">
+<h3 id="exercise-6-var-with-fat-tails">Exercise 6: VaR with Fat
+Tails</h3>
+<p>A portfolio has daily returns that follow a Student’s t-distribution
+with:</p>
+<ul>
+<li>Mean: <span class="math inline">\(\mu = 0.05\%\)</span></li>
+<li>Standard deviation: <span class="math inline">\(\sigma =
+1.5\%\)</span></li>
+<li>Degrees of freedom: <span class="math inline">\(\nu =
+5\)</span></li>
+</ul>
+<p>For <span class="math inline">\(t_5\)</span>, the 99th percentile is
+approximately <span class="math inline">\(z_{0.99} \approx
+3.36\)</span>.</p>
+<p><strong>Tasks:</strong></p>
+<ol type="1">
+<li>Calculate the 99% parametric VaR assuming normal returns</li>
+<li>Calculate the 99% VaR using the t-distribution</li>
+<li>What is the percentage difference between the two estimates?</li>
+<li>Explain why fat tails increase VaR</li>
+<li>What does this imply about VaR based on historical data that
+excludes crisis periods?</li>
+</ol>
+</section>
+<section class="slide">
+<h3 id="exercise-7-backtesting-var">Exercise 7: Backtesting VaR</h3>
+<p>You have computed a 95% daily VaR for a portfolio. Over the past 250
+trading days, your portfolio exceeded the VaR on 20 days.</p>
+<p><strong>Tasks:</strong></p>
+<ol type="1">
+<li>What is the empirical exceedance rate?</li>
+<li>Under the null hypothesis that VaR is correctly specified,
+exceedances should occur 5% of the time. Construct a binomial test: is
+20 exceedances out of 250 days significantly different from 5%?</li>
+<li>The p-value for this test is approximately 0.005. What do you
+conclude?</li>
+<li>List three possible explanations for this result</li>
+<li>What actions should the risk manager take?</li>
+</ol>
+<p><strong>Hint:</strong> Under the null, the number of exceedances
+follows <span class="math inline">\(\text{Binomial}(n=250,
+p=0.05)\)</span>.</p>
+</section>
+<section class="slide">
+<h3 id="exercise-8-var-and-options">Exercise 8: VaR and Options</h3>
+<p>A portfolio consists of:</p>
+<ul>
+<li>Long position in a stock: <span class="math inline">\(S_0 =
+\$100\)</span>, <span class="math inline">\(\sigma = 30\%\)</span></li>
+<li>Short position in a put option: strike <span class="math inline">\(K
+= \$95\)</span>, maturity <span class="math inline">\(T = 1\)</span>
+year</li>
+</ul>
+<p><strong>Tasks:</strong></p>
+<ol type="1">
+<li>Explain why parametric VaR (assuming linear returns) will
+underestimate risk for this portfolio</li>
+<li>Sketch the profit/loss distribution. Is it symmetric?</li>
+<li>Would historical simulation VaR work well if historical data doesn’t
+include large market drops?</li>
+<li>Which VaR method (parametric, historical, Monte Carlo) is most
+appropriate here? Why?</li>
+<li>Describe how you would implement Monte Carlo VaR for this
+portfolio</li>
+</ol>
+</section>
+<section class="slide">
+<h2 id="final-takeaways">Final Takeaways</h2>
+<ul>
+<li><p><strong>VaR is a quantile-based risk measure</strong></p>
+<ul>
+<li><span class="math inline">\(\text{VaR}_\alpha\)</span> is the worst
+loss not exceeded with probability <span
+class="math inline">\(\alpha\)</span></li>
+<li>Typically used with <span class="math inline">\(\alpha =
+95\%\)</span> or <span class="math inline">\(99\%\)</span></li>
+<li>Focuses exclusively on downside risk</li>
+</ul></li>
+<li><p><strong>Three methods to compute VaR</strong></p>
+<ul>
+<li><strong>Parametric:</strong> Fast, assumes normal returns</li>
+<li><strong>Historical simulation:</strong> Non-parametric, simple</li>
+<li><strong>Monte Carlo:</strong> Flexible, can handle complex
+models</li>
+</ul></li>
+<li><p><strong>Parametric VaR formula:</strong> <span
+class="math display">\[
+\text{VaR}_\alpha = \sigma z_\alpha - \mu \approx \sigma z_\alpha
+\]</span> for normal returns with small mean</p></li>
+<li><p><strong>VaR has critical limitations</strong></p>
+<ul>
+<li>Ignores tail severity (what happens beyond VaR?)</li>
+<li>Not subadditive (may penalize diversification)</li>
+<li>Sensitive to distributional assumptions</li>
+<li>Procyclical (amplifies market stress)</li>
+</ul></li>
+<li><p><strong>VaR satisfies some desirable properties</strong></p>
+<ul>
+<li>Positive homogeneity (scales correctly)</li>
+<li>Translation invariance (cash affects VaR correctly)</li>
+<li>Monotonicity (more loss → higher VaR)</li>
+<li>But fails subadditivity—not a coherent risk measure</li>
+</ul></li>
+<li><p><strong>Despite flaws, VaR remains widely used</strong></p>
+<ul>
+<li>Simple to communicate (one number)</li>
+<li>Regulatory standard (Basel accords)</li>
+<li>Useful as one tool among many</li>
+</ul></li>
+<li><p><strong>Best practices:</strong></p>
+<ul>
+<li>Don’t rely on VaR alone</li>
+<li>Supplement with stress testing and scenario analysis</li>
+<li>Use Expected Shortfall for tail risk</li>
+<li>Backtest VaR regularly</li>
+<li>Be aware of model limitations</li>
+</ul></li>
+</ul>
+<p><strong>Key insight:</strong> VaR answers “How much can I lose?” but
+not “How bad can it get beyond that point?”</p>
+<p>Next lecture: <strong>Coherent risk measures</strong>—Expected
+Shortfall and the axiomatic foundations of risk measurement.</p>
+<p>Because regulators learned the hard way that VaR is not enough.</p>
+</section>
+</div>
+</body>
+</html>

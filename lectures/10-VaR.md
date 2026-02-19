@@ -278,7 +278,7 @@ For the **standard normal** $Z \sim N(0,1)$:
 ### Visualizing Quantiles
 
 <div align="center">
-<img src="Figures/loss_distribution_quantiles.png" alt="Loss Distribution and Quantiles" style="width:85%;"/>
+<img src="Figures/loss_distribution_quantiles.png" alt="Loss Distribution and Quantiles" style="width:65%;"/>
 </div>
 
 *Figure: Loss distribution with VaR at 95% and 99% confidence levels. The shaded regions show the probability mass beyond each VaR threshold. VaR captures a single quantile but ignores the severity of losses beyond that point.*

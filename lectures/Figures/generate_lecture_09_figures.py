@@ -260,7 +260,7 @@ def plot_risk_premiums():
         # Find CE
         CE = None
         for w in W_range:
-            if abs(u_func(w) - E_u) < 0.001:
+            if abs(u_func(w) - E_u) < 0.001 * abs(np.mean(E_u)):
                 CE = w
                 break
         if CE is None:
@@ -277,7 +277,9 @@ def plot_risk_premiums():
 
         # Annotations
         ax.plot([CE, E_W], [E_u, E_u], 'r-', linewidth=3, alpha=0.6)
-        ax.text(E_W - 5, E_u - 0.1, f'RP = {RP:.2f}', fontsize=10, ha='right',
+        # Use axes coordinates to keep annotation inside each subplot across scales.
+        ax.text(0.95, 0.08, f'RP = {RP:.2f}', transform=ax.transAxes,
+                fontsize=10, ha='right', va='bottom',
                 bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
 
         ax.set_xlabel('Wealth W', fontsize=10)

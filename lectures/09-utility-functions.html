@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
@@ -995,7 +995,6 @@ creating a risk premium. The investor prefers the certainty equivalent
 (CE) over the risky lottery.</em></p>
 <p>For a concave function:</p>
 <ul>
-<li>The curve lies <strong>below</strong> any secant line</li>
 <li>Marginal utility <span class="math inline">\(u&#39;(W)\)</span> is
 <strong>decreasing</strong></li>
 <li>More wealth provides less additional satisfaction</li>
@@ -1024,6 +1023,8 @@ investors</li>
 <li><span class="math inline">\(RP = 0\)</span> for risk-neutral</li>
 <li><span class="math inline">\(RP &lt; 0\)</span> for risk-loving</li>
 </ul>
+</section>
+<section class="slide">
 <h3 id="example-certainty-equivalent">Example: Certainty Equivalent</h3>
 <p>Suppose <span class="math inline">\(u(W) = \ln(W)\)</span> and
 consider:</p>
@@ -1031,22 +1032,19 @@ consider:</p>
 <li>50% chance of $100</li>
 <li>50% chance of $25</li>
 </ul>
-<p><strong>Expected value:</strong></p>
-<p><span class="math display">\[
+<p><strong>Expected value:</strong> <span class="math display">\[
 \mathbb{E}[W] = 0.5(100) + 0.5(25) = 62.5
 \]</span></p>
-<p><strong>Expected utility:</strong></p>
-<p><span class="math display">\[
+<p><strong>Expected utility:</strong> <span class="math display">\[
 \mathbb{E}[u(W)] = 0.5\ln(100) + 0.5\ln(25) = 0.5(4.605) + 0.5(3.219) =
 3.912
 \]</span></p>
 <p><strong>Certainty equivalent:</strong> Solve <span
-class="math inline">\(\ln(CE) = 3.912\)</span></p>
-<p><span class="math display">\[
+class="math inline">\(\ln(CE) = 3.912\)</span> <span
+class="math display">\[
 CE = e^{3.912} = 50
 \]</span></p>
-<p><strong>Risk premium:</strong></p>
-<p><span class="math display">\[
+<p><strong>Risk premium:</strong> <span class="math display">\[
 RP = 62.5 - 50 = 12.5
 \]</span></p>
 <p><strong>Interpretation:</strong> The investor is willing to pay
@@ -1084,26 +1082,46 @@ A(W) = -\frac{u&#39;&#39;(W)}{u&#39;(W)}
 risk-averse</li>
 <li>Determines optimal portfolio allocation</li>
 </ul>
+</section>
+<section class="slide">
 <p><strong>Why this formula?</strong></p>
 <p>Consider a small risk <span
 class="math inline">\(\tilde{\varepsilon}\)</span> with <span
 class="math inline">\(\mathbb{E}[\tilde{\varepsilon}] = 0\)</span> and
 variance <span class="math inline">\(\sigma^2\)</span>.</p>
-<p>Second-order Taylor expansion:</p>
-<p><span class="math display">\[
-\mathbb{E}[u(W + \tilde{\varepsilon})] \approx u(W) +
-u&#39;(W)\mathbb{E}[\tilde{\varepsilon}] +
-\frac{1}{2}u&#39;&#39;(W)\sigma^2
+<p>Second-order Taylor expansion around current wealth <span
+class="math inline">\(W\)</span>: <span class="math display">\[
+u(W+\tilde{\varepsilon})
+\approx
+u(W)+u&#39;(W)\tilde{\varepsilon}+\frac{1}{2}u&#39;&#39;(W)\tilde{\varepsilon}^2
 \]</span></p>
-<p><span class="math display">\[
-= u(W) + \frac{1}{2}u&#39;&#39;(W)\sigma^2
+<p>Taking expectations and using <span
+class="math inline">\(\mathbb{E}[\tilde{\varepsilon}]=0\)</span>, <span
+class="math inline">\(\mathbb{E}[\tilde{\varepsilon}^2]=\sigma^2\)</span>:
+<span class="math display">\[
+\mathbb{E}[u(W+\tilde{\varepsilon})]
+\approx
+u(W)+u&#39;(W)\mathbb{E}[\tilde{\varepsilon}] +
+\frac{1}{2}u&#39;&#39;(W)\mathbb{E}[\tilde{\varepsilon}^2]
+=
+u(W)+\frac{1}{2}u&#39;&#39;(W)\sigma^2
 \]</span></p>
-<p>Risk premium for small risk:</p>
-<p><span class="math display">\[
-RP \approx \frac{1}{2}A(W)\sigma^2
+<p>Define certainty equivalent <span class="math inline">\(CE\)</span>
+by: <span class="math display">\[
+u(CE)=\mathbb{E}[u(W+\tilde{\varepsilon})], \qquad CE = W - RP
+\]</span></p>
+<p>For small <span class="math inline">\(RP\)</span>, first-order
+expansion of the left side: <span class="math display">\[
+u(W-RP)\approx u(W)-u&#39;(W)RP
+\]</span></p>
+<p>Equate both sides: <span class="math display">\[
+RP \approx -\frac{u&#39;&#39;(W)}{2u&#39;(W)}\sigma^2 =
+\frac{1}{2}A(W)\sigma^2
 \]</span></p>
 <p>So <span class="math inline">\(A(W)\)</span> directly determines
 willingness to bear small risks.</p>
+</section>
+<section class="slide">
 <h3 id="relative-risk-aversion-rra">Relative Risk Aversion (RRA)</h3>
 <p><span class="math display">\[
 R(W) = -W\frac{u&#39;&#39;(W)}{u&#39;(W)} = W \cdot A(W)
@@ -1127,6 +1145,8 @@ wealth, same dollar risk tolerance</li>
 wealth, double dollar risk tolerance</li>
 </ul>
 <p>CRRA is more realistic.</p>
+</section>
+<section class="slide">
 <div data-align="center">
 <p><img src="Figures/risk_aversion_measures.png" alt="Risk Aversion Measures" style="width:90%;"/></p>
 </div>
@@ -1140,16 +1160,10 @@ fractions.</em></p>
 <h3 id="computing-ara-and-rra-for-common-functions">Computing ARA and
 RRA for Common Functions</h3>
 <p><strong>1. Quadratic:</strong> <span class="math inline">\(u(W) = W -
-\frac{\gamma}{2}W^2\)</span></p>
-<p><span class="math display">\[
-u&#39;(W) = 1 - \gamma W, \quad u&#39;&#39;(W) = -\gamma
-\]</span></p>
-<p><span class="math display">\[
-A(W) = -\frac{-\gamma}{1 - \gamma W} = \frac{\gamma}{1 - \gamma W}
-\]</span></p>
-<p><span class="math display">\[
-R(W) = W \cdot \frac{\gamma}{1 - \gamma W} = \frac{\gamma W}{1 - \gamma
-W}
+\frac{\gamma}{2}W^2\)</span> <span class="math display">\[
+A(W) = -\frac{-\gamma}{1 - \gamma W} = \frac{\gamma}{1 - \gamma W};
+\quad R(W) = W \cdot \frac{\gamma}{1 - \gamma W} = \frac{\gamma W}{1 -
+\gamma W}
 \]</span></p>
 <p><strong>Observation:</strong> Both <span
 class="math inline">\(A(W)\)</span> and <span
@@ -1157,16 +1171,10 @@ class="math inline">\(R(W)\)</span> <strong>increase</strong> with <span
 class="math inline">\(W\)</span> (IARA and IRRA).</p>
 <p>This is unrealistic: suggests rich people are more risk-averse. ✗</p>
 <p><strong>2. Exponential (CARA):</strong> <span
-class="math inline">\(u(W) = -e^{-\gamma W}\)</span></p>
-<p><span class="math display">\[
-u&#39;(W) = \gamma e^{-\gamma W}, \quad u&#39;&#39;(W) = -\gamma^2
-e^{-\gamma W}
-\]</span></p>
-<p><span class="math display">\[
-A(W) = -\frac{-\gamma^2 e^{-\gamma W}}{\gamma e^{-\gamma W}} = \gamma
-\]</span></p>
-<p><span class="math display">\[
-R(W) = W \cdot \gamma
+class="math inline">\(u(W) = -e^{-\gamma W}\)</span> <span
+class="math display">\[
+A(W) = -\frac{-\gamma^2 e^{-\gamma W}}{\gamma e^{-\gamma W}} = \gamma;
+\quad R(W) = W \cdot \gamma
 \]</span></p>
 <p><strong>Observation:</strong> * <span class="math inline">\(A(W) =
 \gamma\)</span> is <strong>constant</strong> (CARA—as the name suggests)
@@ -1174,21 +1182,17 @@ R(W) = W \cdot \gamma
 <strong>increases</strong> linearly with wealth (IRRA) ✗</p>
 <p>CARA is tractable but not empirically realistic.</p>
 <p><strong>3. Power (CRRA):</strong> <span class="math inline">\(u(W) =
-\frac{W^{1-\gamma}}{1-\gamma}\)</span></p>
-<p><span class="math display">\[
-u&#39;(W) = W^{-\gamma}, \quad u&#39;&#39;(W) = -\gamma W^{-\gamma-1}
-\]</span></p>
-<p><span class="math display">\[
-A(W) = -\frac{-\gamma W^{-\gamma-1}}{W^{-\gamma}} = \frac{\gamma}{W}
-\]</span></p>
-<p><span class="math display">\[
-R(W) = W \cdot \frac{\gamma}{W} = \gamma
+\frac{W^{1-\gamma}}{1-\gamma}\)</span> <span class="math display">\[
+A(W) = -\frac{-\gamma W^{-\gamma-1}}{W^{-\gamma}} = \frac{\gamma}{W};
+\quad R(W) = W \cdot \frac{\gamma}{W} = \gamma
 \]</span></p>
 <p><strong>Observation:</strong> * <span class="math inline">\(A(W) =
 \gamma/W\)</span> <strong>decreases</strong> with wealth
 (DARA—realistic!) ✓ * <span class="math inline">\(R(W) = \gamma\)</span>
 is <strong>constant</strong> (CRRA—as the name suggests) ✓</p>
 <p>Power utility has the best empirical properties.</p>
+</section>
+<section class="slide">
 <h3 id="special-case-log-utility">Special Case: Log Utility</h3>
 <p>For <span class="math inline">\(u(W) = \ln(W)\)</span> (which is CRRA
 with <span class="math inline">\(\gamma = 1\)</span>):</p>
@@ -1291,8 +1295,8 @@ class="math inline">\(R\)</span> constant (CRRA)</td>
 </tbody>
 </table>
 <p><strong>Key insight:</strong> Only CRRA (power/log) maintains
-constant relative risk aversion as wealth changes.</p>
-<p>This matches empirical evidence that rich people invest a constant
+constant relative risk aversion as wealth changes. This matches
+empirical evidence that rich people invest a constant
 <strong>fraction</strong> of wealth in risky assets.</p>
 <h3 id="typical-values-of-gamma-rra">Typical Values of <span
 class="math inline">\(\gamma\)</span> (RRA)</h3>
@@ -1335,10 +1339,12 @@ class="math inline">\(\gamma\)</span> (RRA)</h3>
 </table>
 <p><strong>Equity premium puzzle:</strong> Some asset pricing models
 require <span class="math inline">\(\gamma &gt; 10\)</span> to match
-historical stock returns.</p>
-<p>This seems implausibly high—ongoing research topic.</p>
+historical stock returns. This seems implausibly high—ongoing research
+topic.</p>
+</section>
+<section class="slide">
 <div data-align="center">
-<p><img src="Figures/risk_premiums_comparison.png" alt="Risk Premiums Comparison" style="width:90%;"/></p>
+<p><img src="Figures/risk_premiums_comparison.png" alt="Risk Premiums Comparison" style="width:80%;"/></p>
 </div>
 <p><em>Figure: Risk premiums for the same lottery under different CRRA
 utility functions. Higher γ (more risk aversion) leads to larger risk
@@ -1348,9 +1354,8 @@ risk than the investor with γ=0.5.</em></p>
 <section class="slide">
 <h2 id="utility-meanvariance-and-capm">7. Utility, Mean–Variance, and
 CAPM</h2>
-<p>Mean-variance optimization (Lectures 06-07) and CAPM (Lecture 08)
-assumed investors care only about <span
-class="math inline">\(\mu\)</span> and <span
+<p>Mean-variance optimization and CAPM assumed investors care only about
+<span class="math inline">\(\mu\)</span> and <span
 class="math inline">\(\sigma^2\)</span>.</p>
 <p>When is this justified?</p>
 <p><strong>Two sufficient conditions:</strong></p>
@@ -1362,6 +1367,8 @@ utility</li>
 </ol>
 <p>Under either condition, expected utility reduces to mean-variance
 form.</p>
+</section>
+<section class="slide">
 <h3 id="condition-1-quadratic-utility">Condition 1: Quadratic
 Utility</h3>
 <p>We showed earlier that with <span class="math inline">\(u(W) = W -
@@ -1380,7 +1387,6 @@ class="math inline">\(\mu^2\)</span> term is approximately constant.</p>
 \max \mathbb{E}[u(W)] \quad \iff \quad \max \left[\mu -
 \frac{\gamma}{2}\sigma^2\right]
 \]</span></p>
-<p>This is exactly the mean-variance criterion from Lecture 06.</p>
 <p><strong>Limitation:</strong> Quadratic utility has serious flaws
 (satiation, IARA).</p>
 <p>So we need an alternative justification…</p>
@@ -1413,6 +1419,8 @@ class="math inline">\((\sigma, \mu)\)</span> space.</p>
 quadratic utility!</p>
 <p>Works with exponential, power, or any concave <span
 class="math inline">\(u\)</span>.</p>
+</section>
+<section class="slide">
 <h3 id="are-returns-normal">Are Returns Normal?</h3>
 <p><strong>Reality check:</strong> Empirically, returns are
 <strong>not</strong> perfectly normal.</p>
@@ -1450,12 +1458,10 @@ distribution despite identical mean-variance characteristics.</em></p>
 </section>
 <section class="slide">
 <h2 id="utility-and-capm">8. Utility and CAPM</h2>
-<p>Recall CAPM from Lecture 08:</p>
-<p><span class="math display">\[
-\mathbb{E}[R_i] - R_f = \beta_i(\mathbb{E}[R_M] - R_f)
+<p>Recall CAPM: <span class="math display">\[
+\mathbb{E}[R_i] - R_f = \beta_i(\mathbb{E}[R_M] - R_f); \quad \beta_i =
+\frac{\text{Cov}(R_i, R_M)}{\text{Var}(R_M)}
 \]</span></p>
-<p>Where <span class="math inline">\(\beta_i = \frac{\text{Cov}(R_i,
-R_M)}{\text{Var}(R_M)}\)</span>.</p>
 <p><strong>CAPM assumptions:</strong></p>
 <ol type="1">
 <li>Mean–variance optimization (all investors)</li>
@@ -1471,21 +1477,21 @@ R_M)}{\text{Var}(R_M)}\)</span>.</p>
 <li><strong>Normal returns</strong> (which make mean-variance summaries
 sufficient under expected utility)</li>
 </ul>
-<p>Without one of these, mean-variance optimization is just a
+<p>Without any of these, mean-variance optimization is just a
 heuristic.</p>
 <p>With these, it’s <strong>optimal</strong> behavior.</p>
 </section>
 <section class="slide">
 <h3 id="connecting-utility-to-capm">Connecting Utility to CAPM</h3>
-<p>From Lecture 08, all investors hold:</p>
+<p>From CAPM, all investors hold:</p>
 <ol type="1">
 <li>The market portfolio <span class="math inline">\(M\)</span> (risky
 assets)</li>
 <li>The risk-free asset</li>
 </ol>
 <p>The mix depends on risk aversion <span
-class="math inline">\(\gamma\)</span> (from Lecture 06):</p>
-<p><span class="math display">\[
+class="math inline">\(\gamma\)</span> from mean-variance optimization:
+<span class="math display">\[
 w^* = \frac{\mu_M - R_f}{\gamma \sigma_M^2}
 \]</span></p>
 <p><strong>Equilibrium condition:</strong> Market clearing requires the
@@ -1495,6 +1501,8 @@ betas.</p>
 <p><strong>Key result:</strong> If all investors maximize expected
 utility under quadratic or normal assumptions, CAPM holds in
 equilibrium.</p>
+</section>
+<section class="slide">
 <h3 id="what-if-returns-arent-normal">What if Returns Aren’t
 Normal?</h3>
 <p>CAPM breaks down when:</p>
@@ -1516,9 +1524,8 @@ of systematic risk)</li>
 <p>But they lose the elegance and tractability of CAPM.</p>
 </section>
 <section class="slide">
-<h3 id="what-changes-with-general-utility">What Changes with General
-Utility?</h3>
-<p>Moving beyond quadratic/normal assumptions:</p>
+<h3 id="what-changes-with-general-utility-realistic-vs.-tractable">What
+Changes with General Utility? (Realistic vs. Tractable)</h3>
 <p><strong>1. Market portfolio need not be mean–variance
 efficient</strong></p>
 <ul>
@@ -1556,8 +1563,6 @@ substitution)</li>
 <li>Volatility puzzle</li>
 <li>Predictability of returns</li>
 </ul>
-<p>The cost: Much less tractable than CAPM.</p>
-<p>The benefit: More realistic.</p>
 </section>
 <section class="slide">
 <h3 id="summary-utility-foundations-of-portfolio-theory">Summary:

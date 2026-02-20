@@ -281,13 +281,13 @@ For the **standard normal** $Z \sim N(0,1)$:
 <img src="Figures/loss_distribution_quantiles.png" alt="Loss Distribution and Quantiles" style="width:65%;"/>
 </div>
 
-*Figure: Loss distribution with VaR at 95% and 99% confidence levels. The shaded regions show the probability mass beyond each VaR threshold. VaR captures a single quantile but ignores the severity of losses beyond that point.*
+*Figure: Loss distribution with VaR at 95% and 99% confidence levels. The shaded regions show the probability mass beyond each VaR threshold. VaR captures a single quantile but ignores the severity of losses beyond that point. ($\mu=0.1\%$, $\sigma=1\%$)*
 
 **Key observation:**
 
 VaR tells us **where** the $\alpha$-quantile is, but not **how bad** losses can be beyond that point.
 
-This is a fundamental limitation (more on this later).
+This is a fundamental limitation.
 
 </section>
 

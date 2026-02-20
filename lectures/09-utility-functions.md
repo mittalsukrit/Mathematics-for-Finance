@@ -1230,7 +1230,9 @@ Empirical studies and calibration exercises suggest:
 | $5-10$ | High | Conservative investors |
 | $> 10$ | Very high | Near retirement, very cautious |
 
-**Equity premium puzzle:** Some asset pricing models require $\gamma > 10$ to match historical stock returns. This seems implausibly high—ongoing research topic.
+**Equity premium puzzle:** Some asset pricing models require $\gamma > 10$ to match historical stock returns. ([read me](https://en.wikipedia.org/wiki/Equity_premium_puzzle)) 
+
+**Power-law Portfolios:** ([read me](https://arxiv.org/pdf/2104.07976))
 
 </section>
 

@@ -58,11 +58,11 @@ Franklin Templeton Investments
 2. From portfolio theory to risk management
 3. Loss distributions and quantiles
 4. Definition of Value at Risk
-5. Computing VaR: three methods
-6. Parametric VaR with normal returns
-7. Historical simulation VaR
-8. Monte Carlo VaR
-9. Mathematical properties of VaR
+5. Mathematical properties of VaR
+6. Computing VaR: three methods
+7. Parametric VaR with normal returns
+8. Historical simulation VaR
+9. Monte Carlo VaR
 10. Limitations and critique of VaR
 11. Exercises
 
@@ -404,6 +404,224 @@ VaR is **preference-free**—it describes the distribution, not the investor's a
 
 <section class="slide" markdown="1">
 
+## 5. Mathematical Properties of VaR
+
+We now examine VaR's formal properties and see where it fails to be a "coherent" risk measure.
+
+### Property 1: Positive Homogeneity
+
+For any $\lambda > 0$:
+
+$$
+\text{VaR}_\alpha(\lambda L) = \lambda \, \text{VaR}_\alpha(L)
+$$
+
+**Proof:** If $\mathbb{P}(L \le x) = \alpha$, then $\mathbb{P}(\lambda L \le \lambda x) = \alpha$.
+
+Therefore, $\text{VaR}_\alpha(\lambda L) = \lambda x = \lambda \, \text{VaR}_\alpha(L)$. ✓
+
+**Interpretation:** Doubling position size doubles VaR.
+
+This is intuitive and desirable.
+
+</section>
+
+<section class="slide" markdown="1">
+
+### Property 2: Translation Invariance
+
+For any constant $c$:
+
+$$
+\text{VaR}_\alpha(L + c) = \text{VaR}_\alpha(L) + c
+$$
+
+**Proof:** $\mathbb{P}(L + c \le x) = \mathbb{P}(L \le x - c) = \alpha$ when $x - c = \text{VaR}_\alpha(L)$.
+
+So $\text{VaR}_\alpha(L + c) = \text{VaR}_\alpha(L) + c$. ✓
+
+**Interpretation:** Adding a certain loss $c$ increases VaR by exactly $c$.
+
+This is also intuitive.
+
+</section>
+
+<section class="slide" markdown="1">
+
+### Property 3: Monotonicity
+
+If $L_1 \le L_2$ almost surely, then:
+
+$$
+\text{VaR}_\alpha(L_1) \le \text{VaR}_\alpha(L_2)
+$$
+
+**Proof:** For any $x$:
+
+$$
+\{L_1 \le x\} \supseteq \{L_2 \le x\}
+$$
+
+So $\mathbb{P}(L_1 \le x) \ge \mathbb{P}(L_2 \le x)$.
+
+This implies $\text{VaR}_\alpha(L_1) \le \text{VaR}_\alpha(L_2)$. ✓
+
+**Interpretation:** A portfolio that always has smaller losses has lower VaR.
+
+Reasonable.
+
+</section>
+
+<section class="slide" markdown="1">
+
+### Property 4: Lack of Subadditivity
+
+**Subadditivity** would require:
+
+$$
+\text{VaR}_\alpha(L_1 + L_2) \le \text{VaR}_\alpha(L_1) + \text{VaR}_\alpha(L_2)
+$$
+
+**Interpretation:** Combining two portfolios should not increase total risk.
+
+This is the **diversification principle**.
+
+**Bad news:** VaR is **not subadditive** in general.
+
+**Counterexample:** See next slide.
+
+</section>
+
+<section class="slide" markdown="1">
+
+### Counterexample: VaR Violates Subadditivity
+
+Consider two independent bonds, each with:
+
+* Value: \$100
+* Default probability: 4%
+* Recovery: \$0 if default, \$100 if no default
+
+**Individual VaR at 95%:**
+
+Each bond has:
+
+$$
+\mathbb{P}(\text{loss} = 0) = 0.96, \quad \mathbb{P}(\text{loss} = 100) = 0.04
+$$
+
+Since $\mathbb{P}(\text{loss} \le 0) = 0.96 > 0.95$:
+
+$$
+\text{VaR}_{0.95}(\text{one bond}) = 0
+$$
+
+</section>
+
+<section class="slide" markdown="1">
+
+**Portfolio VaR at 95%:**
+
+For two independent bonds, the joint distribution is:
+
+* Loss = 0 with probability $0.96^2 = 0.9216$
+* Loss = 100 with probability $2 \times 0.96 \times 0.04 = 0.0768$
+* Loss = 200 with probability $0.04^2 = 0.0016$
+
+Since $\mathbb{P}(\text{loss} \le 0) = 0.9216 < 0.95$, we need the next threshold:
+$$
+\mathbb{P}(\text{loss} \le 100) = 0.9216 + 0.0768 = 0.9984 > 0.95
+$$
+
+So:
+$$
+\text{VaR}_{0.95}(\text{two bonds}) = 100
+$$
+
+**Subadditivity fails:**
+$$
+100 = \text{VaR}_{0.95}(L_1 + L_2) > \text{VaR}_{0.95}(L_1) + \text{VaR}_{0.95}(L_2) = 0 + 0 = 0
+$$
+
+**Interpretation:** Diversifying (holding two bonds instead of one) **increases** VaR!
+
+This is paradoxical and violates the diversification principle.
+
+</section>
+
+<section class="slide" markdown="1">
+
+### Why VaR Fails Subadditivity
+
+The problem is that VaR **ignores the tail beyond the quantile**.
+
+In the bond example:
+
+* Holding one bond: 95% of the time you lose nothing
+* Holding two bonds: You're more likely to lose *something* (small losses from one default)
+* But the *worst case* (two defaults) is rare enough to not matter at 95%
+
+VaR sees only that you're more likely to exceed the threshold, not that the worst outcome is still bounded.
+
+**Key insight:** VaR measures "probability of exceeding a threshold" but not "severity of exceedance."
+
+This is why we need **Expected Shortfall** —it captures tail severity.
+
+</section>
+
+<section class="slide" markdown="1">
+
+### When Is VaR Subadditive?
+
+VaR **is** subadditive under specific conditions:
+
+**Theorem:** If returns are jointly **elliptically distributed** (e.g., multivariate normal), then VaR is subadditive.
+
+**Proof sketch:** For elliptical distributions, portfolio VaR can be written as:
+
+$$
+\text{VaR}_\alpha(w^\top R) = w^\top \mu + z_\alpha \sqrt{w^\top \Sigma w}
+$$
+
+By the triangle inequality for norms:
+
+$$
+\sqrt{(w_1 + w_2)^\top \Sigma (w_1 + w_2)} \le \sqrt{w_1^\top \Sigma w_1} + \sqrt{w_2^\top \Sigma w_2}
+$$
+
+So subadditivity holds for normal returns. ✓
+
+**But:** Real returns are not normal, especially in the tails.
+
+So VaR fails subadditivity in realistic settings.
+
+</section>
+
+<section class="slide" markdown="1">
+
+### Summary: Properties of VaR
+
+| Property | VaR Satisfies? | Implication |
+|----------|----------------|-------------|
+| Positive homogeneity | ✓ Yes | Scales correctly with position size |
+| Translation invariance | ✓ Yes | Adding cash affects VaR correctly |
+| Monotonicity | ✓ Yes | More loss → higher VaR |
+| **Subadditivity** | ✗ No | **May penalize diversification** |
+
+The failure of subadditivity is a **critical flaw**.
+
+It means VaR can:
+
+* Discourage diversification
+* Lead to incorrect risk aggregation across divisions
+* Violate the principle that "the whole is less risky than the sum of parts"
+
+This motivated the development of **coherent risk measures**.
+
+</section>
+
+<section class="slide" markdown="1">
+
 ## 5. Computing VaR: Three Methods
 
 There are three main approaches to computing VaR:
@@ -432,56 +650,23 @@ We'll cover each in detail.
 ## 6. Parametric VaR with Normal Returns
 
 Assume portfolio returns are normally distributed:
-
 $$
 R_p \sim N(\mu, \sigma^2)
 $$
 
 Then losses $L = -R_p$ are also normal:
-
 $$
 L \sim N(-\mu, \sigma^2)
 $$
 
-### Derivation of Normal VaR
+### Normal VaR
 
 For $L \sim N(-\mu, \sigma^2)$, the $\alpha$-quantile is:
-
 $$
 \text{VaR}_\alpha = -\mu + \sigma \cdot z_\alpha
 $$
 
 where $z_\alpha = \Phi^{-1}(\alpha)$ is the $\alpha$-quantile of the standard normal $N(0,1)$.
-
-**Proof:**
-
-Standardize $L$:
-
-$$
-\frac{L - (-\mu)}{\sigma} = \frac{L + \mu}{\sigma} \sim N(0,1)
-$$
-
-The $\alpha$-quantile satisfies:
-
-$$
-\mathbb{P}(L \le \text{VaR}_\alpha) = \alpha
-$$
-
-$$
-\mathbb{P}\left(\frac{L + \mu}{\sigma} \le \frac{\text{VaR}_\alpha + \mu}{\sigma}\right) = \alpha
-$$
-
-$$
-\Phi\left(\frac{\text{VaR}_\alpha + \mu}{\sigma}\right) = \alpha
-$$
-
-$$
-\frac{\text{VaR}_\alpha + \mu}{\sigma} = z_\alpha
-$$
-
-$$
-\text{VaR}_\alpha = -\mu + \sigma z_\alpha
-$$
 
 </section>
 
@@ -510,25 +695,21 @@ For the lower tail (relevant for returns), we use $z_{1-\alpha} = -z_\alpha$.
 ### Parametric VaR Formula (Summary)
 
 For returns $R_p \sim N(\mu, \sigma^2)$:
-
 $$
 \boxed{\text{VaR}_\alpha = \sigma z_\alpha - \mu}
 $$
 
 Often $\mu$ is small relative to $\sigma z_\alpha$, so:
-
 $$
 \text{VaR}_\alpha \approx \sigma z_\alpha
 $$
 
 **Dollar VaR:**
-
 $$
 \text{VaR}_\alpha^{\$} = V_0(\sigma z_\alpha - \mu)
 $$
 
 **Approximation for small $\mu$:**
-
 $$
 \text{VaR}_\alpha^{\$} \approx V_0 \sigma z_\alpha
 $$
@@ -937,223 +1118,6 @@ Fat tails increase VaR by about 45% in this example.
 * **Report multiple VaR estimates:** Compare methods to assess model uncertainty
 
 In practice, sophisticated institutions use all three methods and compare results.
-
-</section>
-
-<section class="slide" markdown="1">
-
-## 9. Mathematical Properties of VaR
-
-We now examine VaR's formal properties and see where it fails to be a "coherent" risk measure.
-
-### Property 1: Positive Homogeneity
-
-For any $\lambda > 0$:
-
-$$
-\text{VaR}_\alpha(\lambda L) = \lambda \, \text{VaR}_\alpha(L)
-$$
-
-**Proof:** If $\mathbb{P}(L \le x) = \alpha$, then $\mathbb{P}(\lambda L \le \lambda x) = \alpha$.
-
-Therefore, $\text{VaR}_\alpha(\lambda L) = \lambda x = \lambda \, \text{VaR}_\alpha(L)$. ✓
-
-**Interpretation:** Doubling position size doubles VaR.
-
-This is intuitive and desirable.
-
-</section>
-
-<section class="slide" markdown="1">
-
-### Property 2: Translation Invariance
-
-For any constant $c$:
-
-$$
-\text{VaR}_\alpha(L + c) = \text{VaR}_\alpha(L) + c
-$$
-
-**Proof:** $\mathbb{P}(L + c \le x) = \mathbb{P}(L \le x - c) = \alpha$ when $x - c = \text{VaR}_\alpha(L)$.
-
-So $\text{VaR}_\alpha(L + c) = \text{VaR}_\alpha(L) + c$. ✓
-
-**Interpretation:** Adding a certain loss $c$ increases VaR by exactly $c$.
-
-This is also intuitive.
-
-</section>
-
-<section class="slide" markdown="1">
-
-### Property 3: Monotonicity
-
-If $L_1 \le L_2$ almost surely, then:
-
-$$
-\text{VaR}_\alpha(L_1) \le \text{VaR}_\alpha(L_2)
-$$
-
-**Proof:** For any $x$:
-
-$$
-\{L_1 \le x\} \supseteq \{L_2 \le x\}
-$$
-
-So $\mathbb{P}(L_1 \le x) \ge \mathbb{P}(L_2 \le x)$.
-
-This implies $\text{VaR}_\alpha(L_1) \le \text{VaR}_\alpha(L_2)$. ✓
-
-**Interpretation:** A portfolio that always has smaller losses has lower VaR.
-
-Reasonable.
-
-</section>
-
-<section class="slide" markdown="1">
-
-### Property 4: Lack of Subadditivity
-
-**Subadditivity** would require:
-
-$$
-\text{VaR}_\alpha(L_1 + L_2) \le \text{VaR}_\alpha(L_1) + \text{VaR}_\alpha(L_2)
-$$
-
-**Interpretation:** Combining two portfolios should not increase total risk.
-
-This is the **diversification principle**.
-
-**Bad news:** VaR is **not subadditive** in general.
-
-**Counterexample:** See next slide.
-
-</section>
-
-<section class="slide" markdown="1">
-
-### Counterexample: VaR Violates Subadditivity
-
-Consider two independent bonds, each with:
-
-* Value: \$100
-* Default probability: 4%
-* Recovery: \$0 if default, \$100 if no default
-
-**Individual VaR at 95%:**
-
-Each bond has:
-
-$$
-\mathbb{P}(\text{loss} = 0) = 0.96, \quad \mathbb{P}(\text{loss} = 100) = 0.04
-$$
-
-Since $\mathbb{P}(\text{loss} \le 0) = 0.96 > 0.95$:
-
-$$
-\text{VaR}_{0.95}(\text{one bond}) = 0
-$$
-
-**Portfolio VaR at 95%:**
-
-For two independent bonds, the joint distribution is:
-
-* Loss = 0 with probability $0.96^2 = 0.9216$
-* Loss = 100 with probability $2 \times 0.96 \times 0.04 = 0.0768$
-* Loss = 200 with probability $0.04^2 = 0.0016$
-
-Since $\mathbb{P}(\text{loss} \le 0) = 0.9216 < 0.95$, we need the next threshold:
-
-$$
-\mathbb{P}(\text{loss} \le 100) = 0.9216 + 0.0768 = 0.9984 > 0.95
-$$
-
-So:
-
-$$
-\text{VaR}_{0.95}(\text{two bonds}) = 100
-$$
-
-**Subadditivity fails:**
-
-$$
-100 = \text{VaR}_{0.95}(L_1 + L_2) > \text{VaR}_{0.95}(L_1) + \text{VaR}_{0.95}(L_2) = 0 + 0 = 0
-$$
-
-**Interpretation:** Diversifying (holding two bonds instead of one) **increases** VaR!
-
-This is paradoxical and violates the diversification principle.
-
-</section>
-
-<section class="slide" markdown="1">
-
-### Why VaR Fails Subadditivity
-
-The problem is that VaR **ignores the tail beyond the quantile**.
-
-In the bond example:
-
-* Holding one bond: 95% of the time you lose nothing
-* Holding two bonds: You're more likely to lose *something* (small losses from one default)
-* But the *worst case* (two defaults) is rare enough to not matter at 95%
-
-VaR sees only that you're more likely to exceed the threshold, not that the worst outcome is still bounded.
-
-**Key insight:** VaR measures "probability of exceeding a threshold" but not "severity of exceedance."
-
-This is why we need **Expected Shortfall** (Lecture 11)—it captures tail severity.
-
-</section>
-
-<section class="slide" markdown="1">
-
-### When Is VaR Subadditive?
-
-VaR **is** subadditive under specific conditions:
-
-**Theorem:** If returns are jointly **elliptically distributed** (e.g., multivariate normal), then VaR is subadditive.
-
-**Proof sketch:** For elliptical distributions, portfolio VaR can be written as:
-
-$$
-\text{VaR}_\alpha(w^\top R) = w^\top \mu + z_\alpha \sqrt{w^\top \Sigma w}
-$$
-
-By the triangle inequality for norms:
-
-$$
-\sqrt{(w_1 + w_2)^\top \Sigma (w_1 + w_2)} \le \sqrt{w_1^\top \Sigma w_1} + \sqrt{w_2^\top \Sigma w_2}
-$$
-
-So subadditivity holds for normal returns. ✓
-
-**But:** Real returns are not normal, especially in the tails.
-
-So VaR fails subadditivity in realistic settings.
-
-</section>
-
-<section class="slide" markdown="1">
-
-### Summary: Properties of VaR
-
-| Property | VaR Satisfies? | Implication |
-|----------|----------------|-------------|
-| Positive homogeneity | ✓ Yes | Scales correctly with position size |
-| Translation invariance | ✓ Yes | Adding cash affects VaR correctly |
-| Monotonicity | ✓ Yes | More loss → higher VaR |
-| **Subadditivity** | ✗ No | **May penalize diversification** |
-
-The failure of subadditivity is a **critical flaw**.
-
-It means VaR can:
-
-* Discourage diversification
-* Lead to incorrect risk aggregation across divisions
-* Violate the principle that "the whole is less risky than the sum of parts"
-
-This motivated the development of **coherent risk measures** (Lecture 11).
 
 </section>
 

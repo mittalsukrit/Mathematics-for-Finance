@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
@@ -77,11 +77,11 @@
 <li>From portfolio theory to risk management</li>
 <li>Loss distributions and quantiles</li>
 <li>Definition of Value at Risk</li>
+<li>Mathematical properties of VaR</li>
 <li>Computing VaR: three methods</li>
 <li>Parametric VaR with normal returns</li>
 <li>Historical simulation VaR</li>
 <li>Monte Carlo VaR</li>
-<li>Mathematical properties of VaR</li>
 <li>Limitations and critique of VaR</li>
 <li>Exercises</li>
 </ol>
@@ -406,6 +406,212 @@ lottery, but identical VaR.</p>
 distribution, not the investor’s attitude toward risk.</p>
 </section>
 <section class="slide">
+<h2 id="mathematical-properties-of-var">5. Mathematical Properties of
+VaR</h2>
+<p>We now examine VaR’s formal properties and see where it fails to be a
+“coherent” risk measure.</p>
+<h3 id="property-1-positive-homogeneity">Property 1: Positive
+Homogeneity</h3>
+<p>For any <span class="math inline">\(\lambda &gt; 0\)</span>:</p>
+<p><span class="math display">\[
+\text{VaR}_\alpha(\lambda L) = \lambda \, \text{VaR}_\alpha(L)
+\]</span></p>
+<p><strong>Proof:</strong> If <span class="math inline">\(\mathbb{P}(L
+\le x) = \alpha\)</span>, then <span
+class="math inline">\(\mathbb{P}(\lambda L \le \lambda x) =
+\alpha\)</span>.</p>
+<p>Therefore, <span class="math inline">\(\text{VaR}_\alpha(\lambda L) =
+\lambda x = \lambda \, \text{VaR}_\alpha(L)\)</span>. ✓</p>
+<p><strong>Interpretation:</strong> Doubling position size doubles
+VaR.</p>
+<p>This is intuitive and desirable.</p>
+</section>
+<section class="slide">
+<h3 id="property-2-translation-invariance">Property 2: Translation
+Invariance</h3>
+<p>For any constant <span class="math inline">\(c\)</span>:</p>
+<p><span class="math display">\[
+\text{VaR}_\alpha(L + c) = \text{VaR}_\alpha(L) + c
+\]</span></p>
+<p><strong>Proof:</strong> <span class="math inline">\(\mathbb{P}(L + c
+\le x) = \mathbb{P}(L \le x - c) = \alpha\)</span> when <span
+class="math inline">\(x - c = \text{VaR}_\alpha(L)\)</span>.</p>
+<p>So <span class="math inline">\(\text{VaR}_\alpha(L + c) =
+\text{VaR}_\alpha(L) + c\)</span>. ✓</p>
+<p><strong>Interpretation:</strong> Adding a certain loss <span
+class="math inline">\(c\)</span> increases VaR by exactly <span
+class="math inline">\(c\)</span>.</p>
+<p>This is also intuitive.</p>
+</section>
+<section class="slide">
+<h3 id="property-3-monotonicity">Property 3: Monotonicity</h3>
+<p>If <span class="math inline">\(L_1 \le L_2\)</span> almost surely,
+then:</p>
+<p><span class="math display">\[
+\text{VaR}_\alpha(L_1) \le \text{VaR}_\alpha(L_2)
+\]</span></p>
+<p><strong>Proof:</strong> For any <span
+class="math inline">\(x\)</span>:</p>
+<p><span class="math display">\[
+\{L_1 \le x\} \supseteq \{L_2 \le x\}
+\]</span></p>
+<p>So <span class="math inline">\(\mathbb{P}(L_1 \le x) \ge
+\mathbb{P}(L_2 \le x)\)</span>.</p>
+<p>This implies <span class="math inline">\(\text{VaR}_\alpha(L_1) \le
+\text{VaR}_\alpha(L_2)\)</span>. ✓</p>
+<p><strong>Interpretation:</strong> A portfolio that always has smaller
+losses has lower VaR.</p>
+<p>Reasonable.</p>
+</section>
+<section class="slide">
+<h3 id="property-4-lack-of-subadditivity">Property 4: Lack of
+Subadditivity</h3>
+<p><strong>Subadditivity</strong> would require:</p>
+<p><span class="math display">\[
+\text{VaR}_\alpha(L_1 + L_2) \le \text{VaR}_\alpha(L_1) +
+\text{VaR}_\alpha(L_2)
+\]</span></p>
+<p><strong>Interpretation:</strong> Combining two portfolios should not
+increase total risk.</p>
+<p>This is the <strong>diversification principle</strong>.</p>
+<p><strong>Bad news:</strong> VaR is <strong>not subadditive</strong> in
+general.</p>
+<p><strong>Counterexample:</strong> See next slide.</p>
+</section>
+<section class="slide">
+<h3 id="counterexample-var-violates-subadditivity">Counterexample: VaR
+Violates Subadditivity</h3>
+<p>Consider two independent bonds, each with:</p>
+<ul>
+<li>Value: $100</li>
+<li>Default probability: 4%</li>
+<li>Recovery: $0 if default, $100 if no default</li>
+</ul>
+<p><strong>Individual VaR at 95%:</strong></p>
+<p>Each bond has:</p>
+<p><span class="math display">\[
+\mathbb{P}(\text{loss} = 0) = 0.96, \quad \mathbb{P}(\text{loss} = 100)
+= 0.04
+\]</span></p>
+<p>Since <span class="math inline">\(\mathbb{P}(\text{loss} \le 0) =
+0.96 &gt; 0.95\)</span>:</p>
+<p><span class="math display">\[
+\text{VaR}_{0.95}(\text{one bond}) = 0
+\]</span></p>
+</section>
+<section class="slide">
+<p><strong>Portfolio VaR at 95%:</strong></p>
+<p>For two independent bonds, the joint distribution is:</p>
+<ul>
+<li>Loss = 0 with probability <span class="math inline">\(0.96^2 =
+0.9216\)</span></li>
+<li>Loss = 100 with probability <span class="math inline">\(2 \times
+0.96 \times 0.04 = 0.0768\)</span></li>
+<li>Loss = 200 with probability <span class="math inline">\(0.04^2 =
+0.0016\)</span></li>
+</ul>
+<p>Since <span class="math inline">\(\mathbb{P}(\text{loss} \le 0) =
+0.9216 &lt; 0.95\)</span>, we need the next threshold: <span
+class="math display">\[
+\mathbb{P}(\text{loss} \le 100) = 0.9216 + 0.0768 = 0.9984 &gt; 0.95
+\]</span></p>
+<p>So: <span class="math display">\[
+\text{VaR}_{0.95}(\text{two bonds}) = 100
+\]</span></p>
+<p><strong>Subadditivity fails:</strong> <span class="math display">\[
+100 = \text{VaR}_{0.95}(L_1 + L_2) &gt; \text{VaR}_{0.95}(L_1) +
+\text{VaR}_{0.95}(L_2) = 0 + 0 = 0
+\]</span></p>
+<p><strong>Interpretation:</strong> Diversifying (holding two bonds
+instead of one) <strong>increases</strong> VaR!</p>
+<p>This is paradoxical and violates the diversification principle.</p>
+</section>
+<section class="slide">
+<h3 id="why-var-fails-subadditivity">Why VaR Fails Subadditivity</h3>
+<p>The problem is that VaR <strong>ignores the tail beyond the
+quantile</strong>.</p>
+<p>In the bond example:</p>
+<ul>
+<li>Holding one bond: 95% of the time you lose nothing</li>
+<li>Holding two bonds: You’re more likely to lose <em>something</em>
+(small losses from one default)</li>
+<li>But the <em>worst case</em> (two defaults) is rare enough to not
+matter at 95%</li>
+</ul>
+<p>VaR sees only that you’re more likely to exceed the threshold, not
+that the worst outcome is still bounded.</p>
+<p><strong>Key insight:</strong> VaR measures “probability of exceeding
+a threshold” but not “severity of exceedance.”</p>
+<p>This is why we need <strong>Expected Shortfall</strong> —it captures
+tail severity.</p>
+</section>
+<section class="slide">
+<h3 id="when-is-var-subadditive">When Is VaR Subadditive?</h3>
+<p>VaR <strong>is</strong> subadditive under specific conditions:</p>
+<p><strong>Theorem:</strong> If returns are jointly <strong>elliptically
+distributed</strong> (e.g., multivariate normal), then VaR is
+subadditive.</p>
+<p><strong>Proof sketch:</strong> For elliptical distributions,
+portfolio VaR can be written as:</p>
+<p><span class="math display">\[
+\text{VaR}_\alpha(w^\top R) = w^\top \mu + z_\alpha \sqrt{w^\top \Sigma
+w}
+\]</span></p>
+<p>By the triangle inequality for norms:</p>
+<p><span class="math display">\[
+\sqrt{(w_1 + w_2)^\top \Sigma (w_1 + w_2)} \le \sqrt{w_1^\top \Sigma
+w_1} + \sqrt{w_2^\top \Sigma w_2}
+\]</span></p>
+<p>So subadditivity holds for normal returns. ✓</p>
+<p><strong>But:</strong> Real returns are not normal, especially in the
+tails.</p>
+<p>So VaR fails subadditivity in realistic settings.</p>
+</section>
+<section class="slide">
+<h3 id="summary-properties-of-var">Summary: Properties of VaR</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>VaR Satisfies?</th>
+<th>Implication</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Positive homogeneity</td>
+<td>✓ Yes</td>
+<td>Scales correctly with position size</td>
+</tr>
+<tr>
+<td>Translation invariance</td>
+<td>✓ Yes</td>
+<td>Adding cash affects VaR correctly</td>
+</tr>
+<tr>
+<td>Monotonicity</td>
+<td>✓ Yes</td>
+<td>More loss → higher VaR</td>
+</tr>
+<tr>
+<td><strong>Subadditivity</strong></td>
+<td>✗ No</td>
+<td><strong>May penalize diversification</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The failure of subadditivity is a <strong>critical flaw</strong>.</p>
+<p>It means VaR can:</p>
+<ul>
+<li>Discourage diversification</li>
+<li>Lead to incorrect risk aggregation across divisions</li>
+<li>Violate the principle that “the whole is less risky than the sum of
+parts”</li>
+</ul>
+<p>This motivated the development of <strong>coherent risk
+measures</strong>.</p>
+</section>
+<section class="slide">
 <h2 id="computing-var-three-methods">5. Computing VaR: Three
 Methods</h2>
 <p>There are three main approaches to computing VaR:</p>
@@ -434,48 +640,24 @@ Methods</h2>
 <section class="slide">
 <h2 id="parametric-var-with-normal-returns">6. Parametric VaR with
 Normal Returns</h2>
-<p>Assume portfolio returns are normally distributed:</p>
-<p><span class="math display">\[
+<p>Assume portfolio returns are normally distributed: <span
+class="math display">\[
 R_p \sim N(\mu, \sigma^2)
 \]</span></p>
 <p>Then losses <span class="math inline">\(L = -R_p\)</span> are also
-normal:</p>
-<p><span class="math display">\[
+normal: <span class="math display">\[
 L \sim N(-\mu, \sigma^2)
 \]</span></p>
-<h3 id="derivation-of-normal-var">Derivation of Normal VaR</h3>
+<h3 id="normal-var">Normal VaR</h3>
 <p>For <span class="math inline">\(L \sim N(-\mu, \sigma^2)\)</span>,
-the <span class="math inline">\(\alpha\)</span>-quantile is:</p>
-<p><span class="math display">\[
+the <span class="math inline">\(\alpha\)</span>-quantile is: <span
+class="math display">\[
 \text{VaR}_\alpha = -\mu + \sigma \cdot z_\alpha
 \]</span></p>
 <p>where <span class="math inline">\(z_\alpha =
 \Phi^{-1}(\alpha)\)</span> is the <span
 class="math inline">\(\alpha\)</span>-quantile of the standard normal
 <span class="math inline">\(N(0,1)\)</span>.</p>
-<p><strong>Proof:</strong></p>
-<p>Standardize <span class="math inline">\(L\)</span>:</p>
-<p><span class="math display">\[
-\frac{L - (-\mu)}{\sigma} = \frac{L + \mu}{\sigma} \sim N(0,1)
-\]</span></p>
-<p>The <span class="math inline">\(\alpha\)</span>-quantile
-satisfies:</p>
-<p><span class="math display">\[
-\mathbb{P}(L \le \text{VaR}_\alpha) = \alpha
-\]</span></p>
-<p><span class="math display">\[
-\mathbb{P}\left(\frac{L + \mu}{\sigma} \le \frac{\text{VaR}_\alpha +
-\mu}{\sigma}\right) = \alpha
-\]</span></p>
-<p><span class="math display">\[
-\Phi\left(\frac{\text{VaR}_\alpha + \mu}{\sigma}\right) = \alpha
-\]</span></p>
-<p><span class="math display">\[
-\frac{\text{VaR}_\alpha + \mu}{\sigma} = z_\alpha
-\]</span></p>
-<p><span class="math display">\[
-\text{VaR}_\alpha = -\mu + \sigma z_\alpha
-\]</span></p>
 </section>
 <section class="slide">
 <h3 id="standard-normal-quantiles">Standard Normal Quantiles</h3>
@@ -525,22 +707,20 @@ class="math inline">\(z_{1-\alpha} = -z_\alpha\)</span>.</p>
 <h3 id="parametric-var-formula-summary">Parametric VaR Formula
 (Summary)</h3>
 <p>For returns <span class="math inline">\(R_p \sim N(\mu,
-\sigma^2)\)</span>:</p>
-<p><span class="math display">\[
+\sigma^2)\)</span>: <span class="math display">\[
 \boxed{\text{VaR}_\alpha = \sigma z_\alpha - \mu}
 \]</span></p>
 <p>Often <span class="math inline">\(\mu\)</span> is small relative to
-<span class="math inline">\(\sigma z_\alpha\)</span>, so:</p>
-<p><span class="math display">\[
+<span class="math inline">\(\sigma z_\alpha\)</span>, so: <span
+class="math display">\[
 \text{VaR}_\alpha \approx \sigma z_\alpha
 \]</span></p>
-<p><strong>Dollar VaR:</strong></p>
-<p><span class="math display">\[
+<p><strong>Dollar VaR:</strong> <span class="math display">\[
 \text{VaR}_\alpha^{\$} = V_0(\sigma z_\alpha - \mu)
 \]</span></p>
 <p><strong>Approximation for small <span
-class="math inline">\(\mu\)</span>:</strong></p>
-<p><span class="math display">\[
+class="math inline">\(\mu\)</span>:</strong> <span
+class="math display">\[
 \text{VaR}_\alpha^{\$} \approx V_0 \sigma z_\alpha
 \]</span></p>
 <p>This is the form most commonly used in practice.</p>
@@ -1034,212 +1214,6 @@ assess model uncertainty</li>
 </ul>
 <p>In practice, sophisticated institutions use all three methods and
 compare results.</p>
-</section>
-<section class="slide">
-<h2 id="mathematical-properties-of-var">9. Mathematical Properties of
-VaR</h2>
-<p>We now examine VaR’s formal properties and see where it fails to be a
-“coherent” risk measure.</p>
-<h3 id="property-1-positive-homogeneity">Property 1: Positive
-Homogeneity</h3>
-<p>For any <span class="math inline">\(\lambda &gt; 0\)</span>:</p>
-<p><span class="math display">\[
-\text{VaR}_\alpha(\lambda L) = \lambda \, \text{VaR}_\alpha(L)
-\]</span></p>
-<p><strong>Proof:</strong> If <span class="math inline">\(\mathbb{P}(L
-\le x) = \alpha\)</span>, then <span
-class="math inline">\(\mathbb{P}(\lambda L \le \lambda x) =
-\alpha\)</span>.</p>
-<p>Therefore, <span class="math inline">\(\text{VaR}_\alpha(\lambda L) =
-\lambda x = \lambda \, \text{VaR}_\alpha(L)\)</span>. ✓</p>
-<p><strong>Interpretation:</strong> Doubling position size doubles
-VaR.</p>
-<p>This is intuitive and desirable.</p>
-</section>
-<section class="slide">
-<h3 id="property-2-translation-invariance">Property 2: Translation
-Invariance</h3>
-<p>For any constant <span class="math inline">\(c\)</span>:</p>
-<p><span class="math display">\[
-\text{VaR}_\alpha(L + c) = \text{VaR}_\alpha(L) + c
-\]</span></p>
-<p><strong>Proof:</strong> <span class="math inline">\(\mathbb{P}(L + c
-\le x) = \mathbb{P}(L \le x - c) = \alpha\)</span> when <span
-class="math inline">\(x - c = \text{VaR}_\alpha(L)\)</span>.</p>
-<p>So <span class="math inline">\(\text{VaR}_\alpha(L + c) =
-\text{VaR}_\alpha(L) + c\)</span>. ✓</p>
-<p><strong>Interpretation:</strong> Adding a certain loss <span
-class="math inline">\(c\)</span> increases VaR by exactly <span
-class="math inline">\(c\)</span>.</p>
-<p>This is also intuitive.</p>
-</section>
-<section class="slide">
-<h3 id="property-3-monotonicity">Property 3: Monotonicity</h3>
-<p>If <span class="math inline">\(L_1 \le L_2\)</span> almost surely,
-then:</p>
-<p><span class="math display">\[
-\text{VaR}_\alpha(L_1) \le \text{VaR}_\alpha(L_2)
-\]</span></p>
-<p><strong>Proof:</strong> For any <span
-class="math inline">\(x\)</span>:</p>
-<p><span class="math display">\[
-\{L_1 \le x\} \supseteq \{L_2 \le x\}
-\]</span></p>
-<p>So <span class="math inline">\(\mathbb{P}(L_1 \le x) \ge
-\mathbb{P}(L_2 \le x)\)</span>.</p>
-<p>This implies <span class="math inline">\(\text{VaR}_\alpha(L_1) \le
-\text{VaR}_\alpha(L_2)\)</span>. ✓</p>
-<p><strong>Interpretation:</strong> A portfolio that always has smaller
-losses has lower VaR.</p>
-<p>Reasonable.</p>
-</section>
-<section class="slide">
-<h3 id="property-4-lack-of-subadditivity">Property 4: Lack of
-Subadditivity</h3>
-<p><strong>Subadditivity</strong> would require:</p>
-<p><span class="math display">\[
-\text{VaR}_\alpha(L_1 + L_2) \le \text{VaR}_\alpha(L_1) +
-\text{VaR}_\alpha(L_2)
-\]</span></p>
-<p><strong>Interpretation:</strong> Combining two portfolios should not
-increase total risk.</p>
-<p>This is the <strong>diversification principle</strong>.</p>
-<p><strong>Bad news:</strong> VaR is <strong>not subadditive</strong> in
-general.</p>
-<p><strong>Counterexample:</strong> See next slide.</p>
-</section>
-<section class="slide">
-<h3 id="counterexample-var-violates-subadditivity">Counterexample: VaR
-Violates Subadditivity</h3>
-<p>Consider two independent bonds, each with:</p>
-<ul>
-<li>Value: $100</li>
-<li>Default probability: 4%</li>
-<li>Recovery: $0 if default, $100 if no default</li>
-</ul>
-<p><strong>Individual VaR at 95%:</strong></p>
-<p>Each bond has:</p>
-<p><span class="math display">\[
-\mathbb{P}(\text{loss} = 0) = 0.96, \quad \mathbb{P}(\text{loss} = 100)
-= 0.04
-\]</span></p>
-<p>Since <span class="math inline">\(\mathbb{P}(\text{loss} \le 0) =
-0.96 &gt; 0.95\)</span>:</p>
-<p><span class="math display">\[
-\text{VaR}_{0.95}(\text{one bond}) = 0
-\]</span></p>
-<p><strong>Portfolio VaR at 95%:</strong></p>
-<p>For two independent bonds, the joint distribution is:</p>
-<ul>
-<li>Loss = 0 with probability <span class="math inline">\(0.96^2 =
-0.9216\)</span></li>
-<li>Loss = 100 with probability <span class="math inline">\(2 \times
-0.96 \times 0.04 = 0.0768\)</span></li>
-<li>Loss = 200 with probability <span class="math inline">\(0.04^2 =
-0.0016\)</span></li>
-</ul>
-<p>Since <span class="math inline">\(\mathbb{P}(\text{loss} \le 0) =
-0.9216 &lt; 0.95\)</span>, we need the next threshold:</p>
-<p><span class="math display">\[
-\mathbb{P}(\text{loss} \le 100) = 0.9216 + 0.0768 = 0.9984 &gt; 0.95
-\]</span></p>
-<p>So:</p>
-<p><span class="math display">\[
-\text{VaR}_{0.95}(\text{two bonds}) = 100
-\]</span></p>
-<p><strong>Subadditivity fails:</strong></p>
-<p><span class="math display">\[
-100 = \text{VaR}_{0.95}(L_1 + L_2) &gt; \text{VaR}_{0.95}(L_1) +
-\text{VaR}_{0.95}(L_2) = 0 + 0 = 0
-\]</span></p>
-<p><strong>Interpretation:</strong> Diversifying (holding two bonds
-instead of one) <strong>increases</strong> VaR!</p>
-<p>This is paradoxical and violates the diversification principle.</p>
-</section>
-<section class="slide">
-<h3 id="why-var-fails-subadditivity">Why VaR Fails Subadditivity</h3>
-<p>The problem is that VaR <strong>ignores the tail beyond the
-quantile</strong>.</p>
-<p>In the bond example:</p>
-<ul>
-<li>Holding one bond: 95% of the time you lose nothing</li>
-<li>Holding two bonds: You’re more likely to lose <em>something</em>
-(small losses from one default)</li>
-<li>But the <em>worst case</em> (two defaults) is rare enough to not
-matter at 95%</li>
-</ul>
-<p>VaR sees only that you’re more likely to exceed the threshold, not
-that the worst outcome is still bounded.</p>
-<p><strong>Key insight:</strong> VaR measures “probability of exceeding
-a threshold” but not “severity of exceedance.”</p>
-<p>This is why we need <strong>Expected Shortfall</strong> (Lecture
-11)—it captures tail severity.</p>
-</section>
-<section class="slide">
-<h3 id="when-is-var-subadditive">When Is VaR Subadditive?</h3>
-<p>VaR <strong>is</strong> subadditive under specific conditions:</p>
-<p><strong>Theorem:</strong> If returns are jointly <strong>elliptically
-distributed</strong> (e.g., multivariate normal), then VaR is
-subadditive.</p>
-<p><strong>Proof sketch:</strong> For elliptical distributions,
-portfolio VaR can be written as:</p>
-<p><span class="math display">\[
-\text{VaR}_\alpha(w^\top R) = w^\top \mu + z_\alpha \sqrt{w^\top \Sigma
-w}
-\]</span></p>
-<p>By the triangle inequality for norms:</p>
-<p><span class="math display">\[
-\sqrt{(w_1 + w_2)^\top \Sigma (w_1 + w_2)} \le \sqrt{w_1^\top \Sigma
-w_1} + \sqrt{w_2^\top \Sigma w_2}
-\]</span></p>
-<p>So subadditivity holds for normal returns. ✓</p>
-<p><strong>But:</strong> Real returns are not normal, especially in the
-tails.</p>
-<p>So VaR fails subadditivity in realistic settings.</p>
-</section>
-<section class="slide">
-<h3 id="summary-properties-of-var">Summary: Properties of VaR</h3>
-<table>
-<thead>
-<tr>
-<th>Property</th>
-<th>VaR Satisfies?</th>
-<th>Implication</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Positive homogeneity</td>
-<td>✓ Yes</td>
-<td>Scales correctly with position size</td>
-</tr>
-<tr>
-<td>Translation invariance</td>
-<td>✓ Yes</td>
-<td>Adding cash affects VaR correctly</td>
-</tr>
-<tr>
-<td>Monotonicity</td>
-<td>✓ Yes</td>
-<td>More loss → higher VaR</td>
-</tr>
-<tr>
-<td><strong>Subadditivity</strong></td>
-<td>✗ No</td>
-<td><strong>May penalize diversification</strong></td>
-</tr>
-</tbody>
-</table>
-<p>The failure of subadditivity is a <strong>critical flaw</strong>.</p>
-<p>It means VaR can:</p>
-<ul>
-<li>Discourage diversification</li>
-<li>Lead to incorrect risk aggregation across divisions</li>
-<li>Violate the principle that “the whole is less risky than the sum of
-parts”</li>
-</ul>
-<p>This motivated the development of <strong>coherent risk
-measures</strong> (Lecture 11).</p>
 </section>
 <section class="slide">
 <h2 id="limitations-and-critique-of-var">10. Limitations and Critique of

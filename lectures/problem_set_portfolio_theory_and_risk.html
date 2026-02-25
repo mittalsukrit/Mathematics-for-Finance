@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>problem_set_portfolio_theory_and_risk</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="lecture-theme.css" />
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<h1
+id="problem-set-portfolio-theory-asset-pricing-and-risk-management">Problem
+Set: Portfolio Theory, Asset Pricing, and Risk Management</h1>
+<hr />
+<h2
+id="problem-1-portfolio-construction-for-a-financial-advisor">Problem 1:
+Portfolio Construction for a Financial Advisor</h2>
+<p><strong>The Scenario:</strong></p>
+<p>You are a quantitative analyst at a wealth management firm. A
+financial advisor needs your help creating an optimal investment plan
+for a new client. The client has a moderate risk tolerance and wants to
+invest in a portfolio of three well-known stocks: - <strong>“TechGrowth
+Inc.” (TGI)</strong> - <strong>“SteadyDividends Corp.” (SDC)</strong> -
+<strong>“GlobalInnovate Ltd.” (GIL)</strong></p>
+<p>Your team has provided the following forecasts for the next year:</p>
+<table>
+<thead>
+<tr>
+<th>Asset</th>
+<th>Expected Return (E[R])</th>
+<th>Volatility (Std. Dev, σ)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TGI</td>
+<td>15%</td>
+<td>30%</td>
+</tr>
+<tr>
+<td>SDC</td>
+<td>8%</td>
+<td>18%</td>
+</tr>
+<tr>
+<td>GIL</td>
+<td>12%</td>
+<td>25%</td>
+</tr>
+</tbody>
+</table>
+<p>The correlation matrix between the asset returns is:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>TGI</th>
+<th>SDC</th>
+<th>GIL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TGI</strong></td>
+<td>1.0</td>
+<td>0.2</td>
+<td>0.4</td>
+</tr>
+<tr>
+<td><strong>SDC</strong></td>
+<td>0.2</td>
+<td>1.0</td>
+<td>0.3</td>
+</tr>
+<tr>
+<td><strong>GIL</strong></td>
+<td>0.4</td>
+<td>0.3</td>
+<td>1.0</td>
+</tr>
+</tbody>
+</table>
+<p>The current risk-free rate is 3%.</p>
+<p><strong>Your Task:</strong></p>
+<p>The advisor sends you a request:</p>
+<blockquote>
+<p>“I need to show the client how we can build a superior portfolio. Can
+you run the numbers? I want to see the efficient frontier, find the best
+possible risky portfolio, and then figure out the final allocation for a
+client with a risk-aversion coefficient of 3.5. Show your work so I can
+explain the logic.”</p>
+</blockquote>
+<p><strong>What to deliver:</strong></p>
+<ol type="1">
+<li><strong>The Efficient Frontier:</strong> Plot the efficient frontier
+of the three risky assets. Highlight the Global Minimum Variance (GMV)
+portfolio on your plot.</li>
+<li><strong>The Optimal Risky Portfolio:</strong> Calculate the weights,
+expected return, and volatility of the tangency (optimal risky)
+portfolio.</li>
+<li><strong>The Capital Allocation Line (CAL):</strong> What is the
+equation of the CAL that passes through the optimal risky
+portfolio?</li>
+<li><strong>The Client’s Complete Portfolio:</strong> Determine the
+optimal allocation for this specific client <span
+class="math inline">\((\gamma=3.5)\)</span> between the risk-free asset
+and the optimal risky portfolio. What are the weights in TGI, SDC, and
+GIL for this client’s final portfolio?</li>
+</ol>
+<hr />
+<h2
+id="problem-2-project-valuation-using-the-capital-asset-pricing-model-capm">Problem
+2: Project Valuation using the Capital Asset Pricing Model (CAPM)</h2>
+<p><strong>The Scenario:</strong></p>
+<p>You are a strategic finance analyst at a large technology
+conglomerate. The R&amp;D division has proposed a new, ambitious project
+in the Artificial Intelligence space. The project requires a significant
+upfront investment and is expected to generate cash flows over the next
+10 years.</p>
+<p>The CFO is skeptical and has tasked you with evaluating whether the
+project’s expected return justifies its risk.</p>
+<p>Market Data: - 10-Year Government Bond Rate (Risk-Free Rate): 4.0% -
+Expected Return on the Market Portfolio (e.g., S&amp;P 500): 11.0%</p>
+<p>Project &amp; Company Data: - The project’s internal rate of return
+(IRR) is estimated to be 14.5%. - Your company’s stock has a beta of
+1.2. - However, this AI project is significantly riskier than the
+company’s average business. You have identified three publicly traded
+“pure-play” AI companies with the following betas: - AI Corp A: 1.6 - AI
+Corp B: 1.8 - AI Corp C: 1.7</p>
+<p><strong>Your Task:</strong></p>
+<p>The CFO emails you:</p>
+<blockquote>
+<p>“Is this AI project a go or no-go? Don’t just use the IRR. I need a
+market-based assessment. Calculate the appropriate required rate of
+return for this specific project using CAPM. Is it creating value for
+our shareholders or is it just a risky bet?”</p>
+</blockquote>
+<p><strong>What to deliver:</strong></p>
+<ol type="1">
+<li><strong>Estimate the Project Beta:</strong> Determine and justify an
+appropriate beta for the AI project. Why shouldn’t you use your
+company’s beta of 1.2?</li>
+<li><strong>Calculate the Required Rate of Return:</strong> Using the
+CAPM, calculate the cost of equity (the required return) for this
+project.</li>
+<li><strong>Draw the Security Market Line (SML):</strong> Sketch the SML
+and plot both the market portfolio and the proposed AI project on
+it.</li>
+<li><strong>Make a Recommendation:</strong> Is the project’s expected
+return of 14.5% sufficient to compensate for its systematic risk?
+Explain your recommendation to the CFO with reference to the SML and the
+concept of ‘alpha’.</li>
+</ol>
+<hr />
+<h2
+id="problem-3-hedge-fund-risk-assessment-with-utility-and-var">Problem
+3: Hedge Fund Risk Assessment with Utility and VaR</h2>
+<p><strong>The Scenario:</strong></p>
+<p>You are a junior risk manager at a hedge fund. The fund’s flagship
+“Global Macro” portfolio is valued at $500 million. Based on historical
+data, the portfolio’s annual expected return is 18% with a volatility of
+20%. You can assume the returns are approximately normally
+distributed.</p>
+<p>The portfolio manager has a quadratic utility function of the form:
+<span class="math inline">\(U=E[R] - \gamma \sigma^2 / 2\)</span>, with
+a risk aversion coefficient of 4.</p>
+<p><strong>Your Task:</strong></p>
+<p>The Chief Risk Officer (CRO) wants a risk report on the
+portfolio.</p>
+<blockquote>
+<p>“Give me a snapshot of our risk profile. First, tell me the 1-day 99%
+VaR. Our internal limit is $5 million. Are we in breach? Also, the PM is
+considering a new trade that would reduce volatility to 18% but also
+lower the expected return to 16.5%. Should she take it, from a utility
+perspective?”</p>
+</blockquote>
+<p><strong>What to deliver:</strong></p>
+<ol type="1">
+<li><p><strong>Utility Analysis:</strong></p>
+<ol type="a">
+<li>Calculate the utility of the current portfolio for the manager.</li>
+<li>Calculate the utility of the proposed new portfolio (with the new
+trade).</li>
+<li>Based purely on this utility model, should the portfolio manager
+make the trade?</li>
+</ol></li>
+<li><p><strong>Value at Risk (VaR) Calculation:</strong></p>
+<ol type="a">
+<li>Convert the annual return and volatility to daily figures. (Assume
+252 trading days in a year).</li>
+<li>Calculate the 1-day Value at Risk (VaR) at a 99% confidence level in
+dollar terms.</li>
+</ol></li>
+<li><p><strong>Risk Limit Compliance:</strong> Does the portfolio’s
+1-day 99% VaR exceed the internal limit of $5 million?</p></li>
+<li><p><strong>Conceptual Discussion:</strong> The CRO follows up, “What
+if the portfolio returns are not normal, but have ‘fat tails’? What does
+that mean for our VaR calculation? Is our current VaR estimate likely to
+be too high or too low in that case?” Provide a brief, non-technical
+explanation.</p></li>
+</ol>
+</body>
+</html>

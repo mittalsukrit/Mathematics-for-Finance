@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>12-options-general-properties</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="lecture-theme.css" />
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<style>
+  .slides {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    height: 100vh;
+
+    /* 🔢 Start slide counter */
+    counter-reset: slide;
+  }
+
+  .slide {
+    scroll-snap-align: start;
+    min-height: 100vh;
+    padding: 4rem;
+    padding-top: 1rem;
+    box-sizing: border-box;
+
+    /* Ensure relative positioning for numbering */
+    position: relative;
+  }
+
+  /* Nice-to-have: smoother feel */
+  html { scroll-behavior: smooth; }
+
+  /* 🔢 Automatic slide numbering */
+  .slide::before {
+    counter-increment: slide;
+    content: "Slide " counter(slide);
+    position: absolute;
+    top: 1rem;   /* footer-like placement */
+    right: 2rem;
+    font-size: 1rem;
+    color: #666;
+  }
+</style>
+<div class="slides" data-markdown="1">
+<section class="slide">
+<h1 id="options-general-properties">Options: General Properties</h1>
+<p><strong>Sukrit Mittal</strong> Franklin Templeton Investments</p>
+</section>
+<section class="slide">
+<h2 id="outline">Outline</h2>
+<ol type="1">
+<li>From forwards to options: the asymmetric payoff</li>
+<li>Basic definitions and notation</li>
+<li>Payoff and profit diagrams</li>
+<li>Moneyness and intrinsic value</li>
+<li>Put-call parity (European)</li>
+<li>Put-call inequalities (American)</li>
+<li>Bounds on European option prices</li>
+<li>European and American calls on non-dividend-paying stocks</li>
+<li>Bounds on American option prices</li>
+<li>Variables determining option prices</li>
+<li>Time value of options</li>
+<li>Exercises</li>
+</ol>
+</section>
+<section class="slide">
+<h2 id="from-forwards-to-options">1. From Forwards to Options</h2>
+<p>A forward contract <strong>obligates</strong> both parties.</p>
+<p>The buyer must buy. The seller must sell.</p>
+<p>Symmetry has a cost: both sides bear unlimited risk.</p>
+<p>An <strong>option</strong> breaks this symmetry.</p>
+<p>One party acquires a <strong>right</strong>. The other accepts an
+<strong>obligation</strong>.</p>
+<p>This asymmetry is purchased. The price is the
+<strong>premium</strong>.</p>
+<p>Forwards are free to enter. Options are not.</p>
+<p>Nothing valuable is free.</p>
+</section>
+<section class="slide">
+<h2 id="basic-definitions">2. Basic Definitions</h2>
+<h3 id="call-option">Call Option</h3>
+<p>A <strong>European call option</strong> gives the holder the
+<strong>right, but not the obligation</strong>, to <strong>buy</strong>
+the underlying asset at a predetermined price <span
+class="math inline">\(K\)</span> on a specified date <span
+class="math inline">\(T\)</span>.</p>
+<h3 id="put-option">Put Option</h3>
+<p>A <strong>European put option</strong> gives the holder the
+<strong>right, but not the obligation</strong>, to <strong>sell</strong>
+the underlying asset at a predetermined price <span
+class="math inline">\(K\)</span> on a specified date <span
+class="math inline">\(T\)</span>.</p>
+<h3 id="american-options">American Options</h3>
+<p>An <strong>American call</strong> (or put) gives the same right, but
+it may be exercised <strong>at any time</strong> on or before <span
+class="math inline">\(T\)</span>, not just at maturity.</p>
+<p>The distinction seems minor.</p>
+<p>It is not.</p>
+</section>
+<section class="slide">
+<h3 id="notation">Notation</h3>
+<p>Throughout this lecture:</p>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(S_0\)</span></td>
+<td>Current price of the underlying asset</td>
+</tr>
+<tr>
+<td><span class="math inline">\(S_T\)</span></td>
+<td>Price of the underlying at maturity</td>
+</tr>
+<tr>
+<td><span class="math inline">\(K\)</span></td>
+<td>Strike price (exercise price)</td>
+</tr>
+<tr>
+<td><span class="math inline">\(T\)</span></td>
+<td>Time to maturity (in years)</td>
+</tr>
+<tr>
+<td><span class="math inline">\(r\)</span></td>
+<td>Continuously compounded risk-free rate</td>
+</tr>
+<tr>
+<td><span class="math inline">\(c\)</span></td>
+<td>Price (premium) of a European call</td>
+</tr>
+<tr>
+<td><span class="math inline">\(p\)</span></td>
+<td>Price (premium) of a European put</td>
+</tr>
+<tr>
+<td><span class="math inline">\(C\)</span></td>
+<td>Price (premium) of an American call</td>
+</tr>
+<tr>
+<td><span class="math inline">\(P\)</span></td>
+<td>Price (premium) of an American put</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Convention:</strong> Lowercase for European, uppercase for
+American.</p>
+<p>All options considered here are on a <strong>non-dividend-paying
+stock</strong> unless stated otherwise.</p>
+</section>
+<section class="slide">
+<h3 id="the-four-basic-positions">The Four Basic Positions</h3>
+<p>Every option trade has two sides:</p>
+<p><strong>Long call:</strong> Pay premium <span
+class="math inline">\(c\)</span>, acquire the right to buy at <span
+class="math inline">\(K\)</span></p>
+<p><strong>Short call:</strong> Receive premium <span
+class="math inline">\(c\)</span>, accept the obligation to sell at <span
+class="math inline">\(K\)</span></p>
+<p><strong>Long put:</strong> Pay premium <span
+class="math inline">\(p\)</span>, acquire the right to sell at <span
+class="math inline">\(K\)</span></p>
+<p><strong>Short put:</strong> Receive premium <span
+class="math inline">\(p\)</span>, accept the obligation to buy at <span
+class="math inline">\(K\)</span></p>
+<p>The buyer’s gain is the seller’s loss.</p>
+<p>Options are zero-sum contracts between the two counterparties.</p>
+</section>
+<section class="slide">
+<h2 id="payoff-and-profit-diagrams">3. Payoff and Profit Diagrams</h2>
+<h3 id="call-option-payoff">Call Option Payoff</h3>
+<p>At maturity, the holder of a European call exercises only if <span
+class="math inline">\(S_T &gt; K\)</span>:</p>
+<p><span class="math display">\[
+\boxed{\text{Call payoff} = \max(S_T - K, \, 0) = (S_T - K)^+}
+\]</span></p>
+<p>If <span class="math inline">\(S_T &gt; K\)</span>: exercise, buy at
+<span class="math inline">\(K\)</span>, asset is worth <span
+class="math inline">\(S_T\)</span>. Profit from exercise: <span
+class="math inline">\(S_T - K\)</span>.</p>
+<p>If <span class="math inline">\(S_T \leq K\)</span>: do not exercise.
+The option expires worthless.</p>
+<p>The payoff is <strong>never negative</strong>. That is the privilege
+of holding a right.</p>
+<h3 id="put-option-payoff">Put Option Payoff</h3>
+<p><span class="math display">\[
+\boxed{\text{Put payoff} = \max(K - S_T, \, 0) = (K - S_T)^+}
+\]</span></p>
+<p>If <span class="math inline">\(S_T &lt; K\)</span>: exercise, sell at
+<span class="math inline">\(K\)</span>, asset is worth only <span
+class="math inline">\(S_T\)</span>. Profit from exercise: <span
+class="math inline">\(K - S_T\)</span>.</p>
+<p>If <span class="math inline">\(S_T \geq K\)</span>: do not
+exercise.</p>
+</section>
+<section class="slide">
+<h3 id="profit-diagrams">Profit Diagrams</h3>
+<p>The <strong>profit</strong> accounts for the premium paid:</p>
+<p><span class="math display">\[
+\text{Long call profit} = \max(S_T - K, \, 0) - c
+\]</span></p>
+<p><span class="math display">\[
+\text{Long put profit} = \max(K - S_T, \, 0) - p
+\]</span></p>
+<p>For short positions, negate:</p>
+<p><span class="math display">\[
+\text{Short call profit} = c - \max(S_T - K, \, 0)
+\]</span></p>
+<p><span class="math display">\[
+\text{Short put profit} = p - \max(K - S_T, \, 0)
+\]</span></p>
+<p><strong>Key features:</strong></p>
+<ul>
+<li>Long call: unlimited upside, limited downside (lose at most <span
+class="math inline">\(c\)</span>)</li>
+<li>Long put: large upside (up to <span class="math inline">\(K -
+p\)</span> if stock goes to zero), limited downside (lose at most <span
+class="math inline">\(p\)</span>)</li>
+<li>Short call: limited upside (collect premium <span
+class="math inline">\(c\)</span>), <strong>unlimited</strong> downside
+(stock can rise without bound)</li>
+<li>Short put: limited upside (collect premium <span
+class="math inline">\(p\)</span>), large but <strong>bounded</strong>
+downside (at most <span class="math inline">\(K - p\)</span>, if stock
+falls to zero)</li>
+</ul>
+<p>The asymmetry is the entire point.</p>
+</section>
+<section class="slide">
+<h3 id="breakeven-points">Breakeven Points</h3>
+<p><strong>Long call breakeven:</strong> <span class="math inline">\(S_T
+= K + c\)</span></p>
+<p>The stock must rise above the strike by at least the premium
+paid.</p>
+<p><strong>Long put breakeven:</strong> <span class="math inline">\(S_T
+= K - p\)</span></p>
+<p>The stock must fall below the strike by at least the premium
+paid.</p>
+<p><strong>Example:</strong> A call with <span class="math inline">\(K =
+100\)</span> and <span class="math inline">\(c = 7\)</span> breaks even
+at <span class="math inline">\(S_T = 107\)</span>. For <span
+class="math inline">\(S_T = 115\)</span>, the profit is <span
+class="math inline">\(115 - 100 - 7 = 8\)</span>. For <span
+class="math inline">\(S_T = 95\)</span>, the loss is <span
+class="math inline">\(-7\)</span> (the entire premium).</p>
+<p>The premium sets the threshold. Below it, the right has no value.</p>
+</section>
+<section class="slide">
+<h2 id="moneyness-and-intrinsic-value">4. Moneyness and Intrinsic
+Value</h2>
+<h3 id="moneyness">Moneyness</h3>
+<p>Options are classified by their relationship to the current spot
+price:</p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Call (<span class="math inline">\(S_0\)</span> vs <span
+class="math inline">\(K\)</span>)</th>
+<th>Put (<span class="math inline">\(S_0\)</span> vs <span
+class="math inline">\(K\)</span>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>In-the-money (ITM)</strong></td>
+<td><span class="math inline">\(S_0 &gt; K\)</span></td>
+<td><span class="math inline">\(S_0 &lt; K\)</span></td>
+</tr>
+<tr>
+<td><strong>At-the-money (ATM)</strong></td>
+<td><span class="math inline">\(S_0 = K\)</span></td>
+<td><span class="math inline">\(S_0 = K\)</span></td>
+</tr>
+<tr>
+<td><strong>Out-of-the-money (OTM)</strong></td>
+<td><span class="math inline">\(S_0 &lt; K\)</span></td>
+<td><span class="math inline">\(S_0 &gt; K\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>An ITM option has immediate exercise value.</p>
+<p>An OTM option does not.</p>
+<p>But an OTM option is not worthless — time remains.</p>
+</section>
+<section class="slide">
+<h3 id="intrinsic-value">Intrinsic Value</h3>
+<p>The <strong>intrinsic value</strong> is the payoff if the option were
+exercised immediately:</p>
+<p><span class="math display">\[
+\text{Intrinsic value of call} = \max(S_0 - K, \, 0)
+\]</span></p>
+<p><span class="math display">\[
+\text{Intrinsic value of put} = \max(K - S_0, \, 0)
+\]</span></p>
+<p>Intrinsic value is always non-negative.</p>
+<p>It measures the “minimum worth” of the option based on current
+prices.</p>
+<h3 id="time-value">Time Value</h3>
+<p>The <strong>time value</strong> (also called extrinsic value) is the
+excess of the option price over intrinsic value:</p>
+<p><span class="math display">\[
+\text{Time value} = \text{Option price} - \text{Intrinsic value}
+\]</span></p>
+<p>For a call: <span class="math inline">\(\text{Time value} = c -
+\max(S_0 - K, \, 0)\)</span></p>
+<p>For a put: <span class="math inline">\(\text{Time value} = p - \max(K
+- S_0, \, 0)\)</span></p>
+<p>Time value reflects the <strong>possibility</strong> that the option
+will become more valuable before expiration.</p>
+<p>Possibility has a price.</p>
+</section>
+<section class="slide">
+<h2 id="put-call-parity-european-options">5. Put-Call Parity (European
+Options)</h2>
+<p>This is one of the most important results in option theory.</p>
+<p>It requires <strong>no model</strong> for the stock price.</p>
+<p>No assumptions about volatility or distributions.</p>
+<p>Only the absence of arbitrage.</p>
+<h3 id="the-two-portfolios">The Two Portfolios</h3>
+<p>Consider two portfolios constructed at time <span
+class="math inline">\(0\)</span>:</p>
+<p><strong>Portfolio A:</strong> One European call option (<span
+class="math inline">\(c\)</span>) + cash equal to <span
+class="math inline">\(Ke^{-rT}\)</span></p>
+<p><strong>Portfolio B:</strong> One European put option (<span
+class="math inline">\(p\)</span>) + one share of stock (<span
+class="math inline">\(S_0\)</span>)</p>
+<p>We will show that both portfolios have <strong>identical
+payoffs</strong> at maturity <span class="math inline">\(T\)</span>.</p>
+<p>Therefore, by the no-arbitrage principle, they must have
+<strong>identical values</strong> today.</p>
+</section>
+<section class="slide">
+<h3 id="payoff-analysis-at-maturity">Payoff Analysis at Maturity</h3>
+<p><strong>Portfolio A at time <span
+class="math inline">\(T\)</span>:</strong></p>
+<p>The cash grows to <span class="math inline">\(Ke^{-rT} \cdot e^{rT} =
+K\)</span>.</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Call payoff</th>
+<th>Cash</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(S_T &gt; K\)</span></td>
+<td><span class="math inline">\(S_T - K\)</span></td>
+<td><span class="math inline">\(K\)</span></td>
+<td><span class="math inline">\(S_T\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(S_T \leq K\)</span></td>
+<td><span class="math inline">\(0\)</span></td>
+<td><span class="math inline">\(K\)</span></td>
+<td><span class="math inline">\(K\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Portfolio A pays <span class="math inline">\(\max(S_T,
+K)\)</span>.</p>
+<p><strong>Portfolio B at time <span
+class="math inline">\(T\)</span>:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Put payoff</th>
+<th>Stock</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(S_T &gt; K\)</span></td>
+<td><span class="math inline">\(0\)</span></td>
+<td><span class="math inline">\(S_T\)</span></td>
+<td><span class="math inline">\(S_T\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(S_T \leq K\)</span></td>
+<td><span class="math inline">\(K - S_T\)</span></td>
+<td><span class="math inline">\(S_T\)</span></td>
+<td><span class="math inline">\(K\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Portfolio B also pays <span class="math inline">\(\max(S_T,
+K)\)</span>.</p>
+</section>
+<section class="slide">
+<h3 id="the-parity-relation">The Parity Relation</h3>
+<p>Since both portfolios produce the same payoff in every state of the
+world:</p>
+<p><span class="math display">\[
+\boxed{c + Ke^{-rT} = p + S_0}
+\]</span></p>
+<p>This is <strong>put-call parity</strong> for European options on a
+non-dividend-paying stock.</p>
+<p>Rearranging:</p>
+<p><span class="math display">\[
+c - p = S_0 - Ke^{-rT}
+\]</span></p>
+<p>The difference between a call and a put (same strike, same maturity)
+equals the difference between the stock price and the present value of
+the strike.</p>
+<h3 id="interpretation">Interpretation</h3>
+<ul>
+<li>If you know <span class="math inline">\(c\)</span>, you can infer
+<span class="math inline">\(p\)</span> (and vice versa)</li>
+<li>The relationship holds regardless of the stock price model</li>
+<li>Violations imply arbitrage opportunities</li>
+</ul>
+<p>Put-call parity is not a pricing formula.</p>
+<p>It is a <strong>consistency condition</strong> that any prices must
+satisfy.</p>
+</section>
+<section class="slide">
+<h3 id="arbitrage-when-parity-is-violated">Arbitrage When Parity Is
+Violated</h3>
+<p><strong>Case 1:</strong> <span class="math inline">\(c + Ke^{-rT}
+&gt; p + S_0\)</span></p>
+<p>Portfolio A is overpriced relative to Portfolio B.</p>
+<p><strong>Strategy:</strong> Sell Portfolio A, buy Portfolio B.</p>
+<ul>
+<li>Sell the call: receive <span class="math inline">\(c\)</span></li>
+<li>Borrow <span class="math inline">\(Ke^{-rT}\)</span>: receive <span
+class="math inline">\(Ke^{-rT}\)</span> now, repay <span
+class="math inline">\(K\)</span> at <span
+class="math inline">\(T\)</span></li>
+<li>Buy the put: pay <span class="math inline">\(p\)</span></li>
+<li>Buy the stock: pay <span class="math inline">\(S_0\)</span></li>
+</ul>
+<p><strong>Net cash flow at <span
+class="math inline">\(t=0\)</span>:</strong> <span
+class="math inline">\(c + Ke^{-rT} - p - S_0 &gt; 0\)</span></p>
+<p><strong>At maturity:</strong></p>
+<p>If <span class="math inline">\(S_T &gt; K\)</span>: call is exercised
+against you, deliver stock at <span class="math inline">\(K\)</span>,
+repay loan <span class="math inline">\(K\)</span>. Put expires. Net:
+<span class="math inline">\(0\)</span>.</p>
+<p>If <span class="math inline">\(S_T \leq K\)</span>: call expires,
+exercise put to sell stock at <span class="math inline">\(K\)</span>,
+repay loan <span class="math inline">\(K\)</span>. Net: <span
+class="math inline">\(0\)</span>.</p>
+<p>Riskless profit of <span class="math inline">\(c + Ke^{-rT} - p -
+S_0\)</span> at inception.</p>
+<p><strong>Case 2:</strong> <span class="math inline">\(c + Ke^{-rT}
+&lt; p + S_0\)</span></p>
+<p>Reverse every position. Same logic, same conclusion.</p>
+</section>
+<section class="slide">
+<h3 id="numerical-example">Numerical Example</h3>
+<p><strong>Given:</strong> <span class="math inline">\(S_0 =
+100\)</span>, <span class="math inline">\(K = 105\)</span>, <span
+class="math inline">\(T = 0.5\)</span>, <span class="math inline">\(r =
+6\%\)</span>, <span class="math inline">\(c = 8.00\)</span>.</p>
+<p><strong>Find:</strong> The no-arbitrage put price.</p>
+<p>From put-call parity:</p>
+<p><span class="math display">\[
+p = c + Ke^{-rT} - S_0 = 8.00 + 105 \cdot e^{-0.06 \times 0.5} - 100
+\]</span></p>
+<p><span class="math display">\[
+p = 8.00 + 105 \times 0.9704 - 100 = 8.00 + 101.90 - 100 = 9.90
+\]</span></p>
+<p>If the market quotes <span class="math inline">\(p = 10.50\)</span>,
+the put is overpriced.</p>
+<p><strong>Arbitrage:</strong> Sell the put at <span
+class="math inline">\(10.50\)</span>, buy a synthetic put (buy call at
+<span class="math inline">\(8.00\)</span>, short stock at <span
+class="math inline">\(100\)</span>, lend <span
+class="math inline">\(Ke^{-rT} = 101.90\)</span>). Net cash inflow:
+<span class="math inline">\(10.50 - 9.90 = 0.60\)</span> per share.</p>
+</section>
+<section class="slide">
+<h2 id="put-call-inequalities-american-options">6. Put-Call Inequalities
+(American Options)</h2>
+<p>American options can be exercised early.</p>
+<p>This breaks the clean equality of put-call parity.</p>
+<p>But inequality constraints survive.</p>
+<h3 id="why-parity-fails-for-american-options">Why Parity Fails for
+American Options</h3>
+<p>The proof of European put-call parity relies on comparing terminal
+payoffs.</p>
+<p>For American options, early exercise creates <strong>additional cash
+flows</strong> at intermediate dates that depend on the stock price
+path.</p>
+<p>Two portfolios with the same terminal payoff may differ if one
+component is exercised early.</p>
+<p>Equality becomes inequality.</p>
+</section>
+<section class="slide">
+<h3 id="american-put-call-inequality">American Put-Call Inequality</h3>
+<p>For American options on a non-dividend-paying stock:</p>
+<p><span class="math display">\[
+\boxed{S_0 - K \leq C - P \leq S_0 - Ke^{-rT}}
+\]</span></p>
+<h3 id="proof-of-the-upper-bound-c---p-leq-s_0---ke-rt">Proof of the
+Upper Bound: <span class="math inline">\(C - P \leq S_0 -
+Ke^{-rT}\)</span></h3>
+<p>For a non-dividend-paying stock, early exercise of an American call
+is never optimal (we prove this in Section 8). Therefore <span
+class="math inline">\(C = c\)</span>.</p>
+<p>We already know <span class="math inline">\(c - p = S_0 -
+Ke^{-rT}\)</span>.</p>
+<p>Since <span class="math inline">\(P \geq p\)</span> (the American put
+is at least as valuable as the European put):</p>
+<p><span class="math display">\[
+C - P = c - P \leq c - p = S_0 - Ke^{-rT}
+\]</span></p>
+<h3 id="proof-of-the-lower-bound-c---p-geq-s_0---k">Proof of the Lower
+Bound: <span class="math inline">\(C - P \geq S_0 - K\)</span></h3>
+<p>Consider two portfolios:</p>
+<p><strong>Portfolio A:</strong> One American call + cash <span
+class="math inline">\(K\)</span></p>
+<p><strong>Portfolio B:</strong> One American put + one share</p>
+<p>If the put in Portfolio B is exercised early at time <span
+class="math inline">\(\tau \leq T\)</span>, Portfolio B yields $K + $
+dividends (but there are none) <span class="math inline">\(= K\)</span>.
+At that moment, Portfolio A is worth at least <span
+class="math inline">\(C_\tau + Ke^{r\tau} \geq K\)</span> since <span
+class="math inline">\(C_\tau \geq 0\)</span> and <span
+class="math inline">\(Ke^{r\tau} \geq K\)</span>.</p>
+<p>If the put is not exercised early, at maturity both portfolios yield
+<span class="math inline">\(\max(S_T, K)\)</span> (same as European
+case). Portfolio A’s cash has grown to <span
+class="math inline">\(Ke^{rT} \geq K\)</span>.</p>
+<p>In all scenarios, Portfolio A is worth at least as much as Portfolio
+B:</p>
+<p><span class="math display">\[
+C + K \geq P + S_0 \implies C - P \geq S_0 - K
+\]</span></p>
+</section>
+<section class="slide">
+<h2 id="bounds-on-european-option-prices">7. Bounds on European Option
+Prices</h2>
+<p>Every option price must lie within bounds dictated by
+no-arbitrage.</p>
+<p>These bounds require no model.</p>
+<p>They are consequences of logic alone.</p>
+<h3 id="upper-bounds">Upper Bounds</h3>
+<p><strong>European call:</strong></p>
+<p><span class="math display">\[
+\boxed{c \leq S_0}
+\]</span></p>
+<p>A call gives the right to buy the stock. It can never be worth more
+than the stock itself. If <span class="math inline">\(c &gt;
+S_0\)</span>, sell the call and buy the stock for a riskless profit.</p>
+<p><strong>European put:</strong></p>
+<p><span class="math display">\[
+\boxed{p \leq Ke^{-rT}}
+\]</span></p>
+<p>A European put pays at most <span class="math inline">\(K\)</span> at
+maturity. Its present value cannot exceed <span
+class="math inline">\(Ke^{-rT}\)</span>. If <span
+class="math inline">\(p &gt; Ke^{-rT}\)</span>, sell the put and invest
+the proceeds at the risk-free rate.</p>
+</section>
+<section class="slide">
+<h3 id="lower-bound-for-european-call">Lower Bound for European
+Call</h3>
+<p><strong>Claim:</strong></p>
+<p><span class="math display">\[
+\boxed{c \geq \max(S_0 - Ke^{-rT}, \, 0)}
+\]</span></p>
+<p>The option price is never negative (a right has non-negative
+value).</p>
+<p>We need to show <span class="math inline">\(c \geq S_0 -
+Ke^{-rT}\)</span>.</p>
+<p><strong>Proof by arbitrage:</strong></p>
+<p>Suppose <span class="math inline">\(c &lt; S_0 -
+Ke^{-rT}\)</span>.</p>
+<p><strong>Strategy:</strong> Buy the call at <span
+class="math inline">\(c\)</span>, short the stock at <span
+class="math inline">\(S_0\)</span>, invest <span
+class="math inline">\(Ke^{-rT}\)</span> at the risk-free rate.</p>
+<p><strong>Cash at <span class="math inline">\(t = 0\)</span>:</strong>
+<span class="math inline">\(S_0 - c - Ke^{-rT} &gt; 0\)</span> (by
+assumption).</p>
+<p><strong>At maturity (<span
+class="math inline">\(T\)</span>):</strong></p>
+<p>The investment grows to <span class="math inline">\(K\)</span>.</p>
+<p>If <span class="math inline">\(S_T &gt; K\)</span>: exercise the
+call, buy stock at <span class="math inline">\(K\)</span>, return to
+short position. Net: <span class="math inline">\(0\)</span>.</p>
+<p>If <span class="math inline">\(S_T \leq K\)</span>: let call expire,
+buy stock at <span class="math inline">\(S_T\)</span> to close the
+short. Net: <span class="math inline">\(K - S_T \geq 0\)</span>.</p>
+<p>Initial positive cash flow + non-negative terminal payoff =
+<strong>arbitrage</strong>.</p>
+<p>Therefore <span class="math inline">\(c \geq S_0 -
+Ke^{-rT}\)</span>.</p>
+</section>
+<section class="slide">
+<h3 id="lower-bound-for-european-put">Lower Bound for European Put</h3>
+<p><strong>Claim:</strong></p>
+<p><span class="math display">\[
+\boxed{p \geq \max(Ke^{-rT} - S_0, \, 0)}
+\]</span></p>
+<p><strong>Proof by arbitrage:</strong></p>
+<p>Suppose <span class="math inline">\(p &lt; Ke^{-rT} -
+S_0\)</span>.</p>
+<p><strong>Strategy:</strong> Buy the put at <span
+class="math inline">\(p\)</span>, buy the stock at <span
+class="math inline">\(S_0\)</span>, borrow <span
+class="math inline">\(Ke^{-rT}\)</span> at the risk-free rate.</p>
+<p><strong>Cash at <span class="math inline">\(t = 0\)</span>:</strong>
+<span class="math inline">\(Ke^{-rT} - p - S_0 &gt; 0\)</span> (by
+assumption).</p>
+<p><strong>At maturity (<span
+class="math inline">\(T\)</span>):</strong></p>
+<p>The loan requires repayment of <span
+class="math inline">\(K\)</span>.</p>
+<p>If <span class="math inline">\(S_T &lt; K\)</span>: exercise the put,
+sell stock at <span class="math inline">\(K\)</span>, repay <span
+class="math inline">\(K\)</span>. Net: <span
+class="math inline">\(0\)</span>.</p>
+<p>If <span class="math inline">\(S_T \geq K\)</span>: let put expire,
+sell stock at <span class="math inline">\(S_T\)</span>, repay <span
+class="math inline">\(K\)</span>. Net: <span class="math inline">\(S_T -
+K \geq 0\)</span>.</p>
+<p>Initial positive cash flow + non-negative terminal payoff =
+<strong>arbitrage</strong>.</p>
+<p>Therefore <span class="math inline">\(p \geq Ke^{-rT} -
+S_0\)</span>.</p>
+</section>
+<section class="slide">
+<h3 id="summary-of-european-bounds">Summary of European Bounds</h3>
+<p>Collecting all results for a non-dividend-paying stock:</p>
+<p><strong>European call:</strong></p>
+<p><span class="math display">\[
+\max(S_0 - Ke^{-rT}, \, 0) \leq c \leq S_0
+\]</span></p>
+<p><strong>European put:</strong></p>
+<p><span class="math display">\[
+\max(Ke^{-rT} - S_0, \, 0) \leq p \leq Ke^{-rT}
+\]</span></p>
+<p>These bounds narrow the possible range of option prices
+<strong>without any model</strong>.</p>
+<p>Any quoted price outside these bounds is an arbitrage
+opportunity.</p>
+<p>Inside these bounds, we need a model (like Black-Scholes) to pin down
+the exact price.</p>
+</section>
+<section class="slide">
+<h3 id="numerical-example-european-bounds">Numerical Example: European
+Bounds</h3>
+<p><strong>Given:</strong> <span class="math inline">\(S_0 =
+50\)</span>, <span class="math inline">\(K = 48\)</span>, <span
+class="math inline">\(T = 0.25\)</span>, <span class="math inline">\(r =
+5\%\)</span>.</p>
+<p><strong>Call bounds:</strong></p>
+<p><span class="math display">\[
+\text{Lower:} \quad S_0 - Ke^{-rT} = 50 - 48 \cdot e^{-0.05 \times 0.25}
+= 50 - 48 \times 0.9876 = 50 - 47.40 = 2.60
+\]</span></p>
+<p><span class="math display">\[
+\text{Upper:} \quad S_0 = 50
+\]</span></p>
+<p>So <span class="math inline">\(2.60 \leq c \leq 50\)</span>.</p>
+<p><strong>Put bounds:</strong></p>
+<p><span class="math display">\[
+\text{Lower:} \quad Ke^{-rT} - S_0 = 47.40 - 50 = -2.60 \implies
+\max(-2.60, \, 0) = 0
+\]</span></p>
+<p><span class="math display">\[
+\text{Upper:} \quad Ke^{-rT} = 47.40
+\]</span></p>
+<p>So <span class="math inline">\(0 \leq p \leq 47.40\)</span>.</p>
+<p>The call lower bound of <span class="math inline">\(2.60\)</span> is
+tight — it represents the <strong>minimum</strong> a rational market
+would charge.</p>
+</section>
+<section class="slide">
+<h2 id="european-and-american-calls-on-non-dividend-paying-stocks">8.
+European and American Calls on Non-Dividend-Paying Stocks</h2>
+<p>This section contains one of the most elegant results in option
+theory.</p>
+<h3
+id="theorem-early-exercise-of-american-calls-is-never-optimal">Theorem:
+Early Exercise of American Calls Is Never Optimal</h3>
+<p>For a non-dividend-paying stock:</p>
+<p><span class="math display">\[
+\boxed{C = c}
+\]</span></p>
+<p>An American call on a non-dividend-paying stock is worth exactly the
+same as a European call.</p>
+<p>The right to exercise early has <strong>zero value</strong>.</p>
+<p>This is counterintuitive. Let us prove it.</p>
+</section>
+<section class="slide">
+<h3 id="proof-why-early-exercise-destroys-value">Proof: Why Early
+Exercise Destroys Value</h3>
+<p>Suppose the American call is deep in-the-money at time <span
+class="math inline">\(t &lt; T\)</span>, with stock price <span
+class="math inline">\(S_t \gg K\)</span>.</p>
+<p><strong>If you exercise:</strong> You receive <span
+class="math inline">\(S_t - K\)</span> immediately.</p>
+<p><strong>If you do not exercise:</strong> You hold an option worth at
+least <span class="math inline">\(c_t \geq S_t -
+Ke^{-r(T-t)}\)</span>.</p>
+<p>Compare the two:</p>
+<p><span class="math display">\[
+S_t - Ke^{-r(T-t)} &gt; S_t - K
+\]</span></p>
+<p>since <span class="math inline">\(Ke^{-r(T-t)} &lt; K\)</span> for
+<span class="math inline">\(r &gt; 0\)</span> and <span
+class="math inline">\(T - t &gt; 0\)</span>.</p>
+<p><strong>The option alive is worth more than the option
+dead.</strong></p>
+<p>By holding rather than exercising, you:</p>
+<ol type="1">
+<li><strong>Defer payment</strong> of <span
+class="math inline">\(K\)</span> — keeping <span
+class="math inline">\(K\)</span> invested at rate <span
+class="math inline">\(r\)</span> until maturity</li>
+<li><strong>Retain insurance</strong> — if the stock crashes before
+<span class="math inline">\(T\)</span>, you can walk away losing only
+the premium</li>
+</ol>
+<p>Early exercise sacrifices both the time value of money and the
+insurance value.</p>
+<p>No rational agent does this.</p>
+</section>
+<section class="slide">
+<h3 id="formal-argument">Formal Argument</h3>
+<p>Since early exercise is never optimal, the American call will always
+be held to maturity and exercised (or not) at time <span
+class="math inline">\(T\)</span> — exactly like a European call.</p>
+<p>Therefore:</p>
+<p><span class="math display">\[
+C = c
+\]</span></p>
+<p>and the lower bound for the American call is:</p>
+<p><span class="math display">\[
+C \geq \max(S_0 - Ke^{-rT}, \, 0)
+\]</span></p>
+<p>This is <strong>strictly greater</strong> than the intrinsic value
+<span class="math inline">\(\max(S_0 - K, \, 0)\)</span> whenever <span
+class="math inline">\(r &gt; 0\)</span> and <span
+class="math inline">\(T &gt; 0\)</span>.</p>
+<p>An American call on a non-dividend-paying stock should never be
+exercised early.</p>
+<p>It should never trade below <span class="math inline">\(S_0 -
+Ke^{-rT}\)</span>.</p>
+<h3 id="what-changes-with-dividends">What Changes with Dividends?</h3>
+<p>If the stock pays dividends before <span
+class="math inline">\(T\)</span>, the stock price drops on the
+ex-dividend date.</p>
+<p>This drop is a <strong>cost of waiting</strong> that does not affect
+the option holder.</p>
+<p>Early exercise may then become optimal — specifically, just before an
+ex-dividend date.</p>
+<p>Dividends break the result. Without them, it holds
+unconditionally.</p>
+</section>
+<section class="slide">
+<h2 id="bounds-on-american-option-prices">9. Bounds on American Option
+Prices</h2>
+<p>American options inherit all European bounds and add more, because
+early exercise can only <strong>add</strong> value.</p>
+<h3 id="relation-to-european-prices">Relation to European Prices</h3>
+<p>Since an American option can do everything a European option can (and
+more):</p>
+<p><span class="math display">\[
+C \geq c, \qquad P \geq p
+\]</span></p>
+<p>The American premium is at least as large as the European
+premium.</p>
+<h3 id="american-call-non-dividend-paying-stock">American Call
+(Non-Dividend-Paying Stock)</h3>
+<p>From Section 8, <span class="math inline">\(C = c\)</span>. So:</p>
+<p><span class="math display">\[
+\max(S_0 - Ke^{-rT}, \, 0) \leq C \leq S_0
+\]</span></p>
+<p>The bounds are the same as European.</p>
+</section>
+<section class="slide">
+<h3 id="american-put-early-exercise-can-be-optimal">American Put: Early
+Exercise Can Be Optimal</h3>
+<p>Unlike calls, <strong>American puts may be exercised early</strong> —
+even without dividends.</p>
+<p><strong>Intuition:</strong> Suppose <span class="math inline">\(S_t =
+0\)</span> (the stock is worthless). The put payoff from immediate
+exercise is <span class="math inline">\(K\)</span>. Waiting until <span
+class="math inline">\(T\)</span> gives <span
+class="math inline">\(K\)</span> at maturity, whose present value is
+<span class="math inline">\(Ke^{-r(T-t)} &lt; K\)</span>.</p>
+<p>You collect <span class="math inline">\(K\)</span> now and invest it
+at the risk-free rate, earning <span class="math inline">\(K(e^{r(T-t)}
+- 1)\)</span> in interest.</p>
+<p>Waiting has an <strong>opportunity cost</strong> when the put is deep
+in-the-money.</p>
+<p>The stock cannot fall below zero, so the put’s payoff cannot improve
+by waiting — holding provides no additional insurance.</p>
+<h3 id="bounds-on-american-put">Bounds on American Put</h3>
+<p>Since early exercise is possible:</p>
+<p><span class="math display">\[
+\boxed{\max(K - S_0, \, 0) \leq P \leq K}
+\]</span></p>
+<p>The lower bound uses <span class="math inline">\(K - S_0\)</span>
+(not <span class="math inline">\(Ke^{-rT} - S_0\)</span>), because you
+can exercise now and receive <span class="math inline">\(K -
+S_0\)</span> immediately.</p>
+<p>The upper bound is <span class="math inline">\(K\)</span> (not <span
+class="math inline">\(Ke^{-rT}\)</span>), because immediate exercise
+yields at most <span class="math inline">\(K\)</span> when <span
+class="math inline">\(S_0 = 0\)</span>.</p>
+</section>
+<section class="slide">
+<h3 id="american-put-the-early-exercise-boundary">American Put: The
+Early Exercise Boundary</h3>
+<p>At any time <span class="math inline">\(t\)</span>, there exists a
+critical stock price <span class="math inline">\(S^*(t)\)</span> below
+which immediate exercise is optimal.</p>
+<p><strong>Optimal exercise condition:</strong> Exercise the American
+put at time <span class="math inline">\(t\)</span> if:</p>
+<p><span class="math display">\[
+K - S_t \geq P_t(S_t)
+\]</span></p>
+<p>where <span class="math inline">\(P_t(S_t)\)</span> is the value of
+the put if held alive. The critical price <span
+class="math inline">\(S^*(t)\)</span> satisfies:</p>
+<p><span class="math display">\[
+K - S^*(t) = P_t(S^*(t))
+\]</span></p>
+<p>Below <span class="math inline">\(S^*(t)\)</span>: the intrinsic
+value exceeds the continuation value. Exercise immediately.</p>
+<p>Above <span class="math inline">\(S^*(t)\)</span>: the continuation
+value (including insurance) exceeds the intrinsic value. Keep
+holding.</p>
+<p><strong>Properties of <span
+class="math inline">\(S^*(t)\)</span>:</strong></p>
+<ul>
+<li><span class="math inline">\(S^*(T) = K\)</span> (at maturity,
+exercise whenever ITM)</li>
+<li><span class="math inline">\(S^*(t) &lt; K\)</span> for <span
+class="math inline">\(t &lt; T\)</span> (before maturity, some ITM puts
+should not be exercised)</li>
+<li><span class="math inline">\(S^*(t)\)</span> increases as <span
+class="math inline">\(t \to T\)</span> (the exercise boundary converges
+to <span class="math inline">\(K\)</span>)</li>
+</ul>
+<p>The American put premium exceeds the European put premium precisely
+because of this early exercise right:</p>
+<p><span class="math display">\[
+P - p \geq 0
+\]</span></p>
+<p>with strict inequality whenever there is a positive probability of
+optimal early exercise.</p>
+</section>
+<section class="slide">
+<h3 id="summary-european-vs-american-bounds">Summary: European vs
+American Bounds</h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Lower Bound</th>
+<th>Upper Bound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>European call</td>
+<td><span class="math inline">\(\max(S_0 - Ke^{-rT}, \, 0)\)</span></td>
+<td><span class="math inline">\(S_0\)</span></td>
+</tr>
+<tr>
+<td>European put</td>
+<td><span class="math inline">\(\max(Ke^{-rT} - S_0, \, 0)\)</span></td>
+<td><span class="math inline">\(Ke^{-rT}\)</span></td>
+</tr>
+<tr>
+<td>American call (no div)</td>
+<td><span class="math inline">\(\max(S_0 - Ke^{-rT}, \, 0)\)</span></td>
+<td><span class="math inline">\(S_0\)</span></td>
+</tr>
+<tr>
+<td>American put</td>
+<td><span class="math inline">\(\max(K - S_0, \, 0)\)</span></td>
+<td><span class="math inline">\(K\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Note the difference in the put bounds:</p>
+<ul>
+<li>European put lower bound involves the <strong>present value</strong>
+<span class="math inline">\(Ke^{-rT}\)</span></li>
+<li>American put lower bound involves <span
+class="math inline">\(K\)</span> directly (because you can exercise
+now)</li>
+</ul>
+<p>Similarly for upper bounds:</p>
+<ul>
+<li>European put upper bound: <span
+class="math inline">\(Ke^{-rT}\)</span> (payment only at <span
+class="math inline">\(T\)</span>)</li>
+<li>American put upper bound: <span class="math inline">\(K\)</span>
+(exercise any time)</li>
+</ul>
+</section>
+<section class="slide">
+<h2 id="variables-determining-option-prices">10. Variables Determining
+Option Prices</h2>
+<p>Six variables affect option prices. Understanding their directional
+effects requires no model — only arbitrage reasoning and economic
+intuition.</p>
+<h3 id="the-six-variables">The Six Variables</h3>
+<ol type="1">
+<li><strong>Current stock price</strong> <span
+class="math inline">\(S_0\)</span></li>
+<li><strong>Strike price</strong> <span
+class="math inline">\(K\)</span></li>
+<li><strong>Time to maturity</strong> <span
+class="math inline">\(T\)</span></li>
+<li><strong>Risk-free interest rate</strong> <span
+class="math inline">\(r\)</span></li>
+<li><strong>Volatility of the stock</strong> <span
+class="math inline">\(\sigma\)</span></li>
+<li><strong>Dividends</strong> expected during the life of the
+option</li>
+</ol>
+<p>We analyze each in turn for European and American options.</p>
+</section>
+<section class="slide">
+<h3 id="effect-of-stock-price-s_0">Effect of Stock Price <span
+class="math inline">\(S_0\)</span></h3>
+<p><strong>Calls</strong> (European and American):
+<strong>Increasing</strong> in <span
+class="math inline">\(S_0\)</span>.</p>
+<p>A higher stock price means the call is more likely to finish
+in-the-money.</p>
+<p>For European calls, the lower bound <span class="math inline">\(S_0 -
+Ke^{-rT}\)</span> increases with <span
+class="math inline">\(S_0\)</span>.</p>
+<p><strong>Puts</strong> (European and American):
+<strong>Decreasing</strong> in <span
+class="math inline">\(S_0\)</span>.</p>
+<p>A higher stock price makes the put less likely to have value at
+expiry.</p>
+<p>These are the most intuitive effects. If you are paying for the right
+to buy, you want the asset to be expensive at maturity. A higher
+starting point helps.</p>
+</section>
+<section class="slide">
+<h3 id="effect-of-strike-price-k">Effect of Strike Price <span
+class="math inline">\(K\)</span></h3>
+<p><strong>Calls:</strong> <strong>Decreasing</strong> in <span
+class="math inline">\(K\)</span>.</p>
+<p>A higher strike means you must pay more upon exercise. The right to
+buy at <span class="math inline">\(100\)</span> is more valuable than
+the right to buy at <span class="math inline">\(110\)</span>.</p>
+<p>For two European calls with strikes <span class="math inline">\(K_1
+&lt; K_2\)</span>:</p>
+<p><span class="math display">\[
+c(K_1) \geq c(K_2)
+\]</span></p>
+<p><strong>Proof:</strong> At maturity, <span class="math inline">\((S_T
+- K_1)^+ \geq (S_T - K_2)^+\)</span> for all <span
+class="math inline">\(S_T\)</span>. By no-arbitrage, the present value
+of the larger payoff is at least as large.</p>
+<p><strong>Puts:</strong> <strong>Increasing</strong> in <span
+class="math inline">\(K\)</span>.</p>
+<p>A higher strike means you can sell at a higher price. The right to
+sell at <span class="math inline">\(110\)</span> is more valuable than
+the right to sell at <span class="math inline">\(100\)</span>.</p>
+</section>
+<section class="slide">
+<h3 id="effect-of-time-to-maturity-t">Effect of Time to Maturity <span
+class="math inline">\(T\)</span></h3>
+<p><strong>American options</strong> (calls and puts):
+<strong>Non-decreasing</strong> in <span
+class="math inline">\(T\)</span>.</p>
+<p>An American option with longer maturity can do everything a
+shorter-maturity option can — it has the same exercise rights plus more.
+Therefore:</p>
+<p><span class="math display">\[
+C(T_2) \geq C(T_1), \quad P(T_2) \geq P(T_1) \quad \text{for } T_2 &gt;
+T_1
+\]</span></p>
+<p><strong>European options:</strong> The effect is <strong>generally
+positive but not guaranteed</strong>.</p>
+<p>A European option can only be exercised at maturity. A
+longer-maturity European option cannot replicate a shorter-maturity one
+(it cannot be exercised at the earlier date).</p>
+<p>For European calls on non-dividend-paying stocks, the effect is
+unambiguously positive (since <span class="math inline">\(C = c\)</span>
+and <span class="math inline">\(C\)</span> is non-decreasing in <span
+class="math inline">\(T\)</span>).</p>
+<p>For European puts, longer maturity means the present value of the
+strike <span class="math inline">\(Ke^{-rT}\)</span> is lower. This
+discounting effect can sometimes dominate, making the European put less
+valuable despite having more time.</p>
+</section>
+<section class="slide">
+<h3 id="effect-of-risk-free-rate-r">Effect of Risk-Free Rate <span
+class="math inline">\(r\)</span></h3>
+<p><strong>Calls</strong> (European and American):
+<strong>Increasing</strong> in <span
+class="math inline">\(r\)</span>.</p>
+<p>A higher rate reduces the present value of the strike payment <span
+class="math inline">\(Ke^{-rT}\)</span>.</p>
+<p>Buying the stock via a call effectively defers payment. Higher rates
+make deferral more valuable.</p>
+<p>From the lower bound: <span class="math inline">\(c \geq S_0 -
+Ke^{-rT}\)</span>, which increases with <span
+class="math inline">\(r\)</span>.</p>
+<p><strong>Puts</strong> (European and American):
+<strong>Decreasing</strong> in <span
+class="math inline">\(r\)</span>.</p>
+<p>A higher rate reduces the present value of the strike received upon
+exercise.</p>
+<p>Selling the stock via a put defers the receipt of <span
+class="math inline">\(K\)</span>. Higher rates make this deferral more
+costly.</p>
+<h3 id="effect-of-volatility-sigma">Effect of Volatility <span
+class="math inline">\(\sigma\)</span></h3>
+<p><strong>All options</strong> (European and American, calls and puts):
+<strong>Increasing</strong> in <span
+class="math inline">\(\sigma\)</span>.</p>
+<p>Higher volatility means larger potential price swings in both
+directions.</p>
+<p>The option holder benefits from favorable swings (captures upside)
+and is protected from adverse swings (can walk away).</p>
+<p>More volatility = more extreme outcomes = more valuable
+insurance.</p>
+<p>This is the single most important variable in option pricing.</p>
+</section>
+<section class="slide">
+<h3 id="effect-of-dividends">Effect of Dividends</h3>
+<p>Dividends reduce the stock price on the ex-dividend date.</p>
+<p><strong>Calls:</strong> <strong>Decreasing</strong> in expected
+dividends.</p>
+<p>A lower stock price reduces the call’s expected payoff.</p>
+<p><strong>Puts:</strong> <strong>Increasing</strong> in expected
+dividends.</p>
+<p>A lower stock price increases the put’s expected payoff.</p>
+<p>For a stock paying known dividends with present value <span
+class="math inline">\(D\)</span> during the option’s life, put-call
+parity generalizes to:</p>
+<p><span class="math display">\[
+c + Ke^{-rT} = p + S_0 - D
+\]</span></p>
+<p>The stock price is effectively replaced by <span
+class="math inline">\(S_0 - D\)</span> (the stock price net of the
+present value of dividends).</p>
+</section>
+<section class="slide">
+<h3 id="summary-table-effect-of-variables-on-option-prices">Summary
+Table: Effect of Variables on Option Prices</h3>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr>
+<th>Variable</th>
+<th style="text-align: center;">European Call <span
+class="math inline">\(c\)</span></th>
+<th style="text-align: center;">European Put <span
+class="math inline">\(p\)</span></th>
+<th style="text-align: center;">American Call <span
+class="math inline">\(C\)</span></th>
+<th style="text-align: center;">American Put <span
+class="math inline">\(P\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(S_0 \uparrow\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(+\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(-\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(+\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(-\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(K \uparrow\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(-\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(+\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(-\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(+\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(T \uparrow\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(+^*\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(?\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(+\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(+\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(r \uparrow\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(+\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(-\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(+\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(-\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(\sigma \uparrow\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(+\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(+\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(+\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(+\)</span></td>
+</tr>
+<tr>
+<td>Dividends <span class="math inline">\(\uparrow\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(-\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(+\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(-\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(+\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(+^*\)</span>: Positive for
+non-dividend-paying stocks; generally positive but not guaranteed
+otherwise.</p>
+<p><span class="math inline">\(?\)</span>: The effect can go either way
+(discounting vs. optionality).</p>
+<p>Memorizing this table is unnecessary.</p>
+<p>Understanding the economics behind each entry is sufficient.</p>
+</section>
+<section class="slide">
+<h2 id="time-value-of-options">11. Time Value of Options</h2>
+<h3 id="decomposition">Decomposition</h3>
+<p>Every option price can be decomposed:</p>
+<p><span class="math display">\[
+\boxed{\text{Option price} = \text{Intrinsic value} + \text{Time value}}
+\]</span></p>
+<p>The standard practitioner definition (Section 4) uses <span
+class="math inline">\(\max(S_0 - K, 0)\)</span> for a call. However, for
+European options it is more natural to use the <strong>adjusted
+intrinsic value</strong> <span class="math inline">\(\max(S_0 -
+Ke^{-rT}, 0)\)</span>, which accounts for the fact that the strike is
+paid at maturity, not today:</p>
+<p><span class="math display">\[
+c = \underbrace{\max(S_0 - Ke^{-rT}, \, 0)}_{\text{adjusted intrinsic
+value}} + \underbrace{(c - \max(S_0 - Ke^{-rT}, \, 0))}_{\text{time
+value}}
+\]</span></p>
+<p>With this adjusted definition, time value is always non-negative for
+European calls on non-dividend-paying stocks (this follows directly from
+the lower bound <span class="math inline">\(c \geq S_0 -
+Ke^{-rT}\)</span>).</p>
+<p>Note: under the standard definition, time value <span
+class="math inline">\(c - \max(S_0 - K, 0)\)</span> is also non-negative
+for European calls, since <span class="math inline">\(S_0 - Ke^{-rT}
+\geq S_0 - K\)</span> when <span class="math inline">\(r \geq
+0\)</span>. The two definitions agree on the sign; the adjusted version
+simply gives a tighter decomposition.</p>
+</section>
+<section class="slide">
+<h3 id="behavior-of-time-value">Behavior of Time Value</h3>
+<p><strong>At-the-money options</strong> have the <strong>maximum time
+value</strong>.</p>
+<p><strong>Intuition:</strong> An ATM option is poised on the boundary
+between exercise and non-exercise. Small price movements in either
+direction have large effects on whether the option finishes ITM. This
+uncertainty is most valuable when the option is at-the-money.</p>
+<p><strong>Deep ITM and deep OTM options</strong> have <strong>minimal
+time value</strong>.</p>
+<ul>
+<li>Deep ITM: the option will almost certainly be exercised. Its value
+converges to the (discounted) intrinsic value. There is little
+optionality remaining.</li>
+<li>Deep OTM: the option will almost certainly expire worthless. Its
+value converges to zero. There is little chance of recovery.</li>
+</ul>
+<p>The time value is a <strong>hump-shaped</strong> function of
+moneyness, peaking at ATM.</p>
+</section>
+<section class="slide">
+<h3 id="time-decay">Time Decay</h3>
+<p>As <span class="math inline">\(T \to 0\)</span>, time value decays to
+zero.</p>
+<p>At expiration, there is no time left and no possibility of favorable
+price movements:</p>
+<p><span class="math display">\[
+\lim_{T \to 0} \text{Time value} = 0
+\]</span></p>
+<p>The option price converges to its intrinsic value:</p>
+<p><span class="math display">\[
+c \to \max(S_T - K, \, 0), \quad p \to \max(K - S_T, \, 0)
+\]</span></p>
+<p><strong>Key properties of time decay:</strong></p>
+<ol type="1">
+<li>Time decay is <strong>non-linear</strong>: most time value is lost
+near expiration</li>
+<li>ATM options lose time value fastest as expiration approaches</li>
+<li>Deep ITM and deep OTM options lose time value slowly (there is
+little to lose)</li>
+</ol>
+<p>In options trading, this is called <strong>theta</strong> — the rate
+of change of option price with respect to time:</p>
+<p><span class="math display">\[
+\Theta = \frac{\partial V}{\partial t}
+\]</span></p>
+<p>For most long positions, <span class="math inline">\(\Theta &lt;
+0\)</span> — the option loses value as time passes, all else being
+equal.</p>
+<p><strong>Exception:</strong> Deep ITM European puts can have <span
+class="math inline">\(\Theta &gt; 0\)</span>. Their value is
+approximately <span class="math inline">\(Ke^{-r(T-t)} - S_t\)</span>,
+which <em>increases</em> as <span class="math inline">\(t\)</span>
+advances because the discounting penalty shrinks. This is consistent
+with their negative time value — the passage of time brings them closer
+to collecting <span class="math inline">\(K\)</span>, which is
+beneficial.</p>
+<p>For long calls on non-dividend-paying stocks, <span
+class="math inline">\(\Theta &lt; 0\)</span> always holds.</p>
+<p>Time is generally the enemy of the option buyer.</p>
+<p>Time is generally the ally of the option seller.</p>
+</section>
+<section class="slide">
+<h3 id="time-value-and-no-arbitrage">Time Value and No-Arbitrage</h3>
+<p>The no-arbitrage lower bound for a European call can be
+rewritten:</p>
+<p><span class="math display">\[
+c \geq S_0 - Ke^{-rT} = (S_0 - K) + K(1 - e^{-rT})
+\]</span></p>
+<p>The first term is the traditional intrinsic value.</p>
+<p>The second term <span class="math inline">\(K(1 - e^{-rT})\)</span>
+represents the <strong>interest advantage</strong> of deferring payment
+of the strike.</p>
+<p>This decomposition shows that even for a deep ITM call, the time
+value has two components:</p>
+<ol type="1">
+<li><strong>Insurance value:</strong> the possibility that <span
+class="math inline">\(S_T\)</span> may fall below <span
+class="math inline">\(K\)</span></li>
+<li><strong>Interest value:</strong> the benefit of paying <span
+class="math inline">\(K\)</span> later rather than now</li>
+</ol>
+<p>As <span class="math inline">\(T \to 0\)</span>, both components
+vanish: there is no time for the stock to move, and no time to earn
+interest on <span class="math inline">\(K\)</span>.</p>
+<p>As <span class="math inline">\(T \to \infty\)</span>, the call value
+approaches <span class="math inline">\(S_0\)</span> (since <span
+class="math inline">\(Ke^{-rT} \to 0\)</span>), and time value converges
+to <span class="math inline">\(\min(S_0, K)\)</span> — large, but
+bounded. A perpetual call is valuable, but its value never exceeds the
+stock price.</p>
+</section>
+<section class="slide">
+<h3 id="european-put-time-value-subtlety">European Put: Time Value
+Subtlety</h3>
+<p>For European puts, time value can be <strong>negative</strong> for
+deep ITM options.</p>
+<p>Consider a European put with <span class="math inline">\(S_0 \ll
+K\)</span>. The intrinsic value is approximately <span
+class="math inline">\(K - S_0\)</span>.</p>
+<p>But the European put price satisfies:</p>
+<p><span class="math display">\[
+p \leq Ke^{-rT}
+\]</span></p>
+<p>For a deep ITM put, the intrinsic value <span class="math inline">\(K
+- S_0\)</span> can exceed <span class="math inline">\(Ke^{-rT}\)</span>
+when <span class="math inline">\(S_0\)</span> is very small:</p>
+<p><span class="math display">\[
+K - S_0 &gt; Ke^{-rT} \quad \Leftrightarrow \quad S_0 &lt; K(1 -
+e^{-rT})
+\]</span></p>
+<p>In this region, the European put trades <strong>below its intrinsic
+value</strong> — its time value is negative.</p>
+<p><strong>Why?</strong> The European put cannot be exercised until
+<span class="math inline">\(T\)</span>. Even though the stock is nearly
+worthless, the holder cannot collect <span
+class="math inline">\(K\)</span> until maturity. The present value of
+this delayed payment is <span class="math inline">\(Ke^{-rT} &lt;
+K\)</span>.</p>
+<p>This is precisely the situation where an <strong>American</strong>
+put would be exercised early. The American put holder collects <span
+class="math inline">\(K\)</span> now, invests it, and avoids the
+discounting penalty.</p>
+<p>Negative time value for European puts is not a paradox.</p>
+<p>It is the cost of being forced to wait.</p>
+</section>
+<section class="slide">
+<h2 id="final-takeaways">Final Takeaways</h2>
+<ul>
+<li><strong>Options introduce asymmetric payoffs</strong>
+<ul>
+<li>The buyer pays a premium for the right to choose</li>
+<li>Payoff: <span class="math inline">\(\max(S_T - K, 0)\)</span> for
+calls, <span class="math inline">\(\max(K - S_T, 0)\)</span> for
+puts</li>
+<li>Asymmetry is the defining feature separating options from
+forwards</li>
+</ul></li>
+<li><strong>Put-call parity is a model-free consistency
+condition</strong>
+<ul>
+<li>European: <span class="math inline">\(c + Ke^{-rT} = p +
+S_0\)</span></li>
+<li>Violations imply arbitrage</li>
+<li>American options satisfy inequalities: <span
+class="math inline">\(S_0 - K \leq C - P \leq S_0 -
+Ke^{-rT}\)</span></li>
+</ul></li>
+<li><strong>No-arbitrage bounds constrain option prices without any
+model</strong>
+<ul>
+<li>European call: <span class="math inline">\(\max(S_0 - Ke^{-rT}, 0)
+\leq c \leq S_0\)</span></li>
+<li>European put: <span class="math inline">\(\max(Ke^{-rT} - S_0, 0)
+\leq p \leq Ke^{-rT}\)</span></li>
+<li>American bounds differ because of early exercise</li>
+</ul></li>
+<li><strong>Early exercise of American calls on non-dividend-paying
+stocks is never optimal</strong>
+<ul>
+<li><span class="math inline">\(C = c\)</span> — the early exercise
+right has zero value</li>
+<li>Exercising sacrifices both time value of money and insurance</li>
+<li>Dividends change this conclusion</li>
+</ul></li>
+<li><strong>American puts may be exercised early</strong>
+<ul>
+<li>Deep ITM puts benefit from collecting <span
+class="math inline">\(K\)</span> now rather than waiting</li>
+<li>An early exercise boundary <span
+class="math inline">\(S^*(t)\)</span> separates the exercise and
+continuation regions</li>
+</ul></li>
+<li><strong>Six variables determine option prices</strong>
+<ul>
+<li><span class="math inline">\(S_0\)</span>, <span
+class="math inline">\(K\)</span>, <span
+class="math inline">\(T\)</span>, <span
+class="math inline">\(r\)</span>, <span
+class="math inline">\(\sigma\)</span>, and dividends</li>
+<li>Volatility is the most important — it always increases option
+value</li>
+</ul></li>
+<li><strong>Time value reflects optionality and decays to zero at
+maturity</strong>
+<ul>
+<li>Maximum at ATM, minimal deep ITM/OTM</li>
+<li>Non-linear decay accelerates near expiration</li>
+<li>European puts can have negative time value (cost of forced
+waiting)</li>
+</ul></li>
+</ul>
+<p>Next lecture: <strong>Option pricing</strong> — the Black-Scholes
+framework and the mathematics of replication under uncertainty.</p>
+</section>
+<section class="slide">
+<h2 id="exercises">12. Exercises</h2>
+<h3 id="exercise-1-payoffs-and-profit">Exercise 1: Payoffs and
+Profit</h3>
+<p>A European call on stock XYZ has <span class="math inline">\(K =
+65\)</span> and premium <span class="math inline">\(c =
+4.50\)</span>.</p>
+<p><strong>Tasks:</strong> 1. Compute the payoff and profit for <span
+class="math inline">\(S_T \in \{55, 60, 65, 70, 75, 80\}\)</span> 2.
+What is the breakeven stock price? 3. What is the maximum loss for the
+call buyer? 4. What is the maximum loss for the call seller?</p>
+</section>
+<section class="slide">
+<h3 id="exercise-2-put-call-parity">Exercise 2: Put-Call Parity</h3>
+<p>A non-dividend-paying stock has <span class="math inline">\(S_0 =
+42\)</span>. European options with <span class="math inline">\(K =
+40\)</span> and <span class="math inline">\(T = 0.5\)</span> are
+available. The risk-free rate is <span class="math inline">\(r =
+8\%\)</span> (continuously compounded). The European call trades at
+<span class="math inline">\(c = 5.50\)</span>.</p>
+<p><strong>Tasks:</strong> 1. Use put-call parity to determine the
+European put price <span class="math inline">\(p\)</span> 2. If the
+market quotes <span class="math inline">\(p = 2.00\)</span>, describe
+the arbitrage strategy in detail 3. Compute the arbitrage profit per
+share</p>
+</section>
+<section class="slide">
+<h3 id="exercise-3-european-bounds">Exercise 3: European Bounds</h3>
+<p>Consider a non-dividend-paying stock with <span
+class="math inline">\(S_0 = 90\)</span>, <span class="math inline">\(K =
+85\)</span>, <span class="math inline">\(T = 1\)</span>, <span
+class="math inline">\(r = 4\%\)</span>.</p>
+<p><strong>Tasks:</strong> 1. Compute the lower and upper bounds for the
+European call price 2. Compute the lower and upper bounds for the
+European put price 3. A broker quotes <span class="math inline">\(c =
+4.00\)</span>. Show that this violates the lower bound and describe the
+arbitrage 4. Verify that your arbitrage generates a non-negative payoff
+in every scenario</p>
+</section>
+<section class="slide">
+<h3 id="exercise-4-early-exercise">Exercise 4: Early Exercise</h3>
+<p>An American call on a non-dividend-paying stock has <span
+class="math inline">\(K = 50\)</span>, <span class="math inline">\(T =
+3\)</span> months, <span class="math inline">\(r = 10\%\)</span>, <span
+class="math inline">\(S_0 = 62\)</span>.</p>
+<p><strong>Tasks:</strong> 1. Compute the lower bound for this call 2.
+What would the holder receive from immediate exercise? 3. Show that the
+lower bound exceeds the immediate exercise value 4. Explain economically
+why early exercise is suboptimal</p>
+</section>
+<section class="slide">
+<h3 id="exercise-5-american-put-call-inequality">Exercise 5: American
+Put-Call Inequality</h3>
+<p>For a non-dividend-paying stock: <span class="math inline">\(S_0 =
+55\)</span>, <span class="math inline">\(K = 50\)</span>, <span
+class="math inline">\(T = 0.25\)</span>, <span class="math inline">\(r =
+6\%\)</span>. An American call is priced at <span
+class="math inline">\(C = 8.00\)</span>.</p>
+<p><strong>Tasks:</strong> 1. State the American put-call inequality 2.
+Compute the upper and lower bounds for <span class="math inline">\(C -
+P\)</span> 3. Determine the range of no-arbitrage prices for the
+American put <span class="math inline">\(P\)</span> 4. If <span
+class="math inline">\(P = 1.50\)</span>, check whether the inequality is
+satisfied</p>
+</section>
+<section class="slide">
+<h3 id="exercise-6-variables-and-option-prices">Exercise 6: Variables
+and Option Prices</h3>
+<p>A European call on a non-dividend-paying stock is currently priced at
+<span class="math inline">\(c = 6.00\)</span>, with <span
+class="math inline">\(S_0 = 100\)</span>, <span class="math inline">\(K
+= 100\)</span>, <span class="math inline">\(T = 0.5\)</span>, <span
+class="math inline">\(r = 5\%\)</span>, <span
+class="math inline">\(\sigma = 25\%\)</span>.</p>
+<p>For each of the following changes (taken independently), state
+whether the call price increases, decreases, or is ambiguous, and
+explain why:</p>
+<ol type="1">
+<li><span class="math inline">\(S_0\)</span> increases to <span
+class="math inline">\(105\)</span></li>
+<li><span class="math inline">\(K\)</span> increases to <span
+class="math inline">\(105\)</span></li>
+<li><span class="math inline">\(T\)</span> increases to <span
+class="math inline">\(1.0\)</span></li>
+<li><span class="math inline">\(r\)</span> increases to <span
+class="math inline">\(8\%\)</span></li>
+<li><span class="math inline">\(\sigma\)</span> increases to <span
+class="math inline">\(35\%\)</span></li>
+<li>The stock announces a dividend of <span
+class="math inline">\(\$2\)</span> payable in 3 months</li>
+</ol>
+</section>
+<section class="slide">
+<h3 id="exercise-7-time-value-analysis">Exercise 7: Time Value
+Analysis</h3>
+<p>A European put has <span class="math inline">\(K = 100\)</span>,
+<span class="math inline">\(T = 1\)</span>, <span
+class="math inline">\(r = 6\%\)</span>.</p>
+<p><strong>Tasks:</strong> 1. Compute the European put upper bound <span
+class="math inline">\(Ke^{-rT}\)</span> 2. For <span
+class="math inline">\(S_0 = 2\)</span>, compute the intrinsic value
+<span class="math inline">\(K - S_0\)</span> and compare to the upper
+bound. Is time value negative? 3. For <span class="math inline">\(S_0 =
+98\)</span> (near ATM), would you expect time value to be positive or
+negative? Explain. 4. Explain why an American put holder would exercise
+early in the situation from part 2</p>
+</section>
+<section class="slide">
+<h3 id="exercise-8-proving-a-bound">Exercise 8: Proving a Bound</h3>
+<p>Prove that for European call options on a non-dividend-paying stock
+with strikes <span class="math inline">\(K_1 &lt; K_2\)</span>:</p>
+<p><span class="math display">\[
+c(K_1) - c(K_2) \leq (K_2 - K_1)e^{-rT}
+\]</span></p>
+<p><strong>Hint:</strong> Consider a portfolio that is long one call
+with strike <span class="math inline">\(K_1\)</span>, short one call
+with strike <span class="math inline">\(K_2\)</span>, and analyze the
+maximum payoff at maturity.</p>
+<p><strong>Tasks:</strong> 1. Write the payoff of this portfolio at
+maturity for each scenario (<span class="math inline">\(S_T &lt;
+K_1\)</span>, <span class="math inline">\(K_1 \leq S_T &lt;
+K_2\)</span>, <span class="math inline">\(S_T \geq K_2\)</span>) 2. Show
+that the payoff never exceeds <span class="math inline">\(K_2 -
+K_1\)</span> 3. Conclude the bound using no-arbitrage pricing 4.
+Interpret this result: what does it say about how fast call prices
+decrease with strike?</p>
+</section>
+</div>
+</body>
+</html>

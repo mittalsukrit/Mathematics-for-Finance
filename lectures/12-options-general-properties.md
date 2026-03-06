@@ -165,7 +165,6 @@ At maturity, the holder of a European call exercises only if $S_T > K$:
 $$
 \boxed{\text{Call payoff} = \max(S_T - K, \, 0) = (S_T - K)^+}
 $$
-
 If $S_T > K$: exercise, buy at $K$, asset is worth $S_T$. Profit from exercise: $S_T - K$.
 
 If $S_T \leq K$: do not exercise. The option expires worthless.
@@ -176,7 +175,6 @@ The payoff is **never negative**. That is the privilege of holding a right.
 $$
 \boxed{\text{Put payoff} = \max(K - S_T, \, 0) = (K - S_T)^+}
 $$
-
 If $S_T < K$: exercise, sell at $K$, asset is worth only $S_T$. Profit from exercise: $K - S_T$.
 
 If $S_T \geq K$: do not exercise.
@@ -191,7 +189,6 @@ The **profit** accounts for the premium paid:
 $$
 \text{Long call profit} = \max(S_T - K, \, 0) - c
 $$
-
 $$
 \text{Long put profit} = \max(K - S_T, \, 0) - p
 $$
@@ -200,7 +197,6 @@ For short positions, negate:
 $$
 \text{Short call profit} = c - \max(S_T - K, \, 0)
 $$
-
 $$
 \text{Short put profit} = p - \max(K - S_T, \, 0)
 $$

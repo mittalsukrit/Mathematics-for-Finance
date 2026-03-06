@@ -1009,11 +1009,9 @@ The hedge removes about $72\%$ of price variance. The remaining $28\%$ is **basi
 ### Index Futures Hedge for Equity Portfolios
 
 For a portfolio with value $V_P$ and beta $\beta_P$ relative to the index:
-
 $$
 \boxed{N = \frac{(\beta_P - \beta^*)\,V_P}{F_0 \cdot M}}
 $$
-
 where:
 
 * $\beta^*$ is the **target beta** after hedging
@@ -1023,17 +1021,13 @@ where:
 **Example:** Portfolio value $V_P = \$50$ million, $\beta_P = 1.3$, target $\beta^* = 0.5$.
 
 Index futures at $F_0 = 5{,}000$, multiplier $M = 50$, so notional per contract $= \$250{,}000$.
-
 $$
 N = \frac{(1.3 - 0.5) \times 50{,}000{,}000}{250{,}000} = \frac{0.8 \times 50{,}000{,}000}{250{,}000} = 160 \text{ contracts short}
 $$
-
 **Special case: Market-neutral** ($\beta^* = 0$):
-
 $$
 N = \frac{1.3 \times 50{,}000{,}000}{250{,}000} = 260 \text{ contracts short}
 $$
-
 This is a common strategy for equity long-short hedge funds that want stock-picking alpha without market exposure.
 
 </section>

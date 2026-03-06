@@ -840,10 +840,7 @@ where the bias is proportional to the correlation between price and rate changes
 
 ### Convergence at Maturity
 
-For both deliverable and cash-settled futures:
-$$
-\boxed{F_T = S_T}
-$$
+For both deliverable and cash-settled futures: $F_T = S_T$
 
 If $F_T > S_T$: sell futures at $F_T$, buy spot at $S_T$, deliver immediately. Riskless profit.
 
@@ -875,11 +872,7 @@ As maturity approaches, basis converges to zero — this is a deterministic feat
 
 > A hedge transfers unwanted price risk from someone who has it to someone willing to bear it.
 
-**Two fundamental situations:**
-
-**Producer/Inventory Hedge (Short Hedge):**
-
-If you hold or will produce the physical asset, **falling prices hurt you**.
+**Producer/Inventory Hedge (Short Hedge):** If you hold or will produce the physical asset, **falling prices hurt you**.
 
 * Wheat farmer with 100,000 bushels at harvest
 * Gold miner with quarterly production
@@ -887,9 +880,7 @@ If you hold or will produce the physical asset, **falling prices hurt you**.
 
 Hedge by **shorting futures**. If spot falls, the futures gain offsets the inventory loss.
 
-**Consumer/Input Hedge (Long Hedge):**
-
-If you will need to buy the asset in the future, **rising prices hurt you**.
+**Consumer/Input Hedge (Long Hedge):** If you will need to buy the asset in the future, **rising prices hurt you**.
 
 * Airline buying jet fuel
 * Cereal manufacturer buying wheat
@@ -936,23 +927,19 @@ In both cases, the effective selling price is approximately $\$5.90$/bushel (the
 When the spot and futures exposures are not identical (different commodity, different grade, different timing), a 1:1 hedge is not generally optimal.
 
 **Setup:** Let $\Delta S$ and $\Delta F$ be changes in spot and futures prices over the hedge horizon. The hedged P&L for a long spot position with $h$ units of short futures per unit of spot exposure is:
-
 $$
 \Delta \text{P\&L} = \Delta S - h \cdot \Delta F
 $$
 
 **Objective:** Choose $h$ to minimize $\text{Var}(\Delta \text{P\&L})$.
-
 $$
 \text{Var}(\Delta S - h \cdot \Delta F) = \sigma_S^2 - 2h\,\text{Cov}(\Delta S, \Delta F) + h^2 \sigma_F^2
 $$
 
 Take the derivative with respect to $h$ and set to zero:
-
 $$
 \frac{\partial}{\partial h}\text{Var} = -2\,\text{Cov}(\Delta S, \Delta F) + 2h\,\sigma_F^2 = 0
 $$
-
 $$
 \boxed{h^* = \frac{\text{Cov}(\Delta S, \Delta F)}{\text{Var}(\Delta F)} = \rho_{SF}\frac{\sigma_S}{\sigma_F}}
 $$
@@ -977,7 +964,6 @@ The optimal hedge ratio $h^* = \rho_{SF}\frac{\sigma_S}{\sigma_F}$ has two compo
 * $\rho_{SF} = 0.85$, $\sigma_S > \sigma_F$: cross-hedge with $h^* > 0.85$
 
 **Number of futures contracts:**
-
 $$
 N^* = h^* \times \frac{N}{M}
 $$
@@ -998,7 +984,6 @@ Jet fuel buyer needs 2,000,000 gallons in 4 months. No liquid jet fuel futures e
 * Estimated $\sigma_S = 0.12$ (jet fuel volatility), $\sigma_F = 0.10$ (heating oil volatility), $\rho_{SF} = 0.85$
 
 **Step 1: Optimal hedge ratio**
-
 $$
 h^* = 0.85 \times \frac{0.12}{0.10} = 1.02
 $$
@@ -1006,13 +991,11 @@ $$
 The ratio exceeds 1 because jet fuel is more volatile than heating oil.
 
 **Step 2: Number of contracts**
-
 $$
 N^* = 1.02 \times \frac{2{,}000{,}000}{42{,}000} = 48.6 \approx 49 \text{ contracts (long)}
 $$
 
 **Step 3: Hedge effectiveness**
-
 $$
 R^2 = 0.85^2 = 0.7225
 $$

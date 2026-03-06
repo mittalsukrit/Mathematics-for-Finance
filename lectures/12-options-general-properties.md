@@ -107,9 +107,7 @@ A **European put option** gives the holder the **right, but not the obligation**
 
 An **American call** (or put) gives the same right, but it may be exercised **at any time** on or before $T$, not just at maturity.
 
-The distinction seems minor.
-
-It is not.
+The distinction seems minor. **It is not.**
 
 </section>
 
@@ -125,7 +123,7 @@ Throughout this lecture:
 | $S_T$ | Price of the underlying at maturity |
 | $K$ | Strike price (exercise price) |
 | $T$ | Time to maturity (in years) |
-| $r$ | Continuously compounded risk-free rate |
+| $r_f$ | Continuously compounded risk-free rate |
 | $c$ | Price (premium) of a European call |
 | $p$ | Price (premium) of a European put |
 | $C$ | Price (premium) of an American call |
@@ -159,12 +157,11 @@ Options are zero-sum contracts between the two counterparties.
 
 <section class="slide" markdown="1">
 
-## 3. Payoff and Profit Diagrams
+## 3. Payoff and Profit
 
 ### Call Option Payoff
 
 At maturity, the holder of a European call exercises only if $S_T > K$:
-
 $$
 \boxed{\text{Call payoff} = \max(S_T - K, \, 0) = (S_T - K)^+}
 $$
@@ -176,7 +173,6 @@ If $S_T \leq K$: do not exercise. The option expires worthless.
 The payoff is **never negative**. That is the privilege of holding a right.
 
 ### Put Option Payoff
-
 $$
 \boxed{\text{Put payoff} = \max(K - S_T, \, 0) = (K - S_T)^+}
 $$
@@ -192,7 +188,6 @@ If $S_T \geq K$: do not exercise.
 ### Profit Diagrams
 
 The **profit** accounts for the premium paid:
-
 $$
 \text{Long call profit} = \max(S_T - K, \, 0) - c
 $$
@@ -202,7 +197,6 @@ $$
 $$
 
 For short positions, negate:
-
 $$
 \text{Short call profit} = c - \max(S_T - K, \, 0)
 $$
@@ -267,7 +261,6 @@ But an OTM option is not worthless — time remains.
 ### Intrinsic Value
 
 The **intrinsic value** is the payoff if the option were exercised immediately:
-
 $$
 \text{Intrinsic value of call} = \max(S_0 - K, \, 0)
 $$
@@ -276,14 +269,11 @@ $$
 \text{Intrinsic value of put} = \max(K - S_0, \, 0)
 $$
 
-Intrinsic value is always non-negative.
-
-It measures the "minimum worth" of the option based on current prices.
+Intrinsic value is always non-negative. It measures the "minimum worth" of the option based on current prices.
 
 ### Time Value
 
 The **time value** (also called extrinsic value) is the excess of the option price over intrinsic value:
-
 $$
 \text{Time value} = \text{Option price} - \text{Intrinsic value}
 $$
@@ -292,9 +282,7 @@ For a call: $\text{Time value} = c - \max(S_0 - K, \, 0)$
 
 For a put: $\text{Time value} = p - \max(K - S_0, \, 0)$
 
-Time value reflects the **possibility** that the option will become more valuable before expiration.
-
-Possibility has a price.
+Time value reflects the **possibility** that the option will become more valuable before expiration. Possibility has a price.
 
 </section>
 
@@ -355,7 +343,6 @@ Portfolio B also pays $\max(S_T, K)$.
 ### The Parity Relation
 
 Since both portfolios produce the same payoff in every state of the world:
-
 $$
 \boxed{c + Ke^{-rT} = p + S_0}
 $$
@@ -363,7 +350,6 @@ $$
 This is **put-call parity** for European options on a non-dividend-paying stock.
 
 Rearranging:
-
 $$
 c - p = S_0 - Ke^{-rT}
 $$
@@ -376,9 +362,7 @@ The difference between a call and a put (same strike, same maturity) equals the 
 * The relationship holds regardless of the stock price model
 * Violations imply arbitrage opportunities
 
-Put-call parity is not a pricing formula.
-
-It is a **consistency condition** that any prices must satisfy.
+Put-call parity is a **consistency condition** that any prices must satisfy.
 
 </section>
 
@@ -469,7 +453,7 @@ $$
 \boxed{S_0 - K \leq C - P \leq S_0 - Ke^{-rT}}
 $$
 
-### Proof of the Upper Bound: $C - P \leq S_0 - Ke^{-rT}$
+### Proof of the Upper Bound:
 
 For a non-dividend-paying stock, early exercise of an American call is never optimal (we prove this in Section 8). Therefore $C = c$.
 
@@ -481,7 +465,11 @@ $$
 C - P = c - P \leq c - p = S_0 - Ke^{-rT}
 $$
 
-### Proof of the Lower Bound: $C - P \geq S_0 - K$
+</section>
+
+<section class="slide" markdown="1">
+
+### Proof of the Lower Bound:
 
 Consider two portfolios:
 
@@ -505,16 +493,13 @@ $$
 
 ## 7. Bounds on European Option Prices
 
-Every option price must lie within bounds dictated by no-arbitrage.
-
-These bounds require no model.
-
-They are consequences of logic alone.
+* Every option price must lie within bounds dictated by no-arbitrage.
+* These bounds require no model.
+* They are consequences of logic alone.
 
 ### Upper Bounds
 
 **European call:**
-
 $$
 \boxed{c \leq S_0}
 $$
@@ -522,7 +507,6 @@ $$
 A call gives the right to buy the stock. It can never be worth more than the stock itself. If $c > S_0$, sell the call and buy the stock for a riskless profit.
 
 **European put:**
-
 $$
 \boxed{p \leq Ke^{-rT}}
 $$

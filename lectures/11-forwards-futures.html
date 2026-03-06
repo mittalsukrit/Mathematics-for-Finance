@@ -1128,9 +1128,7 @@ rate changes.</p>
 <section class="slide">
 <h3 id="convergence-at-maturity">Convergence at Maturity</h3>
 <p>For both deliverable and cash-settled futures: <span
-class="math display">\[
-\boxed{F_T = S_T}
-\]</span></p>
+class="math inline">\(F_T = S_T\)</span></p>
 <p>If <span class="math inline">\(F_T &gt; S_T\)</span>: sell futures at
 <span class="math inline">\(F_T\)</span>, buy spot at <span
 class="math inline">\(S_T\)</span>, deliver immediately. Riskless
@@ -1164,10 +1162,9 @@ deterministic feature, not a forecast.</p>
 <p>A hedge transfers unwanted price risk from someone who has it to
 someone willing to bear it.</p>
 </blockquote>
-<p><strong>Two fundamental situations:</strong></p>
-<p><strong>Producer/Inventory Hedge (Short Hedge):</strong></p>
-<p>If you hold or will produce the physical asset, <strong>falling
-prices hurt you</strong>.</p>
+<p><strong>Producer/Inventory Hedge (Short Hedge):</strong> If you hold
+or will produce the physical asset, <strong>falling prices hurt
+you</strong>.</p>
 <ul>
 <li>Wheat farmer with 100,000 bushels at harvest</li>
 <li>Gold miner with quarterly production</li>
@@ -1175,9 +1172,9 @@ prices hurt you</strong>.</p>
 </ul>
 <p>Hedge by <strong>shorting futures</strong>. If spot falls, the
 futures gain offsets the inventory loss.</p>
-<p><strong>Consumer/Input Hedge (Long Hedge):</strong></p>
-<p>If you will need to buy the asset in the future, <strong>rising
-prices hurt you</strong>.</p>
+<p><strong>Consumer/Input Hedge (Long Hedge):</strong> If you will need
+to buy the asset in the future, <strong>rising prices hurt
+you</strong>.</p>
 <ul>
 <li>Airline buying jet fuel</li>
 <li>Cereal manufacturer buying wheat</li>
@@ -1264,24 +1261,23 @@ generally optimal.</p>
 S\)</span> and <span class="math inline">\(\Delta F\)</span> be changes
 in spot and futures prices over the hedge horizon. The hedged P&amp;L
 for a long spot position with <span class="math inline">\(h\)</span>
-units of short futures per unit of spot exposure is:</p>
-<p><span class="math display">\[
+units of short futures per unit of spot exposure is: <span
+class="math display">\[
 \Delta \text{P\&amp;L} = \Delta S - h \cdot \Delta F
 \]</span></p>
 <p><strong>Objective:</strong> Choose <span
 class="math inline">\(h\)</span> to minimize <span
-class="math inline">\(\text{Var}(\Delta \text{P\&amp;L})\)</span>.</p>
-<p><span class="math display">\[
+class="math inline">\(\text{Var}(\Delta \text{P\&amp;L})\)</span>. <span
+class="math display">\[
 \text{Var}(\Delta S - h \cdot \Delta F) = \sigma_S^2 -
 2h\,\text{Cov}(\Delta S, \Delta F) + h^2 \sigma_F^2
 \]</span></p>
 <p>Take the derivative with respect to <span
-class="math inline">\(h\)</span> and set to zero:</p>
-<p><span class="math display">\[
+class="math inline">\(h\)</span> and set to zero: <span
+class="math display">\[
 \frac{\partial}{\partial h}\text{Var} = -2\,\text{Cov}(\Delta S, \Delta
 F) + 2h\,\sigma_F^2 = 0
-\]</span></p>
-<p><span class="math display">\[
+\]</span> <span class="math display">\[
 \boxed{h^* = \frac{\text{Cov}(\Delta S, \Delta F)}{\text{Var}(\Delta F)}
 = \rho_{SF}\frac{\sigma_S}{\sigma_F}}
 \]</span></p>
@@ -1312,8 +1308,8 @@ benefit at all, <span class="math inline">\(h^* = 0\)</span></li>
 class="math inline">\(\sigma_S &gt; \sigma_F\)</span>: cross-hedge with
 <span class="math inline">\(h^* &gt; 0.85\)</span></li>
 </ul>
-<p><strong>Number of futures contracts:</strong></p>
-<p><span class="math display">\[
+<p><strong>Number of futures contracts:</strong> <span
+class="math display">\[
 N^* = h^* \times \frac{N}{M}
 \]</span></p>
 <p>where <span class="math inline">\(N\)</span> is the position size (in
@@ -1338,19 +1334,19 @@ fuel volatility), <span class="math inline">\(\sigma_F = 0.10\)</span>
 (heating oil volatility), <span class="math inline">\(\rho_{SF} =
 0.85\)</span></li>
 </ul>
-<p><strong>Step 1: Optimal hedge ratio</strong></p>
-<p><span class="math display">\[
+<p><strong>Step 1: Optimal hedge ratio</strong> <span
+class="math display">\[
 h^* = 0.85 \times \frac{0.12}{0.10} = 1.02
 \]</span></p>
 <p>The ratio exceeds 1 because jet fuel is more volatile than heating
 oil.</p>
-<p><strong>Step 2: Number of contracts</strong></p>
-<p><span class="math display">\[
+<p><strong>Step 2: Number of contracts</strong> <span
+class="math display">\[
 N^* = 1.02 \times \frac{2{,}000{,}000}{42{,}000} = 48.6 \approx 49
 \text{ contracts (long)}
 \]</span></p>
-<p><strong>Step 3: Hedge effectiveness</strong></p>
-<p><span class="math display">\[
+<p><strong>Step 3: Hedge effectiveness</strong> <span
+class="math display">\[
 R^2 = 0.85^2 = 0.7225
 \]</span></p>
 <p>The hedge removes about <span class="math inline">\(72\%\)</span> of

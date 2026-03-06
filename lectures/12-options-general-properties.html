@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
@@ -118,8 +118,7 @@ class="math inline">\(T\)</span>.</p>
 <p>An <strong>American call</strong> (or put) gives the same right, but
 it may be exercised <strong>at any time</strong> on or before <span
 class="math inline">\(T\)</span>, not just at maturity.</p>
-<p>The distinction seems minor.</p>
-<p>It is not.</p>
+<p>The distinction seems minor. <strong>It is not.</strong></p>
 </section>
 <section class="slide">
 <h3 id="notation">Notation</h3>
@@ -149,7 +148,7 @@ class="math inline">\(T\)</span>, not just at maturity.</p>
 <td>Time to maturity (in years)</td>
 </tr>
 <tr>
-<td><span class="math inline">\(r\)</span></td>
+<td><span class="math inline">\(r_f\)</span></td>
 <td>Continuously compounded risk-free rate</td>
 </tr>
 <tr>
@@ -194,11 +193,10 @@ class="math inline">\(K\)</span></p>
 <p>Options are zero-sum contracts between the two counterparties.</p>
 </section>
 <section class="slide">
-<h2 id="payoff-and-profit-diagrams">3. Payoff and Profit Diagrams</h2>
+<h2 id="payoff-and-profit">3. Payoff and Profit</h2>
 <h3 id="call-option-payoff">Call Option Payoff</h3>
 <p>At maturity, the holder of a European call exercises only if <span
-class="math inline">\(S_T &gt; K\)</span>:</p>
-<p><span class="math display">\[
+class="math inline">\(S_T &gt; K\)</span>: <span class="math display">\[
 \boxed{\text{Call payoff} = \max(S_T - K, \, 0) = (S_T - K)^+}
 \]</span></p>
 <p>If <span class="math inline">\(S_T &gt; K\)</span>: exercise, buy at
@@ -222,15 +220,14 @@ exercise.</p>
 </section>
 <section class="slide">
 <h3 id="profit-diagrams">Profit Diagrams</h3>
-<p>The <strong>profit</strong> accounts for the premium paid:</p>
-<p><span class="math display">\[
+<p>The <strong>profit</strong> accounts for the premium paid: <span
+class="math display">\[
 \text{Long call profit} = \max(S_T - K, \, 0) - c
 \]</span></p>
 <p><span class="math display">\[
 \text{Long put profit} = \max(K - S_T, \, 0) - p
 \]</span></p>
-<p>For short positions, negate:</p>
-<p><span class="math display">\[
+<p>For short positions, negate: <span class="math display">\[
 \text{Short call profit} = c - \max(S_T - K, \, 0)
 \]</span></p>
 <p><span class="math display">\[
@@ -313,20 +310,18 @@ class="math inline">\(K\)</span>)</th>
 <section class="slide">
 <h3 id="intrinsic-value">Intrinsic Value</h3>
 <p>The <strong>intrinsic value</strong> is the payoff if the option were
-exercised immediately:</p>
-<p><span class="math display">\[
+exercised immediately: <span class="math display">\[
 \text{Intrinsic value of call} = \max(S_0 - K, \, 0)
 \]</span></p>
 <p><span class="math display">\[
 \text{Intrinsic value of put} = \max(K - S_0, \, 0)
 \]</span></p>
-<p>Intrinsic value is always non-negative.</p>
-<p>It measures the “minimum worth” of the option based on current
-prices.</p>
+<p>Intrinsic value is always non-negative. It measures the “minimum
+worth” of the option based on current prices.</p>
 <h3 id="time-value">Time Value</h3>
 <p>The <strong>time value</strong> (also called extrinsic value) is the
-excess of the option price over intrinsic value:</p>
-<p><span class="math display">\[
+excess of the option price over intrinsic value: <span
+class="math display">\[
 \text{Time value} = \text{Option price} - \text{Intrinsic value}
 \]</span></p>
 <p>For a call: <span class="math inline">\(\text{Time value} = c -
@@ -334,8 +329,8 @@ excess of the option price over intrinsic value:</p>
 <p>For a put: <span class="math inline">\(\text{Time value} = p - \max(K
 - S_0, \, 0)\)</span></p>
 <p>Time value reflects the <strong>possibility</strong> that the option
-will become more valuable before expiration.</p>
-<p>Possibility has a price.</p>
+will become more valuable before expiration. Possibility has a
+price.</p>
 </section>
 <section class="slide">
 <h2 id="put-call-parity-european-options">5. Put-Call Parity (European
@@ -422,14 +417,12 @@ K)\)</span>.</p>
 <section class="slide">
 <h3 id="the-parity-relation">The Parity Relation</h3>
 <p>Since both portfolios produce the same payoff in every state of the
-world:</p>
-<p><span class="math display">\[
+world: <span class="math display">\[
 \boxed{c + Ke^{-rT} = p + S_0}
 \]</span></p>
 <p>This is <strong>put-call parity</strong> for European options on a
 non-dividend-paying stock.</p>
-<p>Rearranging:</p>
-<p><span class="math display">\[
+<p>Rearranging: <span class="math display">\[
 c - p = S_0 - Ke^{-rT}
 \]</span></p>
 <p>The difference between a call and a put (same strike, same maturity)
@@ -442,9 +435,8 @@ the strike.</p>
 <li>The relationship holds regardless of the stock price model</li>
 <li>Violations imply arbitrage opportunities</li>
 </ul>
-<p>Put-call parity is not a pricing formula.</p>
-<p>It is a <strong>consistency condition</strong> that any prices must
-satisfy.</p>
+<p>Put-call parity is a <strong>consistency condition</strong> that any
+prices must satisfy.</p>
 </section>
 <section class="slide">
 <h3 id="arbitrage-when-parity-is-violated">Arbitrage When Parity Is
@@ -526,9 +518,7 @@ component is exercised early.</p>
 <p><span class="math display">\[
 \boxed{S_0 - K \leq C - P \leq S_0 - Ke^{-rT}}
 \]</span></p>
-<h3 id="proof-of-the-upper-bound-c---p-leq-s_0---ke-rt">Proof of the
-Upper Bound: <span class="math inline">\(C - P \leq S_0 -
-Ke^{-rT}\)</span></h3>
+<h3 id="proof-of-the-upper-bound">Proof of the Upper Bound:</h3>
 <p>For a non-dividend-paying stock, early exercise of an American call
 is never optimal (we prove this in Section 8). Therefore <span
 class="math inline">\(C = c\)</span>.</p>
@@ -539,8 +529,9 @@ is at least as valuable as the European put):</p>
 <p><span class="math display">\[
 C - P = c - P \leq c - p = S_0 - Ke^{-rT}
 \]</span></p>
-<h3 id="proof-of-the-lower-bound-c---p-geq-s_0---k">Proof of the Lower
-Bound: <span class="math inline">\(C - P \geq S_0 - K\)</span></h3>
+</section>
+<section class="slide">
+<h3 id="proof-of-the-lower-bound">Proof of the Lower Bound:</h3>
 <p>Consider two portfolios:</p>
 <p><strong>Portfolio A:</strong> One American call + cash <span
 class="math inline">\(K\)</span></p>
@@ -565,20 +556,20 @@ C + K \geq P + S_0 \implies C - P \geq S_0 - K
 <section class="slide">
 <h2 id="bounds-on-european-option-prices">7. Bounds on European Option
 Prices</h2>
-<p>Every option price must lie within bounds dictated by
-no-arbitrage.</p>
-<p>These bounds require no model.</p>
-<p>They are consequences of logic alone.</p>
+<ul>
+<li>Every option price must lie within bounds dictated by
+no-arbitrage.</li>
+<li>These bounds require no model.</li>
+<li>They are consequences of logic alone.</li>
+</ul>
 <h3 id="upper-bounds">Upper Bounds</h3>
-<p><strong>European call:</strong></p>
-<p><span class="math display">\[
+<p><strong>European call:</strong> <span class="math display">\[
 \boxed{c \leq S_0}
 \]</span></p>
 <p>A call gives the right to buy the stock. It can never be worth more
 than the stock itself. If <span class="math inline">\(c &gt;
 S_0\)</span>, sell the call and buy the stock for a riskless profit.</p>
-<p><strong>European put:</strong></p>
-<p><span class="math display">\[
+<p><strong>European put:</strong> <span class="math display">\[
 \boxed{p \leq Ke^{-rT}}
 \]</span></p>
 <p>A European put pays at most <span class="math inline">\(K\)</span> at

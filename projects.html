@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Course Project: Quant Finance Toolkit Ecosystem</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#111a33;
+      --muted:#9fb0d0;
+      --text:#eaf0ff;
+      --accent:#7aa2ff;
+      --accent2:#55d6be;
+      --border:rgba(255,255,255,.10);
+      --shadow: 0 12px 30px rgba(0,0,0,.35);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background: radial-gradient(1200px 500px at 20% 0%, rgba(122,162,255,.25), transparent 60%),
+                  radial-gradient(900px 500px at 90% 20%, rgba(85,214,190,.22), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      font-family:var(--sans);
+      line-height:1.55;
+    }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    header{
+      padding: 48px 20px 26px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(17,26,51,.65), rgba(17,26,51,.0));
+    }
+    .wrap{max-width:1100px; margin:0 auto}
+    .kicker{
+      display:inline-flex; gap:10px; align-items:center;
+      padding:6px 12px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      color:var(--muted);
+      font-size:13px;
+      background: rgba(17,26,51,.45);
+      backdrop-filter: blur(6px);
+    }
+    .dot{width:8px; height:8px; border-radius:50%; background:var(--accent2); display:inline-block}
+    h1{
+      margin:14px 0 10px;
+      font-size: clamp(28px, 3.2vw, 44px);
+      letter-spacing: -0.02em;
+    }
+    p.lead{
+      margin:0;
+      color:var(--muted);
+      font-size: clamp(15px, 1.4vw, 18px);
+      max-width: 78ch;
+    }
+    nav{
+      margin-top: 22px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    nav a{
+      display:inline-block;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius:10px;
+      background: rgba(17,26,51,.35);
+      color:var(--text);
+      font-size:14px;
+    }
+    nav a:hover{background: rgba(17,26,51,.6)}
+    main{padding: 28px 20px 70px}
+    section{margin-top: 22px}
+    h2{
+      margin: 0 0 12px;
+      font-size: 22px;
+      letter-spacing:-0.01em;
+    }
+    h3{
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing:-0.01em;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+    .card{
+      grid-column: span 12;
+      background: rgba(17,26,51,.55);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 16px;
+      box-shadow: var(--shadow);
+    }
+    .card p{margin: 8px 0; color: var(--muted)}
+    .pillrow{
+      margin-top:10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .pill{
+      padding:6px 10px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      font-size:12px;
+      color:var(--text);
+      background: rgba(0,0,0,.15);
+    }
+    .two{grid-column: span 12}
+    @media (min-width: 860px){
+      .two{grid-column: span 6}
+    }
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:10px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .meta span{
+      padding:6px 10px;
+      border:1px dashed var(--border);
+      border-radius:10px;
+      background: rgba(0,0,0,.10);
+    }
+    .codebox{
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: #d9e3ff;
+      background: rgba(0,0,0,.25);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      overflow:auto;
+      white-space: pre;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
+    }
+    details{
+      border:1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      background: rgba(17,26,51,.35);
+    }
+    details + details{margin-top: 12px}
+    summary{
+      cursor:pointer;
+      font-weight: 600;
+      list-style:none;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    summary::-webkit-details-marker{display:none}
+    .chev{
+      width: 10px; height: 10px;
+      border-right:2px solid var(--muted);
+      border-bottom:2px solid var(--muted);
+      transform: rotate(-45deg);
+      transition: transform .18s ease;
+      margin-left:auto;
+      flex: 0 0 auto;
+    }
+    details[open] .chev{transform: rotate(45deg)}
+    .small{font-size:13px; color:var(--muted)}
+    ul{margin: 8px 0 0 18px; color: var(--muted)}
+    li{margin: 6px 0}
+    .hr{
+      height:1px;
+      background: var(--border);
+      margin: 18px 0;
+    }
+    footer{
+      padding: 30px 20px 40px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(122,162,255,.15);
+      border: 1px solid rgba(122,162,255,.28);
+      color: #d9e3ff;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
+      <div class="kicker"><span class="dot"></span> Course Project · Ecosystem Build (7 groups)</div>
+      <h1>Quant Finance Toolkit Ecosystem</h1>
+      <p class="lead">
+        The big idea: each group builds one <strong>interoperable module</strong> of a single toolkit
+        (pricing, risk, optimization, factor modeling, strategies, and AI reporting). Individually, each project is
+        self-contained and meaningful; together, they become a coherent mini “quant platform” inside one repo.
+      </p>
+
+      <nav aria-label="page navigation">
+        <a href="#overview">Overview</a>
+        <a href="#repo">Repo Framework</a>
+        <a href="#briefs">Project Briefs</a>
+        <a href="#data">Open Data Sources</a>
+        <a href="#statements">Detailed Project Statements</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="overview">
+      <h2>What you can build (together)</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="meta">
+            <span>7 groups × 4 students</span>
+            <span>~4-week effort</span>
+            <span>Public data + laptop-scale compute</span>
+            <span>Finance concept + pricing/optimization/ML required</span>
+          </div>
+
+          <div class="hr"></div>
+
+          <p>
+            The ecosystem centers around shared interfaces and reusable components:
+            a unified data layer, common instrument definitions, and standardized APIs for
+            <strong>pricing</strong>, <strong>risk</strong>, <strong>optimization</strong>, <strong>backtesting</strong>,
+            and <strong>explainable reporting</strong>.
+          </p>
+
+          <div class="pillrow" aria-label="key pillars">
+            <span class="pill">No-arbitrage & replication</span>
+            <span class="pill">Portfolios & CAPM / factors</span>
+            <span class="pill">Utility & risk measures (VaR/CVaR)</span>
+            <span class="pill">Derivatives: forwards/futures/options</span>
+            <span class="pill">Discrete-time models</span>
+            <span class="pill">Continuous-time models</span>
+            <span class="pill">Optimization + ML</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="repo">
+      <h2>Shared repo framework</h2>
+      <div class="grid">
+        <div class="card two">
+          <h3>Standard interfaces (the glue)</h3>
+          <p class="small">Groups should code to shared, minimal function signatures.</p>
+          <div class="codebox" role="region" aria-label="shared interface sketch">
+# Core types
+MarketDataSnapshot(prices, rates, dividends, option_chain, metadata)
+Instrument (Stock, Forward, Option, Portfolio)
+
+# Pricing
+price = Pricer.price(instrument, market)
+
+# Risk
+risk_report = RiskModel.risk(portfolio, market)
+# e.g. var_95, cvar_95, beta, greeks, stress_results
+
+# Optimization
+weights = Optimizer.solve(objective, constraints, data)
+
+# Backtesting
+bt = Backtest.run(strategy, universe, costs, risk_limits)
+
+# AI reporting (optional)
+report_md = Copilot.generate_report(analytics_outputs, guardrails=True)
+          </div>
+        </div>
+
+        <div class="card two">
+          <h3>Suggested folder layout</h3>
+          <p class="small">One repo. Each group owns one module folder + tests + a demo notebook.</p>
+          <div class="codebox" role="region" aria-label="repo layout">
+quantkit/
+  data/           # downloaders, caching, cleaning
+  instruments/    # Stock/Forward/Option/Portfolio
+  pricing/        # BS, trees, LSMC, calibration helpers
+  risk/           # VaR/CVaR, Greeks aggregation, stress tests
+  opt/            # mean-variance, CVaR, utility-aware optimization
+  factors/        # CAPM + multifactor + macro
+  strategies/     # hedging, pairs, overlays
+  ai/             # optional LLM-based reporting, guardrails
+notebooks/        # 1 demo notebook per group + integrated demo
+tests/            # parity tests, invariants, regression tests
+docs/             # short module docs + examples
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="briefs">
+      <h2>Project briefs (quick scan)</h2>
+      <div class="grid">
+        <div class="card two">
+          <h3>1) Volatility Surface + Calibration</h3>
+          <p>Build an implied-vol surface from public option chains; calibrate simple models; expose <code>iv(K,T)</code>.</p>
+          <div class="pillrow">
+            <span class="pill">Options</span><span class="pill">Calibration</span><span class="pill">Optimization</span>
+          </div>
+        </div>
+
+        <div class="card two">
+          <h3>2) American Option Pricing Engines</h3>
+          <p>Implement binomial-tree and LSMC pricers for American puts/calls; compare accuracy vs compute.</p>
+          <div class="pillrow">
+            <span class="pill">Discrete-time</span><span class="pill">Pricing</span><span class="pill">Regression (ML)</span>
+          </div>
+        </div>
+
+        <div class="card two">
+          <h3>3) Dynamic Hedging + P&amp;L Attribution</h3>
+          <p>Backtest delta hedging with transaction costs; analyze hedging error distributions and drivers.</p>
+          <div class="pillrow">
+            <span class="pill">Greeks</span><span class="pill">Backtesting</span><span class="pill">Risk</span>
+          </div>
+        </div>
+
+        <div class="card two">
+          <h3>4) Portfolio Optimization under Tail Risk</h3>
+          <p>Mean–variance vs CVaR optimization; rolling backtests; constraint handling; solver interface.</p>
+          <div class="pillrow">
+            <span class="pill">Optimization</span><span class="pill">CVaR</span><span class="pill">Portfolios</span>
+          </div>
+        </div>
+
+        <div class="card two">
+          <h3>5) Factor &amp; Macro Modeling</h3>
+          <p>CAPM + multifactor regressions with macro series; exposure analysis; expected return forecasts.</p>
+          <div class="pillrow">
+            <span class="pill">CAPM</span><span class="pill">Regression</span><span class="pill">FRED</span>
+          </div>
+        </div>
+
+        <div class="card two">
+          <h3>6) Strategy Module: Pairs Trading with Risk Controls</h3>
+          <p>Design a pairs framework with costs, sizing, and risk limits; validate robustness.</p>
+          <div class="pillrow">
+            <span class="pill">Time series</span><span class="pill">Signals</span><span class="pill">Risk limits</span>
+          </div>
+        </div>
+
+        <div class="card two">
+          <h3>7) GenAI “Copilot” for Explainable Analytics</h3>
+          <p>Use open LLMs to generate faithful reports grounded in computed outputs + guardrails.</p>
+          <div class="pillrow">
+            <span class="pill">GenAI</span><span class="pill">Explainability</span><span class="pill">Evaluation</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="data">
+      <h2>Open-source data sources we will consider</h2>
+      <div class="grid">
+        <div class="card">
+          <p class="small">Students should not depend on proprietary datasets. These are the recommended public sources:</p>
+          <ul>
+            <li><strong>Yahoo Finance</strong> via <strong>yfinance</strong>: equities/ETFs, OHLCV, some corporate actions, and option chains.</li>
+            <li><strong>FRED</strong> (Federal Reserve Economic Data): macro series (rates, inflation, unemployment, spreads).</li>
+            <li><strong>Stooq</strong>: free historical price data (often used as a backup source for equities/indices/FX).</li>
+            <li><strong>World Bank / IMF public datasets</strong>: macro indicators (optional for macro-heavy projects).</li>
+            <li><strong>ECB / other central bank public feeds</strong>: policy rates and selected macro series (optional).</li>
+            <li><strong>Open-source libraries</strong> (not data, but critical): NumPy/Pandas/Statsmodels; CVXPy/Scipy for optimization; QuantLib for pricing engines; Matplotlib/Plotly for visuals.</li>
+            <li><strong>Open-source LLMs</strong> via Hugging Face: small-to-mid models suitable for CPU inference; optional quantized models.</li>
+          </ul>
+          <p class="small">
+            Note: availability of option chains and depth can vary by ticker/date; groups should implement a
+            fallback plan (switch underlyings / cache snapshots / simplify the surface).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="statements">
+      <h2>Detailed project statements</h2>
+      <p class="small">
+        Each group must deliver: (1) a runnable module, (2) a demo notebook, (3) tests for at least 3 invariants,
+        and (4) a short report explaining assumptions, validation, and limitations.
+      </p>
+
+      <details>
+        <summary>
+          Project 1 — Volatility Surface + Calibration Module
+          <span class="chev" aria-hidden="true"></span>
+        </summary>
+        <div class="hr"></div>
+        <p><strong>Goal:</strong> Convert public option chain data into a usable implied-volatility surface and provide
+          calibration tools for simple models.</p>
+
+        <ul>
+          <li><strong>Inputs:</strong> option chains (strikes, expiries, mid prices), underlying price, risk-free proxy.</li>
+          <li><strong>Core tasks:</strong>
+            <ul>
+              <li>Compute implied volatility per (K, T) using a robust root-finder.</li>
+              <li>Build an interpolated surface <code>iv(K,T)</code> with basic smoothing/regularization.</li>
+              <li>Calibrate at least one parametric model (e.g., constant vol baseline; optional Heston/local-vol proxy).</li>
+              <li>Quantify fit errors (pricing error, IV error) and stability across dates.</li>
+            </ul>
+          </li>
+          <li><strong>Optimization component:</strong> parameter calibration via least squares with regularization.</li>
+          <li><strong>Validation:</strong> put–call parity checks, monotonicity vs strike, arbitrage sanity checks.</li>
+          <li><strong>Deliverables:</strong> surface builder API, calibration notebook, error diagnostics plots.</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>
+          Project 2 — American Option Pricing (Trees + LSMC)
+          <span class="chev" aria-hidden="true"></span>
+        </summary>
+        <div class="hr"></div>
+        <p><strong>Goal:</strong> Provide discrete-time pricing engines for American options and compare methods.</p>
+        <ul>
+          <li><strong>Methods:</strong> CRR (or JR) binomial tree; Least Squares Monte Carlo (Longstaff–Schwartz).</li>
+          <li><strong>Core tasks:</strong>
+            <ul>
+              <li>Implement American put pricing and exercise boundary extraction from the tree.</li>
+              <li>Implement LSMC with configurable basis functions and regression choices.</li>
+              <li>Run convergence experiments (tree steps vs MC paths; basis complexity).</li>
+            </ul>
+          </li>
+          <li><strong>ML component:</strong> regression basis selection and hyperparameter study.</li>
+          <li><strong>Validation:</strong> compare to European prices (American ≥ European for puts; equality cases).</li>
+          <li><strong>Deliverables:</strong> pricer API, comparison notebook, runtime/accuracy tradeoff table.</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>
+          Project 3 — Dynamic Hedging + Hedging Error Attribution
+          <span class="chev" aria-hidden="true"></span>
+        </summary>
+        <div class="hr"></div>
+        <p><strong>What are model Greeks?</strong> Greeks (delta, gamma, vega, theta, rho) are partial derivatives of an option's price with respect to market factors. Delta measures price sensitivity to the underlying; gamma measures delta's sensitivity; vega measures sensitivity to volatility; theta measures time decay; rho measures rate sensitivity. In hedging, Greeks guide position sizing and rebalancing frequency.</p>
+        <p><strong>Goal:</strong> Build a hedging backtester that connects model Greeks to realized P&amp;L.</p>
+        <ul>
+          <li><strong>Core tasks:</strong>
+            <ul>
+              <li>Implement delta hedging for a European option (baseline) using BS delta.</li>
+              <li>Support discrete re-hedging (daily/weekly) and transaction cost models (fixed bps per trade).</li>
+              <li>Compute hedging P&amp;L and decompose drivers (rebalancing frequency, vol misspecification, jumps/regimes).</li>
+            </ul>
+          </li>
+          <li><strong>Optimization component:</strong> choose re-hedge frequency to minimize tail risk of hedging error under cost.</li>
+          <li><strong>Risk component:</strong> hedging error VaR/CVaR over backtest windows.</li>
+          <li><strong>Deliverables:</strong> strategy module + demo notebook showing hedging error distributions and conclusions.</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>
+          Project 4 — Portfolio Optimization: Mean–Variance vs CVaR
+          <span class="chev" aria-hidden="true"></span>
+        </summary>
+        <div class="hr"></div>
+        <p><strong>Goal:</strong> Provide an optimization layer with consistent APIs and compare risk objectives.</p>
+        <ul>
+          <li><strong>Core tasks:</strong>
+            <ul>
+              <li>Implement mean–variance optimizer with constraints (long-only, weight caps, turnover constraints optional).</li>
+              <li>Implement CVaR optimizer using scenario returns (LP form) and comparable constraints.</li>
+              <li>Rolling-window backtest and evaluation (vol, drawdown, tail loss, turnover, costs).</li>
+            </ul>
+          </li>
+          <li><strong>Optimization component:</strong> convex optimization + constraint handling.</li>
+          <li><strong>Validation:</strong> sanity checks (weights sum to 1, constraint satisfaction, stable solutions).</li>
+          <li><strong>Deliverables:</strong> optimizer API, comparative notebook, discussion: when CVaR helps/hurts.</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>
+          Project 5 — Factor &amp; Macro Modeling (CAPM + Multifactor)
+          <span class="chev" aria-hidden="true"></span>
+        </summary>
+        <div class="hr"></div>
+        <p><strong>Goal:</strong> Provide factor exposure estimation and simple expected return modeling using public macro data.</p>
+        <ul>
+          <li><strong>Core tasks:</strong>
+            <ul>
+              <li>Estimate CAPM beta/alpha for a basket of assets; rolling stability analysis.</li>
+              <li>Extend to multifactor regression using macro series (FRED) + market proxies.</li>
+              <li>Out-of-sample evaluation (walk-forward): forecast errors and economic usefulness (tilts/overlays).</li>
+            </ul>
+          </li>
+          <li><strong>ML component:</strong> regularized regression (ridge/lasso) + model selection.</li>
+          <li><strong>Deliverables:</strong> factor API, notebook with exposure plots and a clear bias/overfitting discussion.</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>
+          Project 6 — Pairs Trading Strategy Framework with Risk Controls
+          <span class="chev" aria-hidden="true"></span>
+        </summary>
+        <div class="hr"></div>
+        <p><strong>What is a pairs framework?</strong> A pairs strategy identifies two correlated assets that have temporarily diverged in price (the "spread" has widened). The strategy goes long the underperformer and short the outperformer, betting the spread mean-reverts. Risk controls ensure position sizing stays rational and losses are capped. Success depends on finding stable pairs, reliable signals, and robust execution under costs.</p>
+        <p><strong>Goal:</strong> Build a strategy module that stresses integration: data → signals → sizing → risk → backtest.</p>
+        <ul>
+          <li><strong>Core tasks:</strong>
+            <ul>
+              <li>Select/identify pairs (sector ETFs, similar equities); compute spread and stationarity diagnostics.</li>
+              <li>Signal generation (z-score mean reversion) + position sizing (vol targeting).</li>
+              <li>Add risk controls (max leverage, stop-loss/time stop, VaR limits) and transaction costs.</li>
+              <li>Evaluate robustness: subperiods, parameter sweeps, stress periods.</li>
+            </ul>
+          </li>
+          <li><strong>Optimization component:</strong> threshold tuning and sizing under constraints via cross-validation.</li>
+          <li><strong>Deliverables:</strong> strategy API, backtest notebook, honest “does it survive costs &amp; risk?” conclusions.</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>
+          Project 7 — GenAI Copilot for Explainable Quant Analytics (Open Models)
+          <span class="chev" aria-hidden="true"></span>
+        </summary>
+        <div class="hr"></div>
+        <p><strong>Goal:</strong> Produce an explainability layer that generates faithful reports grounded in computed outputs.</p>
+        <ul>
+          <li><strong>Core tasks:</strong>
+            <ul>
+              <li>Design templates and “formula cards” so the model references computed numbers (not invented math).</li>
+              <li>Build a small pipeline: user query → run analytics → generate report with citations to computed fields.</li>
+              <li>Implement guardrails: refuse on missing inputs; unit tests for key computations; hallucination checks.</li>
+              <li>Evaluate quality with a rubric: faithfulness, completeness, clarity, consistency.</li>
+            </ul>
+          </li>
+          <li><strong>GenAI component:</strong> open-source models via Hugging Face + light evaluation harness.</li>
+          <li><strong>Deliverables:</strong> demo notebook or simple app that produces a final “portfolio + options + risk” report.</li>
+        </ul>
+      </details>
+
+      <div class="hr"></div>
+
+      <div class="card">
+        <h3>Integration requirement (recommended)</h3>
+        <p class="small">
+          To ensure a true ecosystem, require a final integrated demo notebook:
+          <span class="badge">Integrated Demo</span>
+        </p>
+        <ul>
+          <li>Build vol surface (P1) → price options (P1/P2) → hedge (P3)</li>
+          <li>Construct a portfolio overlay with CVaR constraints (P4)</li>
+          <li>Explain exposures via factors/macro (P5)</li>
+          <li>Add a small “alpha sleeve” via pairs strategy (P6)</li>
+          <li>Generate a final narrative report with copilot (P7)</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>
+        Tip: keep compute modest by caching data snapshots, limiting universes (10–30 assets), and using
+        reproducible seeds for Monte Carlo. Each module should have a clear API and at least one end-to-end demo.
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

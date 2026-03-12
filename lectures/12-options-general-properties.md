@@ -183,6 +183,16 @@ If $S_T \geq K$: do not exercise.
 
 <section class="slide" markdown="1">
 
+<div align="center">
+<img src="Figures/option_payoffs.png" alt="Option Payoff Diagrams" style="width:70%;"/>
+</div>
+
+*Figure: Payoff at maturity for all four basic option positions ($K = 100$). Long call and long put payoffs are always non-negative — the holder's right is never exercised at a loss. Short positions mirror these with opposite sign.*
+
+</section>
+
+<section class="slide" markdown="1">
+
 ### Profit Diagrams
 
 The **profit** accounts for the premium paid:
@@ -209,6 +219,16 @@ $$
 * Short put: limited upside (collect premium $p$), large but **bounded** downside (at most $K - p$, if stock falls to zero)
 
 The asymmetry is the entire point.
+
+</section>
+
+<section class="slide" markdown="1">
+
+<div align="center">
+<img src="Figures/option_profits.png" alt="Option Profit Diagrams" style="width:70%;"/>
+</div>
+
+*Figure: Profit at maturity for all four positions ($K = 100$, $c = 7$, $p = 5$). Blue shading marks profit zones; red shading marks loss zones. Dashed horizontals indicate the premium collected or paid. Dotted verticals mark the breakeven stock price.*
 
 </section>
 
@@ -279,6 +299,16 @@ For a call: $\text{Time value} = c - \max(S_0 - K, \, 0)$
 For a put: $\text{Time value} = p - \max(K - S_0, \, 0)$
 
 Time value reflects the **possibility** that the option will become more valuable before expiration. Possibility has a price.
+
+</section>
+
+<section class="slide" markdown="1">
+
+<div align="center">
+<img src="Figures/intrinsic_time_value.png" alt="Intrinsic and Time Value Decomposition" style="width:80%;"/>
+</div>
+
+*Figure: Option price decomposed into intrinsic value (lower fill) and time value (upper fill) as a function of $S_0$ ($K=100$, $T=1$yr, $r=5\%$, $\sigma=25\%$). For the European call, time value is always non-negative and peaks at-the-money. For the European put, time value turns negative deep in-the-money (red region) — the cost of being forced to wait rather than exercising now.*
 
 </section>
 
@@ -603,6 +633,12 @@ Any quoted price outside these bounds is an arbitrage opportunity.
 
 Inside these bounds, we need a model (like Black-Scholes) to pin down the exact price.
 
+<div align="center">
+<img src="Figures/option_bounds.png" alt="European Option No-Arbitrage Bounds" style="width:80%;"/>
+</div>
+
+*Figure: The shaded region shows the feasible price range for European calls (left) and puts (right) as a function of $S_0$. The Black-Scholes price (orange) threads inside the band. Any price outside the band implies an arbitrage opportunity. ($K=100$, $T=1$yr, $r=5\%$, $\sigma=25\%$)*
+
 </section>
 
 <section class="slide" markdown="1">
@@ -820,6 +856,12 @@ $$
 
 with strict inequality whenever there is a positive probability of optimal early exercise.
 
+<div align="center">
+<img src="Figures/early_exercise_boundary.png" alt="American Put Early Exercise Boundary" style="width:72%;"/>
+</div>
+
+*Figure: The early exercise boundary $S^*(t)$ for an American put ($K=100$, $T=1$yr, $r=5\%$, $\sigma=25\%$). Below the curve (red), the intrinsic value exceeds the continuation value — exercise immediately. Above the curve (blue), it is optimal to keep holding the option. The boundary converges to $K$ at maturity ($S^*(T) = K$).*
+
 </section>
 
 <section class="slide" markdown="1">
@@ -956,6 +998,12 @@ More volatility = more extreme outcomes = more valuable insurance.
 
 This is the single most important variable in option pricing.
 
+<div align="center">
+<img src="Figures/volatility_effect.png" alt="Effect of Volatility on Option Prices" style="width:72%;"/>
+</div>
+
+*Figure: All four option types increase monotonically in volatility $\sigma$ (ATM: $S_0 = K = 100$, $T=1$yr, $r=5\%$). The European call equals the American call for a non-dividend-paying stock. The American put price (binomial tree) sits above the European put due to the early exercise premium, with the gap widening at lower volatilities.*
+
 </section>
 
 <section class="slide" markdown="1">
@@ -1043,6 +1091,12 @@ Note: under the standard definition, time value $c - \max(S_0 - K, 0)$ is also n
 * Deep OTM: the option will almost certainly expire worthless. Its value converges to zero. There is little chance of recovery.
 
 The time value is a **hump-shaped** function of moneyness, peaking at ATM.
+
+<div align="center">
+<img src="Figures/time_decay.png" alt="Time Value Hump and Theta Decay" style="width:80%;"/>
+</div>
+
+*Figure — Left: Call time value as a function of $S_0$ for three maturities. The hump peaks at-the-money and grows with $T$. — Right: Theta decay — call price as time to expiry shrinks to zero (time flows left to right). The ATM call loses time value fastest near expiry; OTM and ITM calls converge more gradually. Dots mark each option's intrinsic value at $T=0$.*
 
 </section>
 

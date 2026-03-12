@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
@@ -217,6 +217,15 @@ class="math inline">\(K - S_T\)</span>.</p>
 exercise.</p>
 </section>
 <section class="slide">
+<div data-align="center">
+<p><img src="Figures/option_payoffs.png" alt="Option Payoff Diagrams" style="width:70%;"/></p>
+</div>
+<p><em>Figure: Payoff at maturity for all four basic option positions
+(<span class="math inline">\(K = 100\)</span>). Long call and long put
+payoffs are always non-negative — the holder’s right is never exercised
+at a loss. Short positions mirror these with opposite sign.</em></p>
+</section>
+<section class="slide">
 <h3 id="profit-diagrams">Profit Diagrams</h3>
 <p>The <strong>profit</strong> accounts for the premium paid: <span
 class="math display">\[
@@ -245,6 +254,17 @@ downside (at most <span class="math inline">\(K - p\)</span>, if stock
 falls to zero)</li>
 </ul>
 <p>The asymmetry is the entire point.</p>
+</section>
+<section class="slide">
+<div data-align="center">
+<p><img src="Figures/option_profits.png" alt="Option Profit Diagrams" style="width:70%;"/></p>
+</div>
+<p><em>Figure: Profit at maturity for all four positions (<span
+class="math inline">\(K = 100\)</span>, <span class="math inline">\(c =
+7\)</span>, <span class="math inline">\(p = 5\)</span>). Blue shading
+marks profit zones; red shading marks loss zones. Dashed horizontals
+indicate the premium collected or paid. Dotted verticals mark the
+breakeven stock price.</em></p>
 </section>
 <section class="slide">
 <h3 id="breakeven-points">Breakeven Points</h3>
@@ -327,6 +347,21 @@ class="math display">\[
 <p>Time value reflects the <strong>possibility</strong> that the option
 will become more valuable before expiration. Possibility has a
 price.</p>
+</section>
+<section class="slide">
+<div data-align="center">
+<p><img src="Figures/intrinsic_time_value.png" alt="Intrinsic and Time Value Decomposition" style="width:80%;"/></p>
+</div>
+<p><em>Figure: Option price decomposed into intrinsic value (lower fill)
+and time value (upper fill) as a function of <span
+class="math inline">\(S_0\)</span> (<span
+class="math inline">\(K=100\)</span>, <span
+class="math inline">\(T=1\)</span>yr, <span
+class="math inline">\(r=5\%\)</span>, <span
+class="math inline">\(\sigma=25\%\)</span>). For the European call, time
+value is always non-negative and peaks at-the-money. For the European
+put, time value turns negative deep in-the-money (red region) — the cost
+of being forced to wait rather than exercising now.</em></p>
 </section>
 <section class="slide">
 <h2 id="put-call-parity-european-options">5. Put-Call Parity (European
@@ -659,6 +694,17 @@ S_0\)</span>.</p>
 opportunity.</p>
 <p>Inside these bounds, we need a model (like Black-Scholes) to pin down
 the exact price.</p>
+<div data-align="center">
+<p><img src="Figures/option_bounds.png" alt="European Option No-Arbitrage Bounds" style="width:80%;"/></p>
+</div>
+<p><em>Figure: The shaded region shows the feasible price range for
+European calls (left) and puts (right) as a function of <span
+class="math inline">\(S_0\)</span>. The Black-Scholes price (orange)
+threads inside the band. Any price outside the band implies an arbitrage
+opportunity. (<span class="math inline">\(K=100\)</span>, <span
+class="math inline">\(T=1\)</span>yr, <span
+class="math inline">\(r=5\%\)</span>, <span
+class="math inline">\(\sigma=25\%\)</span>)</em></p>
 </section>
 <section class="slide">
 <h3 id="numerical-example-european-bounds">Numerical Example: European
@@ -866,6 +912,19 @@ P - p \geq 0
 \]</span></p>
 <p>with strict inequality whenever there is a positive probability of
 optimal early exercise.</p>
+<div data-align="center">
+<p><img src="Figures/early_exercise_boundary.png" alt="American Put Early Exercise Boundary" style="width:72%;"/></p>
+</div>
+<p><em>Figure: The early exercise boundary <span
+class="math inline">\(S^*(t)\)</span> for an American put (<span
+class="math inline">\(K=100\)</span>, <span
+class="math inline">\(T=1\)</span>yr, <span
+class="math inline">\(r=5\%\)</span>, <span
+class="math inline">\(\sigma=25\%\)</span>). Below the curve (red), the
+intrinsic value exceeds the continuation value — exercise immediately.
+Above the curve (blue), it is optimal to keep holding the option. The
+boundary converges to <span class="math inline">\(K\)</span> at maturity
+(<span class="math inline">\(S^*(T) = K\)</span>).</em></p>
 </section>
 <section class="slide">
 <h3 id="summary-european-vs-american-bounds">Summary: European vs
@@ -1044,6 +1103,17 @@ and is protected from adverse swings (can walk away).</p>
 <p>More volatility = more extreme outcomes = more valuable
 insurance.</p>
 <p>This is the single most important variable in option pricing.</p>
+<div data-align="center">
+<p><img src="Figures/volatility_effect.png" alt="Effect of Volatility on Option Prices" style="width:72%;"/></p>
+</div>
+<p><em>Figure: All four option types increase monotonically in
+volatility <span class="math inline">\(\sigma\)</span> (ATM: <span
+class="math inline">\(S_0 = K = 100\)</span>, <span
+class="math inline">\(T=1\)</span>yr, <span
+class="math inline">\(r=5\%\)</span>). The European call equals the
+American call for a non-dividend-paying stock. The American put price
+(binomial tree) sits above the European put due to the early exercise
+premium, with the gap widening at lower volatilities.</em></p>
 </section>
 <section class="slide">
 <h3 id="effect-of-dividends">Effect of Dividends</h3>
@@ -1213,6 +1283,16 @@ value converges to zero. There is little chance of recovery.</li>
 </ul>
 <p>The time value is a <strong>hump-shaped</strong> function of
 moneyness, peaking at ATM.</p>
+<div data-align="center">
+<p><img src="Figures/time_decay.png" alt="Time Value Hump and Theta Decay" style="width:80%;"/></p>
+</div>
+<p><em>Figure — Left: Call time value as a function of <span
+class="math inline">\(S_0\)</span> for three maturities. The hump peaks
+at-the-money and grows with <span class="math inline">\(T\)</span>. —
+Right: Theta decay — call price as time to expiry shrinks to zero (time
+flows left to right). The ATM call loses time value fastest near expiry;
+OTM and ITM calls converge more gradually. Dots mark each option’s
+intrinsic value at <span class="math inline">\(T=0\)</span>.</em></p>
 </section>
 <section class="slide">
 <h3 id="time-decay">Time Decay</h3>

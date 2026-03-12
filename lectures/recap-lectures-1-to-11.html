@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>recap-lectures-1-to-11</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="lecture-theme.css" />
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<style>
+  .slides {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    height: 100vh;
+
+    /* Start slide counter */
+    counter-reset: slide;
+  }
+
+  .slide {
+    scroll-snap-align: start;
+    min-height: 100vh;
+    padding: 4rem;
+    padding-top: 1rem;
+    box-sizing: border-box;
+
+    /* Ensure relative positioning for numbering */
+    position: relative;
+  }
+
+  /* Nice-to-have: smoother feel */
+  html { scroll-behavior: smooth; }
+
+  /* Automatic slide numbering */
+  .slide::before {
+    counter-increment: slide;
+    content: "Slide " counter(slide);
+    position: absolute;
+    top: 1rem;   /* footer-like placement */
+    right: 2rem;
+    font-size: 1rem;
+    color: #666;
+  }
+</style>
+<div class="slides" data-markdown="1">
+<section class="slide">
+<h1 id="recap-lectures-111">Recap: Lectures 1–11</h1>
+<p><strong>Sukrit Mittal</strong> Franklin Templeton Investments</p>
+<p><em>Where we’ve been, and why it matters for what comes
+next.</em></p>
+</section>
+<section class="slide">
+<h2 id="the-big-picture">The Big Picture</h2>
+<p>We have built a toolkit – layer by layer – for understanding how
+financial markets work mathematically.</p>
+<table>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 31%" />
+<col style="width: 46%" />
+</colgroup>
+<thead>
+<tr>
+<th>Block</th>
+<th>Lectures</th>
+<th>Core question</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Foundations</strong></td>
+<td>1–4</td>
+<td>How do we model markets and the value of money?</td>
+</tr>
+<tr>
+<td><strong>Portfolio Theory</strong></td>
+<td>5–8</td>
+<td>How should an investor allocate capital?</td>
+</tr>
+<tr>
+<td><strong>Risk Measurement</strong></td>
+<td>9–10</td>
+<td>How do we quantify and manage risk?</td>
+</tr>
+<tr>
+<td><strong>Derivatives</strong></td>
+<td>11</td>
+<td>How do we price contracts whose value derives from other
+assets?</td>
+</tr>
+</tbody>
+</table>
+<p>Each block answers a question that the next block depends on.</p>
+</section>
+<section class="slide">
+<h2 id="foundations-lectures-14">Foundations (Lectures 1–4)</h2>
+<h3 id="lecture-1-financial-systems">Lecture 1 – Financial Systems</h3>
+<p><em>What is a financial market, mathematically?</em> Defined the
+objects of study: assets, prices, time, uncertainty. Established that
+finance is not storytelling – it is <strong>structure and
+abstraction</strong>.</p>
+<h3 id="lecture-2-a-simple-market-model">Lecture 2 – A Simple Market
+Model</h3>
+<p><em>What is the simplest non-trivial market?</em> The one-step
+binomial model. Two states, one period – yet rich enough to introduce
+<strong>no-arbitrage</strong>, the single most important principle in
+all of mathematical finance.</p>
+<h3 id="lecture-3-time-value-of-money">Lecture 3 – Time Value of
+Money</h3>
+<p><em>Why is $1 today worth more than $1 tomorrow?</em> Opportunity
+cost, inflation, risk. Moved from simple to compound to
+<strong>continuous compounding</strong> – the language derivatives
+pricing speaks in.</p>
+<h3 id="lecture-4-money-market">Lecture 4 – Money Market</h3>
+<p><em>How do we price time itself?</em> Bonds, discount factors, term
+structure. The <strong>yield curve</strong> encodes the market’s
+collective view of the future cost of money.</p>
+</section>
+<section class="slide">
+<h2 id="portfolio-theory-lectures-58">Portfolio Theory (Lectures
+5–8)</h2>
+<h3 id="lecture-5-introduction-to-portfolios">Lecture 5 – Introduction
+to Portfolios</h3>
+<p><em>How do risk and return trade off?</em> Defined return (simple,
+log), variance as risk, and the fundamental insight: <strong>you cannot
+earn more without accepting more risk</strong> – but you can be smart
+about <em>which</em> risks you take.</p>
+<h3 id="lecture-6-risk-free-asset-and-optimization">Lecture 6 –
+Risk-Free Asset and Optimization</h3>
+<p><em>What happens when you can lend and borrow at a risk-free
+rate?</em> The <strong>Capital Allocation Line</strong>: every efficient
+portfolio is a mix of the risk-free asset and one optimal risky
+portfolio. Introduced constrained optimization via Lagrange
+multipliers.</p>
+<h3 id="lecture-7-multi-asset-portfolios">Lecture 7 – Multi-Asset
+Portfolios</h3>
+<p><em>How does diversification work with many assets?</em>
+Matrix/vector formulation. The <strong>efficient frontier</strong> as a
+hyperbola. Diversification doesn’t just reduce risk – it reshapes the
+entire opportunity set.</p>
+<h3 id="lecture-8-capm">Lecture 8 – CAPM</h3>
+<p><em>How are assets priced in equilibrium?</em> If all investors
+optimize, the market portfolio <em>is</em> the optimal risky portfolio.
+An asset’s expected return depends only on its <strong>systematic
+risk</strong> (beta), not its total risk.</p>
+</section>
+<section class="slide">
+<h2 id="risk-measurement-lectures-910">Risk Measurement (Lectures
+9–10)</h2>
+<h3 id="lecture-9-utility-functions">Lecture 9 – Utility Functions</h3>
+<p><em>Why do different investors hold different portfolios?</em>
+Expected utility theory formalizes <strong>risk aversion</strong>.
+Utility functions encode preferences; concavity measures how much an
+investor dislikes uncertainty. This is the theoretical backbone behind
+mean-variance analysis.</p>
+<h3 id="lecture-10-value-at-risk">Lecture 10 – Value at Risk</h3>
+<p><em>How bad can it get?</em> VaR asks: <em>“What is my maximum loss
+at a given confidence level?”</em> Three methods – parametric,
+historical simulation, Monte Carlo. Powerful but limited: VaR says
+nothing about <strong>how bad</strong> losses can be beyond the
+threshold.</p>
+</section>
+<section class="slide">
+<h2 id="derivatives-i-lecture-11">Derivatives I (Lecture 11)</h2>
+<h3 id="lecture-11-forwards-and-futures">Lecture 11 – Forwards and
+Futures</h3>
+<p><em>How do you lock in a price today for a transaction
+tomorrow?</em></p>
+<p>Forward contracts: <strong>symmetric</strong> obligations. Priced by
+<strong>no-arbitrage replication</strong> – construct a portfolio that
+exactly mimics the payoff, and the price follows. Futures add daily
+margining to manage counterparty risk.</p>
+<p><strong>Key insight:</strong> the forward price is <em>not</em> a
+forecast. It is the unique price that prevents free money.</p>
+</section>
+<section class="slide">
+<h2 id="one-concept-per-lecture-the-unique-value">One Concept Per
+Lecture – The Unique Value</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr>
+<th>Lecture</th>
+<th>The one thing to remember</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Financial Systems</td>
+<td>Finance = mathematical structure, not intuition</td>
+</tr>
+<tr>
+<td>2. Simple Market Model</td>
+<td><strong>No-arbitrage</strong> – the anchor of all pricing</td>
+</tr>
+<tr>
+<td>3. Time Value of Money</td>
+<td>Continuous compounding as the natural language</td>
+</tr>
+<tr>
+<td>4. Money Market</td>
+<td>The yield curve prices time</td>
+</tr>
+<tr>
+<td>5. Intro to Portfolios</td>
+<td>Risk-return is a trade-off, not a choice</td>
+</tr>
+<tr>
+<td>6. Risk-Free + Optimization</td>
+<td>One optimal risky portfolio for everyone</td>
+</tr>
+<tr>
+<td>7. Multi-Asset Portfolios</td>
+<td>Diversification reshapes opportunity</td>
+</tr>
+<tr>
+<td>8. CAPM</td>
+<td>Only systematic risk is rewarded</td>
+</tr>
+<tr>
+<td>9. Utility Functions</td>
+<td>Preferences explain behaviour</td>
+</tr>
+<tr>
+<td>10. Value at Risk</td>
+<td>Quantify downside, but respect its limits</td>
+</tr>
+<tr>
+<td>11. Forwards &amp; Futures</td>
+<td>Price by replication, not prediction</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="slide">
+<h2 id="the-story-so-far">The Story So Far</h2>
+<p><span class="math display">\[
+\boxed{\text{Model a market}} \;\longrightarrow\; \boxed{\text{Price
+time (bonds)}} \;\longrightarrow\; \boxed{\text{Combine assets
+(portfolios)}}
+\]</span></p>
+<p><span class="math display">\[
+\longrightarrow\; \boxed{\text{Quantify risk (utility, VaR)}}
+\;\longrightarrow\; \boxed{\text{Price derivatives (forwards)}}
+\]</span></p>
+<p>Every step rests on one principle: <strong>no-arbitrage</strong>.</p>
+<ul>
+<li>We used it to price bonds (Lecture 4).</li>
+<li>We used it to derive CAPM (Lecture 8).</li>
+<li>We used it to price forwards (Lecture 11).</li>
+</ul>
+<p>What if we want a contract that gives us the <strong>right, but not
+the obligation</strong>, to trade?</p>
+</section>
+<section class="slide">
+<h2 id="looking-ahead-lecture-12-options">Looking Ahead: Lecture 12 –
+Options</h2>
+<p>A forward contract is a <strong>symmetric</strong> bet: both sides
+are equally exposed.</p>
+<p>But what if you could keep the upside and <strong>cut off the
+downside</strong>?</p>
+<p>That is an <strong>option</strong> – and its asymmetric payoff
+changes everything:</p>
+<ul>
+<li>Payoffs are no longer linear, so replication is harder.</li>
+<li>The right to walk away has a <strong>price</strong> (the
+premium).</li>
+<li>New relationships emerge: <strong>put-call parity</strong>, pricing
+bounds, and the interplay of time, volatility, and moneyness.</li>
+</ul>
+<p>No-arbitrage still rules – but the arguments become richer.</p>
+</section>
+</div>
+</body>
+</html>

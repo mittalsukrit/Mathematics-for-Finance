@@ -52,6 +52,17 @@ Franklin Templeton Investments
 
 <section class="slide" markdown="1">
 
+## Cases
+
+1. Insurance policy (metaphorically): getting protection against unpleasant price drops.
+2. Income generation: by selling options, you can earn premiums.
+3. Price discovery: options markets can reveal information about future volatility and market sentiment.
+4. Holding flight prices for a day or two, at a premium.
+
+</section>
+
+<section class="slide" markdown="1">
+
 ## Outline
 
 1. From forwards to options: the asymmetric payoff

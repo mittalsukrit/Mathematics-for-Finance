@@ -623,17 +623,14 @@ the proceeds at the risk-free rate.</p>
 <section class="slide">
 <h3 id="lower-bound-for-european-call">Lower Bound for European
 Call</h3>
-<p><strong>Claim:</strong></p>
 <p><span class="math display">\[
 \boxed{c \geq \max(S_0 - Ke^{-rT}, \, 0)}
-\]</span></p>
-<p>The option price is never negative (a right has non-negative
+\]</span> The option price is never negative (a right has non-negative
 value).</p>
 <p>We need to show <span class="math inline">\(c \geq S_0 -
 Ke^{-rT}\)</span>.</p>
-<p><strong>Proof by arbitrage:</strong></p>
-<p>Suppose <span class="math inline">\(c &lt; S_0 -
-Ke^{-rT}\)</span>.</p>
+<p><strong>Proof by arbitrage:</strong> Suppose <span
+class="math inline">\(c &lt; S_0 - Ke^{-rT}\)</span>.</p>
 <p><strong>Strategy:</strong> Buy the call at <span
 class="math inline">\(c\)</span>, short the stock at <span
 class="math inline">\(S_0\)</span>, invest <span
@@ -642,8 +639,8 @@ class="math inline">\(Ke^{-rT}\)</span> at the risk-free rate.</p>
 <span class="math inline">\(S_0 - c - Ke^{-rT} &gt; 0\)</span> (by
 assumption).</p>
 <p><strong>At maturity (<span
-class="math inline">\(T\)</span>):</strong></p>
-<p>The investment grows to <span class="math inline">\(K\)</span>.</p>
+class="math inline">\(T\)</span>):</strong> The investment grows to
+<span class="math inline">\(K\)</span>.</p>
 <p>If <span class="math inline">\(S_T &gt; K\)</span>: exercise the
 call, buy stock at <span class="math inline">\(K\)</span>, return to
 short position. Net: <span class="math inline">\(0\)</span>.</p>
@@ -657,13 +654,10 @@ Ke^{-rT}\)</span>.</p>
 </section>
 <section class="slide">
 <h3 id="lower-bound-for-european-put">Lower Bound for European Put</h3>
-<p><strong>Claim:</strong></p>
 <p><span class="math display">\[
 \boxed{p \geq \max(Ke^{-rT} - S_0, \, 0)}
-\]</span></p>
-<p><strong>Proof by arbitrage:</strong></p>
-<p>Suppose <span class="math inline">\(p &lt; Ke^{-rT} -
-S_0\)</span>.</p>
+\]</span> <strong>Proof by arbitrage:</strong> Suppose <span
+class="math inline">\(p &lt; Ke^{-rT} - S_0\)</span>.</p>
 <p><strong>Strategy:</strong> Buy the put at <span
 class="math inline">\(p\)</span>, buy the stock at <span
 class="math inline">\(S_0\)</span>, borrow <span
@@ -672,9 +666,8 @@ class="math inline">\(Ke^{-rT}\)</span> at the risk-free rate.</p>
 <span class="math inline">\(Ke^{-rT} - p - S_0 &gt; 0\)</span> (by
 assumption).</p>
 <p><strong>At maturity (<span
-class="math inline">\(T\)</span>):</strong></p>
-<p>The loan requires repayment of <span
-class="math inline">\(K\)</span>.</p>
+class="math inline">\(T\)</span>):</strong> The loan requires repayment
+of <span class="math inline">\(K\)</span>.</p>
 <p>If <span class="math inline">\(S_T &lt; K\)</span>: exercise the put,
 sell stock at <span class="math inline">\(K\)</span>, repay <span
 class="math inline">\(K\)</span>. Net: <span
@@ -705,6 +698,8 @@ S_0\)</span>.</p>
 opportunity.</p>
 <p>Inside these bounds, we need a model (like Black-Scholes) to pin down
 the exact price.</p>
+</section>
+<section class="slide">
 <div data-align="center">
 <p><img src="Figures/option_bounds.png" alt="European Option No-Arbitrage Bounds" style="width:80%;"/></p>
 </div>
@@ -724,24 +719,20 @@ Bounds</h3>
 50\)</span>, <span class="math inline">\(K = 48\)</span>, <span
 class="math inline">\(T = 0.25\)</span>, <span class="math inline">\(r =
 5\%\)</span>.</p>
-<p><strong>Call bounds:</strong></p>
-<p><span class="math display">\[
+<p><strong>Call bounds:</strong> <span class="math display">\[
 \text{Lower:} \quad S_0 - Ke^{-rT} = 50 - 48 \cdot e^{-0.05 \times 0.25}
 = 50 - 48 \times 0.9876 = 50 - 47.40 = 2.60
-\]</span></p>
-<p><span class="math display">\[
+\]</span> <span class="math display">\[
 \text{Upper:} \quad S_0 = 50
-\]</span></p>
-<p>So <span class="math inline">\(2.60 \leq c \leq 50\)</span>.</p>
-<p><strong>Put bounds:</strong></p>
-<p><span class="math display">\[
+\]</span> So <span class="math inline">\(2.60 \leq c \leq
+50\)</span>.</p>
+<p><strong>Put bounds:</strong> <span class="math display">\[
 \text{Lower:} \quad Ke^{-rT} - S_0 = 47.40 - 50 = -2.60 \implies
 \max(-2.60, \, 0) = 0
-\]</span></p>
-<p><span class="math display">\[
+\]</span> <span class="math display">\[
 \text{Upper:} \quad Ke^{-rT} = 47.40
-\]</span></p>
-<p>So <span class="math inline">\(0 \leq p \leq 47.40\)</span>.</p>
+\]</span> So <span class="math inline">\(0 \leq p \leq
+47.40\)</span>.</p>
 <p>The call lower bound of <span class="math inline">\(2.60\)</span> is
 tight — it represents the <strong>minimum</strong> a rational market
 would charge.</p>
@@ -774,12 +765,10 @@ class="math inline">\(S_t - K\)</span> immediately.</p>
 <p><strong>If you do not exercise:</strong> You hold an option worth at
 least <span class="math inline">\(c_t \geq S_t -
 Ke^{-r(T-t)}\)</span>.</p>
-<p>Compare the two:</p>
-<p><span class="math display">\[
+<p>Compare the two: <span class="math display">\[
 S_t - Ke^{-r(T-t)} &gt; S_t - K
-\]</span></p>
-<p>since <span class="math inline">\(Ke^{-r(T-t)} &lt; K\)</span> for
-<span class="math inline">\(r &gt; 0\)</span> and <span
+\]</span> since <span class="math inline">\(Ke^{-r(T-t)} &lt; K\)</span>
+for <span class="math inline">\(r &gt; 0\)</span> and <span
 class="math inline">\(T - t &gt; 0\)</span>.</p>
 <p><strong>The option alive is worth more than the option
 dead.</strong></p>
@@ -794,40 +783,38 @@ class="math inline">\(r\)</span> until maturity</li>
 the premium</li>
 </ol>
 <p>Early exercise sacrifices both the time value of money and the
-insurance value.</p>
-<p>No rational agent does this.</p>
+insurance value. No rational agent does this.</p>
 </section>
 <section class="slide">
 <h3 id="formal-argument">Formal Argument</h3>
 <p>Since early exercise is never optimal, the American call will always
 be held to maturity and exercised (or not) at time <span
-class="math inline">\(T\)</span> — exactly like a European call.</p>
-<p>Therefore:</p>
-<p><span class="math display">\[
+class="math inline">\(T\)</span> — exactly like a European call.
+Therefore: <span class="math display">\[
 C = c
-\]</span></p>
-<p>and the lower bound for the American call is:</p>
-<p><span class="math display">\[
+\]</span> and the lower bound for the American call is: <span
+class="math display">\[
 C \geq \max(S_0 - Ke^{-rT}, \, 0)
-\]</span></p>
-<p>This is <strong>strictly greater</strong> than the intrinsic value
-<span class="math inline">\(\max(S_0 - K, \, 0)\)</span> whenever <span
-class="math inline">\(r &gt; 0\)</span> and <span
+\]</span> This is <strong>strictly greater</strong> than the intrinsic
+value <span class="math inline">\(\max(S_0 - K, \, 0)\)</span> whenever
+<span class="math inline">\(r &gt; 0\)</span> and <span
 class="math inline">\(T &gt; 0\)</span>.</p>
 <p>An American call on a non-dividend-paying stock should never be
 exercised early.</p>
 <p>It should never trade below <span class="math inline">\(S_0 -
 Ke^{-rT}\)</span>.</p>
 <h3 id="what-changes-with-dividends">What Changes with Dividends?</h3>
-<p>If the stock pays dividends before <span
+<ul>
+<li>If the stock pays dividends before <span
 class="math inline">\(T\)</span>, the stock price drops on the
-ex-dividend date.</p>
-<p>This drop is a <strong>cost of waiting</strong> that does not affect
-the option holder.</p>
-<p>Early exercise may then become optimal — specifically, just before an
-ex-dividend date.</p>
-<p>Dividends break the result. Without them, it holds
-unconditionally.</p>
+ex-dividend date.</li>
+<li>This drop is a <strong>cost of waiting</strong> that does not affect
+the option holder.</li>
+<li>Early exercise may then become optimal — specifically, just before
+an ex-dividend date.</li>
+<li>Dividends break the result. Without them, it holds
+unconditionally.</li>
+</ul>
 </section>
 <section class="slide">
 <h2 id="bounds-on-american-option-prices">9. Bounds on American Option
@@ -836,16 +823,15 @@ Prices</h2>
 early exercise can only <strong>add</strong> value.</p>
 <h3 id="relation-to-european-prices">Relation to European Prices</h3>
 <p>Since an American option can do everything a European option can (and
-more):</p>
-<p><span class="math display">\[
+more): <span class="math display">\[
 C \geq c, \qquad P \geq p
 \]</span></p>
 <p>The American premium is at least as large as the European
 premium.</p>
 <h3 id="american-call-non-dividend-paying-stock">American Call
 (Non-Dividend-Paying Stock)</h3>
-<p>From Section 8, <span class="math inline">\(C = c\)</span>. So:</p>
-<p><span class="math display">\[
+<p>From Section 8, <span class="math inline">\(C = c\)</span>. So: <span
+class="math display">\[
 \max(S_0 - Ke^{-rT}, \, 0) \leq C \leq S_0
 \]</span></p>
 <p>The bounds are the same as European.</p>
@@ -869,13 +855,11 @@ in-the-money.</p>
 <p>The stock cannot fall below zero, so the put’s payoff cannot improve
 by waiting — holding provides no additional insurance.</p>
 <h3 id="bounds-on-american-put">Bounds on American Put</h3>
-<p>Since early exercise is possible:</p>
-<p><span class="math display">\[
+<p>Since early exercise is possible: <span class="math display">\[
 \boxed{\max(K - S_0, \, 0) \leq P \leq K}
-\]</span></p>
-<p>The lower bound uses <span class="math inline">\(K - S_0\)</span>
-(not <span class="math inline">\(Ke^{-rT} - S_0\)</span>), because you
-can exercise now and receive <span class="math inline">\(K -
+\]</span> The lower bound uses <span class="math inline">\(K -
+S_0\)</span> (not <span class="math inline">\(Ke^{-rT} - S_0\)</span>),
+because you can exercise now and receive <span class="math inline">\(K -
 S_0\)</span> immediately.</p>
 <p>The upper bound is <span class="math inline">\(K\)</span> (not <span
 class="math inline">\(Ke^{-rT}\)</span>), because immediate exercise

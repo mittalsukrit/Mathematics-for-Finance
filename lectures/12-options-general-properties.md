@@ -555,28 +555,20 @@ A European put pays at most $K$ at maturity. Its present value cannot exceed $Ke
 <section class="slide" markdown="1">
 
 ### Lower Bound for European Call
-
-**Claim:**
-
 $$
 \boxed{c \geq \max(S_0 - Ke^{-rT}, \, 0)}
 $$
-
 The option price is never negative (a right has non-negative value).
 
 We need to show $c \geq S_0 - Ke^{-rT}$.
 
-**Proof by arbitrage:**
-
-Suppose $c < S_0 - Ke^{-rT}$.
+**Proof by arbitrage:** Suppose $c < S_0 - Ke^{-rT}$.
 
 **Strategy:** Buy the call at $c$, short the stock at $S_0$, invest $Ke^{-rT}$ at the risk-free rate.
 
 **Cash at $t = 0$:** $S_0 - c - Ke^{-rT} > 0$ (by assumption).
 
-**At maturity ($T$):**
-
-The investment grows to $K$.
+**At maturity ($T$):** The investment grows to $K$.
 
 If $S_T > K$: exercise the call, buy stock at $K$, return to short position. Net: $0$.
 
@@ -591,24 +583,16 @@ Therefore $c \geq S_0 - Ke^{-rT}$.
 <section class="slide" markdown="1">
 
 ### Lower Bound for European Put
-
-**Claim:**
-
 $$
 \boxed{p \geq \max(Ke^{-rT} - S_0, \, 0)}
 $$
-
-**Proof by arbitrage:**
-
-Suppose $p < Ke^{-rT} - S_0$.
+**Proof by arbitrage:** Suppose $p < Ke^{-rT} - S_0$.
 
 **Strategy:** Buy the put at $p$, buy the stock at $S_0$, borrow $Ke^{-rT}$ at the risk-free rate.
 
 **Cash at $t = 0$:** $Ke^{-rT} - p - S_0 > 0$ (by assumption).
 
-**At maturity ($T$):**
-
-The loan requires repayment of $K$.
+**At maturity ($T$):** The loan requires repayment of $K$.
 
 If $S_T < K$: exercise the put, sell stock at $K$, repay $K$. Net: $0$.
 
@@ -644,6 +628,10 @@ Any quoted price outside these bounds is an arbitrage opportunity.
 
 Inside these bounds, we need a model (like Black-Scholes) to pin down the exact price.
 
+</section>
+
+<section class="slide" markdown="1">
+
 <div align="center">
 <img src="Figures/option_bounds.png" alt="European Option No-Arbitrage Bounds" style="width:80%;"/>
 </div>
@@ -659,27 +647,21 @@ Inside these bounds, we need a model (like Black-Scholes) to pin down the exact 
 **Given:** $S_0 = 50$, $K = 48$, $T = 0.25$, $r = 5\%$.
 
 **Call bounds:**
-
 $$
 \text{Lower:} \quad S_0 - Ke^{-rT} = 50 - 48 \cdot e^{-0.05 \times 0.25} = 50 - 48 \times 0.9876 = 50 - 47.40 = 2.60
 $$
-
 $$
 \text{Upper:} \quad S_0 = 50
 $$
-
 So $2.60 \leq c \leq 50$.
 
 **Put bounds:**
-
 $$
 \text{Lower:} \quad Ke^{-rT} - S_0 = 47.40 - 50 = -2.60 \implies \max(-2.60, \, 0) = 0
 $$
-
 $$
 \text{Upper:} \quad Ke^{-rT} = 47.40
 $$
-
 So $0 \leq p \leq 47.40$.
 
 The call lower bound of $2.60$ is tight — it represents the **minimum** a rational market would charge.
@@ -719,11 +701,9 @@ Suppose the American call is deep in-the-money at time $t < T$, with stock price
 **If you do not exercise:** You hold an option worth at least $c_t \geq S_t - Ke^{-r(T-t)}$.
 
 Compare the two:
-
 $$
 S_t - Ke^{-r(T-t)} > S_t - K
 $$
-
 since $Ke^{-r(T-t)} < K$ for $r > 0$ and $T - t > 0$.
 
 **The option alive is worth more than the option dead.**
@@ -733,9 +713,7 @@ By holding rather than exercising, you:
 1. **Defer payment** of $K$ — keeping $K$ invested at rate $r$ until maturity
 2. **Retain insurance** — if the stock crashes before $T$, you can walk away losing only the premium
 
-Early exercise sacrifices both the time value of money and the insurance value.
-
-No rational agent does this.
+Early exercise sacrifices both the time value of money and the insurance value. No rational agent does this.
 
 </section>
 
@@ -743,20 +721,14 @@ No rational agent does this.
 
 ### Formal Argument
 
-Since early exercise is never optimal, the American call will always be held to maturity and exercised (or not) at time $T$ — exactly like a European call.
-
-Therefore:
-
+Since early exercise is never optimal, the American call will always be held to maturity and exercised (or not) at time $T$ — exactly like a European call. Therefore:
 $$
 C = c
 $$
-
 and the lower bound for the American call is:
-
 $$
 C \geq \max(S_0 - Ke^{-rT}, \, 0)
 $$
-
 This is **strictly greater** than the intrinsic value $\max(S_0 - K, \, 0)$ whenever $r > 0$ and $T > 0$.
 
 An American call on a non-dividend-paying stock should never be exercised early.
@@ -765,13 +737,10 @@ It should never trade below $S_0 - Ke^{-rT}$.
 
 ### What Changes with Dividends?
 
-If the stock pays dividends before $T$, the stock price drops on the ex-dividend date.
-
-This drop is a **cost of waiting** that does not affect the option holder.
-
-Early exercise may then become optimal — specifically, just before an ex-dividend date.
-
-Dividends break the result. Without them, it holds unconditionally.
+* If the stock pays dividends before $T$, the stock price drops on the ex-dividend date.
+* This drop is a **cost of waiting** that does not affect the option holder.
+* Early exercise may then become optimal — specifically, just before an ex-dividend date.
+* Dividends break the result. Without them, it holds unconditionally.
 
 </section>
 
@@ -784,7 +753,6 @@ American options inherit all European bounds and add more, because early exercis
 ### Relation to European Prices
 
 Since an American option can do everything a European option can (and more):
-
 $$
 C \geq c, \qquad P \geq p
 $$
@@ -794,7 +762,6 @@ The American premium is at least as large as the European premium.
 ### American Call (Non-Dividend-Paying Stock)
 
 From Section 8, $C = c$. So:
-
 $$
 \max(S_0 - Ke^{-rT}, \, 0) \leq C \leq S_0
 $$
@@ -820,11 +787,9 @@ The stock cannot fall below zero, so the put's payoff cannot improve by waiting 
 ### Bounds on American Put
 
 Since early exercise is possible:
-
 $$
 \boxed{\max(K - S_0, \, 0) \leq P \leq K}
 $$
-
 The lower bound uses $K - S_0$ (not $Ke^{-rT} - S_0$), because you can exercise now and receive $K - S_0$ immediately.
 
 The upper bound is $K$ (not $Ke^{-rT}$), because immediate exercise yields at most $K$ when $S_0 = 0$.

@@ -803,17 +803,13 @@ The upper bound is $K$ (not $Ke^{-rT}$), because immediate exercise yields at mo
 At any time $t$, there exists a critical stock price $S^*(t)$ below which immediate exercise is optimal.
 
 **Optimal exercise condition:** Exercise the American put at time $t$ if:
-
 $$
 K - S_t \geq P_t(S_t)
 $$
-
 where $P_t(S_t)$ is the value of the put if held alive. The critical price $S^*(t)$ satisfies:
-
 $$
 K - S^*(t) = P_t(S^*(t))
 $$
-
 Below $S^*(t)$: the intrinsic value exceeds the continuation value. Exercise immediately.
 
 Above $S^*(t)$: the continuation value (including insurance) exceeds the intrinsic value. Keep holding.
@@ -825,12 +821,14 @@ Above $S^*(t)$: the continuation value (including insurance) exceeds the intrins
 * $S^*(t)$ increases as $t \to T$ (the exercise boundary converges to $K$)
 
 The American put premium exceeds the European put premium precisely because of this early exercise right:
-
 $$
 P - p \geq 0
 $$
-
 with strict inequality whenever there is a positive probability of optimal early exercise.
+
+</section>
+
+<section class="slide" markdown="1">
 
 <div align="center">
 <img src="Figures/early_exercise_boundary.png" alt="American Put Early Exercise Boundary" style="width:72%;"/>
@@ -962,6 +960,10 @@ A higher rate reduces the present value of the strike received upon exercise.
 
 Selling the stock via a put defers the receipt of $K$. Higher rates make this deferral more costly.
 
+</section>
+
+<section class="slide" markdown="1">
+
 ### Effect of Volatility $\sigma$
 
 **All options** (European and American, calls and puts): **Increasing** in $\sigma$.
@@ -973,6 +975,10 @@ The option holder benefits from favorable swings (captures upside) and is protec
 More volatility = more extreme outcomes = more valuable insurance.
 
 This is the single most important variable in option pricing.
+
+</section>
+
+<section class="slide" markdown="1">
 
 <div align="center">
 <img src="Figures/volatility_effect.png" alt="Effect of Volatility on Option Prices" style="width:72%;"/>

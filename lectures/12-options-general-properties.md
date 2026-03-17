@@ -1106,6 +1106,10 @@ $$
 2. ATM options lose time value fastest as expiration approaches
 3. Deep ITM and deep OTM options lose time value slowly (there is little to lose)
 
+</section>
+
+<section class="slide" markdown="1">
+
 In options trading, this is called **theta** — the rate of change of option price with respect to time:
 
 $$
@@ -1121,6 +1125,43 @@ For long calls on non-dividend-paying stocks, $\Theta < 0$ always holds.
 Time is generally the enemy of the option buyer.
 
 Time is generally the ally of the option seller.
+
+</section>
+
+<section class="slide" markdown="1">
+
+### Effect on Put Price (Deep ITM)
+
+For a deep ITM European put:
+$$
+p \approx K e^{-r(T-t)} - S_t
+$$
+As time passes ($t \uparrow$):
+
+* $T-t$ decreases  
+* discounting weakens  
+* $K e^{-r(T-t)}$ **increases**
+
+Therefore the put price **increases with time**, giving
+$$
+\Theta > 0
+$$
+
+Intrinsic value of the put: $K - S_t$
+
+But
+$$
+p \approx K e^{-r(T-t)} - S_t
+$$
+Since
+$$
+K e^{-r(T-t)} < K
+$$
+we get
+$$
+p < K - S_t
+$$
+So the option trades **below intrinsic value**, implying **negative time value**.
 
 </section>
 
@@ -1158,17 +1199,13 @@ For European puts, time value can be **negative** for deep ITM options.
 Consider a European put with $S_0 \ll K$. The intrinsic value is approximately $K - S_0$.
 
 But the European put price satisfies:
-
 $$
 p \leq Ke^{-rT}
 $$
-
 For a deep ITM put, the intrinsic value $K - S_0$ can exceed $Ke^{-rT}$ when $S_0$ is very small:
-
 $$
 K - S_0 > Ke^{-rT} \quad \Leftrightarrow \quad S_0 < K(1 - e^{-rT})
 $$
-
 In this region, the European put trades **below its intrinsic value** — its time value is negative.
 
 **Why?** The European put cannot be exercised until $T$. Even though the stock is nearly worthless, the holder cannot collect $K$ until maturity. The present value of this delayed payment is $Ke^{-rT} < K$.

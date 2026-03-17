@@ -1313,6 +1313,8 @@ near expiration</li>
 <li>Deep ITM and deep OTM options lose time value slowly (there is
 little to lose)</li>
 </ol>
+</section>
+<section class="slide">
 <p>In options trading, this is called <strong>theta</strong> — the rate
 of change of option price with respect to time:</p>
 <p><span class="math display">\[
@@ -1333,6 +1335,36 @@ beneficial.</p>
 class="math inline">\(\Theta &lt; 0\)</span> always holds.</p>
 <p>Time is generally the enemy of the option buyer.</p>
 <p>Time is generally the ally of the option seller.</p>
+</section>
+<section class="slide">
+<h3 id="effect-on-put-price-deep-itm">Effect on Put Price (Deep
+ITM)</h3>
+<p>For a deep ITM European put: <span class="math display">\[
+p \approx K e^{-r(T-t)} - S_t
+\]</span> As time passes (<span class="math inline">\(t
+\uparrow\)</span>):</p>
+<ul>
+<li><span class="math inline">\(T-t\)</span> decreases<br />
+</li>
+<li>discounting weakens<br />
+</li>
+<li><span class="math inline">\(K e^{-r(T-t)}\)</span>
+<strong>increases</strong></li>
+</ul>
+<p>Therefore the put price <strong>increases with time</strong>, giving
+<span class="math display">\[
+\Theta &gt; 0
+\]</span></p>
+<p>Intrinsic value of the put: <span class="math inline">\(K -
+S_t\)</span></p>
+<p>But <span class="math display">\[
+p \approx K e^{-r(T-t)} - S_t
+\]</span> Since <span class="math display">\[
+K e^{-r(T-t)} &lt; K
+\]</span> we get <span class="math display">\[
+p &lt; K - S_t
+\]</span> So the option trades <strong>below intrinsic value</strong>,
+implying <strong>negative time value</strong>.</p>
 </section>
 <section class="slide">
 <h3 id="time-value-and-no-arbitrage">Time Value and No-Arbitrage</h3>
@@ -1372,19 +1404,17 @@ deep ITM options.</p>
 <p>Consider a European put with <span class="math inline">\(S_0 \ll
 K\)</span>. The intrinsic value is approximately <span
 class="math inline">\(K - S_0\)</span>.</p>
-<p>But the European put price satisfies:</p>
-<p><span class="math display">\[
+<p>But the European put price satisfies: <span class="math display">\[
 p \leq Ke^{-rT}
-\]</span></p>
-<p>For a deep ITM put, the intrinsic value <span class="math inline">\(K
-- S_0\)</span> can exceed <span class="math inline">\(Ke^{-rT}\)</span>
-when <span class="math inline">\(S_0\)</span> is very small:</p>
-<p><span class="math display">\[
+\]</span> For a deep ITM put, the intrinsic value <span
+class="math inline">\(K - S_0\)</span> can exceed <span
+class="math inline">\(Ke^{-rT}\)</span> when <span
+class="math inline">\(S_0\)</span> is very small: <span
+class="math display">\[
 K - S_0 &gt; Ke^{-rT} \quad \Leftrightarrow \quad S_0 &lt; K(1 -
 e^{-rT})
-\]</span></p>
-<p>In this region, the European put trades <strong>below its intrinsic
-value</strong> — its time value is negative.</p>
+\]</span> In this region, the European put trades <strong>below its
+intrinsic value</strong> — its time value is negative.</p>
 <p><strong>Why?</strong> The European put cannot be exercised until
 <span class="math inline">\(T\)</span>. Even though the stock is nearly
 worthless, the holder cannot collect <span

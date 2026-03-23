@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>13-option-pricing</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="lecture-theme.css" />
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<style>
+  .slides {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    height: 100vh;
+
+    /* 🔢 Start slide counter */
+    counter-reset: slide;
+  }
+
+  .slide {
+    scroll-snap-align: start;
+    min-height: 100vh;
+    padding: 4rem;
+    padding-top: 1rem;
+    box-sizing: border-box;
+
+    /* Ensure relative positioning for numbering */
+    position: relative;
+  }
+
+  /* Nice-to-have: smoother feel */
+  html { scroll-behavior: smooth; }
+
+  /* 🔢 Automatic slide numbering */
+  .slide::before {
+    counter-increment: slide;
+    content: "Slide " counter(slide);
+    position: absolute;
+    top: 1rem;   /* footer-like placement */
+    right: 2rem;
+    font-size: 1rem;
+    color: #666;
+  }
+</style>
+<div class="slides" data-markdown="1">
+<section class="slide">
+<h1 id="option-pricing">Option Pricing</h1>
+<p><strong>Sukrit Mittal</strong> Franklin Templeton Investments</p>
+</section>
+<section class="slide">
+<h2 id="outline">Outline</h2>
+<ol type="1">
+<li>Recap: replication in the one-step binomial model</li>
+<li>Risk-neutral pricing: the key insight</li>
+<li>Two-step binomial trees</li>
+<li>General <span class="math inline">\(N\)</span>-step binomial
+model</li>
+<li>The Cox-Ross-Rubinstein (CRR) formula</li>
+<li>American options in the binomial tree</li>
+<li>From discrete to continuous: the Black-Scholes formula</li>
+<li>Black-Scholes: interpretation and Greeks</li>
+<li>Exercises</li>
+</ol>
+</section>
+<section class="slide">
+<h2 id="recap-replication-in-the-one-step-binomial-model">1. Recap:
+Replication in the One-Step Binomial Model</h2>
+<p>In Lecture 2, we priced a call option by <strong>replication</strong>
+— constructing a portfolio of stocks and bonds that matches the option’s
+payoff in every state, then invoking no-arbitrage.</p>
+<h3 id="setup">Setup</h3>
+<p>One period: <span class="math inline">\(t = 0\)</span> to <span
+class="math inline">\(t = T\)</span>. Two assets:</p>
+<ul>
+<li><strong>Stock:</strong> Current price <span
+class="math inline">\(S_0\)</span>, future price <span
+class="math inline">\(S_0 u\)</span> (up) or <span
+class="math inline">\(S_0 d\)</span> (down), with <span
+class="math inline">\(d &lt; u\)</span>.</li>
+<li><strong>Bond:</strong> Grows from <span
+class="math inline">\(1\)</span> to <span
+class="math inline">\(e^{rT}\)</span> (or <span class="math inline">\(1
++ r_F\)</span> in discrete compounding).</li>
+</ul>
+<p>A derivative pays <span class="math inline">\(f_u\)</span> in the up
+state and <span class="math inline">\(f_d\)</span> in the down
+state.</p>
+<p>We seek a replicating portfolio <span class="math inline">\((x,
+y)\)</span>: hold <span class="math inline">\(x\)</span> shares of stock
+and <span class="math inline">\(y\)</span> dollars in bonds. <span
+class="math display">\[
+\begin{cases}
+x \cdot S_0 u + y \cdot e^{rT} = f_u \\
+x \cdot S_0 d + y \cdot e^{rT} = f_d
+\end{cases}
+\]</span></p>
+<p>Two equations, two unknowns. The solution is unique (since <span
+class="math inline">\(u \neq d\)</span>).</p>
+</section>
+<section class="slide">
+<h3 id="solution-by-replication">Solution by Replication</h3>
+<p>Subtracting the second equation from the first: <span
+class="math display">\[
+\boxed{x = \frac{f_u - f_d}{S_0 u - S_0 d} = \frac{f_u - f_d}{S_0(u -
+d)}}
+\]</span></p>
+<p>The quantity <span class="math inline">\(x\)</span> is the
+<strong>hedge ratio</strong> of the option — the number of shares needed
+to replicate it. (In later sections, we will call this the option’s
+<strong>delta</strong>.)</p>
+<p>Substituting back: <span class="math display">\[
+y = e^{-rT}(f_u - x \cdot S_0 u) = e^{-rT}\left(\frac{u \, f_d - d \,
+f_u}{u - d}\right)
+\]</span></p>
+<p>The derivative price at <span class="math inline">\(t = 0\)</span> is
+the cost of the replicating portfolio: <span class="math display">\[
+f = x \cdot S_0 + y
+\]</span></p>
+<p>This was the method used in Lecture 2. It works perfectly. But for
+multi-step trees, solving simultaneous equations at every node becomes
+unwieldy. We need a more elegant approach.</p>
+</section>
+<section class="slide">
+<h2 id="risk-neutral-pricing-the-key-insight">2. Risk-Neutral Pricing:
+The Key Insight</h2>
+<p>Let us rearrange the replication price algebraically. Substituting
+<span class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> into <span class="math inline">\(f = x
+S_0 + y\)</span>: <span class="math display">\[
+f = \frac{f_u - f_d}{u - d} + e^{-rT}\left(\frac{u \, f_d - d \, f_u}{u
+- d}\right)
+\]</span></p>
+<p>Combining over the common denominator <span class="math inline">\(u -
+d\)</span>: <span class="math display">\[
+f = e^{-rT}\left[\frac{e^{rT} - d}{u - d} \cdot f_u + \frac{u -
+e^{rT}}{u - d} \cdot f_d\right]
+\]</span></p>
+<p>Define: <span class="math display">\[
+\boxed{q = \frac{e^{rT} - d}{u - d}}
+\]</span></p>
+<p>Then: <span class="math display">\[
+\boxed{f = e^{-rT}\left[q \, f_u + (1 - q) \, f_d\right]}
+\]</span></p>
+<p>This is a <strong>discounted expectation</strong> — but under what
+probability?</p>
+</section>
+<section class="slide">
+<h3 id="the-risk-neutral-probability">The Risk-Neutral Probability</h3>
+<p>The quantity <span class="math inline">\(q\)</span> is called the
+<strong>risk-neutral probability</strong> (or equivalent martingale
+probability).</p>
+<p><strong>Is <span class="math inline">\(q\)</span> a valid
+probability?</strong> We need <span class="math inline">\(0 &lt; q &lt;
+1\)</span>.</p>
+<p>From <span class="math inline">\(q = \frac{e^{rT} - d}{u -
+d}\)</span>:</p>
+<ul>
+<li><span class="math inline">\(q &gt; 0\)</span> requires <span
+class="math inline">\(e^{rT} &gt; d\)</span></li>
+<li><span class="math inline">\(q &lt; 1\)</span> requires <span
+class="math inline">\(e^{rT} &lt; u\)</span></li>
+</ul>
+<p>Together: <span class="math inline">\(d &lt; e^{rT} &lt; u\)</span>,
+which is precisely the <strong>no-arbitrage condition</strong> from
+Lecture 2.</p>
+<p>Under the no-arbitrage condition, <span
+class="math inline">\(q\)</span> is a well-defined probability on <span
+class="math inline">\(\{u, d\}\)</span>.</p>
+<h3 id="what-does-q-represent">What does <span
+class="math inline">\(q\)</span> represent?</h3>
+<p>Under the risk-neutral probability <span
+class="math inline">\(q\)</span>, the <strong>expected return on the
+stock equals the risk-free rate</strong>: <span class="math display">\[
+q \cdot S_0 u + (1 - q) \cdot S_0 d = S_0 \cdot \left[q \, u + (1-q) \,
+d\right] = S_0 \, e^{rT}
+\]</span> Verify: <span class="math inline">\(q \, u + (1-q) \, d =
+\frac{(e^{rT} - d) \, u + (u - e^{rT}) \, d}{u - d} = \frac{e^{rT}(u -
+d)}{u - d} = e^{rT}\)</span>. <span
+class="math inline">\(\checkmark\)</span></p>
+</section>
+<section class="slide">
+<h3 id="interpretation">Interpretation</h3>
+<p>Under the risk-neutral measure <span
+class="math inline">\(\mathbb{Q}\)</span>:</p>
+<ul>
+<li>Every asset earns the risk-free rate in expectation</li>
+<li>The stock price is a <strong>martingale</strong> after discounting:
+<span class="math inline">\(S_0 = e^{-rT} \,
+\mathbb{E}^{\mathbb{Q}}[S_T]\)</span></li>
+<li>No investor demands a risk premium — hence the name
+“risk-neutral”</li>
+</ul>
+<p>The real-world probability <span class="math inline">\(p\)</span>
+(which determines how likely the stock is to go up) <strong>does not
+appear anywhere</strong> in the pricing formula.</p>
+<p>This is remarkable. Two investors who disagree completely about the
+probability of the stock rising will nevertheless agree on the option
+price — because the price is determined by <strong>replication</strong>,
+not by expectations about the future.</p>
+<p>The risk-neutral probability <span class="math inline">\(q\)</span>
+is not a belief about the world. It is a mathematical device extracted
+from the no-arbitrage condition.</p>
+<h3 id="the-pricing-recipe">The Pricing Recipe</h3>
+<p>To price any derivative in a one-step binomial model:</p>
+<ol type="1">
+<li>Compute <span class="math inline">\(q = \frac{e^{rT} - d}{u -
+d}\)</span></li>
+<li>Compute <span class="math inline">\(f = e^{-rT}[q \, f_u + (1 - q)
+\, f_d]\)</span></li>
+</ol>
+<p>No need to solve simultaneous equations. This scales beautifully to
+multi-step trees.</p>
+</section>
+<section class="slide">
+<h3 id="numerical-example">Numerical Example</h3>
+<p><strong>Given:</strong> <span class="math inline">\(S_0 =
+100\)</span>, <span class="math inline">\(u = 1.2\)</span>, <span
+class="math inline">\(d = 0.8\)</span>, <span class="math inline">\(r =
+10\%\)</span>, <span class="math inline">\(T = 1\)</span> year.</p>
+<p>Price a European call with <span class="math inline">\(K =
+100\)</span>.</p>
+<p><strong>Step 1:</strong> Risk-neutral probability: <span
+class="math display">\[
+q = \frac{e^{0.10} - 0.8}{1.2 - 0.8} = \frac{1.1052 - 0.8}{0.4} =
+\frac{0.3052}{0.4} = 0.7629
+\]</span></p>
+<p><strong>Step 2:</strong> Payoffs: <span class="math display">\[
+f_u = \max(120 - 100, 0) = 20, \qquad f_d = \max(80 - 100, 0) = 0
+\]</span></p>
+<p><strong>Step 3:</strong> Price: <span class="math display">\[
+c = e^{-0.10}[0.7629 \times 20 + 0.2371 \times 0] = e^{-0.10} \times
+15.258 = 0.9048 \times 15.258 = 13.81
+\]</span></p>
+<p>Compare with the replication method from Lecture 2 (which gave <span
+class="math inline">\(13.64\)</span> for slightly different parameters).
+The logic is the same; the computation is simpler.</p>
+</section>
+<section class="slide">
+<h3 id="why-not-just-use-real-probabilities">Why Not Just Use Real
+Probabilities?</h3>
+<p>A natural question: why not compute <span
+class="math inline">\(\mathbb{E}^p[\text{payoff}]\)</span> under the
+real probability <span class="math inline">\(p\)</span> and
+discount?</p>
+<p>Consider the same example with <span class="math inline">\(p =
+0.6\)</span>: <span class="math display">\[
+\mathbb{E}^p[\text{payoff}] = 0.6 \times 20 + 0.4 \times 0 = 12
+\]</span></p>
+<p><span class="math display">\[
+e^{-0.10} \times 12 = 10.86
+\]</span> This gives a <strong>different</strong> (and wrong) answer.
+The error is that discounting at the risk-free rate is only correct when
+the cash flows are risk-free. Option payoffs are risky — they should be
+discounted at a <strong>risk-adjusted</strong> rate. But what is that
+rate?</p>
+<p>We would need to know the option’s beta, the market risk premium, and
+so on. This is circular and impractical.</p>
+<p>The risk-neutral approach sidesteps the problem entirely: by
+adjusting the probabilities (from <span class="math inline">\(p\)</span>
+to <span class="math inline">\(q\)</span>), we account for risk
+preferences implicitly, and discounting at the risk-free rate becomes
+correct. <span class="math display">\[
+\text{True price} = e^{-rT} \, \mathbb{E}^{\mathbb{Q}}[\text{payoff}] =
+e^{-\mu T} \, \mathbb{E}^{p}[\text{payoff}]
+\]</span></p>
+<p>where <span class="math inline">\(\mu\)</span> is the unknown
+risk-adjusted discount rate. The left-hand side is computable; the
+right-hand side is not.</p>
+</section>
+<section class="slide">
+<h2 id="two-step-binomial-trees">3. Two-Step Binomial Trees</h2>
+<h3 id="setup-1">Setup</h3>
+<p>Divide <span class="math inline">\([0, T]\)</span> into two equal
+steps of length <span class="math inline">\(\Delta t = T/2\)</span>.</p>
+<p>At each step, the stock price moves up by factor <span
+class="math inline">\(u\)</span> or down by factor <span
+class="math inline">\(d\)</span>.</p>
+<p>After two steps, three possible stock prices:</p>
+<p><span class="math display">\[
+S_{uu} = S_0 u^2, \qquad S_{ud} = S_0 u d, \qquad S_{dd} = S_0 d^2
+\]</span></p>
+<p>Note: <span class="math inline">\(S_{ud} = S_{du}\)</span> — the tree
+<strong>recombines</strong>. This is crucial for computational
+efficiency.</p>
+<div data-align="center">
+<p><img src="Figures/two_step_tree.png" alt="Two-Step Binomial Tree" style="width:65%;"/></p>
+</div>
+<p><em>Figure: Two-step recombining binomial tree. The stock starts at
+<span class="math inline">\(S_0\)</span> and branches at each node.
+After two steps, three distinct terminal prices emerge.</em></p>
+</section>
+<section class="slide">
+<h3 id="backward-induction">Backward Induction</h3>
+<p>The key to multi-step trees is <strong>backward induction</strong>:
+price the derivative by working backwards from maturity to the present,
+one step at a time.</p>
+<p><strong>At maturity (<span class="math inline">\(t =
+T\)</span>):</strong> The derivative payoffs are known: <span
+class="math display">\[
+f_{uu} = g(S_0 u^2), \qquad f_{ud} = g(S_0 u d), \qquad f_{dd} = g(S_0
+d^2)
+\]</span> where <span class="math inline">\(g(\cdot)\)</span> is the
+payoff function (e.g., <span class="math inline">\(g(S) = \max(S - K,
+0)\)</span> for a call).</p>
+<p><strong>At <span class="math inline">\(t = \Delta
+t\)</span>:</strong> Apply one-step risk-neutral pricing at each
+intermediate node.</p>
+<p>If the stock is at <span class="math inline">\(S_0 u\)</span> (the up
+node): <span class="math display">\[
+f_u = e^{-r \Delta t}[q \, f_{uu} + (1-q) \, f_{ud}]
+\]</span> If the stock is at <span class="math inline">\(S_0 d\)</span>
+(the down node): <span class="math display">\[
+f_d = e^{-r \Delta t}[q \, f_{ud} + (1-q) \, f_{dd}]
+\]</span> <strong>At <span class="math inline">\(t =
+0\)</span>:</strong> Apply one more step: <span class="math display">\[
+f = e^{-r \Delta t}[q \, f_u + (1-q) \, f_d]
+\]</span> Each step uses the <strong>same</strong> risk-neutral
+probability <span class="math inline">\(q = \frac{e^{r \Delta t} - d}{u
+- d}\)</span>, because the tree has the same <span
+class="math inline">\(u\)</span>, <span
+class="math inline">\(d\)</span>, <span class="math inline">\(r\)</span>
+at every node.</p>
+</section>
+<section class="slide">
+<h3 id="numerical-example-two-step-call">Numerical Example: Two-Step
+Call</h3>
+<p><strong>Given:</strong> <span class="math inline">\(S_0 =
+100\)</span>, <span class="math inline">\(u = 1.1\)</span>, <span
+class="math inline">\(d = 0.9\)</span>, <span class="math inline">\(r =
+5\%\)</span>, <span class="math inline">\(T = 1\)</span> year (two steps
+of <span class="math inline">\(\Delta t = 0.5\)</span>). European call
+with <span class="math inline">\(K = 100\)</span>.</p>
+<p><strong>Step 1:</strong> Stock prices at maturity: <span
+class="math display">\[
+S_{uu} = 100 \times 1.1^2 = 121, \quad S_{ud} = 100 \times 1.1 \times
+0.9 = 99, \quad S_{dd} = 100 \times 0.9^2 = 81
+\]</span></p>
+<p><strong>Step 2:</strong> Call payoffs at maturity: <span
+class="math display">\[
+f_{uu} = \max(121 - 100, 0) = 21, \quad f_{ud} = \max(99 - 100, 0) = 0,
+\quad f_{dd} = \max(81 - 100, 0) = 0
+\]</span></p>
+<p><strong>Step 3:</strong> Risk-neutral probability: <span
+class="math display">\[
+q = \frac{e^{0.05 \times 0.5} - 0.9}{1.1 - 0.9} = \frac{1.02532 -
+0.9}{0.2} = \frac{0.12532}{0.2} = 0.6266
+\]</span></p>
+</section>
+<section class="slide">
+<h3 id="numerical-example-continued">Numerical Example (continued)</h3>
+<p><strong>Step 4:</strong> Backward induction at <span
+class="math inline">\(t = 0.5\)</span>:</p>
+<p>At the up node (<span class="math inline">\(S = 110\)</span>): <span
+class="math display">\[
+f_u = e^{-0.025}[0.6266 \times 21 + 0.3734 \times 0] = 0.97531 \times
+13.159 = 12.834
+\]</span></p>
+<p>At the down node (<span class="math inline">\(S = 90\)</span>): <span
+class="math display">\[
+f_d = e^{-0.025}[0.6266 \times 0 + 0.3734 \times 0] = 0
+\]</span></p>
+<p><strong>Step 5:</strong> Back to <span class="math inline">\(t =
+0\)</span>: <span class="math display">\[
+c = e^{-0.025}[0.6266 \times 12.834 + 0.3734 \times 0] = 0.97531 \times
+8.042 = 7.84
+\]</span></p>
+<p>The European call is worth <span class="math inline">\(c =
+7.84\)</span>.</p>
+<p><strong>Verification:</strong> We can also expand this as a direct
+formula over the terminal nodes (next section).</p>
+</section>
+<section class="slide">
+<h3 id="direct-formula-for-two-steps">Direct Formula for Two Steps</h3>
+<p>Substituting the backward induction into one expression: <span
+class="math display">\[
+f = e^{-r \Delta t}\Big[q \cdot e^{-r \Delta t}(q \, f_{uu} + (1-q) \,
+f_{ud}) + (1-q) \cdot e^{-r \Delta t}(q \, f_{ud} + (1-q) \,
+f_{dd})\Big]
+\]</span></p>
+<p><span class="math display">\[
+\boxed{f = e^{-rT}\left[q^2 f_{uu} + 2q(1-q) f_{ud} + (1-q)^2
+f_{dd}\right]}
+\]</span> The coefficients <span class="math inline">\(q^2\)</span>,
+<span class="math inline">\(2q(1-q)\)</span>, <span
+class="math inline">\((1-q)^2\)</span> are the <strong>binomial
+probabilities</strong> — the risk-neutral probabilities of reaching each
+terminal node.</p>
+<p>This is the discounted expected payoff under the risk-neutral measure
+over two steps. The pattern is unmistakable: it is a <strong>binomial
+distribution</strong>.</p>
+<p>Let us verify with our example: <span class="math display">\[
+c = e^{-0.05}\left[0.6266^2 \times 21 + 2 \times 0.6266 \times 0.3734
+\times 0 + 0.3734^2 \times 0\right]
+\]</span></p>
+<p><span class="math display">\[
+= 0.9512 \times [0.3926 \times 21] = 0.9512 \times 8.245 = 7.84 \quad
+\checkmark
+\]</span></p>
+</section>
+<section class="slide">
+<h2 id="general-n-step-binomial-model">4. General <span
+class="math inline">\(N\)</span>-Step Binomial Model</h2>
+<h3 id="setup-2">Setup</h3>
+<p>Divide <span class="math inline">\([0, T]\)</span> into <span
+class="math inline">\(N\)</span> equal steps of length <span
+class="math inline">\(\Delta t = T/N\)</span>.</p>
+<p>At each step, the stock multiplies by <span
+class="math inline">\(u\)</span> (up) or <span
+class="math inline">\(d\)</span> (down).</p>
+<p>After <span class="math inline">\(N\)</span> steps, the stock price
+at maturity is: <span class="math display">\[
+S_T = S_0 \, u^j \, d^{N-j}
+\]</span> where <span class="math inline">\(j \in \{0, 1, 2, \ldots,
+N\}\)</span> counts the number of up moves.</p>
+<p>Since the tree recombines, there are only <span
+class="math inline">\(N + 1\)</span> distinct terminal prices (not <span
+class="math inline">\(2^N\)</span> paths). This is what makes the
+binomial tree computationally tractable.</p>
+</section>
+<section class="slide">
+<h3 id="risk-neutral-probability">Risk-Neutral Probability</h3>
+<p>At each step, the risk-neutral probability of an up move is: <span
+class="math display">\[
+q = \frac{e^{r \Delta t} - d}{u - d}
+\]</span></p>
+<p>The probability of exactly <span class="math inline">\(j\)</span> up
+moves in <span class="math inline">\(N\)</span> steps is: <span
+class="math display">\[
+\mathbb{Q}(j \text{ up moves}) = \binom{N}{j} q^j (1-q)^{N-j}
+\]</span></p>
+<p>This is the <strong>binomial distribution</strong> <span
+class="math inline">\(B(N, q)\)</span>.</p>
+</section>
+<section class="slide">
+<h3 id="the-n-step-pricing-formula">The <span
+class="math inline">\(N\)</span>-Step Pricing Formula</h3>
+<p>By repeated backward induction (or equivalently, by direct
+computation of the risk-neutral expectation): <span
+class="math display">\[
+\boxed{f = e^{-rT} \sum_{j=0}^{N} \binom{N}{j} q^j (1-q)^{N-j} \,
+g\!\left(S_0 \, u^j d^{N-j}\right)}
+\]</span></p>
+<p>where <span class="math inline">\(g(\cdot)\)</span> is the payoff
+function.</p>
+<p>This is the <strong>discounted risk-neutral expectation</strong> of
+the terminal payoff.</p>
+<p>For a European call (<span class="math inline">\(g(S) = \max(S - K,
+0)\)</span>): <span class="math display">\[
+c = e^{-rT} \sum_{j=0}^{N} \binom{N}{j} q^j (1-q)^{N-j} \max\!\left(S_0
+\, u^j d^{N-j} - K, \, 0\right)
+\]</span></p>
+<p>The <span class="math inline">\(\max\)</span> function zeroes out
+terms where the call finishes out-of-the-money. Only paths with
+sufficiently many up moves contribute.</p>
+</section>
+<section class="slide">
+<h3 id="the-critical-number-of-up-moves">The Critical Number of Up
+Moves</h3>
+<p>Define <span class="math inline">\(a\)</span> as the <strong>minimum
+number of up moves</strong> for the call to finish in-the-money: <span
+class="math display">\[
+S_0 \, u^j \, d^{N-j} &gt; K \quad \Leftrightarrow \quad j &gt;
+\frac{\ln(K / S_0 d^N)}{\ln(u/d)}
+\]</span></p>
+<p>Let <span class="math inline">\(a = \min\{j \in \{0, 1, \ldots, N\} :
+S_0 u^j d^{N-j} &gt; K\}\)</span>.</p>
+<p>Then the call price simplifies to a sum over only the in-the-money
+paths: <span class="math display">\[
+c = e^{-rT} \sum_{j=a}^{N} \binom{N}{j} q^j (1-q)^{N-j} \left(S_0 \, u^j
+d^{N-j} - K\right)
+\]</span></p>
+<p><span class="math display">\[
+= e^{-rT} \sum_{j=a}^{N} \binom{N}{j} q^j (1-q)^{N-j} S_0 \, u^j d^{N-j}
+\;-\; K e^{-rT} \sum_{j=a}^{N} \binom{N}{j} q^j (1-q)^{N-j}
+\]</span> Both sums have clean interpretations, leading to the
+Cox-Ross-Rubinstein formula.</p>
+</section>
+<section class="slide">
+<h2 id="the-cox-ross-rubinstein-crr-formula">5. The Cox-Ross-Rubinstein
+(CRR) Formula</h2>
+<p><span class="math display">\[
+\boxed{c = S_0 \, \Phi(a; N, q&#39;) - K e^{-rT} \, \Phi(a; N, q)}
+\]</span> where: <span class="math display">\[
+\Phi(a; N, q) = \sum_{j=a}^{N} \binom{N}{j} q^j (1-q)^{N-j}
+\]</span> is the <strong>complementary binomial distribution
+function</strong> (probability of <span class="math inline">\(a\)</span>
+or more successes in <span class="math inline">\(N\)</span> trials with
+success probability <span class="math inline">\(q\)</span>), and: <span
+class="math display">\[
+q&#39; = q \cdot \frac{u}{e^{r \Delta t}} = \frac{u \, e^{-r\Delta
+t}(e^{r \Delta t} - d)}{u - d}
+\]</span></p>
+<h3 id="derivation-of-q">Derivation of <span
+class="math inline">\(q&#39;\)</span></h3>
+<p>The first sum involves terms <span class="math inline">\(q^j
+(1-q)^{N-j} \cdot u^j d^{N-j}\)</span>. Factor out <span
+class="math inline">\(e^{rT} = (e^{r\Delta t})^N\)</span>: <span
+class="math display">\[
+q^j (1-q)^{N-j} u^j d^{N-j} = e^{rT} \cdot (q&#39;)^j (1-q&#39;)^{N-j}
+\]</span> where <span class="math inline">\(q&#39; = qu/e^{r\Delta
+t}\)</span> and <span class="math inline">\(1-q&#39; = (1-q)d/e^{r\Delta
+t}\)</span>.</p>
+<p>The <span class="math inline">\(e^{rT}\)</span> factor cancels with
+<span class="math inline">\(e^{-rT}\)</span> in the discounting,
+yielding <span class="math inline">\(S_0 \, \Phi(a; N,
+q&#39;)\)</span>.</p>
+</section>
+<section class="slide">
+<h3 id="verifying-that-q-is-a-valid-probability">Verifying That <span
+class="math inline">\(q&#39;\)</span> Is a Valid Probability</h3>
+<p>We need <span class="math inline">\(0 &lt; q&#39; &lt; 1\)</span>.
+<span class="math display">\[
+q&#39; = \frac{u(e^{r\Delta t} - d)}{e^{r\Delta t}(u - d)}
+\]</span> Since <span class="math inline">\(d &lt; e^{r\Delta t} &lt;
+u\)</span> (no-arbitrage), both numerator and denominator are positive,
+so <span class="math inline">\(q&#39; &gt; 0\)</span>.</p>
+<p>For <span class="math inline">\(q&#39; &lt; 1\)</span>: <span
+class="math display">\[
+q&#39; &lt; 1 \iff u(e^{r\Delta t} - d) &lt; e^{r\Delta t}(u - d) \iff
+ue^{r\Delta t} - ud &lt; ue^{r\Delta t} - de^{r\Delta t}
+\]</span></p>
+<p><span class="math display">\[
+\iff -ud &lt; -de^{r\Delta t} \iff de^{r\Delta t} &lt; du \iff
+e^{r\Delta t} &lt; u \quad \checkmark
+\]</span> Also: <span class="math inline">\(1 - q&#39; = \frac{d(u -
+e^{r\Delta t})}{e^{r\Delta t}(u - d)} &gt; 0\)</span> since <span
+class="math inline">\(e^{r\Delta t} &lt; u\)</span>. <span
+class="math inline">\(\checkmark\)</span></p>
+<p>So <span class="math inline">\(q&#39;\)</span> is indeed a
+probability — in fact, it is the risk-neutral probability of an up move
+measured in <strong>stock-price numeraire</strong> rather than
+money-market numeraire. This distinction becomes important in advanced
+theory.</p>
+</section>
+<section class="slide">
+<h3 id="interpretation-of-the-crr-formula">Interpretation of the CRR
+Formula</h3>
+<p><span class="math display">\[
+c = S_0 \, \Phi(a; N, q&#39;) - K e^{-rT} \, \Phi(a; N, q)
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\Phi(a; N, q)\)</span> = risk-neutral
+probability that the call finishes in-the-money</li>
+<li><span class="math inline">\(K e^{-rT} \Phi(a; N, q)\)</span> =
+present value of the strike, weighted by the exercise probability</li>
+<li><span class="math inline">\(S_0 \Phi(a; N, q&#39;)\)</span> =
+present value of receiving the stock upon exercise (using the
+stock-price numeraire probability <span
+class="math inline">\(q&#39;\)</span>)</li>
+</ul>
+<p>The formula has the structure:</p>
+<p><span class="math display">\[
+\text{Call} = \text{PV(what you receive)} - \text{PV(what you pay)}
+\]</span></p>
+<p>This structure will reappear in the Black-Scholes formula, where
+<span class="math inline">\(\Phi\)</span> is replaced by the
+<strong>normal distribution</strong> <span
+class="math inline">\(\mathcal{N}\)</span>.</p>
+</section>
+<section class="slide">
+<h3 id="crr-parameter-choices">CRR Parameter Choices</h3>
+<p>Cox, Ross, and Rubinstein (1979) proposed specific values for <span
+class="math inline">\(u\)</span> and <span
+class="math inline">\(d\)</span> that ensure the binomial model
+converges to geometric Brownian motion as <span class="math inline">\(N
+\to \infty\)</span>:</p>
+<p><span class="math display">\[
+\boxed{u = e^{\sigma\sqrt{\Delta t}}, \qquad d = e^{-\sigma\sqrt{\Delta
+t}} = \frac{1}{u}}
+\]</span></p>
+<p>where <span class="math inline">\(\sigma\)</span> is the stock’s
+volatility and <span class="math inline">\(\Delta t = T/N\)</span>.</p>
+<p><strong>Why these choices?</strong></p>
+<p>With <span class="math inline">\(ud = 1\)</span> and <span
+class="math inline">\(\Delta t = T/N\)</span>:</p>
+<ul>
+<li>The log-return per step is <span class="math inline">\(\pm
+\sigma\sqrt{\Delta t}\)</span></li>
+<li>The variance of the log-return per step is <span
+class="math inline">\(\sigma^2 \Delta t\)</span> (to leading order)</li>
+<li>Over <span class="math inline">\(N\)</span> steps, the total
+variance is <span class="math inline">\(N \cdot \sigma^2 \Delta t =
+\sigma^2 T\)</span></li>
+</ul>
+<p>By the Central Limit Theorem, as <span class="math inline">\(N \to
+\infty\)</span>, the distribution of <span
+class="math inline">\(\ln(S_T/S_0)\)</span> converges to a
+<strong>normal distribution</strong> with variance <span
+class="math inline">\(\sigma^2 T\)</span>. This is precisely geometric
+Brownian motion — the continuous-time limit.</p>
+</section>
+<section class="slide">
+<h3 id="numerical-example-n-step-crr">Numerical Example: <span
+class="math inline">\(N\)</span>-Step CRR</h3>
+<p><strong>Given:</strong> <span class="math inline">\(S_0 =
+100\)</span>, <span class="math inline">\(K = 100\)</span>, <span
+class="math inline">\(T = 1\)</span>, <span class="math inline">\(r =
+5\%\)</span>, <span class="math inline">\(\sigma = 20\%\)</span>.</p>
+<p>Compare CRR prices for increasing <span
+class="math inline">\(N\)</span>:</p>
+<table>
+<thead>
+<tr>
+<th><span class="math inline">\(N\)</span></th>
+<th><span class="math inline">\(u\)</span></th>
+<th><span class="math inline">\(d\)</span></th>
+<th><span class="math inline">\(q\)</span></th>
+<th>Call Price <span class="math inline">\(c\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1.2214</td>
+<td>0.8187</td>
+<td>0.6282</td>
+<td>13.04</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1.1519</td>
+<td>0.8681</td>
+<td>0.5539</td>
+<td>10.22</td>
+</tr>
+<tr>
+<td>5</td>
+<td>1.0936</td>
+<td>0.9144</td>
+<td>0.5226</td>
+<td>10.24</td>
+</tr>
+<tr>
+<td>10</td>
+<td>1.0645</td>
+<td>0.9394</td>
+<td>0.5159</td>
+<td>10.41</td>
+</tr>
+<tr>
+<td>50</td>
+<td>1.0287</td>
+<td>0.9721</td>
+<td>0.5071</td>
+<td>10.44</td>
+</tr>
+<tr>
+<td>100</td>
+<td>1.0202</td>
+<td>0.9802</td>
+<td>0.5050</td>
+<td>10.45</td>
+</tr>
+<tr>
+<td><span class="math inline">\(\to \infty\)</span></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td><strong>10.45</strong> (Black-Scholes)</td>
+</tr>
+</tbody>
+</table>
+<p>The CRR prices converge to the Black-Scholes price as <span
+class="math inline">\(N\)</span> increases. The oscillation for small
+<span class="math inline">\(N\)</span> is a well-known numerical
+artifact that diminishes as <span class="math inline">\(N\)</span>
+grows.</p>
+</section>
+<section class="slide">
+<h3 id="european-put-via-crr">European Put via CRR</h3>
+<p>By an identical argument, the European put price in the <span
+class="math inline">\(N\)</span>-step CRR model is:</p>
+<p><span class="math display">\[
+\boxed{p = K e^{-rT} \left[1 - \Phi(a; N, q)\right] - S_0 \left[1 -
+\Phi(a; N, q&#39;)\right]}
+\]</span></p>
+<p>Alternatively, once we have the call price, we can use
+<strong>put-call parity</strong> (Lecture 12):</p>
+<p><span class="math display">\[
+p = c - S_0 + Ke^{-rT}
+\]</span></p>
+<p>Both methods give the same answer — they must, since the binomial
+model is arbitrage-free.</p>
+<p><strong>Example (continuing):</strong> With <span
+class="math inline">\(N = 100\)</span>, <span class="math inline">\(c =
+10.45\)</span>:</p>
+<p><span class="math display">\[
+p = 10.45 - 100 + 100 e^{-0.05} = 10.45 - 100 + 95.12 = 5.57
+\]</span></p>
+</section>
+<section class="slide">
+<h2 id="american-options-in-the-binomial-tree">6. American Options in
+the Binomial Tree</h2>
+<h3 id="the-problem">The Problem</h3>
+<p>From Lecture 12, we know:</p>
+<ul>
+<li>American calls on non-dividend-paying stocks are never exercised
+early (<span class="math inline">\(C = c\)</span>)</li>
+<li>American puts <strong>may</strong> be exercised early — the early
+exercise boundary <span class="math inline">\(S^*(t)\)</span> separates
+the exercise and continuation regions</li>
+</ul>
+<p>The binomial tree handles American options naturally by modifying the
+backward induction at each node.</p>
+<h3 id="the-modification">The Modification</h3>
+<p>At every node <span class="math inline">\((i, j)\)</span> (time step
+<span class="math inline">\(i\)</span>, stock price <span
+class="math inline">\(S_0 u^j d^{i-j}\)</span>), the American option
+holder chooses the <strong>maximum</strong> of:</p>
+<ol type="1">
+<li><strong>Continuation value:</strong> The discounted risk-neutral
+expectation of future values (hold the option)</li>
+<li><strong>Immediate exercise value:</strong> The intrinsic value from
+exercising now</li>
+</ol>
+</section>
+<section class="slide">
+<h3 id="american-option-backward-induction">American Option Backward
+Induction</h3>
+<p><strong>At maturity (<span class="math inline">\(t =
+T\)</span>):</strong> Same as European — the holder exercises if
+profitable:</p>
+<p><span class="math display">\[
+f_{N,j} = g\!\left(S_0 u^j d^{N-j}\right) \quad \text{for } j = 0, 1,
+\ldots, N
+\]</span></p>
+<p><strong>At each earlier node</strong> (<span class="math inline">\(i
+= N-1, N-2, \ldots, 0\)</span> and <span class="math inline">\(j = 0, 1,
+\ldots, i\)</span>):</p>
+<p><span class="math display">\[
+\text{Continuation value:} \quad h_{i,j} = e^{-r\Delta t}\left[q \,
+f_{i+1,j+1} + (1-q) \, f_{i+1,j}\right]
+\]</span></p>
+<p><span class="math display">\[
+\text{Exercise value:} \quad e_{i,j} = g\!\left(S_0 u^j d^{i-j}\right)
+\]</span></p>
+<p><span class="math display">\[
+\boxed{f_{i,j} = \max\!\left(h_{i,j}, \; e_{i,j}\right)}
+\]</span></p>
+<p>The <span class="math inline">\(\max\)</span> is the only difference
+from European pricing. At each node, the holder optimally decides
+whether to exercise or wait.</p>
+<p>The value <span class="math inline">\(f_{0,0}\)</span> is the
+American option price.</p>
+</section>
+<section class="slide">
+<h3 id="numerical-example-american-put">Numerical Example: American
+Put</h3>
+<p><strong>Given:</strong> <span class="math inline">\(S_0 =
+100\)</span>, <span class="math inline">\(K = 100\)</span>, <span
+class="math inline">\(u = 1.1\)</span>, <span class="math inline">\(d =
+0.9\)</span>, <span class="math inline">\(r = 5\%\)</span>, <span
+class="math inline">\(T = 1\)</span> year, <span class="math inline">\(N
+= 2\)</span> (<span class="math inline">\(\Delta t = 0.5\)</span>).</p>
+<p><strong>Stock tree:</strong></p>
+<p><span class="math display">\[
+S_{uu} = 121, \quad S_{ud} = 99, \quad S_{dd} = 81
+\]</span></p>
+<p><strong>Risk-neutral probability:</strong> <span
+class="math inline">\(q = \frac{e^{0.025} - 0.9}{0.2} =
+\frac{0.02532}{0.2} = 0.6266\)</span></p>
+<p><strong>Step 1 — Payoffs at <span
+class="math inline">\(T\)</span>:</strong></p>
+<p><span class="math display">\[
+f_{uu} = \max(100 - 121, 0) = 0, \quad f_{ud} = \max(100 - 99, 0) = 1,
+\quad f_{dd} = \max(100 - 81, 0) = 19
+\]</span></p>
+</section>
+<section class="slide">
+<h3 id="american-put-example-continued">American Put Example
+(continued)</h3>
+<p><strong>Step 2 — At <span class="math inline">\(t = 0.5\)</span>, up
+node (<span class="math inline">\(S = 110\)</span>):</strong></p>
+<p><span class="math display">\[
+h_u = e^{-0.025}[0.6266 \times 0 + 0.3734 \times 1] = 0.97531 \times
+0.3734 = 0.364
+\]</span></p>
+<p>Exercise value: <span class="math inline">\(\max(100 - 110, 0) =
+0\)</span>.</p>
+<p><span class="math display">\[
+f_u = \max(0.364, \; 0) = 0.364 \quad \text{(do not exercise)}
+\]</span></p>
+<p><strong>At <span class="math inline">\(t = 0.5\)</span>, down node
+(<span class="math inline">\(S = 90\)</span>):</strong></p>
+<p><span class="math display">\[
+h_d = e^{-0.025}[0.6266 \times 1 + 0.3734 \times 19] = 0.97531 \times
+7.721 = 7.530
+\]</span></p>
+<p>Exercise value: <span class="math inline">\(\max(100 - 90, 0) =
+10\)</span>.</p>
+<p><span class="math display">\[
+f_d = \max(7.530, \; 10) = 10 \quad \textbf{(exercise early!)}
+\]</span></p>
+<p>The put is exercised early at the down node. The intrinsic value
+(<span class="math inline">\(10\)</span>) exceeds the continuation value
+(<span class="math inline">\(7.53\)</span>).</p>
+</section>
+<section class="slide">
+<h3 id="american-put-example-concluded">American Put Example
+(concluded)</h3>
+<p><strong>Step 3 — At <span class="math inline">\(t =
+0\)</span>:</strong></p>
+<p><span class="math display">\[
+P = e^{-0.025}[0.6266 \times 0.364 + 0.3734 \times 10] = 0.97531 \times
+3.962 = 3.864
+\]</span></p>
+<p><strong>Compare with the European put:</strong></p>
+<p>Using the European backward induction (without early exercise):</p>
+<p><span class="math display">\[
+f_d^{\text{Eur}} = 7.530 \quad \text{(not 10)}
+\]</span></p>
+<p><span class="math display">\[
+p = e^{-0.025}[0.6266 \times 0.364 + 0.3734 \times 7.530] = 0.97531
+\times 3.040 = 2.965
+\]</span></p>
+<p><strong>Early exercise premium:</strong></p>
+<p><span class="math display">\[
+P - p = 3.864 - 2.965 = 0.899
+\]</span></p>
+<p>The right to exercise early adds <span
+class="math inline">\(0.90\)</span> to the put’s value — consistent with
+the result from Lecture 12 that <span class="math inline">\(P \geq
+p\)</span> with strict inequality when early exercise has positive
+probability.</p>
+</section>
+<section class="slide">
+<h3 id="identifying-the-early-exercise-boundary">Identifying the Early
+Exercise Boundary</h3>
+<p>In the tree, we can read off the early exercise boundary directly: at
+each time step, find the highest stock price at which early exercise is
+optimal.</p>
+<p>In our example at <span class="math inline">\(t = 0.5\)</span>:</p>
+<ul>
+<li><span class="math inline">\(S = 110\)</span>: do not exercise
+(continuation value $&gt; $ intrinsic value)</li>
+<li><span class="math inline">\(S = 90\)</span>: exercise (intrinsic
+value $&gt; $ continuation value)</li>
+</ul>
+<p>So <span class="math inline">\(S^*(0.5)\)</span> lies between <span
+class="math inline">\(90\)</span> and <span
+class="math inline">\(110\)</span>.</p>
+<p>With finer trees (<span class="math inline">\(N\)</span> large), the
+early exercise boundary <span class="math inline">\(S^*(t)\)</span>
+emerges as a smooth curve — exactly the boundary shown in Lecture 12.
+The binomial tree provides a <strong>constructive</strong> method for
+computing it.</p>
+<div data-align="center">
+<p><img src="Figures/american_put_tree.png" alt="American Put Binomial Tree with Early Exercise" style="width:70%;"/></p>
+</div>
+<p><em>Figure: American put pricing on a binomial tree. Red nodes
+indicate early exercise (intrinsic value exceeds continuation value).
+The early exercise boundary is visible as the threshold between red and
+blue regions.</em></p>
+</section>
+<section class="slide">
+<h3 id="american-call-on-non-dividend-paying-stock">American Call on
+Non-Dividend-Paying Stock</h3>
+<p>Let us verify the Lecture 12 result computationally. Using the same
+tree (<span class="math inline">\(S_0 = 100\)</span>, <span
+class="math inline">\(K = 100\)</span>, <span class="math inline">\(u =
+1.1\)</span>, <span class="math inline">\(d = 0.9\)</span>, <span
+class="math inline">\(r = 5\%\)</span>, <span class="math inline">\(N =
+2\)</span>):</p>
+<p><strong>At <span class="math inline">\(t = 0.5\)</span>, up node
+(<span class="math inline">\(S = 110\)</span>):</strong></p>
+<p>Continuation: <span class="math inline">\(e^{-0.025}[0.6266 \times 21
++ 0.3734 \times 0] = 12.834\)</span></p>
+<p>Exercise: <span class="math inline">\(\max(110 - 100, 0) =
+10\)</span></p>
+<p>Since <span class="math inline">\(12.834 &gt; 10\)</span>: <strong>do
+not exercise</strong>. <span
+class="math inline">\(\checkmark\)</span></p>
+<p><strong>At <span class="math inline">\(t = 0.5\)</span>, down node
+(<span class="math inline">\(S = 90\)</span>):</strong></p>
+<p>Continuation: <span class="math inline">\(0\)</span></p>
+<p>Exercise: <span class="math inline">\(\max(90 - 100, 0) =
+0\)</span></p>
+<p>No exercise (out-of-the-money). <span
+class="math inline">\(\checkmark\)</span></p>
+<p>At every node, the continuation value exceeds the exercise value.
+Early exercise is never optimal, confirming <span
+class="math inline">\(C = c\)</span>.</p>
+<p>The intuition from Lecture 12: exercising sacrifices the time value
+of deferring the strike payment and the insurance against future drops.
+The binomial tree makes this visible node by node.</p>
+</section>
+<section class="slide">
+<h2 id="from-discrete-to-continuous-the-black-scholes-formula">7. From
+Discrete to Continuous: The Black-Scholes Formula</h2>
+<h3 id="the-continuous-time-limit">The Continuous-Time Limit</h3>
+<p>As <span class="math inline">\(N \to \infty\)</span> in the CRR
+model:</p>
+<ul>
+<li>The step size <span class="math inline">\(\Delta t = T/N \to
+0\)</span></li>
+<li>The up/down factors <span class="math inline">\(u =
+e^{\sigma\sqrt{\Delta t}} \to 1\)</span>, <span class="math inline">\(d
+= e^{-\sigma\sqrt{\Delta t}} \to 1\)</span></li>
+<li>The number of up moves follows <span
+class="math inline">\(\text{Binomial}(N, q)\)</span></li>
+</ul>
+<p>By the Central Limit Theorem, the standardized number of up moves
+converges to a normal distribution. The binomial <span
+class="math inline">\(\Phi(a; N, q)\)</span> converges to <span
+class="math inline">\(\mathcal{N}(d_2)\)</span> and <span
+class="math inline">\(\Phi(a; N, q&#39;)\)</span> converges to <span
+class="math inline">\(\mathcal{N}(d_1)\)</span>.</p>
+<p>The CRR formula:</p>
+<p><span class="math display">\[
+c = S_0 \, \Phi(a; N, q&#39;) - K e^{-rT} \, \Phi(a; N, q)
+\]</span></p>
+<p>converges to:</p>
+<p><span class="math display">\[
+\boxed{c = S_0 \, \mathcal{N}(d_1) - K e^{-rT} \, \mathcal{N}(d_2)}
+\]</span></p>
+<p>This is the <strong>Black-Scholes formula</strong> (1973).</p>
+</section>
+<section class="slide">
+<h3 id="the-black-scholes-formula">The Black-Scholes Formula</h3>
+<p>For a European call on a non-dividend-paying stock:</p>
+<p><span class="math display">\[
+\boxed{c = S_0 \, \mathcal{N}(d_1) - K e^{-rT} \, \mathcal{N}(d_2)}
+\]</span></p>
+<p>where:</p>
+<p><span class="math display">\[
+\boxed{d_1 = \frac{\ln(S_0 / K) + (r +
+\tfrac{1}{2}\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 -
+\sigma\sqrt{T}}
+\]</span></p>
+<p>and <span class="math inline">\(\mathcal{N}(\cdot)\)</span> is the
+cumulative standard normal distribution function:</p>
+<p><span class="math display">\[
+\mathcal{N}(x) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{x} e^{-z^2/2} \,
+dz
+\]</span></p>
+<h3 id="inputs">Inputs</h3>
+<p>The formula requires exactly <strong>five inputs</strong>: <span
+class="math inline">\(S_0\)</span>, <span
+class="math inline">\(K\)</span>, <span
+class="math inline">\(T\)</span>, <span
+class="math inline">\(r\)</span>, <span
+class="math inline">\(\sigma\)</span>.</p>
+<p>Of these, <span class="math inline">\(S_0\)</span>, <span
+class="math inline">\(K\)</span>, <span
+class="math inline">\(T\)</span>, and <span
+class="math inline">\(r\)</span> are directly observable. Only <span
+class="math inline">\(\sigma\)</span> (volatility) must be estimated or
+extracted from market prices.</p>
+</section>
+<section class="slide">
+<h3 id="european-put-via-black-scholes">European Put via
+Black-Scholes</h3>
+<p>By put-call parity (<span class="math inline">\(p = c - S_0 +
+Ke^{-rT}\)</span>):</p>
+<p><span class="math display">\[
+\boxed{p = K e^{-rT} \, \mathcal{N}(-d_2) - S_0 \, \mathcal{N}(-d_1)}
+\]</span></p>
+<p><strong>Derivation:</strong> Using <span
+class="math inline">\(\mathcal{N}(-x) = 1 - \mathcal{N}(x)\)</span>:</p>
+<p><span class="math display">\[
+p = \left(S_0 \mathcal{N}(d_1) - Ke^{-rT}\mathcal{N}(d_2)\right) - S_0 +
+Ke^{-rT}
+\]</span></p>
+<p><span class="math display">\[
+= S_0(\mathcal{N}(d_1) - 1) - Ke^{-rT}(\mathcal{N}(d_2) - 1) =
+Ke^{-rT}\mathcal{N}(-d_2) - S_0\mathcal{N}(-d_1)
+\]</span></p>
+<p>The put formula has the same structure as the call but with reversed
+signs and arguments — a natural consequence of put-call parity.</p>
+</section>
+<section class="slide">
+<h3 id="underlying-assumptions">Underlying Assumptions</h3>
+<p>The Black-Scholes formula rests on specific assumptions about the
+market:</p>
+<ol type="1">
+<li><p><strong>Geometric Brownian motion:</strong> The stock price
+follows <span class="math inline">\(dS = \mu S \, dt + \sigma S \,
+dW\)</span>, where <span class="math inline">\(W\)</span> is a Wiener
+process. Returns are log-normally distributed.</p></li>
+<li><p><strong>Constant volatility <span
+class="math inline">\(\sigma\)</span>:</strong> The key parameter does
+not change over time.</p></li>
+<li><p><strong>Constant risk-free rate <span
+class="math inline">\(r\)</span>:</strong> Borrowing and lending at the
+same rate, continuously compounded.</p></li>
+<li><p><strong>No dividends</strong> during the option’s life.</p></li>
+<li><p><strong>No transaction costs, taxes, or short-selling
+restrictions.</strong></p></li>
+<li><p><strong>Continuous trading:</strong> The replicating portfolio
+can be rebalanced continuously.</p></li>
+</ol>
+<p>Each assumption can be relaxed (at the cost of a more complex model).
+The formula’s power is its simplicity: five inputs, one equation, a
+closed-form answer.</p>
+</section>
+<section class="slide">
+<h3 id="numerical-example-1">Numerical Example</h3>
+<p><strong>Given:</strong> <span class="math inline">\(S_0 =
+100\)</span>, <span class="math inline">\(K = 100\)</span>, <span
+class="math inline">\(T = 1\)</span> year, <span class="math inline">\(r
+= 5\%\)</span>, <span class="math inline">\(\sigma = 20\%\)</span>.</p>
+<p><strong>Step 1:</strong> Compute <span
+class="math inline">\(d_1\)</span> and <span
+class="math inline">\(d_2\)</span>:</p>
+<p><span class="math display">\[
+d_1 = \frac{\ln(100/100) + (0.05 + 0.5 \times 0.04) \times 1}{0.20
+\times 1} = \frac{0 + 0.07}{0.20} = 0.35
+\]</span></p>
+<p><span class="math display">\[
+d_2 = 0.35 - 0.20 = 0.15
+\]</span></p>
+<p><strong>Step 2:</strong> Look up (or compute) the normal CDF
+values:</p>
+<p><span class="math display">\[
+\mathcal{N}(0.35) = 0.6368, \qquad \mathcal{N}(0.15) = 0.5596
+\]</span></p>
+<p><strong>Step 3:</strong> Call price:</p>
+<p><span class="math display">\[
+c = 100 \times 0.6368 - 100 \times e^{-0.05} \times 0.5596 = 63.68 -
+95.12 \times 0.5596
+\]</span></p>
+<p><span class="math display">\[
+= 63.68 - 53.23 = 10.45
+\]</span></p>
+<p><strong>Step 4:</strong> Put price (by put-call parity):</p>
+<p><span class="math display">\[
+p = 10.45 - 100 + 95.12 = 5.57
+\]</span></p>
+<p>These match the CRR limit from Section 5.</p>
+</section>
+<section class="slide">
+<h2 id="black-scholes-interpretation-and-greeks">8. Black-Scholes:
+Interpretation and Greeks</h2>
+<h3 id="interpreting-mathcalnd_2-and-mathcalnd_1">Interpreting <span
+class="math inline">\(\mathcal{N}(d_2)\)</span> and <span
+class="math inline">\(\mathcal{N}(d_1)\)</span></h3>
+<p><span class="math display">\[
+c = S_0 \, \mathcal{N}(d_1) - K e^{-rT} \, \mathcal{N}(d_2)
+\]</span></p>
+<p><strong><span
+class="math inline">\(\mathcal{N}(d_2)\)</span></strong> is the
+<strong>risk-neutral probability</strong> that the call finishes
+in-the-money:</p>
+<p><span class="math display">\[
+\mathcal{N}(d_2) = \mathbb{Q}(S_T &gt; K)
+\]</span></p>
+<p>So <span class="math inline">\(Ke^{-rT} \mathcal{N}(d_2)\)</span> is
+the present value of paying <span class="math inline">\(K\)</span>,
+weighted by the probability that payment occurs.</p>
+<p><strong><span
+class="math inline">\(\mathcal{N}(d_1)\)</span></strong> is the
+probability of exercise under the <strong>stock-price numeraire</strong>
+(the forward measure). It accounts for the correlation between the stock
+price being high and the payoff being large.</p>
+<p><span class="math inline">\(S_0 \mathcal{N}(d_1)\)</span> is the
+present value of receiving the stock, conditional on exercise
+occurring.</p>
+<p>The call price is: <strong>PV(what you receive upon exercise) <span
+class="math inline">\(-\)</span> PV(what you pay upon
+exercise)</strong>.</p>
+</section>
+<section class="slide">
+<h3 id="limiting-cases">Limiting Cases</h3>
+<p>The formula behaves sensibly in extreme scenarios:</p>
+<p><strong>Deep in-the-money</strong> (<span class="math inline">\(S_0
+\gg K\)</span>): <span class="math inline">\(d_1 \to \infty\)</span>,
+<span class="math inline">\(d_2 \to \infty\)</span>, so <span
+class="math inline">\(\mathcal{N}(d_1) \to 1\)</span>, <span
+class="math inline">\(\mathcal{N}(d_2) \to 1\)</span>.</p>
+<p><span class="math display">\[
+c \to S_0 - Ke^{-rT}
+\]</span></p>
+<p>The call approaches the lower bound from Lecture 12. Exercise is
+nearly certain; optionality has negligible value.</p>
+<p><strong>Deep out-of-the-money</strong> (<span
+class="math inline">\(S_0 \ll K\)</span>): <span
+class="math inline">\(d_1 \to -\infty\)</span>, <span
+class="math inline">\(d_2 \to -\infty\)</span>, so <span
+class="math inline">\(\mathcal{N}(d_1) \to 0\)</span>, <span
+class="math inline">\(\mathcal{N}(d_2) \to 0\)</span>.</p>
+<p><span class="math display">\[
+c \to 0
+\]</span></p>
+<p>The call is nearly worthless. Exercise is extremely unlikely.</p>
+<p><strong>At-the-money forward</strong> (<span
+class="math inline">\(S_0 = Ke^{-rT}\)</span>): <span
+class="math inline">\(d_1 = \tfrac{1}{2}\sigma\sqrt{T}\)</span>, <span
+class="math inline">\(d_2 = -\tfrac{1}{2}\sigma\sqrt{T}\)</span>.</p>
+<p><span class="math display">\[
+c \approx S_0 \sigma \sqrt{T} \cdot \frac{1}{\sqrt{2\pi}} \quad
+\text{(for small } \sigma\sqrt{T}\text{)}
+\]</span></p>
+<p>The call price is approximately linear in <span
+class="math inline">\(\sigma\sqrt{T}\)</span> near ATM — volatility is
+the dominant driver.</p>
+</section>
+<section class="slide">
+<h3 id="the-greeks">The Greeks</h3>
+<p>The <strong>Greeks</strong> are partial derivatives of the option
+price with respect to the model inputs. They quantify the option’s
+sensitivity to changes in market conditions.</p>
+<h3 id="delta-delta">Delta (<span
+class="math inline">\(\Delta\)</span>)</h3>
+<p><span class="math display">\[
+\boxed{\Delta_{\text{call}} = \frac{\partial c}{\partial S_0} =
+\mathcal{N}(d_1)}
+\]</span></p>
+<p><span class="math display">\[
+\Delta_{\text{put}} = \mathcal{N}(d_1) - 1 = -\mathcal{N}(-d_1)
+\]</span></p>
+<p>Delta measures how much the option price changes when the stock price
+moves by <span class="math inline">\(\$1\)</span>.</p>
+<ul>
+<li>Call delta: <span class="math inline">\(0 &lt; \Delta &lt;
+1\)</span> (always positive — calls gain when the stock rises)</li>
+<li>Put delta: <span class="math inline">\(-1 &lt; \Delta &lt;
+0\)</span> (always negative — puts gain when the stock falls)</li>
+<li>Deep ITM call: <span class="math inline">\(\Delta \approx 1\)</span>
+(moves dollar-for-dollar with the stock)</li>
+<li>Deep OTM call: <span class="math inline">\(\Delta \approx 0\)</span>
+(barely responds to stock moves)</li>
+<li>ATM call: <span class="math inline">\(\Delta \approx
+0.5\)</span></li>
+</ul>
+<p>Delta also represents the <strong>hedge ratio</strong> — the number
+of shares needed to replicate (or hedge) the option. This connects
+directly to the replicating portfolio share count <span
+class="math inline">\(x\)</span> from Section 1.</p>
+</section>
+<section class="slide">
+<h3 id="gamma-gamma">Gamma (<span
+class="math inline">\(\Gamma\)</span>)</h3>
+<p><span class="math display">\[
+\boxed{\Gamma = \frac{\partial^2 c}{\partial S_0^2} =
+\frac{\mathcal{N}&#39;(d_1)}{S_0 \sigma \sqrt{T}}}
+\]</span></p>
+<p>where <span class="math inline">\(\mathcal{N}&#39;(x) =
+\frac{1}{\sqrt{2\pi}} e^{-x^2/2}\)</span> is the standard normal
+density.</p>
+<p>Gamma measures the <strong>rate of change of delta</strong> — how
+quickly the hedge ratio shifts as the stock moves. It is the same for
+calls and puts (same strike and maturity).</p>
+<ul>
+<li>Gamma is always positive (for long positions)</li>
+<li>Gamma is highest at-the-money (where delta changes fastest)</li>
+<li>Gamma increases as expiration approaches (for ATM options)</li>
+</ul>
+<p>High gamma means the option’s delta is <strong>unstable</strong> —
+hedging requires frequent rebalancing.</p>
+<h3 id="theta-theta">Theta (<span
+class="math inline">\(\Theta\)</span>)</h3>
+<p><span class="math display">\[
+\Theta_{\text{call}} = \frac{\partial c}{\partial t} = -\frac{S_0
+\mathcal{N}&#39;(d_1) \sigma}{2\sqrt{T}} - rKe^{-rT}\mathcal{N}(d_2)
+\]</span></p>
+<p>Theta measures <strong>time decay</strong> — the rate at which the
+option loses value as time passes (all else equal). For long calls,
+<span class="math inline">\(\Theta &lt; 0\)</span> always (consistent
+with the time decay discussion in Lecture 12).</p>
+</section>
+<section class="slide">
+<h3 id="vega-mathcalv">Vega (<span
+class="math inline">\(\mathcal{V}\)</span>)</h3>
+<p><span class="math display">\[
+\boxed{\mathcal{V} = \frac{\partial c}{\partial \sigma} = S_0 \sqrt{T}
+\, \mathcal{N}&#39;(d_1)}
+\]</span></p>
+<p>Vega measures sensitivity to volatility. It is always positive (for
+both calls and puts), confirming the result from Lecture 12 that all
+option prices increase with volatility.</p>
+<ul>
+<li>Vega is highest at-the-money</li>
+<li>Vega is proportional to <span
+class="math inline">\(\sqrt{T}\)</span> — longer-dated options are more
+sensitive to volatility</li>
+</ul>
+<h3 id="rho-rho">Rho (<span class="math inline">\(\rho\)</span>)</h3>
+<p><span class="math display">\[
+\rho_{\text{call}} = \frac{\partial c}{\partial r} =
+KTe^{-rT}\mathcal{N}(d_2)
+\]</span></p>
+<p><span class="math display">\[
+\rho_{\text{put}} = -KTe^{-rT}\mathcal{N}(-d_2)
+\]</span></p>
+<p>Rho is positive for calls (higher rates increase call values) and
+negative for puts (higher rates decrease put values) — again consistent
+with Lecture 12.</p>
+</section>
+<section class="slide">
+<h3 id="summary-of-greeks">Summary of Greeks</h3>
+<table>
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 20%" />
+<col style="width: 15%" />
+<col style="width: 12%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Greek</th>
+<th>Symbol</th>
+<th>Call</th>
+<th>Put</th>
+<th>Sign (long)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Delta</td>
+<td><span class="math inline">\(\Delta\)</span></td>
+<td><span class="math inline">\(\mathcal{N}(d_1)\)</span></td>
+<td><span class="math inline">\(\mathcal{N}(d_1) - 1\)</span></td>
+<td>Call: <span class="math inline">\(+\)</span>, Put: <span
+class="math inline">\(-\)</span></td>
+</tr>
+<tr>
+<td>Gamma</td>
+<td><span class="math inline">\(\Gamma\)</span></td>
+<td><span
+class="math inline">\(\frac{\mathcal{N}&#39;(d_1)}{S_0\sigma\sqrt{T}}\)</span></td>
+<td>Same</td>
+<td><span class="math inline">\(+\)</span></td>
+</tr>
+<tr>
+<td>Theta</td>
+<td><span class="math inline">\(\Theta\)</span></td>
+<td><span
+class="math inline">\(-\frac{S_0\mathcal{N}&#39;(d_1)\sigma}{2\sqrt{T}}
+- rKe^{-rT}\mathcal{N}(d_2)\)</span></td>
+<td><span
+class="math inline">\(-\frac{S_0\mathcal{N}&#39;(d_1)\sigma}{2\sqrt{T}}
++ rKe^{-rT}\mathcal{N}(-d_2)\)</span></td>
+<td>Usually <span class="math inline">\(-\)</span></td>
+</tr>
+<tr>
+<td>Vega</td>
+<td><span class="math inline">\(\mathcal{V}\)</span></td>
+<td><span
+class="math inline">\(S_0\sqrt{T}\,\mathcal{N}&#39;(d_1)\)</span></td>
+<td>Same</td>
+<td><span class="math inline">\(+\)</span></td>
+</tr>
+<tr>
+<td>Rho</td>
+<td><span class="math inline">\(\rho\)</span></td>
+<td><span class="math inline">\(KTe^{-rT}\mathcal{N}(d_2)\)</span></td>
+<td><span
+class="math inline">\(-KTe^{-rT}\mathcal{N}(-d_2)\)</span></td>
+<td>Call: <span class="math inline">\(+\)</span>, Put: <span
+class="math inline">\(-\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The Greeks are not just theoretical. Traders use them daily to manage
+risk:</p>
+<ul>
+<li><strong>Delta hedging:</strong> Adjust stock holdings to maintain
+<span class="math inline">\(\Delta\)</span>-neutral portfolio</li>
+<li><strong>Gamma scalping:</strong> Profit from large stock moves when
+<span class="math inline">\(\Gamma\)</span> is high</li>
+<li><strong>Theta collection:</strong> Sell options to earn time
+decay</li>
+<li><strong>Vega trading:</strong> Take positions based on views about
+future volatility</li>
+</ul>
+</section>
+<section class="slide">
+<div data-align="center">
+<p><img src="Figures/greeks_surface.png" alt="Greeks as Functions of Stock Price and Time" style="width:80%;"/></p>
+</div>
+<p><em>Figure: The four main Greeks for a European call (<span
+class="math inline">\(K=100\)</span>, <span
+class="math inline">\(r=5\%\)</span>, <span
+class="math inline">\(\sigma=25\%\)</span>) as functions of stock price
+<span class="math inline">\(S_0\)</span>, shown for three maturities.
+Delta transitions from <span class="math inline">\(0\)</span> to <span
+class="math inline">\(1\)</span> around the strike. Gamma and vega peak
+at-the-money. Theta is most negative at-the-money and near
+expiration.</em></p>
+</section>
+<section class="slide">
+<h3 id="delta-hedging-the-replication-perspective">Delta Hedging: The
+Replication Perspective</h3>
+<p>The Black-Scholes formula is not just a pricing formula — it implies
+a <strong>dynamic replication strategy</strong>.</p>
+<p>To replicate a European call, at each instant hold:</p>
+<ul>
+<li><span class="math inline">\(\Delta = \mathcal{N}(d_1)\)</span>
+shares of stock</li>
+<li>The remainder in bonds (borrowing or lending)</li>
+</ul>
+<p>As the stock price moves, <span class="math inline">\(d_1\)</span>
+changes, so <span class="math inline">\(\Delta\)</span> changes. The
+portfolio must be <strong>continuously rebalanced</strong> — this is the
+continuous-time analogue of backward induction in the binomial tree.</p>
+<p>In the binomial model with <span class="math inline">\(N\)</span>
+steps, the replicating portfolio is adjusted <span
+class="math inline">\(N\)</span> times. As <span class="math inline">\(N
+\to \infty\)</span>, rebalancing becomes continuous, and the replication
+becomes exact.</p>
+<p>In practice, continuous rebalancing is impossible. The
+<strong>hedging error</strong> from discrete rebalancing is a cost of
+implementing Black-Scholes in real markets. This cost is proportional to
+<span class="math inline">\(\Gamma\)</span> — options with high gamma
+are expensive to hedge.</p>
+</section>
+<section class="slide">
+<h2 id="final-takeaways">Final Takeaways</h2>
+<ul>
+<li><strong>Risk-neutral pricing replaces replication with
+expectation</strong>
+<ul>
+<li>The derivative price equals <span
+class="math inline">\(e^{-rT}\mathbb{E}^{\mathbb{Q}}[\text{payoff}]\)</span></li>
+<li>The risk-neutral probability <span class="math inline">\(q\)</span>
+is determined by no-arbitrage, not by beliefs</li>
+<li>Real-world probabilities are irrelevant for pricing</li>
+</ul></li>
+<li><strong>The binomial tree is a constructive pricing tool</strong>
+<ul>
+<li>Backward induction prices any derivative, including path-dependent
+and American options</li>
+<li>The CRR formula: <span class="math inline">\(c = S_0 \Phi(a; N,
+q&#39;) - Ke^{-rT}\Phi(a; N, q)\)</span></li>
+<li>CRR parameters <span class="math inline">\(u = e^{\sigma\sqrt{\Delta
+t}}\)</span>, <span class="math inline">\(d = 1/u\)</span> ensure
+convergence to Black-Scholes</li>
+</ul></li>
+<li><strong>American options require optimization at each node</strong>
+<ul>
+<li><span class="math inline">\(f_{i,j} = \max(\text{continuation
+value}, \text{exercise value})\)</span></li>
+<li>American calls on non-dividend-paying stocks: early exercise never
+optimal (<span class="math inline">\(C = c\)</span>)</li>
+<li>American puts: early exercise optimal when deep in-the-money</li>
+</ul></li>
+<li><strong>The Black-Scholes formula is the continuous-time
+limit</strong>
+<ul>
+<li><span class="math inline">\(c = S_0 \mathcal{N}(d_1) -
+Ke^{-rT}\mathcal{N}(d_2)\)</span></li>
+<li>Five inputs: <span class="math inline">\(S_0\)</span>, <span
+class="math inline">\(K\)</span>, <span
+class="math inline">\(T\)</span>, <span
+class="math inline">\(r\)</span>, <span
+class="math inline">\(\sigma\)</span></li>
+<li>The Greeks quantify sensitivity to each input</li>
+</ul></li>
+<li><strong>From binomial to Black-Scholes: the mathematics
+unifies</strong>
+<ul>
+<li>One-step replication <span class="math inline">\(\to\)</span>
+multi-step backward induction <span class="math inline">\(\to\)</span>
+CRR formula <span class="math inline">\(\to\)</span> Black-Scholes</li>
+<li>Each step is a refinement of the same no-arbitrage logic introduced
+in Lecture 2</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide">
+<h2 id="exercises">9. Exercises</h2>
+<h3 id="exercise-1-risk-neutral-pricing-one-step">Exercise 1:
+Risk-Neutral Pricing (One Step)</h3>
+<p>A stock has <span class="math inline">\(S_0 = 80\)</span>, <span
+class="math inline">\(u = 1.25\)</span>, <span class="math inline">\(d =
+0.85\)</span>, <span class="math inline">\(r = 6\%\)</span>, <span
+class="math inline">\(T = 1\)</span> year.</p>
+<p><strong>Tasks:</strong> 1. Verify the no-arbitrage condition <span
+class="math inline">\(d &lt; e^{rT} &lt; u\)</span> 2. Compute the
+risk-neutral probability <span class="math inline">\(q\)</span> 3. Price
+a European call with <span class="math inline">\(K = 85\)</span> using
+risk-neutral pricing 4. Price a European put with <span
+class="math inline">\(K = 85\)</span> using risk-neutral pricing 5.
+Verify that put-call parity holds for your answers</p>
+</section>
+<section class="slide">
+<h3 id="exercise-2-two-step-binomial-tree">Exercise 2: Two-Step Binomial
+Tree</h3>
+<p>A stock has <span class="math inline">\(S_0 = 50\)</span>, <span
+class="math inline">\(u = 1.2\)</span>, <span class="math inline">\(d =
+0.8\)</span>, <span class="math inline">\(r = 4\%\)</span>, <span
+class="math inline">\(T = 1\)</span> year, <span class="math inline">\(N
+= 2\)</span>.</p>
+<p><strong>Tasks:</strong> 1. Draw the stock price tree (all nodes) 2.
+Price a European call with <span class="math inline">\(K = 52\)</span>
+by backward induction 3. Verify your answer using the direct two-step
+formula with binomial coefficients 4. Compute the replicating portfolio
+<span class="math inline">\((x, y)\)</span> at <span
+class="math inline">\(t = 0\)</span></p>
+</section>
+<section class="slide">
+<h3 id="exercise-3-american-put-two-steps">Exercise 3: American Put (Two
+Steps)</h3>
+<p>Using the same parameters as Exercise 2 (<span
+class="math inline">\(S_0 = 50\)</span>, <span class="math inline">\(u =
+1.2\)</span>, <span class="math inline">\(d = 0.8\)</span>, <span
+class="math inline">\(r = 4\%\)</span>, <span class="math inline">\(T =
+1\)</span>, <span class="math inline">\(N = 2\)</span>):</p>
+<p><strong>Tasks:</strong> 1. Price a European put with <span
+class="math inline">\(K = 52\)</span> by backward induction 2. Price an
+American put with <span class="math inline">\(K = 52\)</span> by
+backward induction, checking for early exercise at each node 3. At which
+node(s) is early exercise optimal? 4. Compute the early exercise premium
+<span class="math inline">\(P - p\)</span> 5. Verify that the American
+put price satisfies the bound <span class="math inline">\(P \geq \max(K
+- S_0, 0)\)</span></p>
+</section>
+<section class="slide">
+<h3 id="exercise-4-crr-convergence">Exercise 4: CRR Convergence</h3>
+<p>Consider <span class="math inline">\(S_0 = 100\)</span>, <span
+class="math inline">\(K = 105\)</span>, <span class="math inline">\(T =
+0.5\)</span>, <span class="math inline">\(r = 3\%\)</span>, <span
+class="math inline">\(\sigma = 30\%\)</span>.</p>
+<p><strong>Tasks:</strong> 1. Compute the CRR parameters <span
+class="math inline">\(u\)</span>, <span
+class="math inline">\(d\)</span>, and <span
+class="math inline">\(q\)</span> for <span class="math inline">\(N = 1,
+2, 4\)</span> 2. For each <span class="math inline">\(N\)</span>,
+compute the European call price 3. Compute the Black-Scholes price and
+compare 4. How does the error behave as <span
+class="math inline">\(N\)</span> increases?</p>
+</section>
+<section class="slide">
+<h3 id="exercise-5-black-scholes-computation">Exercise 5: Black-Scholes
+Computation</h3>
+<p>A non-dividend-paying stock has <span class="math inline">\(S_0 =
+60\)</span>, <span class="math inline">\(\sigma = 25\%\)</span>. The
+risk-free rate is <span class="math inline">\(r = 4\%\)</span>.</p>
+<p><strong>Tasks:</strong> 1. Price a 6-month European call with <span
+class="math inline">\(K = 55\)</span> 2. Price a 6-month European put
+with <span class="math inline">\(K = 55\)</span> 3. Verify put-call
+parity 4. Compute <span class="math inline">\(\Delta\)</span>, <span
+class="math inline">\(\Gamma\)</span>, and <span
+class="math inline">\(\mathcal{V}\)</span> for the call 5. If the stock
+price rises by <span class="math inline">\(\$1\)</span> to <span
+class="math inline">\(\$61\)</span>, estimate the new call price using
+(a) delta alone and (b) delta-gamma approximation. Compare with the
+exact Black-Scholes price at <span class="math inline">\(S_0 =
+61\)</span>.</p>
+</section>
+<section class="slide">
+<h3 id="exercise-6-greeks-and-hedging">Exercise 6: Greeks and
+Hedging</h3>
+<p>A trader has sold 1,000 European call options (<span
+class="math inline">\(K = 100\)</span>, <span class="math inline">\(T =
+0.25\)</span>, <span class="math inline">\(\sigma = 20\%\)</span>, <span
+class="math inline">\(r = 5\%\)</span>). The current stock price is
+<span class="math inline">\(S_0 = 100\)</span>.</p>
+<p><strong>Tasks:</strong> 1. Compute the Black-Scholes call price and
+the total premium received 2. Compute the call delta. How many shares
+should the trader hold to be delta-neutral? 3. Compute gamma. If the
+stock jumps to <span class="math inline">\(\$105\)</span>, estimate the
+new delta and the required adjustment in shares 4. Compute theta. What
+is the daily time decay of the portfolio (in dollars)? 5. Explain the
+tradeoff between gamma risk and theta decay for the trader’s short
+position</p>
+</section>
+<section class="slide">
+<h3 id="exercise-7-proving-the-black-scholes-put-formula">Exercise 7:
+Proving the Black-Scholes Put Formula</h3>
+<p>Starting from the Black-Scholes call formula and put-call parity:</p>
+<p><strong>Tasks:</strong> 1. Write down put-call parity for European
+options 2. Substitute the Black-Scholes call formula 3. Use the identity
+<span class="math inline">\(\mathcal{N}(-x) = 1 -
+\mathcal{N}(x)\)</span> to derive the put formula 4. Verify that the put
+formula gives <span class="math inline">\(p \to \max(Ke^{-rT} - S_0,
+0)\)</span> as <span class="math inline">\(\sigma \to 0\)</span> 5.
+Check that the put delta <span class="math inline">\(\Delta_{\text{put}}
+= \mathcal{N}(d_1) - 1\)</span> is consistent with put-call parity
+differentiated with respect to <span
+class="math inline">\(S_0\)</span></p>
+</section>
+<section class="slide">
+<h3
+id="exercise-8-why-early-exercise-destroys-call-value-binomial-verification">Exercise
+8: Why Early Exercise Destroys Call Value (Binomial Verification)</h3>
+<p>Consider an American call on a non-dividend-paying stock with <span
+class="math inline">\(S_0 = 100\)</span>, <span class="math inline">\(K
+= 80\)</span>, <span class="math inline">\(u = 1.3\)</span>, <span
+class="math inline">\(d = 0.7\)</span>, <span class="math inline">\(r =
+5\%\)</span>, <span class="math inline">\(T = 1\)</span>, <span
+class="math inline">\(N = 2\)</span>.</p>
+<p>This call is deep in-the-money (<span class="math inline">\(S_0 - K =
+20\)</span>).</p>
+<p><strong>Tasks:</strong> 1. Build the stock price tree 2. Price the
+American call using backward induction, checking for early exercise at
+every node 3. Confirm that at every node, the continuation value exceeds
+the exercise value 4. Compute the lower bound <span
+class="math inline">\(S_0 - Ke^{-rT}\)</span> and verify it exceeds the
+intrinsic value <span class="math inline">\(S_0 - K\)</span> 5. Relate
+your findings to the economic argument from Lecture 12 (deferring
+payment of <span class="math inline">\(K\)</span> and retaining
+insurance)</p>
+</section>
+</div>
+</body>
+</html>

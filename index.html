@@ -7,51 +7,115 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
+    <header class="hero">
         <h1>Mathematics for Finance</h1>
+        <!-- <p class="subtitle">A rigorous introduction to the mathematical foundations of modern financial systems, risk management, and asset valuation.</p> -->
     </header>
 
-    <section id="about">
-        <h2>About This Course</h2>
-        <p>This course introduces the <b>mathematical foundations of modern financial systems</b> with emphasis on structure, abstraction, and rigor. Rather than providing recipes or rules, these notes develop the theoretical framework needed to understand how financial markets operate, how to quantify and manage risk, and how to value assets under uncertainty.</p>
-        <p><b>Instructor:</b> Sukrit Mittal</p>
-        <p><b>Code:</b> MA8.402</p>
-        <p><b>Semester:</b> Spring 2026</p>
-        <p><b>Location:</b> H201, Himalayan Block, IIIT Hyderabad</p>
-    </section>
+    <div class="info-bar">
+        <div class="info-item">
+            <span class="info-label">Instructor</span>
+            <span class="info-value">Sukrit Mittal</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Course Code</span>
+            <span class="info-value">MA8.402</span>
+        </div>
+        <!-- <div class="info-item">
+            <span class="info-label">Semester</span>
+            <span class="info-value">Spring 2026</span>
+        </div> -->
+        <div class="info-item">
+            <span class="info-label">Location</span>
+            <span class="info-value">IIIT Hyderabad</span>
+        </div>
+    </div>
 
-    <section id="topics">
-        <h2>Lecture Notes</h2>
-        <h3>Part I: Foundations</h3>
-        <ul>
-            <li><a href="lectures/01-financial-systems.html">Overview of financial systems</a>: <i>Introduction to mathematical finance and the structure of financial systems</i></li>
-            <li><a href="lectures/02-simple-market-model.html">Simple market model</a>: <i>Basic modeling frameworks for financial markets</i></li>
-            <li><a href="lectures/03-time-value-of-money.html">Time value of money</a>: <i>Present and future value concepts, discounting, and time-based calculations</i></li>
-            <li><a href="lectures/04-money-market.html">Money market</a>: <i>Money market instruments, mechanics, and short-term interest rates</i></li>
-        </ul>
-        <p><i>Practical problems and case studies can be found in the <a href="lectures/problem_set_foundations_mathematical_finance.html">Problem Sets</a>.</i></p>
-        <h3>Part II: Portfolio Theory</h3>
-        <ul>
-            <li><a href="lectures/05-introduction-to-portfolios.html">Introduction to portfolios</a>: <i>Portfolio theory fundamentals and two securities</i></li>
-            <li><a href="lectures/06-risk-free-and-preferences.html">Risk-free assets and preferences</a>: <i>Risk-free assets and preferences in portfolio optimization</i></li>
-            <li><a href="lectures/07-multi-asset-portfolios.html">Multi-asset portfolios</a>: <i>Portfolio optimization with multiple assets and constraints</i></li>
-            <li><a href="lectures/08-capm.html">CAPM model</a>: <i>Capital Asset Pricing Model, systematic vs. idiosyncratic risk</i></li>
-        <!-- </ul>
-        <h3>Part III:</h3>
-        <ul> -->
-            <li><a href="lectures/09-utility-functions.html">Utility functions</a>: <i>Risk preferences, expected utility theory, and decision-making under uncertainty</i></li>
-            <li><a href="lectures/10-VaR.html">Value at Risk</a>: <i>VaR methodology, risk measurement, and quantile-based approaches</i></li>
-        </ul>
-        <p><i>Practical problems and case studies can be found in the <a href="lectures/problem_set_portfolio_theory_and_risk.html">Problem Sets</a>.</i></p>
-        <h3>Part III: Futures & Options</h3>
-        <ul>
-            <li><a href="lectures/11-forwards-futures.html">Forwards & Futures</a>: <i>Contracts, pricing, margins and hedging</i></li>
-            <li><a href="lectures/12-options-general-properties.html">Options: General Properties</a>: <i>Options, payoffs, and basic properties</i></li>
-            <li><a href="lectures/13-option-pricing.html">Option Pricing</a>: <i>Binomial pricing, risk-neutral valuation, American options, and Black-Scholes foundations</i></li>
-        </ul>
-        <p><i>Recap: <a href="lectures/recap-lectures-1-to-11.html">Lectures 1-11</a></i></p>
-        <p><i>Project suggestions and additional resources can be found in here: <a href="projects.html">Project Section</a>.</i></p>
-    </section>
+    <main>
+        <!-- <section id="about">
+            <h2>About This Course</h2>
+            <p>Rather than providing simple recipes, this course develops the theoretical framework needed to understand how financial markets operate. We focus on <b>structure, abstraction, and rigor</b> to quantify risk and value assets under uncertainty.</p>
+        </section> -->
+
+        <section id="lectures">
+            <h2>Lecture Notes</h2>
+            
+            <h3>Part I: Foundations</h3>
+            <ul>
+                <li>
+                    <a href="lectures/01-financial-systems.html">Overview of Financial Systems</a>
+                    <i>Introduction to mathematical finance and the structure of financial systems</i>
+                </li>
+                <li>
+                    <a href="lectures/02-simple-market-model.html">Simple Market Model</a>
+                    <i>Basic modeling frameworks for financial markets</i>
+                </li>
+                <li>
+                    <a href="lectures/03-time-value-of-money.html">Time Value of Money</a>
+                    <i>Present and future value concepts, discounting, and calculations</i>
+                </li>
+                <li>
+                    <a href="lectures/04-money-market.html">Money Market</a>
+                    <i>Instruments, mechanics, and short-term interest rates</i>
+                </li>
+            </ul>
+
+            <h3>Part II: Portfolio Theory</h3>
+            <ul>
+                <li>
+                    <a href="lectures/05-introduction-to-portfolios.html">Introduction to Portfolios</a>
+                    <i>Portfolio theory fundamentals and two securities</i>
+                </li>
+                <li>
+                    <a href="lectures/06-risk-free-and-preferences.html">Risk-free Assets and Preferences</a>
+                    <i>Risk-free assets and preferences in portfolio optimization</i>
+                </li>
+                <li>
+                    <a href="lectures/07-multi-asset-portfolios.html">Multi-asset Portfolios</a>
+                    <i>Optimization with multiple assets and constraints</i>
+                </li>
+                <li>
+                    <a href="lectures/08-capm.html">CAPM Model</a>
+                    <i>Capital Asset Pricing Model, systematic vs. idiosyncratic risk</i>
+                </li>
+                <li>
+                    <a href="lectures/09-utility-functions.html">Utility Functions</a>
+                    <i>Risk preferences, expected utility, and decision-making</i>
+                </li>
+                <li>
+                    <a href="lectures/10-VaR.html">Value at Risk</a>
+                    <i>VaR methodology, risk measurement, and quantile-based approaches</i>
+                </li>
+            </ul>
+
+            <h3>Part III: Futures & Options</h3>
+            <ul>
+                <li>
+                    <a href="lectures/11-forwards-futures.html">Forwards & Futures</a>
+                    <i>Contracts, pricing, margins and hedging</i>
+                </li>
+                <li>
+                    <a href="lectures/12-options-general-properties.html">Options: General Properties</a>
+                    <i>Options, payoffs, and basic properties</i>
+                </li>
+                <li>
+                    <a href="lectures/13-option-pricing.html">Option Pricing</a>
+                    <i>Binomial pricing, American options, and Black-Scholes foundations</i>
+                </li>
+            </ul>
+        </section>
+
+        <section id="resources">
+            <h2>Additional Resources</h2>
+            <p>Explore problem sets, recap materials, and project suggestions to deepen your understanding.</p>
+            <div class="resource-links">
+                <a href="lectures/problem_set_foundations_mathematical_finance.html" class="resource-btn">Foundations Problem Set</a>
+                <a href="lectures/problem_set_portfolio_theory_and_risk.html" class="resource-btn">Portfolio Theory Problem Set</a>
+                <a href="lectures/recap-lectures-1-to-11.html" class="resource-btn">Lectures 1-11 Recap</a>
+                <a href="projects.html" class="resource-btn">Project Suggestions</a>
+            </div>
+        </section>
+    </main>
 
     <footer>
         <p>© 2026 <a href="https://mittalsukrit.github.io">Sukrit Mittal</a> | Last updated: March 17, 2026</p>

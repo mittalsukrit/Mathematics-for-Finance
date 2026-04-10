@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>14-financial-engineering</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="lecture-theme.css" />
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<style>
+  .slides {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    height: 100vh;
+
+    /* 🔢 Start slide counter */
+    counter-reset: slide;
+  }
+
+  .slide {
+    scroll-snap-align: start;
+    min-height: 100vh;
+    padding: 4rem;
+    padding-top: 1rem;
+    box-sizing: border-box;
+
+    /* Ensure relative positioning for numbering */
+    position: relative;
+  }
+
+  /* Nice-to-have: smoother feel */
+  html { scroll-behavior: smooth; }
+
+  /* 🔢 Automatic slide numbering */
+  .slide::before {
+    counter-increment: slide;
+    content: "Slide " counter(slide);
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    font-size: 1rem;
+    color: #666;
+  }
+</style>
+<div class="slides" data-markdown="1">
+<section class="slide">
+<h1 id="financial-engineering">Financial Engineering</h1>
+<p><strong>Sukrit Mittal</strong> Franklin Templeton Investments</p>
+</section>
+<section class="slide">
+<h2 id="outline">Outline</h2>
+<ol type="1">
+<li>From pricing to engineering</li>
+<li>The hedging problem</li>
+<li>Delta hedging</li>
+<li>The Black-Scholes PDE: pricing is hedging</li>
+<li>Delta hedging in practice</li>
+<li>Greek parameters as hedge targets</li>
+<li>Delta-gamma hedging</li>
+<li>Hedging business risk</li>
+<li>Case study: airline fuel hedging</li>
+<li>Speculating with derivatives</li>
+<li>Case study: long straddle</li>
+<li>Exercises</li>
+</ol>
+</section>
+<section class="slide">
+<h2 id="from-pricing-to-engineering">1. From Pricing to Engineering</h2>
+<p>In Lectures 12 and 13, we developed the theory of option pricing —
+from no-arbitrage bounds and put-call parity to binomial trees, the CRR
+formula, and the Black-Scholes equation.</p>
+<p>That answered the question:</p>
+<blockquote>
+<p>What is this contract worth under no-arbitrage?</p>
+</blockquote>
+<p>This lecture asks a different question:</p>
+<blockquote>
+<p>Given this contract, what position should I take, and how should I
+manage its risk over time?</p>
+</blockquote>
+<p>If a position has value <span class="math display">\[
+V = V(S,\sigma,r,t),
+\]</span> then engineering means choosing additional traded positions so
+that the combined portfolio has desired properties:</p>
+<ul>
+<li>lower risk</li>
+<li>a particular payoff shape</li>
+<li>controlled sensitivity to market variables</li>
+</ul>
+<p>Pricing values the machine. Engineering decides how to use it.</p>
+</section>
+<section class="slide">
+<h3 id="three-uses-of-the-same-derivative">Three Uses of the Same
+Derivative</h3>
+<p>The same derivative can serve three very different purposes:</p>
+<ul>
+<li><strong>Hedging:</strong> reduce an unwanted exposure</li>
+<li><strong>Speculation:</strong> deliberately take an exposure</li>
+<li><strong>Arbitrage/relative value:</strong> exploit a pricing
+inconsistency</li>
+</ul>
+<p>Example: a put option on an equity index.</p>
+<ul>
+<li>For a pension fund holding equities, it is
+<strong>insurance</strong></li>
+<li>For a macro trader expecting a recession, it is a <strong>bearish
+bet</strong></li>
+<li>For an arbitrageur observing a violation of put-call parity, it is
+one <strong>leg of a riskless trade</strong></li>
+</ul>
+<p>Same instrument. Same mathematics. Different objective function.</p>
+<p>In Lecture 11, we saw that forwards serve all three purposes in the
+context of linear payoffs. Options extend this to nonlinear payoffs —
+and nonlinearity is where the real engineering begins.</p>
+</section>
+<section class="slide">
+<h2 id="the-hedging-problem">2. The Hedging Problem</h2>
+<p>Options create <strong>nonlinear</strong> exposure.</p>
+<p>That is their value. It is also their danger.</p>
+<p>For a small change in market conditions, the option value changes
+approximately as <span class="math display">\[
+\Delta V \approx \frac{\partial V}{\partial S}\Delta S
++ \frac{1}{2}\frac{\partial^2 V}{\partial S^2}(\Delta S)^2
++ \frac{\partial V}{\partial t}\Delta t
++ \frac{\partial V}{\partial \sigma}\Delta \sigma
++ \frac{\partial V}{\partial r}\Delta r.
+\]</span></p>
+<p>This is the second-order Taylor expansion of <span
+class="math inline">\(V(S,\sigma,r,t)\)</span> — the same tool we use
+throughout calculus, now applied to risk.</p>
+<p>Each term has a name and a meaning:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Term</th>
+<th>Name</th>
+<th>Risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(\frac{\partial V}{\partial S}\Delta
+S\)</span></td>
+<td>Delta</td>
+<td>Directional price risk</td>
+</tr>
+<tr>
+<td><span class="math inline">\(\frac{1}{2}\frac{\partial^2 V}{\partial
+S^2}(\Delta S)^2\)</span></td>
+<td>Gamma</td>
+<td>Curvature / large-move risk</td>
+</tr>
+<tr>
+<td><span class="math inline">\(\frac{\partial V}{\partial t}\Delta
+t\)</span></td>
+<td>Theta</td>
+<td>Time decay</td>
+</tr>
+<tr>
+<td><span class="math inline">\(\frac{\partial V}{\partial \sigma}\Delta
+\sigma\)</span></td>
+<td>Vega</td>
+<td>Volatility risk</td>
+</tr>
+<tr>
+<td><span class="math inline">\(\frac{\partial V}{\partial r}\Delta
+r\)</span></td>
+<td>Rho</td>
+<td>Interest rate risk</td>
+</tr>
+</tbody>
+</table>
+<p>A hedge is the attempt to neutralize one or more of these terms using
+other traded instruments.</p>
+</section>
+<section class="slide">
+<h3 id="why-static-hedging-usually-fails">Why Static Hedging Usually
+Fails</h3>
+<p>A forward position has a <strong>linear</strong> payoff. Its slope
+with respect to the underlying is constant. A single offsetting position
+— entered once and never touched — neutralizes the risk completely. This
+is the kind of hedging we did in Lecture 11.</p>
+<p>An option cannot be hedged this way.</p>
+<p>Why not? Because the option’s slope changes with the underlying
+price. In Lecture 13, the one-step binomial hedge ratio was <span
+class="math display">\[
+x = \frac{f_u - f_d}{S_0(u - d)}.
+\]</span></p>
+<p>In a multi-step tree, this ratio changes at every node. In continuous
+time, it changes at every instant.</p>
+<p>So an option hedge must usually be:</p>
+<ul>
+<li><strong>dynamic</strong> — adjusted as the market moves</li>
+<li><strong>state-dependent</strong> — the hedge ratio depends on where
+the stock is</li>
+<li><strong>approximate</strong> — perfect in theory, imperfect in
+practice</li>
+</ul>
+<p>Static hedging works for linear payoffs. Dynamic hedging is the price
+of nonlinearity.</p>
+</section>
+<section class="slide">
+<h2 id="delta-hedging">3. Delta Hedging</h2>
+<p>The first and most important sensitivity is <strong>delta</strong>:
+<span class="math display">\[
+\boxed{\Delta = \frac{\partial V}{\partial S}}
+\]</span></p>
+<p>In Lecture 13, we saw that <span
+class="math inline">\(\Delta_{\text{call}} = \mathcal{N}(d_1)\)</span>
+for a European call under Black-Scholes. Delta measures the local change
+in the option value when the stock price changes by <span
+class="math inline">\(\$1\)</span>.</p>
+<p>For a small move, <span class="math display">\[
+\Delta V \approx \Delta \, \Delta S.
+\]</span></p>
+<p>If we hold one option and short <span
+class="math inline">\(\Delta\)</span> shares of stock, the portfolio
+<span class="math display">\[
+\Pi = V - \Delta S
+\]</span> has local stock-price sensitivity <span
+class="math display">\[
+\frac{\partial \Pi}{\partial S}
+= \frac{\partial V}{\partial S} - \Delta = 0.
+\]</span></p>
+<p>So delta hedging removes the <strong>first-order</strong> effect of
+stock-price movements.</p>
+<p>Only the first-order effect.</p>
+<p>This is equivalent to the replicating portfolio from Lecture 13 — but
+viewed from the perspective of a trader managing risk, not a theorist
+deriving a price.</p>
+</section>
+<section class="slide">
+<h3 id="numerical-example-a-short-call-hedge">Numerical Example: A Short
+Call Hedge</h3>
+<p>Suppose a trader is short 1,000 European call options.</p>
+<p>Current stock price: <span class="math inline">\(S_0 = 100\)</span>.
+Each call has delta <span class="math inline">\(\Delta_C =
+0.62\)</span>.</p>
+<p>The short option book has total delta <span class="math display">\[
+\Delta_{\text{book}} = -1{,}000 \times 0.62 = -620.
+\]</span></p>
+<p>To become delta-neutral, the trader buys 620 shares.</p>
+<p>If the stock rises by <span class="math inline">\(\$1\)</span>: <span
+class="math display">\[
+\Delta V_{\text{options}} \approx -1{,}000 \times 0.62 \times 1 = -620
+\]</span> <span class="math display">\[
+\Delta V_{\text{stock}} = +620 \times 1 = +620
+\]</span> <span class="math display">\[
+\Delta V_{\text{portfolio}} \approx -620 + 620 = 0 \quad \checkmark
+\]</span></p>
+<p>First-order risk is neutralized.</p>
+<p>But only at that instant, and only for small moves.</p>
+</section>
+<section class="slide">
+<h3 id="why-the-hedge-must-be-rebalanced">Why the Hedge Must Be
+Rebalanced</h3>
+<p>Suppose after the stock move, the call delta rises from <span
+class="math inline">\(0.62\)</span> to <span
+class="math inline">\(0.69\)</span>.</p>
+<p>Now the short option book has delta <span class="math display">\[
+-1{,}000 \times 0.69 = -690.
+\]</span></p>
+<p>But the trader still owns only 620 shares.</p>
+<p>The hedge is now short 70 deltas. To restore neutrality, the trader
+must buy 70 more shares.</p>
+<p>If the stock then falls and delta drops to <span
+class="math inline">\(0.55\)</span>, the book delta becomes <span
+class="math inline">\(-550\)</span>, but the trader holds 690 shares —
+now 140 deltas too long. Sell 140 shares.</p>
+<p>This is the central fact of option hedging:</p>
+<ul>
+<li>A delta hedge is not a one-time trade</li>
+<li>It is a <strong>rebalancing strategy</strong></li>
+<li>The frequency of rebalancing depends on gamma, liquidity, and
+transaction costs</li>
+</ul>
+<p>The model assumes continuous rebalancing. Markets do not. The gap
+between theory and practice is where hedging cost lives.</p>
+</section>
+<section class="slide">
+<h2 id="the-black-scholes-pde-pricing-is-hedging">4. The Black-Scholes
+PDE: Pricing Is Hedging</h2>
+<p>There is a deeper reason delta matters. It connects hedging to
+pricing.</p>
+<p>Take a short time interval <span class="math inline">\(dt\)</span>.
+Using the second-order Taylor expansion of <span
+class="math inline">\(V(S,t)\)</span>: <span class="math display">\[
+dV \approx V_t \, dt + V_S \, dS + \frac{1}{2}V_{SS}(dS)^2
+\]</span> where subscripts denote partial derivatives: <span
+class="math inline">\(V_t = \frac{\partial V}{\partial t}\)</span>,
+<span class="math inline">\(V_S = \frac{\partial V}{\partial
+S}\)</span>, <span class="math inline">\(V_{SS} = \frac{\partial^2
+V}{\partial S^2}\)</span>.</p>
+<p>In the Black-Scholes model, the stock follows geometric Brownian
+motion with volatility <span class="math inline">\(\sigma\)</span>, so
+heuristically <span class="math display">\[
+(dS)^2 \approx \sigma^2 S^2 \, dt.
+\]</span></p>
+<p>Substituting: <span class="math display">\[
+dV \approx V_t \, dt + V_S \, dS + \frac{1}{2}\sigma^2 S^2 V_{SS} \, dt
+\]</span></p>
+<p><span class="math display">\[
+= \left(V_t + \frac{1}{2}\sigma^2 S^2 V_{SS}\right)dt + V_S \, dS.
+\]</span></p>
+<p>The <span class="math inline">\(dS\)</span> term is random. The <span
+class="math inline">\(dt\)</span> term is deterministic.</p>
+</section>
+<section class="slide">
+<h3 id="eliminating-the-random-term">Eliminating the Random Term</h3>
+<p>Now form the hedged portfolio: <span class="math display">\[
+\Pi = V - \Delta S
+\]</span></p>
+<p>Its change is: <span class="math display">\[
+d\Pi = dV - \Delta \, dS
+\]</span></p>
+<p><span class="math display">\[
+= \left(V_t + \frac{1}{2}\sigma^2 S^2 V_{SS}\right)dt + V_S \, dS -
+\Delta \, dS
+\]</span></p>
+<p><span class="math display">\[
+= \left(V_t + \frac{1}{2}\sigma^2 S^2 V_{SS}\right)dt + (V_S - \Delta)
+\, dS.
+\]</span></p>
+<p>Choose <span class="math inline">\(\Delta = V_S\)</span>. Then the
+random <span class="math inline">\(dS\)</span> term disappears: <span
+class="math display">\[
+\boxed{d\Pi = \left(V_t + \frac{1}{2}\sigma^2 S^2 V_{SS}\right)dt}
+\]</span></p>
+<p>The portfolio is <strong>locally riskless</strong> — its return over
+<span class="math inline">\(dt\)</span> involves no randomness. This is
+the continuous-time analogue of the one-step replication from Lecture
+13.</p>
+</section>
+<section class="slide">
+<h3 id="the-pde">The PDE</h3>
+<p>If <span class="math inline">\(\Pi = V - V_S S\)</span> is locally
+riskless, then no-arbitrage requires it to earn the risk-free rate:
+<span class="math display">\[
+d\Pi = r\Pi \, dt = r(V - V_S S) \, dt.
+\]</span></p>
+<p>Equating the two expressions for <span
+class="math inline">\(d\Pi\)</span>: <span class="math display">\[
+\left(V_t + \frac{1}{2}\sigma^2 S^2 V_{SS}\right)dt = r(V - V_S S) \,
+dt.
+\]</span></p>
+<p>Dividing by <span class="math inline">\(dt\)</span> and rearranging:
+<span class="math display">\[
+V_t + \frac{1}{2}\sigma^2 S^2 V_{SS} = rV - rSV_S
+\]</span></p>
+<p><span class="math display">\[
+\boxed{V_t + \frac{1}{2}\sigma^2 S^2 V_{SS} + rSV_S - rV = 0}
+\]</span></p>
+<p>This is the <strong>Black-Scholes partial differential
+equation</strong>.</p>
+<p><strong>Verify:</strong> The Black-Scholes call formula <span
+class="math inline">\(c = S_0\mathcal{N}(d_1) -
+Ke^{-rT}\mathcal{N}(d_2)\)</span> from Lecture 13 satisfies this PDE.
+Every closed-form option price we have encountered is a solution to this
+equation with appropriate boundary conditions. <span
+class="math inline">\(\checkmark\)</span></p>
+</section>
+<section class="slide">
+<h3 id="interpretation">Interpretation</h3>
+<p>The PDE deserves careful reading.</p>
+<p>Each term has a clear meaning:</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(V_t\)</span></td>
+<td>Time decay (theta)</td>
+</tr>
+<tr>
+<td><span class="math inline">\(\frac{1}{2}\sigma^2 S^2
+V_{SS}\)</span></td>
+<td>Convexity gain from gamma</td>
+</tr>
+<tr>
+<td><span class="math inline">\(rSV_S\)</span></td>
+<td>Cost of financing the delta hedge</td>
+</tr>
+<tr>
+<td><span class="math inline">\(rV\)</span></td>
+<td>Required return on the option position</td>
+</tr>
+</tbody>
+</table>
+<p>The equation says: for any option, <strong>theta + gamma gain +
+financing cost = required return</strong>.</p>
+<p>This has three consequences:</p>
+<ol type="1">
+<li><p><strong>Option pricing and hedging are not separate
+ideas.</strong> The pricing formula exists <em>because</em> dynamic
+hedging exists.</p></li>
+<li><p><strong>Delta is the trading strategy hidden inside the
+formula.</strong> The Black-Scholes price is the cost of the hedging
+program that replicates the option.</p></li>
+<li><p><strong>The real-world probability <span
+class="math inline">\(p\)</span> does not appear.</strong> Just as in
+the binomial tree (Lecture 13), only the risk-neutral measure
+matters.</p></li>
+</ol>
+<p>Lecture 13 emphasized the price. This lecture emphasizes the
+implementation.</p>
+</section>
+<section class="slide">
+<h2 id="delta-hedging-in-practice">5. Delta Hedging in Practice</h2>
+<p>Theory says: rebalance continuously. Practice says: rebalance when
+you can afford to.</p>
+<p>The following table shows a delta hedge for a short position of 1,000
+European calls (<span class="math inline">\(K = 100\)</span>, <span
+class="math inline">\(T = 20\)</span> weeks, <span
+class="math inline">\(\sigma = 20\%\)</span>, <span
+class="math inline">\(r = 5\%\)</span>) rebalanced weekly.</p>
+<table>
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 11%" />
+<col style="width: 12%" />
+<col style="width: 13%" />
+<col style="width: 15%" />
+<col style="width: 17%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr>
+<th>Week</th>
+<th>Stock Price</th>
+<th>Call Delta</th>
+<th>Shares Held</th>
+<th>Shares Traded</th>
+<th>Trade Cost ($)</th>
+<th>Cumulative Cost ($)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>100.00</td>
+<td>0.522</td>
+<td>522</td>
+<td>+522</td>
+<td>52,200</td>
+<td>52,200</td>
+</tr>
+<tr>
+<td>1</td>
+<td>101.50</td>
+<td>0.568</td>
+<td>568</td>
+<td>+46</td>
+<td>4,669</td>
+<td>56,869</td>
+</tr>
+<tr>
+<td>2</td>
+<td>99.20</td>
+<td>0.475</td>
+<td>475</td>
+<td><span class="math inline">\(-93\)</span></td>
+<td><span class="math inline">\(-9,226\)</span></td>
+<td>47,643</td>
+</tr>
+<tr>
+<td>3</td>
+<td>102.00</td>
+<td>0.582</td>
+<td>582</td>
+<td>+107</td>
+<td>10,914</td>
+<td>58,557</td>
+</tr>
+<tr>
+<td>4</td>
+<td>104.50</td>
+<td>0.691</td>
+<td>691</td>
+<td>+109</td>
+<td>11,391</td>
+<td>69,948</td>
+</tr>
+<tr>
+<td>5</td>
+<td>103.80</td>
+<td>0.670</td>
+<td>670</td>
+<td><span class="math inline">\(-21\)</span></td>
+<td><span class="math inline">\(-2,180\)</span></td>
+<td>67,768</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Reading the table:</strong> When the stock rises, delta
+increases, forcing the hedger to <strong>buy more shares</strong> (buy
+high). When the stock falls, delta decreases, forcing the hedger to
+<strong>sell shares</strong> (sell low). Delta hedging systematically
+buys high and sells low.</p>
+<p>This is not a flaw. It is the cost of replication.</p>
+</section>
+<section class="slide">
+<h3 id="hedging-error-and-gamma">Hedging Error and Gamma</h3>
+<p>In theory, continuous rebalancing makes the hedge exact. In practice,
+discrete rebalancing introduces error.</p>
+<p>Over one rebalancing interval, the hedging error is approximately
+<span class="math display">\[
+\epsilon \approx \frac{1}{2}\Gamma(\Delta S)^2 - \frac{1}{2}\sigma^2 S^2
+\Gamma \, \Delta t.
+\]</span></p>
+<p>The first term is the actual gamma P&amp;L from the realized stock
+move. The second is the expected gamma P&amp;L under the model. The
+difference is random.</p>
+<p><strong>Key insight:</strong> The hedging error is proportional to
+<span class="math inline">\(\Gamma\)</span>. Options with high gamma —
+typically those near the money and close to expiry — are the most
+expensive to hedge in practice.</p>
+<p>This is why option dealers care deeply about gamma. It is not just a
+risk measure. It is a measure of <strong>hedging cost</strong>.</p>
+<p>The theoretical Black-Scholes price assumes zero hedging cost
+(continuous rebalancing). The actual cost of running the hedge may
+exceed or fall short of this theoretical value, depending on the
+realized path of the stock.</p>
+</section>
+<section class="slide">
+<h3 id="what-delta-hedging-leaves-behind">What Delta Hedging Leaves
+Behind</h3>
+<p>Once delta is neutralized, the leading residual risks are <span
+class="math display">\[
+\Delta \Pi \approx \frac{1}{2}\Gamma (\Delta S)^2 + \Theta \, \Delta t +
+\mathcal{V}\,\Delta \sigma + \rho \, \Delta r
+\]</span> where <span class="math display">\[
+\Gamma = \frac{\partial^2 V}{\partial S^2}, \qquad
+\Theta = \frac{\partial V}{\partial t}, \qquad
+\mathcal{V} = \frac{\partial V}{\partial \sigma}, \qquad
+\rho = \frac{\partial V}{\partial r}.
+\]</span></p>
+<p>So delta hedging removes directional risk, but not:</p>
+<ul>
+<li><strong>large-move risk</strong> (gamma)</li>
+<li><strong>time-decay risk</strong> (theta)</li>
+<li><strong>volatility risk</strong> (vega)</li>
+<li><strong>interest-rate risk</strong> (rho)</li>
+</ul>
+<p>This is why serious derivatives risk management never stops at
+delta.</p>
+</section>
+<section class="slide">
+<h2 id="greek-parameters-as-hedge-targets">6. Greek Parameters as Hedge
+Targets</h2>
+<p>In Lecture 13, we computed the Greeks from the Black-Scholes formula.
+Here the emphasis is different.</p>
+<blockquote>
+<p>The Greeks are not descriptive statistics. They are hedge
+targets.</p>
+</blockquote>
+<p>Each Greek answers a specific question for the risk manager:</p>
+<table>
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 28%" />
+<col style="width: 42%" />
+</colgroup>
+<thead>
+<tr>
+<th>Greek</th>
+<th>Symbol</th>
+<th>Question it answers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Delta</td>
+<td><span class="math inline">\(\Delta\)</span></td>
+<td>How many shares offset my directional risk?</td>
+</tr>
+<tr>
+<td>Gamma</td>
+<td><span class="math inline">\(\Gamma\)</span></td>
+<td>How fast does my hedge become stale?</td>
+</tr>
+<tr>
+<td>Theta</td>
+<td><span class="math inline">\(\Theta\)</span></td>
+<td>How much do I gain or lose each day from time decay?</td>
+</tr>
+<tr>
+<td>Vega</td>
+<td><span class="math inline">\(\mathcal{V}\)</span></td>
+<td>How exposed am I to a change in implied volatility?</td>
+</tr>
+<tr>
+<td>Rho</td>
+<td><span class="math inline">\(\rho\)</span></td>
+<td>How exposed am I to a shift in interest rates?</td>
+</tr>
+</tbody>
+</table>
+<p>A trader who says “I am hedged” but cannot say <strong>to which
+Greek</strong> is not hedged in any meaningful sense.</p>
+</section>
+<section class="slide">
+<h3 id="gamma-and-theta-the-core-tradeoff">Gamma and Theta: The Core
+Tradeoff</h3>
+<p>For long vanilla options:</p>
+<ul>
+<li><span class="math inline">\(\Gamma &gt; 0\)</span> — the holder
+benefits from large moves</li>
+<li><span class="math inline">\(\Theta &lt; 0\)</span> (usually) — the
+holder pays through time decay</li>
+</ul>
+<p>For short vanilla options:</p>
+<ul>
+<li><span class="math inline">\(\Gamma &lt; 0\)</span> — the writer
+suffers from large moves</li>
+<li><span class="math inline">\(\Theta &gt; 0\)</span> (usually) — the
+writer collects time decay</li>
+</ul>
+<p>This is not accidental.</p>
+<p>From the Black-Scholes PDE, for a delta-neutral portfolio (<span
+class="math inline">\(\Delta = 0\)</span>, so <span
+class="math inline">\(V_S S\)</span> term drops from consideration):
+<span class="math display">\[
+\Theta + \frac{1}{2}\sigma^2 S^2 \Gamma = r\Pi.
+\]</span></p>
+<p>For a portfolio close to zero value (<span class="math inline">\(\Pi
+\approx 0\)</span>), this gives <span class="math display">\[
+\boxed{\Theta \approx -\frac{1}{2}\sigma^2 S^2 \Gamma}
+\]</span></p>
+<p>Gamma and theta are <strong>mechanically linked</strong>. A trader
+who is long gamma must pay theta. A trader who collects theta must bear
+gamma risk.</p>
+<p>There is no free theta.</p>
+</section>
+<section class="slide">
+<h3 id="gamma-theta-tradeoff-a-numerical-example">Gamma-Theta Tradeoff:
+A Numerical Example</h3>
+<p>A trader is short 500 ATM call options (<span class="math inline">\(K
+= 100\)</span>, <span class="math inline">\(S_0 = 100\)</span>, <span
+class="math inline">\(\sigma = 25\%\)</span>, <span
+class="math inline">\(T = 3\)</span> months, <span
+class="math inline">\(r = 5\%\)</span>).</p>
+<p>From the Black-Scholes formulas in Lecture 13:</p>
+<p><span class="math display">\[
+\Gamma_{\text{call}} = \frac{\mathcal{N}&#39;(d_1)}{S_0 \sigma \sqrt{T}}
+= \frac{0.3970}{100 \times 0.25 \times 0.5} = 0.0318
+\]</span></p>
+<p><span class="math display">\[
+\Theta_{\text{call}} = -\frac{S_0
+\mathcal{N}&#39;(d_1)\sigma}{2\sqrt{T}} - rKe^{-rT}\mathcal{N}(d_2) =
+-9.95 - 2.39 = -12.34 \text{ per year}
+\]</span></p>
+<p>The short book has total Greeks: <span class="math display">\[
+\Gamma_{\text{book}} = -500 \times 0.0318 = -15.9
+\]</span> <span class="math display">\[
+\Theta_{\text{book}} = -500 \times (-12.34) = +6{,}170 \text{ per year}
+\approx +\$16.90 \text{ per day}
+\]</span></p>
+<p><strong>Interpretation:</strong> The trader collects about <span
+class="math inline">\(\$17\)</span> per day in time decay. But if the
+stock moves sharply — say <span class="math inline">\(\Delta S =
+5\)</span> — the gamma loss is approximately <span
+class="math display">\[
+\frac{1}{2}|\Gamma_{\text{book}}|(\Delta S)^2 = \frac{1}{2} \times 15.9
+\times 25 = \$199.
+\]</span></p>
+<p>Twelve quiet days of theta barely cover one sharp move. This is the
+risk of being short gamma.</p>
+</section>
+<section class="slide">
+<h3 id="vega-and-rho">Vega and Rho</h3>
+<p><strong>Vega</strong> measures sensitivity to implied volatility:
+<span class="math display">\[
+\mathcal{V} = \frac{\partial V}{\partial \sigma}.
+\]</span></p>
+<p>From Lecture 13: <span class="math inline">\(\mathcal{V} = S_0
+\sqrt{T}\,\mathcal{N}&#39;(d_1)\)</span>. It is always positive for both
+calls and puts.</p>
+<p>Long options are long vega. Rising volatility makes optionality more
+valuable.</p>
+<p>This matters most when:</p>
+<ul>
+<li>options are near the money</li>
+<li>maturities are not too short</li>
+<li>markets face announcements or crises</li>
+</ul>
+<p>In the 2008 financial crisis, implied volatility on S&amp;P 500
+options (the VIX) surged from 20% to over 80%. Traders who were short
+vega without adequate hedging suffered catastrophic losses.</p>
+<p><strong>Rho</strong> measures sensitivity to interest rates: <span
+class="math display">\[
+\rho = \frac{\partial V}{\partial r}.
+\]</span></p>
+<p>For many short-dated equity options, rho is secondary. For long-dated
+contracts, FX options, and interest rate products, it is not.</p>
+</section>
+<section class="slide">
+<h2 id="delta-gamma-hedging">7. Delta-Gamma Hedging</h2>
+<p>The practical problem is usually not “hedge one option.”</p>
+<p>It is:</p>
+<blockquote>
+<p>Hedge an entire book with many strikes, maturities, and
+underlyings.</p>
+</blockquote>
+<p>If a portfolio has total sensitivities <span
+class="math inline">\((\Delta_P, \Gamma_P, \mathcal{V}_P, \rho_P,
+\ldots)\)</span>, then the hedge is constructed by combining instruments
+so that selected sensitivities sum to zero.</p>
+<p>This is replication again — but instead of matching terminal payoffs
+exactly, we match <strong>local sensitivities</strong>.</p>
+<h3 id="the-linear-system">The Linear System</h3>
+<p>Suppose a portfolio has total delta <span
+class="math inline">\(\Delta_P\)</span> and gamma <span
+class="math inline">\(\Gamma_P\)</span>. We use:</p>
+<ul>
+<li><span class="math inline">\(n\)</span> shares of stock (delta = 1
+per share, gamma = 0)</li>
+<li><span class="math inline">\(m\)</span> units of a liquid hedge
+option with delta <span class="math inline">\(\Delta_H\)</span> and
+gamma <span class="math inline">\(\Gamma_H\)</span></li>
+</ul>
+<p>Stock has zero gamma, so stock alone cannot fix gamma. We need the
+hedge option.</p>
+</section>
+<section class="slide">
+<h3 id="solving-the-system">Solving the System</h3>
+<p>To neutralize gamma: <span class="math display">\[
+\Gamma_P + m\Gamma_H = 0
+\]</span></p>
+<p>To neutralize delta (after the gamma hedge changes our delta by <span
+class="math inline">\(m\Delta_H\)</span>): <span class="math display">\[
+\Delta_P + n + m\Delta_H = 0
+\]</span></p>
+<p>Solving: <span class="math display">\[
+\boxed{m = -\frac{\Gamma_P}{\Gamma_H}}, \qquad
+\boxed{n = -\Delta_P - m\Delta_H}
+\]</span></p>
+<p>This is a linear system. Risk management becomes linear algebra.</p>
+<p><strong>Why gamma first, then delta?</strong> Because only options
+carry gamma. Stock can adjust delta but not gamma. So we must use the
+option to fix gamma, then use stock to clean up the residual delta. The
+order matters.</p>
+</section>
+<section class="slide">
+<h3 id="numerical-example-hedging-an-otc-book">Numerical Example:
+Hedging an OTC Book</h3>
+<p>Suppose an OTC options book has: <span class="math display">\[
+\Delta_P = -520, \qquad \Gamma_P = -18.
+\]</span></p>
+<p>A listed option available for hedging has: <span
+class="math display">\[
+\Delta_H = 0.25, \qquad \Gamma_H = 0.06.
+\]</span></p>
+<p><strong>Step 1 — Gamma neutrality:</strong> <span
+class="math display">\[
+m = -\frac{-18}{0.06} = 300
+\]</span></p>
+<p>Buy 300 hedge options.</p>
+<p><strong>Step 2 — Delta adjustment from the gamma hedge:</strong>
+<span class="math display">\[
+300 \times 0.25 = 75
+\]</span></p>
+<p><strong>Step 3 — Stock position for delta neutrality:</strong> <span
+class="math display">\[
+n = -(-520) - 75 = 445
+\]</span></p>
+<p>Buy 445 shares.</p>
+<p><strong>Verification:</strong> <span class="math display">\[
+\text{Total delta} = -520 + 445 + 300 \times 0.25 = -520 + 445 + 75 = 0
+\quad \checkmark
+\]</span> <span class="math display">\[
+\text{Total gamma} = -18 + 300 \times 0.06 = -18 + 18 = 0 \quad
+\checkmark
+\]</span></p>
+<p>Delta and gamma are now neutral. Vega is not — neutralizing vega
+would require a third instrument with different vega, adding a third
+equation to the system.</p>
+</section>
+<section class="slide">
+<h3 id="extension-delta-gamma-vega-hedging">Extension: Delta-Gamma-Vega
+Hedging</h3>
+<p>Suppose the portfolio also has <span
+class="math inline">\(\mathcal{V}_P = -40\)</span>, and we have two
+hedge options:</p>
+<table>
+<thead>
+<tr>
+<th>Instrument</th>
+<th><span class="math inline">\(\Delta_H\)</span></th>
+<th><span class="math inline">\(\Gamma_H\)</span></th>
+<th><span class="math inline">\(\mathcal{V}_H\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Option A</td>
+<td>0.25</td>
+<td>0.06</td>
+<td>0.10</td>
+</tr>
+<tr>
+<td>Option B</td>
+<td>0.40</td>
+<td>0.03</td>
+<td>0.22</td>
+</tr>
+</tbody>
+</table>
+<p>Let <span class="math inline">\(m_A\)</span> and <span
+class="math inline">\(m_B\)</span> be the quantities. The system
+becomes: <span class="math display">\[
+\Gamma_P + m_A \Gamma_A + m_B \Gamma_B = 0
+\]</span> <span class="math display">\[
+\mathcal{V}_P + m_A \mathcal{V}_A + m_B \mathcal{V}_B = 0
+\]</span> <span class="math display">\[
+\Delta_P + n + m_A \Delta_A + m_B \Delta_B = 0
+\]</span></p>
+<p>Three equations, three unknowns (<span
+class="math inline">\(m_A\)</span>, <span
+class="math inline">\(m_B\)</span>, <span
+class="math inline">\(n\)</span>). The first two equations determine the
+option positions; the third determines the stock position.</p>
+<p>Each additional Greek to neutralize requires one additional traded
+option. This is why liquid option markets with many available strikes
+are essential for risk management.</p>
+</section>
+<section class="slide">
+<h2 id="hedging-business-risk">8. Hedging Business Risk</h2>
+<p>Financial engineering is not only for option dealers.</p>
+<p>Corporations hedge:</p>
+<ul>
+<li>commodity input costs (airlines, manufacturers)</li>
+<li>foreign exchange receipts and payments (exporters,
+multinationals)</li>
+<li>interest-rate exposure (leveraged firms, banks)</li>
+<li>inventory price risk (commodity producers)</li>
+</ul>
+<p>In Lecture 11, we introduced hedging with futures: the wheat farmer
+who shorts futures to lock in a selling price, the airline that goes
+long to lock in fuel costs. We also derived the <strong>minimum-variance
+hedge ratio</strong>.</p>
+<p>Here we revisit that framework with a different lens: the hedge ratio
+and VaR as <strong>engineering tools</strong> for designing and
+evaluating a hedge.</p>
+</section>
+<section class="slide">
+<h3 id="minimum-variance-hedge-ratio">Minimum-Variance Hedge Ratio</h3>
+<p>From Lecture 11, when spot and futures are imperfectly correlated, a
+one-for-one hedge is generally suboptimal. The hedge that minimizes
+variance of the hedged position is:</p>
+<p><span class="math display">\[
+\boxed{h^* = \rho \frac{\sigma_A}{\sigma_F}}
+\]</span></p>
+<p>where <span class="math inline">\(\sigma_A\)</span> is spot price
+volatility, <span class="math inline">\(\sigma_F\)</span> is futures
+price volatility, and <span class="math inline">\(\rho\)</span> is the
+correlation between them.</p>
+<p>The optimal number of futures contracts for an exposure of <span
+class="math inline">\(Q_A\)</span> units with contract size <span
+class="math inline">\(Q_F\)</span> is: <span class="math display">\[
+\boxed{N^* = h^* \frac{Q_A}{Q_F}}
+\]</span></p>
+<p><strong>Recall from Lecture 11:</strong> This is simply the
+regression coefficient of <span class="math inline">\(\Delta
+S_A\)</span> on <span class="math inline">\(\Delta F\)</span>. The
+mathematics is identical; the context here is a corporate treasurer
+designing a hedge program, not an arbitrageur pricing a forward.</p>
+<h3 id="why-the-optimal-hedge-is-not-one-for-one">Why the Optimal Hedge
+Is Not One-for-One</h3>
+<p>If <span class="math inline">\(\rho = 1\)</span> and <span
+class="math inline">\(\sigma_A = \sigma_F\)</span>, then <span
+class="math inline">\(h^* = 1\)</span>. This is the ideal one-for-one
+hedge.</p>
+<p>But usually the spot exposure is not identical to the futures
+contract, maturities do not align perfectly, and <span
+class="math inline">\(\rho &lt; 1\)</span>. Then a full hedge introduces
+<strong>basis risk</strong> that can actually increase total variance.
+The mathematics tells us: the optimal hedge is not the largest one. It
+is the variance-minimizing one.</p>
+</section>
+<section class="slide">
+<h3 id="value-at-risk-as-a-hedge-metric">Value at Risk as a Hedge
+Metric</h3>
+<p>In Lecture 10, we introduced Value at Risk (VaR) as a downside risk
+metric. Here it plays a new role:</p>
+<blockquote>
+<p>VaR is a way to evaluate whether a hedge is doing enough.</p>
+</blockquote>
+<p>Under the minimum-variance hedge, the residual variance of the hedged
+position is (from Lecture 11): <span class="math display">\[
+\mathrm{Var}(\Delta \Pi^*) = Q_A^2 \sigma_A^2 (1-\rho^2).
+\]</span></p>
+<p><strong>Derivation:</strong> Substitute <span
+class="math inline">\(N^*\)</span> into <span
+class="math inline">\(\mathrm{Var}(\Delta\Pi) = Q_A^2\sigma_A^2 +
+N^2Q_F^2\sigma_F^2 - 2NQ_AQ_F\rho\sigma_A\sigma_F\)</span>:</p>
+<p><span class="math display">\[
+= Q_A^2\sigma_A^2 + \left(\rho\frac{\sigma_A}{\sigma_F}\right)^2 Q_A^2
+\sigma_F^2 - 2\rho\frac{\sigma_A}{\sigma_F}Q_A^2\rho\sigma_A\sigma_F
+\]</span></p>
+<p><span class="math display">\[
+= Q_A^2\sigma_A^2(1 + \rho^2 - 2\rho^2) = Q_A^2\sigma_A^2(1 - \rho^2)
+\quad \checkmark
+\]</span></p>
+<p>Hence <span class="math display">\[
+\boxed{\sigma_{\Pi^*} = Q_A \sigma_A \sqrt{1-\rho^2}}
+\]</span></p>
+<p>If the hedged P&amp;L is approximately normal, then at confidence
+level <span class="math inline">\(\alpha\)</span>: <span
+class="math display">\[
+\boxed{\mathrm{VaR}_{\alpha}^* = z_{\alpha} Q_A \sigma_A
+\sqrt{1-\rho^2}}
+\]</span></p>
+<p>Hedge effectiveness under this model is driven entirely by <span
+class="math inline">\(\rho^2\)</span>. This is the <span
+class="math inline">\(R^2\)</span> from the hedge regression — the
+fraction of variance eliminated.</p>
+</section>
+<section class="slide">
+<h2 id="case-study-airline-fuel-hedging">9. Case Study: Airline Fuel
+Hedging</h2>
+<p>An airline expects to buy <span class="math display">\[
+Q_A = 2{,}100{,}000
+\]</span> gallons of jet fuel next month.</p>
+<p>No liquid jet fuel futures exist, so the airline uses
+<strong>heating-oil futures</strong> as a proxy hedge — the same
+cross-hedging situation we encountered in Lecture 11.</p>
+<p><strong>Given:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Futures contract size</td>
+<td><span class="math inline">\(Q_F = 42{,}000\)</span> gallons</td>
+</tr>
+<tr>
+<td>Spot volatility (jet fuel)</td>
+<td><span class="math inline">\(\sigma_A = \$0.08\)</span> per
+gallon</td>
+</tr>
+<tr>
+<td>Futures volatility (heating oil)</td>
+<td><span class="math inline">\(\sigma_F = \$0.10\)</span> per
+gallon</td>
+</tr>
+<tr>
+<td>Correlation</td>
+<td><span class="math inline">\(\rho = 0.85\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Step 1 — Hedge ratio:</strong> <span class="math display">\[
+h^* = 0.85 \times \frac{0.08}{0.10} = 0.68
+\]</span></p>
+<p><strong>Step 2 — Number of contracts:</strong> <span
+class="math display">\[
+N^* = 0.68 \times \frac{2{,}100{,}000}{42{,}000} = 34
+\]</span></p>
+<p>The airline buys 34 heating-oil futures contracts. Note: <span
+class="math inline">\(h^* &lt; 1\)</span> because <span
+class="math inline">\(\rho &lt; 1\)</span> and <span
+class="math inline">\(\sigma_A &lt; \sigma_F\)</span>. A full hedge (50
+contracts) would over-hedge.</p>
+</section>
+<section class="slide">
+<h3 id="evaluating-the-hedge-with-var">Evaluating the Hedge with
+VaR</h3>
+<p><strong>Unhedged standard deviation of fuel-cost change:</strong>
+<span class="math display">\[
+Q_A \sigma_A = 2{,}100{,}000 \times 0.08 = \$168{,}000
+\]</span></p>
+<p><strong>Hedged standard deviation:</strong> <span
+class="math display">\[
+\sigma_{\Pi^*} = 168{,}000 \times \sqrt{1-0.85^2}
+= 168{,}000 \times \sqrt{0.2775}
+= 168{,}000 \times 0.5268
+= \$88{,}500
+\]</span></p>
+<p><strong>95% VaR comparison</strong> (using <span
+class="math inline">\(z_{0.95} = 1.645\)</span>):</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Standard Deviation</th>
+<th>95% VaR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unhedged</td>
+<td>$168,000</td>
+<td><span class="math inline">\(1.645 \times 168{,}000 =
+\$276{,}360\)</span></td>
+</tr>
+<tr>
+<td>Hedged</td>
+<td>$88,500</td>
+<td><span class="math inline">\(1.645 \times 88{,}500 =
+\$145{,}600\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><strong>VaR reduction:</strong> <span class="math display">\[
+\frac{276{,}360 - 145{,}600}{276{,}360} = 47\%
+\]</span></p>
+<p>The hedge does not eliminate risk. It cuts it almost in half.</p>
+<p>That is usually what good corporate hedging looks like: not
+perfection, but damage control. The remaining risk — <span
+class="math inline">\(\$145{,}600\)</span> at 95% confidence — is
+<strong>basis risk</strong>: the irreducible mismatch between jet fuel
+and heating oil.</p>
+</section>
+<section class="slide">
+<h2 id="speculating-with-derivatives">10. Speculating with
+Derivatives</h2>
+<p>Hedging reduces exposure.</p>
+<p>Speculation deliberately creates it.</p>
+<p>The appeal of derivatives for speculators is obvious:</p>
+<ul>
+<li>small initial capital outlay</li>
+<li>embedded leverage</li>
+<li>ability to target convexity or volatility</li>
+</ul>
+<p>But the same features that make derivatives efficient also make them
+unforgiving.</p>
+<p>Leverage narrows the margin for error. A correct view with the wrong
+position size is still a bad trade.</p>
+<h3 id="historical-caution">Historical Caution</h3>
+<p>Nick Leeson’s unauthorized speculation in Nikkei index futures
+brought down Barings Bank in 1995 — a <span
+class="math inline">\(\$1.4\)</span> billion loss from a single trader’s
+leveraged bets. The mathematics of futures was correct; the risk
+management was not.</p>
+<p>Derivatives amplify intelligence and recklessness in equal
+measure.</p>
+</section>
+<section class="slide">
+<h3 id="tools-matching-the-instrument-to-the-thesis">Tools: Matching the
+Instrument to the Thesis</h3>
+<p>Different derivatives express different beliefs.</p>
+<p><strong>Futures and forwards</strong></p>
+<ul>
+<li>Best for clean directional views</li>
+<li>Linear payoff: <span class="math display">\[
+\Pi_{\text{long forward}} = S_T - K
+\]</span></li>
+<li>Symmetric risk: gain and loss are unbounded in both directions</li>
+</ul>
+<p><strong>Options</strong></p>
+<ul>
+<li>Directional views with asymmetry</li>
+<li>Long call profit: <span class="math inline">\((S_T - K)^+ -
+c\)</span></li>
+<li>Long put profit: <span class="math inline">\((K - S_T)^+ -
+p\)</span></li>
+<li>Bounded loss (premium paid), unbounded or large potential gain</li>
+</ul>
+<p><strong>Option combinations</strong></p>
+<ul>
+<li>Spreads, straddles, strangles</li>
+<li>Useful when the thesis is about <strong>volatility</strong> or
+<strong>range</strong>, not just direction</li>
+</ul>
+<p>The instrument should match the thesis. Using a linear instrument for
+a convex view is poor engineering. Using options when a forward suffices
+wastes premium.</p>
+</section>
+<section class="slide">
+<h3 id="leverage">Leverage</h3>
+<p>Consider a futures contract on 100 units of an asset at futures price
+<span class="math inline">\(F_0 = 100\)</span>.</p>
+<p>Suppose the required initial margin is only <span
+class="math inline">\(\$1{,}000\)</span> (about 1% of the <span
+class="math inline">\(\$10{,}000\)</span> notional).</p>
+<p>If the futures price rises to <span
+class="math inline">\(103\)</span>, the gain is <span
+class="math display">\[
+100 \times (103 - 100) = \$300.
+\]</span></p>
+<p>Return on posted margin: <span class="math display">\[
+\frac{300}{1{,}000} = 30\%.
+\]</span></p>
+<p>A 3% move in the underlying produces a 30% return on capital — a
+leverage factor of 10.</p>
+<p>If the price falls to <span class="math inline">\(97\)</span>, the
+loss is also <span class="math inline">\(\$300\)</span>: a 30% loss on
+capital from a 3% adverse move.</p>
+<p>Leverage magnifies views. It also magnifies mistakes.</p>
+<p>In Lecture 11, we saw that daily margining creates a stream of cash
+flows that must be financed. Leverage means that even a correct
+long-term view can fail if interim margin calls force liquidation — the
+Metallgesellschaft lesson.</p>
+</section>
+<section class="slide">
+<h2 id="case-study-long-straddle">11. Case Study: Long Straddle</h2>
+<p>Suppose a stock is trading at <span class="math inline">\(S_0 =
+100\)</span>.</p>
+<p>A trader expects a major announcement (earnings, FDA ruling, court
+decision) and believes the market is <strong>underpricing the magnitude
+of the move</strong>. The trader has no view on direction — only on
+movement.</p>
+<p>The trader buys:</p>
+<ul>
+<li>one call with strike <span class="math inline">\(K = 100\)</span>
+for premium <span class="math inline">\(c = 4.5\)</span></li>
+<li>one put with strike <span class="math inline">\(K = 100\)</span> for
+premium <span class="math inline">\(p = 4.0\)</span></li>
+</ul>
+<p>Total premium paid: <span class="math display">\[
+c + p = 8.5.
+\]</span></p>
+<p>The maturity payoff is <span class="math display">\[
+(S_T - 100)^+ + (100 - S_T)^+ = |S_T - 100|.
+\]</span></p>
+<p><strong>Verify:</strong> If <span class="math inline">\(S_T =
+115\)</span>: payoff <span class="math inline">\(= 15 + 0 = 15 = |115 -
+100|\)</span>. <span class="math inline">\(\checkmark\)</span></p>
+<p>If <span class="math inline">\(S_T = 88\)</span>: payoff <span
+class="math inline">\(= 0 + 12 = 12 = |88 - 100|\)</span>. <span
+class="math inline">\(\checkmark\)</span></p>
+<p>The straddle pays the <strong>absolute value</strong> of the stock’s
+move from the strike.</p>
+</section>
+<section class="slide">
+<h3 id="long-straddle-profit-and-greek-profile">Long Straddle: Profit
+and Greek Profile</h3>
+<p>The maturity profit is <span class="math display">\[
+|S_T - 100| - 8.5.
+\]</span></p>
+<p>Break-even prices: <span class="math display">\[
+100 - 8.5 = 91.5, \qquad 100 + 8.5 = 108.5.
+\]</span></p>
+<p>So the trade profits if the stock finishes below <span
+class="math inline">\(91.5\)</span> or above <span
+class="math inline">\(108.5\)</span>. Maximum loss is <span
+class="math inline">\(8.5\)</span> (premium paid), occurring when <span
+class="math inline">\(S_T = 100\)</span> exactly.</p>
+<div data-align="center">
+<p><img src="Figures/straddle_profit.png" alt="Long Straddle Profit Diagram" style="width:65%;"/></p>
+</div>
+<p><em>Figure: Profit at maturity for a long straddle (<span
+class="math inline">\(K=100\)</span>, total premium <span
+class="math inline">\(= 8.5\)</span>). The position profits from large
+moves in either direction. Maximum loss occurs at the strike.</em></p>
+<p>This is not primarily a directional position. It is a view on
+<strong>movement</strong> — and, more precisely, on
+<strong>volatility</strong>.</p>
+</section>
+<section class="slide">
+<h3 id="straddle-greeks">Straddle Greeks</h3>
+<p>At initiation, an ATM straddle has approximate Greek profile:</p>
+<table>
+<thead>
+<tr>
+<th>Greek</th>
+<th>Call contribution</th>
+<th>Put contribution</th>
+<th>Straddle total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Delta</td>
+<td><span class="math inline">\(\approx +0.5\)</span></td>
+<td><span class="math inline">\(\approx -0.5\)</span></td>
+<td><span class="math inline">\(\approx 0\)</span></td>
+</tr>
+<tr>
+<td>Gamma</td>
+<td><span class="math inline">\(+\Gamma\)</span></td>
+<td><span class="math inline">\(+\Gamma\)</span></td>
+<td><span class="math inline">\(+2\Gamma\)</span></td>
+</tr>
+<tr>
+<td>Vega</td>
+<td><span class="math inline">\(+\mathcal{V}\)</span></td>
+<td><span class="math inline">\(+\mathcal{V}\)</span></td>
+<td><span class="math inline">\(+2\mathcal{V}\)</span></td>
+</tr>
+<tr>
+<td>Theta</td>
+<td><span class="math inline">\(\Theta_C &lt; 0\)</span></td>
+<td><span class="math inline">\(\Theta_P &lt; 0\)</span></td>
+<td><span class="math inline">\(2\Theta &lt; 0\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The straddle is:</p>
+<ul>
+<li><strong>delta-neutral</strong> — insensitive to small directional
+moves</li>
+<li><strong>long gamma</strong> — benefits from large moves (the <span
+class="math inline">\((\Delta S)^2\)</span> term)</li>
+<li><strong>long vega</strong> — benefits from an increase in implied
+volatility</li>
+<li><strong>short theta</strong> — pays time decay each day</li>
+</ul>
+<p>If the market stays quiet, time decay hurts. If the market explodes,
+convexity pays. If implied volatility rises (even before the move), vega
+pays.</p>
+<p>This is the cleanest example of a <strong>volatility trade</strong> —
+a position whose profitability depends not on which way the market
+moves, but on whether it moves enough.</p>
+</section>
+<section class="slide">
+<h2 id="final-takeaways">Final Takeaways</h2>
+<ul>
+<li><strong>Financial engineering begins where pricing ends</strong>
+<ul>
+<li>Pricing tells us what a contract is worth</li>
+<li>Engineering tells us how to use it — to hedge, to speculate, or to
+reshape exposure</li>
+</ul></li>
+<li><strong>Delta hedging is the first layer of option risk
+control</strong>
+<ul>
+<li>It removes first-order price risk: <span class="math inline">\(\Pi =
+V - \Delta S\)</span></li>
+<li>It does not remove gamma, vega, theta, or discrete-rebalancing
+risk</li>
+<li>The hedge must be rebalanced as the market moves — systematically
+buying high and selling low</li>
+</ul></li>
+<li><strong>The Black-Scholes PDE is a hedging statement</strong>
+<ul>
+<li><span class="math inline">\(V_t + \frac{1}{2}\sigma^2 S^2 V_{SS} +
+rSV_S - rV = 0\)</span></li>
+<li>Dynamic replication is the economic content behind the pricing
+formula</li>
+<li>The PDE links theta, gamma, and the cost of carry in one
+equation</li>
+</ul></li>
+<li><strong>Greek parameters are hedge targets, not just descriptive
+statistics</strong>
+<ul>
+<li>Gamma and theta are mechanically linked: <span
+class="math inline">\(\Theta \approx -\frac{1}{2}\sigma^2 S^2
+\Gamma\)</span></li>
+<li>Neutralizing each additional Greek requires one more traded
+instrument</li>
+<li>Delta-gamma-vega hedging is a system of linear equations</li>
+</ul></li>
+<li><strong>Business hedging is a variance-minimization problem</strong>
+<ul>
+<li>With basis risk, the optimal futures hedge is <span
+class="math inline">\(h^* = \rho\,\sigma_A / \sigma_F\)</span> (Lecture
+11)</li>
+<li>VaR under the hedge is <span class="math inline">\(z_\alpha Q_A
+\sigma_A \sqrt{1-\rho^2}\)</span> (Lecture 10)</li>
+<li>Hedging reduces variance; it does not abolish uncertainty</li>
+</ul></li>
+<li><strong>Speculation with derivatives is a choice about payoff
+geometry</strong>
+<ul>
+<li>Futures create linear exposure (direction)</li>
+<li>Options create convex exposure (magnitude, volatility)</li>
+<li>Combinations let traders isolate direction, volatility, or tail
+risk</li>
+</ul></li>
+</ul>
+<p><strong>Key insight:</strong> Financial engineering is the
+mathematics of reshaping exposure. The same no-arbitrage logic that
+prices a derivative also determines the trading strategy required to
+manage it.</p>
+</section>
+<section class="slide">
+<h2 id="exercises">12. Exercises</h2>
+<h3 id="exercise-1-delta-hedge-and-rebalancing">Exercise 1: Delta Hedge
+and Rebalancing</h3>
+<p>A trader is short 600 European call options on a stock. Each call
+currently has delta <span class="math inline">\(0.58\)</span>.</p>
+<p><strong>Tasks:</strong> 1. Compute the total delta of the option book
+2. Determine the stock position needed for a delta-neutral hedge 3. If
+the stock rises by <span class="math inline">\(\$2\)</span>, estimate
+the first-order change in the value of the option book 4. If the option
+delta then rises to <span class="math inline">\(0.67\)</span>, how many
+additional shares must be bought? 5. Explain why this hedge cannot
+remain exact over time</p>
+</section>
+<section class="slide">
+<h3
+id="exercise-2-heuristic-derivation-of-the-black-scholes-pde">Exercise
+2: Heuristic Derivation of the Black-Scholes PDE</h3>
+<p>Consider an option value <span
+class="math inline">\(V(S,t)\)</span>.</p>
+<p><strong>Tasks:</strong> 1. Write the second-order local expansion
+<span class="math display">\[
+dV \approx V_t \, dt + V_S \, dS + \frac{1}{2}V_{SS}(dS)^2
+\]</span> 2. Form the portfolio <span class="math inline">\(\Pi = V -
+\Delta S\)</span> 3. Choose <span class="math inline">\(\Delta\)</span>
+so that the random <span class="math inline">\(dS\)</span> term
+disappears. What is <span class="math inline">\(\Delta\)</span>? 4. Use
+<span class="math inline">\((dS)^2 \approx \sigma^2 S^2 dt\)</span> to
+simplify the remaining expression 5. Apply the no-arbitrage condition
+<span class="math inline">\(d\Pi = r\Pi \, dt\)</span> and derive the
+Black-Scholes PDE 6. Identify each term of the PDE with a Greek
+parameter and interpret its economic meaning</p>
+</section>
+<section class="slide">
+<h3 id="exercise-3-delta-gamma-hedge">Exercise 3: Delta-Gamma Hedge</h3>
+<p>A portfolio has total Greeks <span class="math display">\[
+\Delta_P = -150, \qquad \Gamma_P = -9.
+\]</span></p>
+<p>A liquid hedge option has <span class="math display">\[
+\Delta_H = 0.30, \qquad \Gamma_H = 0.05.
+\]</span></p>
+<p><strong>Tasks:</strong> 1. Compute how many hedge options are needed
+to neutralize gamma 2. Compute how many shares of stock are needed to
+neutralize delta 3. Verify that the resulting position has zero delta
+and gamma 4. Is vega necessarily zero after this hedge? Explain why or
+why not 5. Explain why gamma-neutrality is temporary rather than
+permanent</p>
+</section>
+<section class="slide">
+<h3 id="exercise-4-gamma-theta-pl-analysis">Exercise 4: Gamma-Theta
+P&amp;L Analysis</h3>
+<p>A trader is short 200 ATM call options with the following per-option
+Greeks:</p>
+<p><span class="math display">\[
+\Gamma = 0.04, \qquad \Theta = -15 \text{ (per year)}
+\]</span></p>
+<p>The current stock price is <span class="math inline">\(S_0 =
+50\)</span> and <span class="math inline">\(\sigma = 30\%\)</span>.</p>
+<p><strong>Tasks:</strong> 1. Compute the total gamma and total theta of
+the short position 2. Compute the daily theta income (in dollars) for
+the short position 3. If the stock moves by <span
+class="math inline">\(\Delta S = +3\)</span> over one day, estimate the
+gamma loss 4. How many quiet days of theta collection does it take to
+offset this gamma loss? 5. Verify that the gamma-theta relationship
+<span class="math inline">\(\Theta \approx -\frac{1}{2}\sigma^2 S^2
+\Gamma\)</span> holds approximately for a single option. (Use the given
+per-option Greeks.)</p>
+</section>
+<section class="slide">
+<h3 id="exercise-5-minimum-variance-hedge-ratio">Exercise 5:
+Minimum-Variance Hedge Ratio</h3>
+<p>A firm is exposed to 800,000 units of a commodity. A futures contract
+covers 20,000 units. Spot and futures price changes satisfy:</p>
+<ul>
+<li><span class="math inline">\(\sigma_A = 0.12\)</span></li>
+<li><span class="math inline">\(\sigma_F = 0.15\)</span></li>
+<li><span class="math inline">\(\rho = 0.75\)</span></li>
+</ul>
+<p><strong>Tasks:</strong> 1. Compute the minimum-variance hedge ratio
+<span class="math inline">\(h^*\)</span> 2. Compute the optimal number
+of futures contracts 3. Verify that the hedged variance is <span
+class="math inline">\(Q_A^2 \sigma_A^2(1-\rho^2)\)</span> 4. Explain why
+the optimal hedge is not a full one-for-one hedge 5. How would your
+answer change if <span class="math inline">\(\rho\)</span> increased to
+<span class="math inline">\(0.95\)</span>? Compute the new <span
+class="math inline">\(h^*\)</span> and <span
+class="math inline">\(N^*\)</span>, and comment on how the hedged
+variance changes</p>
+</section>
+<section class="slide">
+<h3 id="exercise-6-var-before-and-after-hedging">Exercise 6: VaR Before
+and After Hedging</h3>
+<p>Using the data from Exercise 5:</p>
+<p><strong>Tasks:</strong> 1. Compute the unhedged standard deviation of
+exposure value changes 2. Compute the hedged standard deviation under
+the minimum-variance hedge 3. Compute the 95% VaR before and after
+hedging using <span class="math inline">\(z_{0.95} = 1.645\)</span> 4.
+By what percentage does the hedge reduce VaR? 5. Compute the same for
+<span class="math inline">\(\rho = 0.95\)</span> (from Exercise 5, part
+5) and compare 6. Does a lower VaR imply that catastrophic outcomes are
+impossible? Explain</p>
+</section>
+<section class="slide">
+<h3 id="exercise-7-speculation-with-a-straddle">Exercise 7: Speculation
+with a Straddle</h3>
+<p>A stock trades at <span class="math inline">\(S_0 = 75\)</span>. A
+trader buys:</p>
+<ul>
+<li>one call with strike <span class="math inline">\(75\)</span> for
+premium <span class="math inline">\(3.2\)</span></li>
+<li>one put with strike <span class="math inline">\(75\)</span> for
+premium <span class="math inline">\(2.8\)</span></li>
+</ul>
+<p><strong>Tasks:</strong> 1. Write the maturity payoff of the position
+as a function of <span class="math inline">\(S_T\)</span> 2. Write the
+maturity profit as a function of <span
+class="math inline">\(S_T\)</span> 3. Compute the two break-even prices
+4. Describe the position in Greek terms: is it long or short delta,
+gamma, vega, and theta at initiation? 5. Explain what market view would
+justify entering this trade 6. If the trader is wrong and the stock does
+not move, what is the maximum loss?</p>
+</section>
+<section class="slide">
+<h3 id="exercise-8-verifying-the-black-scholes-pde">Exercise 8:
+Verifying the Black-Scholes PDE</h3>
+<p>Consider a European call with <span class="math inline">\(S_0 =
+100\)</span>, <span class="math inline">\(K = 100\)</span>, <span
+class="math inline">\(T = 0.5\)</span>, <span class="math inline">\(r =
+5\%\)</span>, <span class="math inline">\(\sigma = 25\%\)</span>.</p>
+<p>From the Black-Scholes formulas in Lecture 13: <span
+class="math display">\[
+d_1 = \frac{\ln(100/100) + (0.05 + 0.5 \times 0.0625) \times
+0.5}{0.25\sqrt{0.5}}, \qquad d_2 = d_1 - 0.25\sqrt{0.5}
+\]</span></p>
+<p><strong>Tasks:</strong> 1. Compute <span
+class="math inline">\(d_1\)</span> and <span
+class="math inline">\(d_2\)</span> 2. Compute the Greeks: <span
+class="math inline">\(\Delta = \mathcal{N}(d_1)\)</span>, <span
+class="math inline">\(\Gamma =
+\frac{\mathcal{N}&#39;(d_1)}{S_0\sigma\sqrt{T}}\)</span>, <span
+class="math inline">\(\Theta =
+-\frac{S_0\mathcal{N}&#39;(d_1)\sigma}{2\sqrt{T}} -
+rKe^{-rT}\mathcal{N}(d_2)\)</span> 3. Substitute into the Black-Scholes
+PDE: <span class="math display">\[
+\Theta + \frac{1}{2}\sigma^2 S_0^2 \Gamma + rS_0\Delta - rV = 0
+\]</span> and verify that the equation holds (where <span
+class="math inline">\(V\)</span> is the Black-Scholes call price) 4.
+Interpret: which term is largest in magnitude? What does that tell you
+about the dominant risk for an ATM option with 6 months to expiry?</p>
+</section>
+</div>
+</body>
+</html>

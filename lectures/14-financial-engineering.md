@@ -190,7 +190,7 @@ In Lecture 13, we saw that $\Delta_{\text{call}} = \mathcal{N}(d_1)$ for a Europ
 
 For a small move,
 $$
-\Delta V \approx \Delta \, \Delta S.
+\delta V \approx \Delta \, \delta S.
 $$
 
 If we hold one option and short $\Delta$ shares of stock, the portfolio
